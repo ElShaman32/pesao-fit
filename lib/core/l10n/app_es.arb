@@ -1,0 +1,1029 @@
+{
+  "@@locale": "es",
+  "appName": "PESAO FIT",
+  "@appName": {
+    "description": "Nombre de la aplicación."
+  },
+  "tabHome": "Inicio",
+  "@tabHome": {
+    "description": "Tab 1 de todos los shells."
+  },
+  "tabRoutine": "Rutina",
+  "@tabRoutine": {
+    "description": "Tab de rutina (cliente)."
+  },
+  "tabNutrition": "Nutrición",
+  "@tabNutrition": {
+    "description": "Tab de nutrición (cliente)."
+  },
+  "tabProfile": "Perfil",
+  "@tabProfile": {
+    "description": "Tab de perfil (todos los roles)."
+  },
+  "tabClients": "Clientes",
+  "@tabClients": {
+    "description": "Tab de clientes (dueño/entrenador/nutricionista)."
+  },
+  "tabPayments": "Pagos",
+  "@tabPayments": {
+    "description": "Tab de pagos (dueño/superadmin)."
+  },
+  "tabGyms": "Gimnasios",
+  "@tabGyms": {
+    "description": "Tab de gimnasios (superadmin)."
+  },
+  "tabPlans": "Planes",
+  "@tabPlans": {
+    "description": "Tab de planes (nutricionista)."
+  },
+  "commonRetry": "Reintentar",
+  "@commonRetry": {
+    "description": "Botón para volver a intentar."
+  },
+  "commonCancel": "Cancelar",
+  "@commonCancel": {
+    "description": "Botón cancelar."
+  },
+  "commonConfirm": "Confirmar",
+  "@commonConfirm": {
+    "description": "Botón confirmar."
+  },
+  "commonSave": "Guardar",
+  "@commonSave": {
+    "description": "Botón guardar."
+  },
+  "commonClose": "Cerrar",
+  "@commonClose": {
+    "description": "Botón cerrar."
+  },
+  "commonBack": "Atrás",
+  "@commonBack": {
+    "description": "Botón o semantics de retroceso."
+  },
+  "commonNext": "Siguiente",
+  "@commonNext": {
+    "description": "Botón siguiente."
+  },
+  "commonSkip": "Saltar",
+  "@commonSkip": {
+    "description": "Botón saltar paso."
+  },
+  "commonSearch": "Buscar",
+  "@commonSearch": {
+    "description": "Placeholder de búsqueda."
+  },
+  "commonSeeAll": "Ver todo",
+  "@commonSeeAll": {
+    "description": "Enlace de SectionHeader."
+  },
+  "commonLoading": "Cargando…",
+  "@commonLoading": {
+    "description": "Semantics para skeletons."
+  },
+  "commonStart": "Comenzar",
+  "@commonStart": {
+    "description": "CTA de la acción de hoy."
+  },
+  "fabRegisterExercise": "Registrar ejercicio",
+  "@fabRegisterExercise": {
+    "description": "FAB contextual del rol cliente."
+  },
+  "fabNewRoutine": "Nueva rutina",
+  "@fabNewRoutine": {
+    "description": "FAB contextual del rol entrenador."
+  },
+  "fabAddClient": "Agregar cliente",
+  "@fabAddClient": {
+    "description": "FAB contextual del rol dueño."
+  },
+  "fabNewPlan": "Nuevo plan",
+  "@fabNewPlan": {
+    "description": "FAB contextual del rol nutricionista."
+  },
+  "fabAddGym": "Agregar gimnasio",
+  "@fabAddGym": {
+    "description": "FAB contextual del rol superadmin."
+  },
+  "offlineBanner": "Modo sin conexión — tus datos se sincronizan solos 📶",
+  "@offlineBanner": {
+    "description": "Texto visible del OfflineBanner. Puede llevar emoji."
+  },
+  "offlineBannerSemantics": "Modo sin conexión. Tus datos se sincronizan solos.",
+  "@offlineBannerSemantics": {
+    "description": "Semantics sin emoji para OfflineBanner."
+  },
+  "emptyGenericTitle": "Nada por aquí todavía",
+  "@emptyGenericTitle": {
+    "description": "Título genérico de EmptyState."
+  },
+  "emptyGenericBody": "Cuando tengas algo, aparece en este espacio.",
+  "@emptyGenericBody": {
+    "description": "Cuerpo genérico de EmptyState."
+  },
+  "errorGenericTitle": "Algo no salió bien",
+  "@errorGenericTitle": {
+    "description": "Título genérico de ErrorState."
+  },
+  "errorGenericBody": "Tranquilo, suele pasar. Inténtalo de nuevo.",
+  "@errorGenericBody": {
+    "description": "Cuerpo genérico de ErrorState."
+  },
+  "errorGenericButton": "Reintentar",
+  "@errorGenericButton": {
+    "description": "Botón de ErrorState."
+  },
+  "greetingMorning": "¡Buenos días, {name}! 👋",
+  "@greetingMorning": {
+    "description": "Saludo visible de mañana.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "greetingMorningSemantics": "Buenos días, {name}.",
+  "@greetingMorningSemantics": {
+    "description": "Semantics sin emoji para saludo de mañana.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "greetingAfternoon": "¡Buenas tardes, {name}! 👋",
+  "@greetingAfternoon": {
+    "description": "Saludo visible de tarde.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "greetingAfternoonSemantics": "Buenas tardes, {name}.",
+  "@greetingAfternoonSemantics": {
+    "description": "Semantics sin emoji para saludo de tarde.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "greetingNight": "¡Buenos noches, {name}! 👋",
+  "@greetingNight": {
+    "description": "Saludo visible de noche.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "greetingNightSemantics": "Buenas noches, {name}.",
+  "@greetingNightSemantics": {
+    "description": "Semantics sin emoji para saludo de noche.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "authEmailInvalid": "Hmm, ese correo no parece válido 🤔",
+  "@authEmailInvalid": {
+    "description": "Validación suave de correo."
+  },
+  "loginTitle": "Entrar a PESAO FIT",
+  "@loginTitle": {
+    "description": "Título de la pantalla de login."
+  },
+  "loginSubtitle": "Mete tus datos pa' empezar a darle 💪",
+  "@loginSubtitle": {
+    "description": "Subtítulo de la pantalla de login."
+  },
+  "loginEmailLabel": "Correo electrónico",
+  "@loginEmailLabel": {
+    "description": "Label del campo email."
+  },
+  "loginEmailHint": "tu@correo.com",
+  "@loginEmailHint": {
+    "description": "Hint del campo email."
+  },
+  "loginPasswordLabel": "Contraseña",
+  "@loginPasswordLabel": {
+    "description": "Label del campo password."
+  },
+  "loginPasswordHint": "Mínimo 6 caracteres",
+  "@loginPasswordHint": {
+    "description": "Hint del campo password."
+  },
+  "loginForgot": "¿Se te olvidó la contraseña?",
+  "@loginForgot": {
+    "description": "Link a recuperar contraseña."
+  },
+  "loginSubmit": "Entrar",
+  "@loginSubmit": {
+    "description": "Botón principal de login."
+  },
+  "loginNoAccount": "¿No tienes cuenta?",
+  "@loginNoAccount": {
+    "description": "Prefijo del link a registro."
+  },
+  "loginSignUp": "Regístrate aquí",
+  "@loginSignUp": {
+    "description": "Link a registro."
+  },
+  "loginErrorInvalid": "Hmm, ese correo o contraseña no cuadran 🤔",
+  "@loginErrorInvalid": {
+    "description": "Microcopy para auth/credenciales-invalidas."
+  },
+  "loginErrorEmailUnconfirmed": "Revisa tu correo, te mandamos un link pa' confirmar 📧",
+  "@loginErrorEmailUnconfirmed": {
+    "description": "Microcopy para auth/email-sin-confirmar."
+  },
+  "loginErrorGeneric": "Algo no cuadró, intenta de nuevo ahorita",
+  "@loginErrorGeneric": {
+    "description": "Microcopy genérico de error de login."
+  },
+  "loginValidationEmail": "Ese correo no parece válido",
+  "@loginValidationEmail": {
+    "description": "Validación de email inválido en login."
+  },
+  "loginValidationPassword": "La contraseña debe tener al menos 6 caracteres",
+  "@loginValidationPassword": {
+    "description": "Validación de password corto en login."
+  },
+  "registerTitle": "Crear cuenta",
+  "@registerTitle": { 
+    "description": "Título de la pantalla de registro"
+  },
+  "registerSubtitle": "Únete a PESAO FIT y empieza a entrenar 💪",
+  "@registerSubtitle": {
+    "description": "Subtítulo de la pantalla de registro" 
+  },
+  "registerFullNameLabel": "Nombre completo",
+  "@registerFullNameLabel": { 
+    "description": "Label del campo nombre"
+  },
+  "registerFullNameHint": "Tu nombre real",
+  "@registerFullNameHint": { 
+    "description": "Hint del campo nombre" 
+  },
+  "registerPasswordLabel": "Contraseña",
+  "@registerPasswordLabel": { 
+    "description": "Label del campo password en registro" 
+  },
+  "registerPasswordHint": "Mínimo 6 caracteres",
+  "@registerPasswordHint": { 
+    "description": "Hint del campo password en registro" 
+  },
+  "registerConfirmPasswordLabel": "Confirmar contraseña",
+  "@registerConfirmPasswordLabel": {
+    "description": "Label del campo confirmar password" 
+  },
+  "registerConfirmPasswordHint": "Repite tu contraseña",
+  "@registerConfirmPasswordHint": { 
+    "description": "Hint del campo confirmar password" 
+  },
+  "registerSubmit": "Crear cuenta",
+  "@registerSubmit": { 
+    "description": "Botón principal de registro" 
+  },
+  "registerHasAccount": "¿Ya tienes cuenta?",
+  "@registerHasAccount": { 
+    "description": "Prefijo del link a login" 
+  },
+  "registerSignIn": "Entra aquí",
+  "@registerSignIn": { 
+    "description": "Link a login" 
+  },
+  "registerErrorEmailExists": "Ese correo ya está registrado. ¿Quieres entrar?",
+  "@registerErrorEmailExists": { 
+    "description": "Microcopy para auth/email-ya-registrado" 
+  },
+  "registerErrorWeakPassword": "La contraseña debe tener al menos 6 caracteres",
+  "@registerErrorWeakPassword": { 
+    "description": "Microcopy para auth/password-debil" 
+  },
+  "registerErrorGeneric": "Algo no cuadró, intenta de nuevo",
+  "@registerErrorGeneric": { 
+    "description": "Microcopy genérico de error de registro" 
+  },
+  "registerValidationName": "El nombre no puede estar vacío",
+  "@registerValidationName": { 
+    "description": "Validación de nombre vacío" 
+  },
+  "registerValidationPasswordMismatch": "Las contraseñas no coinciden",
+  "@registerValidationPasswordMismatch": { 
+    "description": "Validación de passwords distintos" 
+  },
+  "onboardingTitle": "¿Cómo quieres usar PESAO FIT?",
+  "@onboardingTitle": { 
+    "description": "Título de la pantalla de selección de rol" 
+  },
+  "onboardingSubtitle": "Elige la opción que mejor te describe 👇",
+  "@onboardingSubtitle": { 
+    "description": "Subtítulo de la pantalla de onboarding"
+  },
+  "onboardingOwnerTitle": "Soy dueño de gimnasio",
+  "@onboardingOwnerTitle": { 
+    "description": "Título de la card del dueño" 
+  },
+  "onboardingOwnerDescription": "Tengo un gym y quiero gestionar clientes, staff y pagos desde la app",
+  "@onboardingOwnerDescription": { 
+    "description": "Descripción de la card del dueño" 
+  },
+  "onboardingClientTitle": "Soy cliente",
+  "@onboardingClientTitle": { 
+    "description": "Título de la card del cliente" 
+  },
+  "onboardingClientDescription": "Entreno en un gym y quiero seguir mi progreso y rutinas",
+  "@onboardingClientDescription": { 
+    "description": "Descripción de la card del cliente" 
+  },
+  "onboardingSkip": "Saltar por ahora",
+  "@onboardingSkip": { 
+    "description": "Botón de saltar (solo para tests, se quita en producción)" 
+  },
+  "ownerAppTitle": "Crear mi gimnasio",
+  "@ownerAppTitle": { 
+    "description": "Título de la pantalla de solicitud KYC"
+  },
+  "ownerAppSubtitle": "Cuéntanos sobre ti y tu gym para verificar tu cuenta 🏋️",
+  "@ownerAppSubtitle": { 
+    "description": "Subtítulo de la pantalla de solicitud" 
+  },
+  "ownerAppPersonalSection": "Tus datos",
+  "@ownerAppPersonalSection": {
+    "description": "Título de sección de datos personales"
+  },
+  "ownerAppPhoneLabel": "Teléfono",
+  "@ownerAppPhoneLabel": { 
+    "description": "Label del campo teléfono del dueño" 
+  },
+  "ownerAppPhoneHint": "0412-1234567",
+  "@ownerAppPhoneHint": { 
+    "description": "Hint del campo teléfono" 
+  },
+  "ownerAppDocumentLabel": "Cédula o RIF (opcional)",
+  "@ownerAppDocumentLabel": { 
+    "description": "Label del campo documento" 
+  },
+  "ownerAppDocumentHint": "V-12345678 o J-12345678-9",
+  "@ownerAppDocumentHint": { 
+    "description": "Hint del campo documento" 
+  },
+  "ownerAppGymSection": "Datos del gimnasio",
+  "@ownerAppGymSection": { 
+    "description": "Título de sección de datos del gimnasio" 
+  },
+  "ownerAppGymNameLabel": "Nombre del gimnasio",
+  "@ownerAppGymNameLabel": {
+    "description": "Label del campo nombre del gym" 
+  },
+  "ownerAppGymNameHint": "Ej: Gym Pesao",
+  "@ownerAppGymNameHint": { 
+    "description": "Hint del campo nombre del gym" 
+  },
+  "ownerAppGymRifLabel": "RIF del negocio (opcional)",
+  "@ownerAppGymRifLabel": { 
+    "description": "Label del campo RIF del gym" 
+  },
+  "ownerAppGymRifHint": "J-12345678-9",
+  "@ownerAppGymRifHint": { 
+    "description": "Hint del campo RIF del gym" 
+  },
+  "ownerAppGymAddressLabel": "Dirección completa",
+  "@ownerAppGymAddressLabel": { 
+    "description": "Label del campo dirección" 
+  },
+  "ownerAppGymAddressHint": "Av. Lara, C.C. Cosmo, Local 12",
+  "@ownerAppGymAddressHint": { 
+    "description": "Hint del campo dirección" 
+  },
+  "ownerAppGymStateLabel": "Estado",
+  "@ownerAppGymStateLabel": { 
+    "description": "Label del campo estado" 
+  },
+  "ownerAppGymCityLabel": "Ciudad",
+  "@ownerAppGymCityLabel": { 
+    "description": "Label del campo ciudad" 
+  },
+  "ownerAppGymCityHint": "Ej: Barquisimeto",
+  "@ownerAppGymCityHint": { 
+    "description": "Hint del campo ciudad" 
+  },
+  "ownerAppGymPhoneLabel": "Teléfono del gimnasio",
+  "@ownerAppGymPhoneLabel": { 
+    "description": "Label del campo teléfono del gym" 
+  },
+  "ownerAppGymPhoneHint": "0251-1234567",
+  "@ownerAppGymPhoneHint": { 
+    "description": "Hint del campo teléfono del gym" 
+  },
+  "ownerAppGymInstagramLabel": "Instagram (opcional)",
+  "@ownerAppGymInstagramLabel": { 
+    "description": "Label del campo Instagram" 
+  },
+  "ownerAppGymInstagramHint": "@gym_pesao",
+  "@ownerAppGymInstagramHint": { 
+    "description": "Hint del campo Instagram" 
+  },
+  "ownerAppGymDescriptionLabel": "Descripción (opcional)",
+  "@ownerAppGymDescriptionLabel": { 
+    "description": "Label del campo descripción" 
+  },
+  "ownerAppGymDescriptionHint": "Cuéntanos sobre tu gym en pocas líneas",
+  "@ownerAppGymDescriptionHint": { 
+    "description": "Hint del campo descripción" 
+  },
+  "ownerAppGymPhotoLabel": "Foto del local (opcional)",
+  "@ownerAppGymPhotoLabel": { 
+    "description": "Label del campo foto" 
+  },
+  "ownerAppGymPhotoButton": "Agregar foto",
+  "@ownerAppGymPhotoButton": { 
+    "description": "Texto del botón para agregar foto" 
+  },
+  "ownerAppGymLocationButton": "Usar mi ubicación",
+  "@ownerAppGymLocationButton": { 
+    "description": "Texto del botón para obtener GPS" 
+  },
+  "ownerAppSubmit": "Enviar solicitud",
+  "@ownerAppSubmit": { 
+    "description": "Botón principal de envío"
+  },
+  "ownerAppValidationErrorPhone": "El teléfono debe tener formato venezolano",
+  "@ownerAppValidationErrorPhone": { 
+    "description": "Validación de teléfono inválido"
+  },
+  "ownerAppValidationErrorGymName": "El nombre del gimnasio no puede estar vacío",
+  "@ownerAppValidationErrorGymName": { 
+    "description": "Validación de nombre de gym vacío"
+  },
+  "ownerAppValidationErrorAddress": "La dirección no puede estar vacía",
+  "@ownerAppValidationErrorAddress": { 
+    "description": "Validación de dirección vacía" 
+  },
+  "ownerAppValidationErrorState": "Debes seleccionar un estado",
+  "@ownerAppValidationErrorState": { 
+    "description": "Validación de estado no seleccionado"
+  },
+  "ownerAppValidationErrorCity": "La ciudad no puede estar vacía",
+  "@ownerAppValidationErrorCity": { 
+    "description": "Validación de ciudad vacía" },
+  "ownerAppSuccessTitle": "¡Solicitud enviada! 🎉",
+  "@ownerAppSuccessTitle": { 
+    "description": "Título de la pantalla de éxito" 
+  },
+  "ownerAppSuccessMessage": "Recibimos tu solicitud. Te contactaremos en 24-48h para verificar tu gym. 📞",
+  "@ownerAppSuccessMessage": { 
+    "description": "Mensaje de éxito tras enviar solicitud" 
+  },
+  "ownerAppSuccessBack": "Volver al inicio",
+  "@ownerAppSuccessBack": { 
+    "description": "Botón para volver al inicio" 
+  },
+  "gymDiscoveryTitle": "Encuentra tu gimnasio",
+  "@gymDiscoveryTitle": { 
+    "description": "Título de gym discovery" 
+  },
+  "gymDiscoverySubtitle": "Busca el gym donde entrenas y únete 💪",
+  "@gymDiscoverySubtitle": { 
+    "description": "Subtítulo de gym discovery" 
+  },
+  "gymDiscoverySearchHint": "Buscar por nombre...",
+  "@gymDiscoverySearchHint": { 
+    "description": "Hint del buscador" 
+  },
+  "gymDiscoveryEmpty": "No encontramos gimnasios con ese nombre. Intenta con otro 🤔",
+  "@gymDiscoveryEmpty": { 
+    "description": "Estado vacío de búsqueda" 
+  },
+  "gymDiscoveryJoin": "Unirme",
+  "@gymDiscoveryJoin": { 
+    "description": "Botón para unirse a un gym" 
+  },
+  "gymDiscoveryJoinTitle": "¿Unirte a {name}?",
+  "@gymDiscoveryJoinTitle": { 
+    "description": "Título del diálogo de confirmación", "placeholders": { "name": { "type": "String" } } 
+  },
+  "gymDiscoveryJoinMessage": "Al unirte, tu gimnasio podrá ver tu progreso y asignarte rutinas.",
+  "@gymDiscoveryJoinMessage": { 
+    "description": "Mensaje del diálogo de confirmación" 
+  },
+  "gymDiscoveryJoinConfirm": "Sí, unirme",
+  "@gymDiscoveryJoinConfirm": { 
+    "description": "Botón confirmar del diálogo"
+  },
+  "gymDiscoveryJoinSuccess": "¡Ya eres parte del gym! Bienvenido 💪",
+  "@gymDiscoveryJoinSuccess": { 
+    "description": "Mensaje de éxito al unirse" 
+  },
+  "adminAppsTitle": "Solicitudes de gimnasios",
+  "@adminAppsTitle": { 
+    "description": "Título de la lista de solicitudes" 
+  },
+  "adminAppsSubtitle": "Revisa y aprueba los nuevos gimnasios 🏋️",
+  "@adminAppsSubtitle": { 
+    "description": "Subtítulo de la lista" 
+  },
+  "adminAppsEmpty": "No hay solicitudes pendientes. Cuando un dueño se registre, aparece aquí.",
+  "@adminAppsEmpty": {
+    "description": "Estado vacío de solicitudes" 
+  },
+  "adminAppsSubmitted": "Enviado",
+  "@adminAppsSubmitted": { 
+    "description": "Label de fecha de envío" 
+  },
+  "adminAppsOwnerSection": "Datos del dueño",
+  "@adminAppsOwnerSection": { 
+    "description": "Sección datos del dueño en detalle" 
+  },
+  "adminAppsGymSection": "Datos del gimnasio",
+  "@adminAppsGymSection": { 
+    "description": "Sección datos del gym en detalle" 
+  },
+  "adminAppsApprove": "Aprobar",
+  "@adminAppsApprove": { 
+    "description": "Botón aprobar" 
+  },
+  "adminAppsReject": "Rechazar",
+  "@adminAppsReject": { 
+    "description": "Botón rechazar" 
+  },
+  "adminAppsApproveTitle": "¿Aprobar {name}?",
+  "@adminAppsApproveTitle": { 
+    "description": "Título diálogo aprobar", "placeholders": { "name": { "type": "String" } } 
+  },
+  "adminAppsApproveMessage": "Se creará el gimnasio, la membresía del dueño y la suscripción Pluma por 1 año.",
+  "@adminAppsApproveMessage": { 
+    "description": "Mensaje diálogo aprobar" 
+  },
+  "adminAppsRejectTitle": "Rechazar solicitud",
+  "@adminAppsRejectTitle": { 
+    "description": "Título diálogo rechazar" 
+  },
+  "adminAppsRejectReasonLabel": "Motivo del rechazo",
+  "@adminAppsRejectReasonLabel": { 
+    "description": "Label del motivo de rechazo" 
+  },
+  "adminAppsRejectReasonHint": "Cuéntale al dueño por qué no fue aprobado...",
+  "@adminAppsRejectReasonHint": { 
+    "description": "Hint del motivo de rechazo" 
+  },
+  "adminAppsApproveSuccess": "¡Gimnasio aprobado! El dueño ya puede entrar 🎉",
+  "@adminAppsApproveSuccess": { 
+    "description": "Toast de éxito al aprobar" 
+  },
+  "adminAppsRejectSuccess": "Solicitud rechazada. El dueño verá el motivo.",
+  "@adminAppsRejectSuccess": { 
+    "description": "Toast de éxito al rechazar" 
+  },
+  "adminAppsError": "No pudimos cargar las solicitudes",
+  "@adminAppsError": { 
+    "description": "Error al cargar solicitudes" 
+  },
+  "adminAppsFieldPhone": "Teléfono",
+  "@adminAppsFieldPhone": { 
+    "description": "Label teléfono" 
+  },
+  "adminAppsFieldDocument": "Documento",
+  "@adminAppsFieldDocument": { 
+    "description": "Label documento" 
+  },
+  "adminAppsFieldAddress": "Dirección",
+  "@adminAppsFieldAddress": { 
+    "description": "Label dirección" 
+  },
+  "adminAppsFieldCity": "Ciudad",
+  "@adminAppsFieldCity": { 
+    "description": "Label ciudad" 
+  },
+  "adminAppsFieldState": "Estado",
+  "@adminAppsFieldState": { 
+    "description": "Label estado" 
+  },
+  "adminAppsFieldInstagram": "Instagram",
+  "@adminAppsFieldInstagram": { 
+    "description": "Label Instagram" 
+  },
+  "adminAppsFieldDescription": "Descripción",
+  "@adminAppsFieldDescription": { 
+    "description": "Label descripción" 
+  },
+  "adminAppsFieldRif": "RIF",
+  "@adminAppsFieldRif": { 
+    "description": "Label RIF" 
+  },
+  "adminDashStatGyms": "Gimnasios",
+  "@adminDashStatGyms": { 
+    "description": "Label de StatCard gimnasios activos" 
+  },
+  "adminDashStatGymsSub": "Activos en la red",
+  "@adminDashStatGymsSub": { 
+    "description": "Sub de StatCard gimnasios" 
+  },
+  "adminDashStatPending": "Pendientes",
+  "@adminDashStatPending": { 
+    "description": "Label de StatCard solicitudes pendientes" 
+  },
+  "adminDashStatPendingSub": "Por revisar",
+  "@adminDashStatPendingSub": { 
+    "description": "Sub de StatCard pendientes" 
+  },
+  "adminDashStatSubs": "Suscripciones",
+  "@adminDashStatSubs": { 
+    "description": "Label de StatCard suscripciones activas" 
+  },
+  "adminDashStatSubsSub": "Planes activos",
+  "@adminDashStatSubsSub": { 
+    "description": "Sub de StatCard suscripciones" 
+  },
+  "adminDashPrimaryTitle": "Solicitudes por revisar",
+  "@adminDashPrimaryTitle": { 
+    "description": "Título del PrimaryCard" 
+  },
+  "adminDashPrimaryBody": "Tienes {count} gimnasios esperando tu revisión. Llamar o visitar antes de aprobar.",
+  "@adminDashPrimaryBody": { 
+    "description": "Body del PrimaryCard", "placeholders": { "count": { "type": "int" } } 
+  },
+  "adminDashPrimaryCta": "Ver solicitudes",
+  "@adminDashPrimaryCta": { 
+    "description": "CTA del PrimaryCard" 
+  },
+  "adminDashPrimaryCtaNone": "Todo al día",
+  "@adminDashPrimaryCtaNone": { 
+    "description": "CTA cuando no hay pendientes" 
+  },
+  "adminDashRecentSection": "Últimos gimnasios aprobados",
+  "@adminDashRecentSection": { 
+    "description": "Sección de últimos aprobados" 
+  },
+  "adminDashRecentEmpty": "Aún no hay gimnasios aprobados",
+  "@adminDashRecentEmpty": { 
+    "description": "Estado vacío de recientes" 
+  },
+  "adminDashErrorTitle": "No pudimos cargar tu panel",
+  "@adminDashErrorTitle": { 
+    "description": "Título del estado error" 
+  },
+  "adminDashErrorBody": "Tranquilo, suele pasar. Inténtalo de nuevo.",
+  "@adminDashErrorBody": { 
+    "description": "Body del estado error" 
+  },
+  "adminDashEmptyTitle": "Todo tranquilo por aquí",
+  "@adminDashEmptyTitle": { 
+    "description": "Título del estado empty general" 
+  },
+  "adminDashEmptyBody": "Cuando se registren gimnasios, los números aparecen aquí.",
+  "@adminDashEmptyBody": { 
+    "description": "Body del estado empty general" 
+  },
+  "clientDashStatKcal": "kcal hoy",
+  "@clientDashStatKcal": { 
+    "description": "Label StatCard kcal" 
+  },
+  "clientDashStatKcalSub": "Meta: 2.200",
+  "@clientDashStatKcalSub": { 
+    "description": "Sub StatCard kcal" 
+  },
+  "clientDashStatStreak": "Racha",
+  "@clientDashStatStreak": { 
+    "description": "Label StatCard racha" 
+  },
+  "clientDashStatStreakSub": "días seguidos",
+  "@clientDashStatStreakSub": { 
+    "description": "Sub StatCard racha" 
+  },
+  "clientDashStatNext": "Próximo",
+  "@clientDashStatNext": { 
+    "description": "Label StatCard próximo entreno" 
+  },
+  "clientDashStatNextSub": "entreno",
+  "@clientDashStatNextSub": { 
+    "description": "Sub StatCard próximo entreno" 
+  },
+  "clientDashPrimaryTitle": "Entreno de hoy",
+  "@clientDashPrimaryTitle": { 
+    "description": "Título PrimaryCard" 
+  },
+  "clientDashPrimaryBody": "Tu coach aún no te asigna una rutina. Cuando lo haga, aparece aquí para que empieces 💪",
+  "@clientDashPrimaryBody": { 
+    "description": "Body PrimaryCard sin rutina" 
+  },
+  "clientDashPrimaryCta": "Comenzar",
+  "@clientDashPrimaryCta": { 
+    "description": "CTA PrimaryCard con rutina"
+  },
+  "clientDashPrimaryCtaNone": "Sin entreno hoy",
+  "@clientDashPrimaryCtaNone": { 
+    "description": "CTA cuando no hay rutina" 
+  },
+  "clientDashTodaySection": "Hoy",
+  "@clientDashTodaySection": { 
+    "description": "SectionHeader de hoy" 
+  },
+  "clientDashTodayEmpty": "Nada programado para hoy. Aprovecha de descansar o hidrátate 💧",
+  "@clientDashTodayEmpty": { 
+    "description": "Empty de la sección hoy" 
+  },
+  "clientDashErrorTitle": "No pudimos cargar tu inicio",
+  "@clientDashErrorTitle": { 
+    "description": "Título estado error" 
+  },
+  "clientDashErrorBody": "Tranquilo, suele pasar. Inténtalo de nuevo.",
+  "@clientDashErrorBody": { 
+    "description": "Body estado error" 
+  },
+  "ownerDashStatClients": "Clientes",
+  "@ownerDashStatClients": { 
+    "description": "Label StatCard clientes activos" 
+  },
+  "ownerDashStatClientsSub": "Activos en tu gym",
+  "@ownerDashStatClientsSub": { 
+    "description": "Sub StatCard clientes" 
+  },
+  "ownerDashStatPayments": "Pagos",
+  "@ownerDashStatPayments": { 
+    "description": "Label StatCard pagos por verificar" 
+  },
+  "ownerDashStatPaymentsSub": "Por verificar",
+  "@ownerDashStatPaymentsSub": { 
+    "description": "Sub StatCard pagos"
+  },
+  "ownerDashStatIncome": "Ingresos",
+  "@ownerDashStatIncome": { 
+    "description": "Label StatCard ingresos del mes" 
+  },
+  "ownerDashStatIncomeSub": "Este mes (Bs)",
+  "@ownerDashStatIncomeSub": { 
+    "description": "Sub StatCard ingresos" 
+    },
+  "ownerDashPrimaryTitle": "Comprobantes por verificar",
+  "@ownerDashPrimaryTitle": { 
+    "description": "Título PrimaryCard" 
+  },
+  "ownerDashPrimaryBody": "Tienes {count} comprobantes de pago esperando tu revisión. Verifícalos pa' mantener al día a tus clientes.",
+  "@ownerDashPrimaryBody": { 
+    "description": "Body PrimaryCard", "placeholders": { "count": { "type": "int" } } 
+  },
+  "ownerDashPrimaryCta": "Ver comprobantes",
+  "@ownerDashPrimaryCta": { 
+    "description": "CTA PrimaryCard" 
+  },
+  "ownerDashPrimaryCtaNone": "Todo al día",
+  "@ownerDashPrimaryCtaNone": { 
+    "description": "CTA sin pendientes" 
+  },
+  "ownerDashRecentSection": "Últimos clientes",
+  "@ownerDashRecentSection": { 
+    "description": "SectionHeader últimos clientes" 
+  },
+  "ownerDashRecentEmpty": "Aún no tienes clientes registrados. Comparte el link de tu gym pa' que se unan 💪",
+  "@ownerDashRecentEmpty": { 
+    "description": "Empty de últimos clientes" 
+  },
+  "ownerDashErrorTitle": "No pudimos cargar tu panel",
+  "@ownerDashErrorTitle": { 
+    "description": "Título estado error" 
+  },
+  "ownerDashErrorBody": "Tranquilo, suele pasar. Inténtalo de nuevo.",
+  "@ownerDashErrorBody": { 
+    "description": "Body estado error" 
+  },
+  "trainerDashStatClients": "Clientes",
+  "@trainerDashStatClients": { 
+    "description": "Label StatCard clientes asignados" 
+  },
+  "trainerDashStatClientsSub": "Asignados a ti",
+  "@trainerDashStatClientsSub": { 
+    "description": "Sub StatCard clientes trainer" 
+  },
+  "trainerDashStatSessions": "Sesiones",
+  "@trainerDashStatSessions": { 
+    "description": "Label StatCard sesiones hoy" 
+  },
+  "trainerDashStatSessionsSub": "Para hoy",
+  "@trainerDashStatSessionsSub": { 
+    "description": "Sub StatCard sesiones" 
+  },
+  "trainerDashStatRoutines": "Rutinas",
+  "@trainerDashStatRoutines": { 
+    "description": "Label StatCard rutinas activas" 
+  },
+  "trainerDashStatRoutinesSub": "Activas",
+  "@trainerDashStatRoutinesSub": { 
+    "description": "Sub StatCard rutinas" 
+  },
+  "trainerDashPrimaryTitle": "Sesiones de hoy",
+  "@trainerDashPrimaryTitle": { 
+    "description": "Título PrimaryCard trainer" 
+  },
+  "trainerDashPrimaryBody": "Tienes {count} sesiones programadas para hoy. ¡A darle con todo! 💪",
+  "@trainerDashPrimaryBody": { 
+    "description": "Body PrimaryCard trainer", "placeholders": { "count": { "type": "int" } } 
+  },
+  "trainerDashPrimaryCta": "Ver sesiones",
+  "@trainerDashPrimaryCta": { 
+    "description": "CTA PrimaryCard trainer" 
+  },
+  "trainerDashPrimaryCtaNone": "Sin sesiones hoy",
+  "@trainerDashPrimaryCtaNone": { 
+    "description": "CTA sin sesiones" 
+  },
+  "trainerDashNextSection": "Próximas sesiones",
+  "@trainerDashNextSection": { 
+    "description": "SectionHeader próximas sesiones" 
+  },
+  "trainerDashNextEmpty": "Nada programado por ahora. Cuando tus clientes agenden, aparece aquí.",
+  "@trainerDashNextEmpty": { 
+    "description": "Empty de próximas sesiones" 
+  },
+  "trainerDashErrorTitle": "No pudimos cargar tu inicio",
+  "@trainerDashErrorTitle": { 
+    "description": "Título estado error trainer" 
+  },
+  "trainerDashErrorBody": "Tranquilo, suele pasar. Inténtalo de nuevo.",
+  "@trainerDashErrorBody": { 
+    "description": "Body estado error trainer" 
+  },
+  "nutriDashStatPlans": "Planes",
+  "@nutriDashStatPlans": { 
+    "description": "Label StatCard planes activos" 
+  },
+  "nutriDashStatPlansSub": "Activos",
+  "@nutriDashStatPlansSub": { 
+    "description": "Sub StatCard planes" 
+  },
+  "nutriDashStatClients": "Clientes",
+  "@nutriDashStatClients": { 
+    "description": "Label StatCard clientes con plan" 
+  },
+  "nutriDashStatClientsSub": "Con plan asignado",
+  "@nutriDashStatClientsSub": { 
+    "description": "Sub StatCard clientes nutri" 
+  },
+  "nutriDashStatConsults": "Consultas",
+  "@nutriDashStatConsults": { 
+    "description": "Label StatCard consultas hoy" 
+  },
+  "nutriDashStatConsultsSub": "Para hoy",
+  "@nutriDashStatConsultsSub": { 
+    "description": "Sub StatCard consultas" 
+  },
+  "nutriDashPrimaryTitle": "Planes por revisar",
+  "@nutriDashPrimaryTitle": { 
+    "description": "Título PrimaryCard nutri" 
+  },
+  "nutriDashPrimaryBody": "Tienes {count} planes que necesitan tu atención. Revísalos cuando puedas 🥗",
+  "@nutriDashPrimaryBody": { 
+    "description": "Body PrimaryCard nutri", "placeholders": { "count": { "type": "int" } } 
+  },
+  "nutriDashPrimaryCta": "Ver planes",
+  "@nutriDashPrimaryCta": { 
+    "description": "CTA PrimaryCard nutri" 
+  },
+  "nutriDashPrimaryCtaNone": "Todo al día",
+  "@nutriDashPrimaryCtaNone": {"description": "CTA sin planes pendientes" 
+  },
+  "nutriDashRecentSection": "Últimos planes",
+  "@nutriDashRecentSection": {
+    "description": "SectionHeader últimos planes" 
+  },
+  "nutriDashRecentEmpty": "Aún no has creado planes. Cuando lo hagas, aparecen aquí 🥗",
+  "@nutriDashRecentEmpty": { 
+    "description": "Empty de últimos planes" 
+    },
+  "nutriDashErrorTitle": "No pudimos cargar tu inicio",
+  "@nutriDashErrorTitle": { 
+    "description": "Título estado error nutri" 
+  },
+  "nutriDashErrorBody": "Tranquilo, suele pasar. Inténtalo de nuevo.",
+  "@nutriDashErrorBody": { 
+    "description": "Body estado error nutri" 
+  },
+  "signalWeak": "Parece que la señal está débil. Tus datos se guardan y se sincronizan solos 📶",
+  "@signalWeak": {
+    "description": "Aviso amable de conexión débil."
+  },
+  "noRoutinesYet": "Aún no tienes rutinas asignadas. Cuando tu coach te arme una, aparece aquí 💪",
+  "@noRoutinesYet": {
+    "description": "EmptyState de rutinas del cliente."
+  },
+  "paymentVerified": "¡Pago verificado! Quedaste activo al instante ✅",
+  "@paymentVerified": {
+    "description": "Toast visible de pago verificado."
+  },
+  "paymentVerifiedSemantics": "Pago verificado. Quedaste activo al instante.",
+  "@paymentVerifiedSemantics": {
+    "description": "Semantics sin emoji para pago verificado."
+  },
+  "streakCelebrate": "¡Burda! {days} días seguidos 🔥",
+  "@streakCelebrate": {
+    "description": "Celebra la racha. Texto visible.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakCelebrateSemantics": "¡Burda! {days} días seguidos.",
+  "@streakCelebrateSemantics": {
+    "description": "Semantics sin emoji para racha.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsLabel": "Notificaciones",
+  "@notificationsLabel": {
+    "description": "Semantics del botón de campana."
+  },
+  "statKcalTodayLabel": "kcal hoy",
+  "@statKcalTodayLabel": {
+    "description": "Label de StatCard kcal."
+  },
+  "statKcalTodaySub": "De 2.200 kcal",
+  "@statKcalTodaySub": {
+    "description": "Sub de StatCard kcal."
+  },
+  "statStreakLabel": "Racha",
+  "@statStreakLabel": {
+    "description": "Label de StatCard racha."
+  },
+  "streakActive": "Vas por {days} días",
+  "@streakActive": {
+    "description": "Sub activo de racha.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakIdle": "Hoy puede ser el día 1",
+  "@streakIdle": {
+    "description": "Sub de racha en cero."
+  },
+  "statNextWorkoutLabel": "Próximo entreno",
+  "@statNextWorkoutLabel": {
+    "description": "Label de StatCard próximo entreno."
+  },
+  "statProgressLabel": "Progreso",
+  "@statProgressLabel": {
+    "description": "Label de StatCard progreso."
+  },
+  "statProgressValue": "68%",
+  "@statProgressValue": {
+    "description": "Valor de StatCard progreso."
+  },
+  "statProgressSub": "Plan semanal",
+  "@statProgressSub": {
+    "description": "Sub de StatCard progreso."
+  },
+  "primaryCardTitle": "Entreno de hoy",
+  "@primaryCardTitle": {
+    "description": "Título de PrimaryCard."
+  },
+  "primaryCardAction": "Comenzar",
+  "@primaryCardAction": {
+    "description": "CTA de PrimaryCard."
+  },
+  "sectionToday": "Hoy",
+  "@sectionToday": {
+    "description": "Sección secundaria del dashboard."
+  },
+  "hydrationTitle": "Hidratación",
+  "@hydrationTitle": {
+    "description": "Tile de hidratación."
+  },
+  "hydrationSubtitle": "Registra tu agua de hoy",
+  "@hydrationSubtitle": {
+    "description": "Sub de tile de hidratación."
+  },
+  "statKcalTodaySemantic": "Calorías de hoy: {value}.",
+  "@statKcalTodaySemantic": {
+    "description": "Semantics de StatCard kcal.",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "statStreakSemantic": "Racha de {days} días.",
+  "@statStreakSemantic": {
+    "description": "Semantics de StatCard racha.",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "statNextWorkoutSemantic": "Próximo entreno: {title}.",
+  "@statNextWorkoutSemantic": {
+    "description": "Semantics de StatCard próximo entreno.",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  }
+}

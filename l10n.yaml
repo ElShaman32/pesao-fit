@@ -1,0 +1,9 @@
+# Configuración de gen-l10n (ADR-027: arb único es_VE).
+# La clase generada se llama AppStrings y se usa en toda la UI.
+arb-dir: lib/core/l10n
+template-arb-file: app_es_VE.arb
+output-localization-file: app_strings.dart
+output-class: AppStrings
+output-dir: lib/core/l10n
+nullable-getter: false
+untranslated-messages-file: lib/core/l10n/untranslated.txt

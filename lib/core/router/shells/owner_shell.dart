@@ -1,0 +1,104 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../features/home/presentation/screens/owner_home_screen.dart';
+import '../../../shared/widgets/pesao_bottom_nav.dart';
+import '../../l10n/app_strings.dart';
+import '../../theme/app_icons.dart';
+import '../route_names.dart';
+import 'shell_scaffold.dart';
+
+final GlobalKey<NavigatorState> _ownerHomeNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'ownerHome');
+final GlobalKey<NavigatorState> _ownerClientsNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'ownerClients');
+final GlobalKey<NavigatorState> _ownerPaymentsNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'ownerPayments');
+final GlobalKey<NavigatorState> _ownerProfileNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'ownerProfile');
+
+/// Shell del rol DUEÑO.
+StatefulShellRoute buildOwnerShell() {
+  return StatefulShellRoute.indexedStack(
+    builder: (context, state, navigationShell) {
+      final strings = AppStrings.of(context);
+
+      return RoleShellScaffold(
+        navigationShell: navigationShell,
+        items: [
+          PesaoBottomNavItem(
+            icon: AppIcons.homeOutline,
+            activeIcon: AppIcons.home,
+            label: strings.tabHome,
+          ),
+          PesaoBottomNavItem(
+            icon: AppIcons.clientsOutline,
+            activeIcon: AppIcons.clients,
+            label: strings.tabClients,
+          ),
+          PesaoBottomNavItem(
+            icon: AppIcons.paymentsOutline,
+            activeIcon: AppIcons.payments,
+            label: strings.tabPayments,
+          ),
+          PesaoBottomNavItem(
+            icon: AppIcons.profileOutline,
+            activeIcon: AppIcons.profile,
+            label: strings.tabProfile,
+          ),
+        ],
+        fabIcon: AppIcons.add,
+        fabSemanticLabel: strings.fabAddClient,
+        onFabPressed: () {},
+      );
+    },
+    branches: [
+      StatefulShellBranch(
+        navigatorKey: _ownerHomeNavigatorKey,
+        routes: [
+          GoRoute(
+            path: RouteNames.ownerHome,
+            name: RouteNames.ownerHome,
+            builder: (context, state) => const OwnerHomeScreen(),
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        navigatorKey: _ownerClientsNavigatorKey,
+        routes: [
+          GoRoute(
+            path: RouteNames.ownerClients,
+            name: RouteNames.ownerClients,
+            builder: (context, state) => ShellPlaceholderScreen(
+              title: AppStrings.of(context).tabClients,
+            ),
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        navigatorKey: _ownerPaymentsNavigatorKey,
+        routes: [
+          GoRoute(
+            path: RouteNames.ownerPayments,
+            name: RouteNames.ownerPayments,
+            builder: (context, state) => ShellPlaceholderScreen(
+              title: AppStrings.of(context).tabPayments,
+            ),
+          ),
+        ],
+      ),
+      StatefulShellBranch(
+        navigatorKey: _ownerProfileNavigatorKey,
+        routes: [
+          GoRoute(
+            path: RouteNames.ownerProfile,
+            name: RouteNames.ownerProfile,
+            builder: (context, state) => ShellPlaceholderScreen(
+              title: AppStrings.of(context).tabProfile,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
