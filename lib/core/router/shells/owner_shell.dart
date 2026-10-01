@@ -7,6 +7,8 @@ import '../../../features/clients/presentation/screens/clients_list_screen.dart'
 import '../../../features/gym/presentation/screens/staff_add_screen.dart';
 import '../../../features/gym/presentation/screens/staff_list_screen.dart';
 import '../../../features/home/presentation/screens/owner_home_screen.dart';
+import '../../../features/payments/presentation/screens/payment_detail_screen.dart';
+import '../../../features/payments/presentation/screens/payments_list_screen.dart';
 import '../../../shared/widgets/pesao_bottom_nav.dart';
 import '../../l10n/app_strings.dart';
 import '../../theme/app_icons.dart';
@@ -80,6 +82,24 @@ _OwnerFabConfig _ownerFabForRoute(String path, BuildContext context) {
     return _OwnerFabConfig(
       icon: AppIcons.add,
       semanticLabel: strings.fabAddClient,
+      onPressed: null,
+    );
+  }
+
+  // Pagos: por ahora sin acción directa.
+  if (path == RouteNames.ownerPayments) {
+    return _OwnerFabConfig(
+      icon: AppIcons.add,
+      semanticLabel: strings.paymentsFabRegister,
+      onPressed: null,
+    );
+  }
+
+  // Detalle de pago: sin acción directa.
+  if (path.startsWith('${RouteNames.ownerPayments}/')) {
+    return _OwnerFabConfig(
+      icon: AppIcons.add,
+      semanticLabel: strings.paymentsFabRegister,
       onPressed: null,
     );
   }
@@ -182,9 +202,17 @@ StatefulShellRoute buildOwnerShell() {
           GoRoute(
             path: RouteNames.ownerPayments,
             name: RouteNames.ownerPayments,
-            builder: (context, state) => ShellPlaceholderScreen(
-              title: AppStrings.of(context).tabPayments,
-            ),
+            builder: (context, state) => const PaymentsListScreen(),
+            routes: [
+              GoRoute(
+                path: 'paymentId',
+                name: RouteNames.ownerPaymentDetail,
+                builder: (context, state) {
+                  final paymentId = state.pathParameters['paymentId']!;
+                  return PaymentDetailScreen(paymentId: paymentId);
+                },
+              ),
+            ],
           ),
         ],
       ),

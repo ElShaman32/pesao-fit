@@ -363,8 +363,8 @@ class _OwnerPrimaryCard extends StatelessWidget {
                   : PesaoButtonVariant.secondary,
               isExpanded: false,
               onPressed: hasPending
-                  ? () {}
-                  : null, // Futuro: navegar a pagos (F4)
+                  ? () => context.go(RouteNames.ownerPayments)
+                  : null,
             ),
           ),
         ],

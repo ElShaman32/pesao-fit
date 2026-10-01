@@ -12,6 +12,7 @@ import '../../../../shared/widgets/pesao_avatar.dart';
 import '../../../../shared/widgets/pesao_button.dart';
 import '../../../../shared/widgets/pesao_stat_card.dart';
 import '../../../../shared/widgets/section_header.dart';
+import '../../../payments/presentation/screens/upload_payment_sheet.dart';
 import '../../domain/entities/client_dashboard_stats.dart';
 import '../providers/client_dashboard_controller.dart';
 
@@ -378,6 +379,19 @@ class _PrimaryCard extends StatelessWidget {
                       // Futuro: navegar al workout activo (F2).
                     }
                   : null,
+            ),
+          ),
+          const SizedBox(height: AppDimens.m),
+          Align(
+            alignment: Alignment.centerRight,
+            child: PesaoButton(
+              label: l10n.clientDashPrimaryCtaUpload,
+              variant: PesaoButtonVariant.secondary,
+              icon: Icons.upload_file_rounded,
+              isExpanded: false,
+              onPressed: () async {
+                await showUploadPaymentSheet(context);
+              },
             ),
           ),
         ],

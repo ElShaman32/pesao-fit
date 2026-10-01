@@ -1100,6 +1100,206 @@ class AppStringsEs extends AppStrings {
   @override
   String get clientAddLimitReached =>
       'Ya llegaste al límite de clientes de tu plan. Actualiza a Hierro para agregar más.';
+
+  @override
+  String get paymentsScreenTitle => 'Pagos';
+
+  @override
+  String get paymentsFilterPending => 'Pendientes';
+
+  @override
+  String get paymentsFilterVerified => 'Verificados';
+
+  @override
+  String get paymentsFilterRejected => 'Rechazados';
+
+  @override
+  String get paymentsEmptyPendingTitle => 'Sin comprobantes pendientes';
+
+  @override
+  String get paymentsEmptyPendingBody =>
+      'Cuando un cliente suba un pago, aparece aquí.';
+
+  @override
+  String get paymentsEmptyVerifiedTitle => 'Nada verificado todavía';
+
+  @override
+  String get paymentsEmptyVerifiedBody => 'Los pagos aprobados aparecen aquí.';
+
+  @override
+  String get paymentsEmptyRejectedTitle => 'Nada rechazado';
+
+  @override
+  String get paymentsEmptyRejectedBody => 'Los pagos rechazados aparecen aquí.';
+
+  @override
+  String get paymentsErrorTitle => 'No pudimos cargar los pagos';
+
+  @override
+  String get paymentsErrorBody => 'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String get paymentsOfflineEmpty =>
+      'Sin conexión. Los pagos se revisan cuando vuelva la señal.';
+
+  @override
+  String get paymentDetailTitle => 'Detalle del pago';
+
+  @override
+  String get paymentDetailClient => 'Cliente';
+
+  @override
+  String get paymentDetailAmountUsd => 'Monto USD';
+
+  @override
+  String get paymentDetailAmountBs => 'Monto Bs';
+
+  @override
+  String get paymentDetailRate => 'Tasa usada';
+
+  @override
+  String get paymentDetailDate => 'Fecha';
+
+  @override
+  String get paymentDetailReceipt => 'Comprobante';
+
+  @override
+  String get paymentDetailApprove => 'Aprobar';
+
+  @override
+  String get paymentDetailReject => 'Rechazar';
+
+  @override
+  String get paymentApproveConfirmTitle => '¿Aprobar este pago?';
+
+  @override
+  String get paymentApproveConfirmBody =>
+      'El cliente quedará activo y el pago marcado como verificado.';
+
+  @override
+  String get paymentRejectDialogTitle => 'Rechazar pago';
+
+  @override
+  String get paymentRejectDialogBody =>
+      'Cuéntale al cliente por qué no pudiste aprobarlo.';
+
+  @override
+  String get paymentRejectReasonLabel => 'Motivo del rechazo';
+
+  @override
+  String get paymentRejectReasonHint => 'Ej: la imagen está borrosa';
+
+  @override
+  String get paymentRejectReasonError => 'Escribe un motivo';
+
+  @override
+  String get paymentApprovedSuccess => 'Pago aprobado ✅';
+
+  @override
+  String get paymentApprovedSemantics => 'Pago aprobado';
+
+  @override
+  String get paymentRejectedSuccess => 'Pago rechazado';
+
+  @override
+  String get paymentRejectedSemantics => 'Pago rechazado';
+
+  @override
+  String get paymentActionError => 'No pudimos completar la acción';
+
+  @override
+  String get paymentStatusPending => 'Pendiente';
+
+  @override
+  String get paymentStatusVerified => 'Verificado';
+
+  @override
+  String get paymentStatusRejected => 'Rechazado';
+
+  @override
+  String get paymentsFabRegister => 'Registrar pago';
+
+  @override
+  String get uploadPaymentTitle => 'Subir pago';
+
+  @override
+  String get uploadPaymentSubtitle =>
+      'Registra tu pago manual (Pago Móvil o transferencia). Lo verificamos en menos de 24h.';
+
+  @override
+  String get uploadPaymentAmountBsLabel => 'Monto en Bs';
+
+  @override
+  String get uploadPaymentAmountBsHint => 'Ej: 15000';
+
+  @override
+  String get uploadPaymentAmountBsError => 'El monto debe ser mayor a cero';
+
+  @override
+  String get uploadPaymentAmountUsdLabel => 'Monto en USD';
+
+  @override
+  String get uploadPaymentAmountUsdHint =>
+      'Se calcula con la tasa del gimnasio';
+
+  @override
+  String get uploadPaymentRateLabel => 'Tasa usada';
+
+  @override
+  String get uploadPaymentRateError => 'No hay tasa configurada en tu gimnasio';
+
+  @override
+  String get uploadPaymentPickImage => 'Tomar o elegir foto del comprobante';
+
+  @override
+  String get uploadPaymentPickImageError =>
+      'Necesitamos una foto del comprobante';
+
+  @override
+  String get uploadPaymentReplaceImage => 'Cambiar foto';
+
+  @override
+  String get uploadPaymentSubmit => 'Enviar comprobante';
+
+  @override
+  String get uploadPaymentSubmitting => 'Subiendo...';
+
+  @override
+  String get uploadPaymentSuccessTitle => '¡Pago enviado! 📩';
+
+  @override
+  String get uploadPaymentSuccessBody =>
+      'Tu comprobante está en revisión. Te avisamos cuando lo aprobemos.';
+
+  @override
+  String get uploadPaymentSuccessSemantics => 'Pago enviado, en revisión';
+
+  @override
+  String get uploadPaymentErrorTitle => 'No pudimos subir tu pago';
+
+  @override
+  String get uploadPaymentErrorSemantics => 'Error al subir el pago';
+
+  @override
+  String get uploadPaymentNoRateTitle =>
+      'Tu gimnasio no tiene tasa configurada';
+
+  @override
+  String get uploadPaymentNoRateBody =>
+      'Pídele al dueño que configure la tasa del día para poder subir pagos.';
+
+  @override
+  String get clientDashPrimaryCtaUpload => 'Subir pago';
+
+  @override
+  String get clientDashPrimaryUploadTitle => 'Tu mensualidad';
+
+  @override
+  String get clientDashPrimaryUploadBody =>
+      'Sube el comprobante de tu pago para seguir activo en el gimnasio.';
+
+  @override
+  String get clientDashUploadFab => 'Subir pago';
 }
 
 /// The translations for Spanish Castilian, as used in Venezuela (`es_VE`).
@@ -2198,4 +2398,204 @@ class AppStringsEsVe extends AppStringsEs {
   @override
   String get clientAddLimitReached =>
       'Ya llegaste al límite de clientes de tu plan. Actualiza a Hierro para agregar más.';
+
+  @override
+  String get paymentsScreenTitle => 'Pagos';
+
+  @override
+  String get paymentsFilterPending => 'Pendientes';
+
+  @override
+  String get paymentsFilterVerified => 'Verificados';
+
+  @override
+  String get paymentsFilterRejected => 'Rechazados';
+
+  @override
+  String get paymentsEmptyPendingTitle => 'Sin comprobantes pendientes';
+
+  @override
+  String get paymentsEmptyPendingBody =>
+      'Cuando un cliente suba un pago, aparece aquí.';
+
+  @override
+  String get paymentsEmptyVerifiedTitle => 'Nada verificado todavía';
+
+  @override
+  String get paymentsEmptyVerifiedBody => 'Los pagos aprobados aparecen aquí.';
+
+  @override
+  String get paymentsEmptyRejectedTitle => 'Nada rechazado';
+
+  @override
+  String get paymentsEmptyRejectedBody => 'Los pagos rechazados aparecen aquí.';
+
+  @override
+  String get paymentsErrorTitle => 'No pudimos cargar los pagos';
+
+  @override
+  String get paymentsErrorBody => 'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String get paymentsOfflineEmpty =>
+      'Sin conexión. Los pagos se revisan cuando vuelva la señal.';
+
+  @override
+  String get paymentDetailTitle => 'Detalle del pago';
+
+  @override
+  String get paymentDetailClient => 'Cliente';
+
+  @override
+  String get paymentDetailAmountUsd => 'Monto USD';
+
+  @override
+  String get paymentDetailAmountBs => 'Monto Bs';
+
+  @override
+  String get paymentDetailRate => 'Tasa usada';
+
+  @override
+  String get paymentDetailDate => 'Fecha';
+
+  @override
+  String get paymentDetailReceipt => 'Comprobante';
+
+  @override
+  String get paymentDetailApprove => 'Aprobar';
+
+  @override
+  String get paymentDetailReject => 'Rechazar';
+
+  @override
+  String get paymentApproveConfirmTitle => '¿Aprobar este pago?';
+
+  @override
+  String get paymentApproveConfirmBody =>
+      'El cliente quedará activo y el pago marcado como verificado.';
+
+  @override
+  String get paymentRejectDialogTitle => 'Rechazar pago';
+
+  @override
+  String get paymentRejectDialogBody =>
+      'Cuéntale al cliente por qué no pudiste aprobarlo.';
+
+  @override
+  String get paymentRejectReasonLabel => 'Motivo del rechazo';
+
+  @override
+  String get paymentRejectReasonHint => 'Ej: la imagen está borrosa';
+
+  @override
+  String get paymentRejectReasonError => 'Escribe un motivo';
+
+  @override
+  String get paymentApprovedSuccess => 'Pago aprobado ✅';
+
+  @override
+  String get paymentApprovedSemantics => 'Pago aprobado';
+
+  @override
+  String get paymentRejectedSuccess => 'Pago rechazado';
+
+  @override
+  String get paymentRejectedSemantics => 'Pago rechazado';
+
+  @override
+  String get paymentActionError => 'No pudimos completar la acción';
+
+  @override
+  String get paymentStatusPending => 'Pendiente';
+
+  @override
+  String get paymentStatusVerified => 'Verificado';
+
+  @override
+  String get paymentStatusRejected => 'Rechazado';
+
+  @override
+  String get paymentsFabRegister => 'Registrar pago';
+
+  @override
+  String get uploadPaymentTitle => 'Subir pago';
+
+  @override
+  String get uploadPaymentSubtitle =>
+      'Registra tu pago manual (Pago Móvil o transferencia). Lo verificamos en menos de 24h.';
+
+  @override
+  String get uploadPaymentAmountBsLabel => 'Monto en Bs';
+
+  @override
+  String get uploadPaymentAmountBsHint => 'Ej: 15000';
+
+  @override
+  String get uploadPaymentAmountBsError => 'El monto debe ser mayor a cero';
+
+  @override
+  String get uploadPaymentAmountUsdLabel => 'Monto en USD';
+
+  @override
+  String get uploadPaymentAmountUsdHint =>
+      'Se calcula con la tasa del gimnasio';
+
+  @override
+  String get uploadPaymentRateLabel => 'Tasa usada';
+
+  @override
+  String get uploadPaymentRateError => 'No hay tasa configurada en tu gimnasio';
+
+  @override
+  String get uploadPaymentPickImage => 'Tomar o elegir foto del comprobante';
+
+  @override
+  String get uploadPaymentPickImageError =>
+      'Necesitamos una foto del comprobante';
+
+  @override
+  String get uploadPaymentReplaceImage => 'Cambiar foto';
+
+  @override
+  String get uploadPaymentSubmit => 'Enviar comprobante';
+
+  @override
+  String get uploadPaymentSubmitting => 'Subiendo...';
+
+  @override
+  String get uploadPaymentSuccessTitle => '¡Pago enviado! 📩';
+
+  @override
+  String get uploadPaymentSuccessBody =>
+      'Tu comprobante está en revisión. Te avisamos cuando lo aprobemos.';
+
+  @override
+  String get uploadPaymentSuccessSemantics => 'Pago enviado, en revisión';
+
+  @override
+  String get uploadPaymentErrorTitle => 'No pudimos subir tu pago';
+
+  @override
+  String get uploadPaymentErrorSemantics => 'Error al subir el pago';
+
+  @override
+  String get uploadPaymentNoRateTitle =>
+      'Tu gimnasio no tiene tasa configurada';
+
+  @override
+  String get uploadPaymentNoRateBody =>
+      'Pídele al dueño que configure la tasa del día para poder subir pagos.';
+
+  @override
+  String get clientDashPrimaryCtaUpload => 'Subir pago';
+
+  @override
+  String get clientDashPrimaryUploadTitle => 'Tu mensualidad';
+
+  @override
+  String get clientDashPrimaryUploadBody =>
+      'Sube el comprobante de tu pago para seguir activo en el gimnasio.';
+
+  @override
+  String get clientDashUploadFab => 'Subir pago';
 }

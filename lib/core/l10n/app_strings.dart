@@ -2118,6 +2118,384 @@ abstract class AppStrings {
   /// In es_VE, this message translates to:
   /// **'Ya llegaste al límite de clientes de tu plan. Actualiza a Hierro para agregar más.'**
   String get clientAddLimitReached;
+
+  /// No description provided for @paymentsScreenTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pagos'**
+  String get paymentsScreenTitle;
+
+  /// No description provided for @paymentsFilterPending.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pendientes'**
+  String get paymentsFilterPending;
+
+  /// No description provided for @paymentsFilterVerified.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Verificados'**
+  String get paymentsFilterVerified;
+
+  /// No description provided for @paymentsFilterRejected.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Rechazados'**
+  String get paymentsFilterRejected;
+
+  /// No description provided for @paymentsEmptyPendingTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sin comprobantes pendientes'**
+  String get paymentsEmptyPendingTitle;
+
+  /// No description provided for @paymentsEmptyPendingBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cuando un cliente suba un pago, aparece aquí.'**
+  String get paymentsEmptyPendingBody;
+
+  /// No description provided for @paymentsEmptyVerifiedTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nada verificado todavía'**
+  String get paymentsEmptyVerifiedTitle;
+
+  /// No description provided for @paymentsEmptyVerifiedBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Los pagos aprobados aparecen aquí.'**
+  String get paymentsEmptyVerifiedBody;
+
+  /// No description provided for @paymentsEmptyRejectedTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nada rechazado'**
+  String get paymentsEmptyRejectedTitle;
+
+  /// No description provided for @paymentsEmptyRejectedBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Los pagos rechazados aparecen aquí.'**
+  String get paymentsEmptyRejectedBody;
+
+  /// No description provided for @paymentsErrorTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No pudimos cargar los pagos'**
+  String get paymentsErrorTitle;
+
+  /// No description provided for @paymentsErrorBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tranquilo, suele pasar. Inténtalo de nuevo.'**
+  String get paymentsErrorBody;
+
+  /// No description provided for @paymentsOfflineEmpty.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sin conexión. Los pagos se revisan cuando vuelva la señal.'**
+  String get paymentsOfflineEmpty;
+
+  /// No description provided for @paymentDetailTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Detalle del pago'**
+  String get paymentDetailTitle;
+
+  /// No description provided for @paymentDetailClient.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cliente'**
+  String get paymentDetailClient;
+
+  /// No description provided for @paymentDetailAmountUsd.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Monto USD'**
+  String get paymentDetailAmountUsd;
+
+  /// No description provided for @paymentDetailAmountBs.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Monto Bs'**
+  String get paymentDetailAmountBs;
+
+  /// No description provided for @paymentDetailRate.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tasa usada'**
+  String get paymentDetailRate;
+
+  /// No description provided for @paymentDetailDate.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Fecha'**
+  String get paymentDetailDate;
+
+  /// No description provided for @paymentDetailReceipt.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Comprobante'**
+  String get paymentDetailReceipt;
+
+  /// No description provided for @paymentDetailApprove.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Aprobar'**
+  String get paymentDetailApprove;
+
+  /// No description provided for @paymentDetailReject.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Rechazar'**
+  String get paymentDetailReject;
+
+  /// No description provided for @paymentApproveConfirmTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¿Aprobar este pago?'**
+  String get paymentApproveConfirmTitle;
+
+  /// No description provided for @paymentApproveConfirmBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El cliente quedará activo y el pago marcado como verificado.'**
+  String get paymentApproveConfirmBody;
+
+  /// No description provided for @paymentRejectDialogTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Rechazar pago'**
+  String get paymentRejectDialogTitle;
+
+  /// No description provided for @paymentRejectDialogBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cuéntale al cliente por qué no pudiste aprobarlo.'**
+  String get paymentRejectDialogBody;
+
+  /// No description provided for @paymentRejectReasonLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Motivo del rechazo'**
+  String get paymentRejectReasonLabel;
+
+  /// No description provided for @paymentRejectReasonHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: la imagen está borrosa'**
+  String get paymentRejectReasonHint;
+
+  /// No description provided for @paymentRejectReasonError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Escribe un motivo'**
+  String get paymentRejectReasonError;
+
+  /// No description provided for @paymentApprovedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pago aprobado ✅'**
+  String get paymentApprovedSuccess;
+
+  /// No description provided for @paymentApprovedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pago aprobado'**
+  String get paymentApprovedSemantics;
+
+  /// No description provided for @paymentRejectedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pago rechazado'**
+  String get paymentRejectedSuccess;
+
+  /// No description provided for @paymentRejectedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pago rechazado'**
+  String get paymentRejectedSemantics;
+
+  /// No description provided for @paymentActionError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No pudimos completar la acción'**
+  String get paymentActionError;
+
+  /// No description provided for @paymentStatusPending.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pendiente'**
+  String get paymentStatusPending;
+
+  /// No description provided for @paymentStatusVerified.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Verificado'**
+  String get paymentStatusVerified;
+
+  /// No description provided for @paymentStatusRejected.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Rechazado'**
+  String get paymentStatusRejected;
+
+  /// No description provided for @paymentsFabRegister.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Registrar pago'**
+  String get paymentsFabRegister;
+
+  /// No description provided for @uploadPaymentTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Subir pago'**
+  String get uploadPaymentTitle;
+
+  /// No description provided for @uploadPaymentSubtitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Registra tu pago manual (Pago Móvil o transferencia). Lo verificamos en menos de 24h.'**
+  String get uploadPaymentSubtitle;
+
+  /// No description provided for @uploadPaymentAmountBsLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Monto en Bs'**
+  String get uploadPaymentAmountBsLabel;
+
+  /// No description provided for @uploadPaymentAmountBsHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: 15000'**
+  String get uploadPaymentAmountBsHint;
+
+  /// No description provided for @uploadPaymentAmountBsError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El monto debe ser mayor a cero'**
+  String get uploadPaymentAmountBsError;
+
+  /// No description provided for @uploadPaymentAmountUsdLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Monto en USD'**
+  String get uploadPaymentAmountUsdLabel;
+
+  /// No description provided for @uploadPaymentAmountUsdHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Se calcula con la tasa del gimnasio'**
+  String get uploadPaymentAmountUsdHint;
+
+  /// No description provided for @uploadPaymentRateLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tasa usada'**
+  String get uploadPaymentRateLabel;
+
+  /// No description provided for @uploadPaymentRateError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No hay tasa configurada en tu gimnasio'**
+  String get uploadPaymentRateError;
+
+  /// No description provided for @uploadPaymentPickImage.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tomar o elegir foto del comprobante'**
+  String get uploadPaymentPickImage;
+
+  /// No description provided for @uploadPaymentPickImageError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Necesitamos una foto del comprobante'**
+  String get uploadPaymentPickImageError;
+
+  /// No description provided for @uploadPaymentReplaceImage.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cambiar foto'**
+  String get uploadPaymentReplaceImage;
+
+  /// No description provided for @uploadPaymentSubmit.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Enviar comprobante'**
+  String get uploadPaymentSubmit;
+
+  /// No description provided for @uploadPaymentSubmitting.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Subiendo...'**
+  String get uploadPaymentSubmitting;
+
+  /// No description provided for @uploadPaymentSuccessTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¡Pago enviado! 📩'**
+  String get uploadPaymentSuccessTitle;
+
+  /// No description provided for @uploadPaymentSuccessBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu comprobante está en revisión. Te avisamos cuando lo aprobemos.'**
+  String get uploadPaymentSuccessBody;
+
+  /// No description provided for @uploadPaymentSuccessSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pago enviado, en revisión'**
+  String get uploadPaymentSuccessSemantics;
+
+  /// No description provided for @uploadPaymentErrorTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No pudimos subir tu pago'**
+  String get uploadPaymentErrorTitle;
+
+  /// No description provided for @uploadPaymentErrorSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Error al subir el pago'**
+  String get uploadPaymentErrorSemantics;
+
+  /// No description provided for @uploadPaymentNoRateTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu gimnasio no tiene tasa configurada'**
+  String get uploadPaymentNoRateTitle;
+
+  /// No description provided for @uploadPaymentNoRateBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pídele al dueño que configure la tasa del día para poder subir pagos.'**
+  String get uploadPaymentNoRateBody;
+
+  /// No description provided for @clientDashPrimaryCtaUpload.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Subir pago'**
+  String get clientDashPrimaryCtaUpload;
+
+  /// No description provided for @clientDashPrimaryUploadTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu mensualidad'**
+  String get clientDashPrimaryUploadTitle;
+
+  /// No description provided for @clientDashPrimaryUploadBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sube el comprobante de tu pago para seguir activo en el gimnasio.'**
+  String get clientDashPrimaryUploadBody;
+
+  /// No description provided for @clientDashUploadFab.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Subir pago'**
+  String get clientDashUploadFab;
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {
