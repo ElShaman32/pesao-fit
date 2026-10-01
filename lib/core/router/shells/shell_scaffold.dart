@@ -53,10 +53,7 @@ class RoleShellScaffold extends StatelessWidget {
 /// No es una pantalla final de feature; solo mantiene visible el shell
 /// con componentes del kit y textos desde AppStrings.
 class ShellPlaceholderScreen extends StatelessWidget {
-  const ShellPlaceholderScreen({
-    super.key,
-    required this.title,
-  });
+  const ShellPlaceholderScreen({super.key, required this.title});
 
   final String title;
 

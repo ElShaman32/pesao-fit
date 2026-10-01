@@ -94,7 +94,29 @@ con anillo primary countdown, botón +1min, vibración al fin), MealCard, MacroT
 | dueño | Inicio | Clientes | Pagos | Perfil | Agregar cliente |
 | nutricionista | Inicio | Clientes | Planes | Perfil | Nuevo plan |
 | superadmin | Inicio | Gimnasios | Pagos | Perfil | Agregar gimnasio |
-El FAB es UNO y ejecuta la acción primaria del rol. Tabs conservan estado (indexedStack).
+El FAB es UNO por shell, pero su acción se adapta a la pantalla visible dentro de ese shell. Tabs conservan estado (indexedStack).
+
+### FAB contextual por pantalla
+
+ejemplo
+
+| Pantalla actual | FAB debe hacer |
+|---|---|
+| Dashboard del dueño (Inicio) | Agregar cliente |
+| Pantalla "Mi equipo" | Agregar staff |
+| Pantalla "Clientes" | Agregar cliente |
+| Pantalla "Pagos" | Subir comprobante (futuro F4) |
+
+Y lo mismo para los demás roles:
+
+| Rol | Pantalla | FAB |
+|---|---|---|
+| Entrenador | Dashboard | Nueva rutina |
+| Entrenador | Clientes | Asignar cliente |
+| Nutricionista | Dashboard | Nuevo plan |
+| Nutricionista | Clientes | Asignar plan |
+| Superadmin | Dashboard | Agregar gimnasio |
+| Superadmin | Gimnasios | Agregar gimnasio |
 
 ## 10. Plantilla de Dashboard (pantalla Inicio de cada rol, en orden)
 1) AppBar: PesaoAvatar + saludo por hora ("¡Buenos días, {nombre}! 👋") + campana con badge.

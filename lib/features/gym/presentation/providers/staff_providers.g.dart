@@ -42,7 +42,7 @@ final class OwnerStaffControllerProvider
 }
 
 String _$ownerStaffControllerHash() =>
-    r'860cab1f236c24f974b87238bfdd81ee2c5385ed';
+    r'5ff2506a91d5a2122ccbf6b85565f9f590fcaf9b';
 
 abstract class _$OwnerStaffController extends $Notifier<Result<StaffOverview>> {
   Result<StaffOverview> build();

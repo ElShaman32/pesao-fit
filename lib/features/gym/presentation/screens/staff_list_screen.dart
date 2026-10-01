@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/app_strings.dart';
 import '../../../../core/providers/connectivity_provider.dart';
+import '../../../../core/providers/fab_config.dart';
+import '../../../../core/router/shells/owner_shell.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../shared/widgets/empty_state.dart';
 import '../../../../shared/widgets/error_state.dart';
@@ -29,9 +31,29 @@ class _StaffListScreenState extends ConsumerState<StaffListScreen> {
   @override
   void initState() {
     super.initState();
+
+    // Cambia el FAB a "Agregar staff" mientras esta pantalla esté visible.
+    ownerFabController.setFab(
+      FabConfig(
+        icon: Icons.person_add_rounded,
+        semanticLabel: 'Agregar miembro del equipo',
+        onPressed: () {
+          // Futuro (Fase 3): navegar a pantalla de agregar staff.
+          // context.push(RouteNames.ownerStaffAdd);
+        },
+      ),
+    );
+
     Future.microtask(() {
       ref.read(ownerStaffControllerProvider.notifier).load();
     });
+  }
+
+  @override
+  void dispose() {
+    // Restaura el FAB a "Agregar cliente" al salir de esta pantalla.
+    ownerFabController.restore();
+    super.dispose();
   }
 
   @override
