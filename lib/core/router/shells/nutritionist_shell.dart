@@ -19,7 +19,7 @@ final GlobalKey<NavigatorState> _nutritionistProfileNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'nutritionistProfile');
 
 /// Controlador del FAB del dueño. Se accede desde cualquier pantalla del shell.
-final nutritionistFabController = OwnerFabController(
+final nutritionistFabController = PesaoFabController(
   defaultConfig: const FabConfig(
     icon: Icons.add_rounded,
     semanticLabel: 'Agregar cliente',

@@ -20,7 +20,7 @@ final GlobalKey<NavigatorState> _ownerProfileNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'ownerProfile');
 
 /// Controlador del FAB del dueño. Se accede desde cualquier pantalla del shell.
-final ownerFabController = OwnerFabController(
+final ownerFabController = PesaoFabController(
   defaultConfig: const FabConfig(
     icon: Icons.add_rounded,
     semanticLabel: 'Agregar cliente',

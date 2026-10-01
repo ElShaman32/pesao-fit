@@ -16,11 +16,11 @@ class FabConfig {
 
 /// Controlador del FAB del owner.
 /// Las pantallas secundarias lo llaman para cambiar la acción del FAB.
-class OwnerFabController extends ChangeNotifier {
+class PesaoFabController extends ChangeNotifier {
   FabConfig _current;
   final FabConfig _default;
 
-  OwnerFabController({required FabConfig defaultConfig})
+  PesaoFabController({required FabConfig defaultConfig})
     : _default = defaultConfig,
       _current = defaultConfig;
 

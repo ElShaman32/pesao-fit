@@ -19,7 +19,7 @@ final GlobalKey<NavigatorState> _trainerProfileNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'trainerProfile');
 
 /// Controlador del FAB del dueño. Se accede desde cualquier pantalla del shell.
-final trainerFabController = OwnerFabController(
+final trainerFabController = PesaoFabController(
   defaultConfig: const FabConfig(
     icon: Icons.add_rounded,
     semanticLabel: 'Nueva Rutina',
