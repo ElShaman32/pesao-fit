@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pesao_fit/core/l10n/app_strings.dart';
-import 'package:pesao_fit/core/providers/connectivity_provider.dart';
-import 'package:pesao_fit/core/theme/app_colors.dart';
-import 'package:pesao_fit/shared/widgets/confirm_dialog.dart';
-import 'package:pesao_fit/shared/widgets/empty_state.dart';
-import 'package:pesao_fit/shared/widgets/error_state.dart';
-import 'package:pesao_fit/shared/widgets/offline_banner.dart';
-import 'package:pesao_fit/shared/widgets/pesao_app_bar.dart';
-import 'package:pesao_fit/shared/widgets/pesao_button.dart';
-import 'package:pesao_fit/shared/widgets/pesao_toast.dart';
-import 'package:pesao_fit/shared/widgets/skeleton_loader.dart';
 
+import '../../../../core/l10n/app_strings.dart';
+import '../../../../core/providers/connectivity_provider.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../shared/widgets/empty_state.dart';
+import '../../../../shared/widgets/error_state.dart';
+import '../../../../shared/widgets/offline_banner.dart';
+import '../../../../shared/widgets/pesao_app_bar.dart';
+import '../../../../shared/widgets/pesao_shell.dart';
+import '../../../../shared/widgets/skeleton_loader.dart';
+import '../../domain/entities/staff_member.dart';
 import '../../domain/entities/staff_overview.dart';
 import '../providers/staff_providers.dart';
 import '../widgets/staff_limit_card.dart';
 import '../widgets/staff_member_tile.dart';
+import '../../../../shared/widgets/confirm_dialog.dart';
+import '../../../../shared/widgets/pesao_toast.dart';
 
-/// Pantalla que muestra el equipo de staff del gimnasio del owner.
-/// Maneja los 5 estados obligatorios: loading, error, empty, success, offline.
 class StaffListScreen extends ConsumerStatefulWidget {
   const StaffListScreen({super.key});
 
@@ -30,30 +29,33 @@ class _StaffListScreenState extends ConsumerState<StaffListScreen> {
   @override
   void initState() {
     super.initState();
-    // Fuerza una carga inicial.
     Future.microtask(() {
-      ref.read(ownerStaffControllerProvider.notifier).refresh();
+      ref.read(ownerStaffControllerProvider.notifier).load();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final staffAsync = ref.watch(ownerStaffControllerProvider);
+    final strings = AppStrings.of(context);
+    final staffResult = ref.watch(ownerStaffControllerProvider);
     final connectivityAsync = ref.watch(connectivityProvider);
     final isOnline = connectivityAsync.value ?? true;
 
-    return Scaffold(
-      appBar: const PesaoAppBar(title: AppStrings.staffScreenTitle),
+    return PesaoShell(
+      appBar: PesaoAppBar(title: strings.staffScreenTitle),
       body: Column(
         children: [
           if (!isOnline) const OfflineBanner(),
           Expanded(
-            child: staffAsync.when(
-              data: (overview) => _buildSuccess(overview, isOnline),
+            child: staffResult.when(
+              idle: () => const Center(child: CircularProgressIndicator()),
               loading: () => const _LoadingState(),
-              error: (error, _) => _ErrorState(
+              success: (overview) => _buildSuccess(overview, isOnline, strings),
+              failure: (error) => ErrorState(
+                title: strings.staffErrorTitle,
+                body: strings.staffErrorBody,
                 onRetry: () =>
-                    ref.read(ownerStaffControllerProvider.notifier).refresh(),
+                    ref.read(ownerStaffControllerProvider.notifier).load(),
               ),
             ),
           ),
@@ -62,19 +64,21 @@ class _StaffListScreenState extends ConsumerState<StaffListScreen> {
     );
   }
 
-  /// Estado de éxito: muestra la lista de staff y el límite.
-  Widget _buildSuccess(StaffOverview overview, bool isOnline) {
+  Widget _buildSuccess(
+    StaffOverview overview,
+    bool isOnline,
+    AppStrings strings,
+  ) {
     if (overview.members.isEmpty) {
       return EmptyState(
-        title: AppStrings.staffEmptyTitle,
-        description: AppStrings.staffEmptyBody,
+        title: strings.staffEmptyTitle,
+        body: strings.staffEmptyBody,
         icon: Icons.people_outline,
       );
     }
 
     return RefreshIndicator(
-      onRefresh: () =>
-          ref.read(ownerStaffControllerProvider.notifier).refresh(),
+      onRefresh: () => ref.read(ownerStaffControllerProvider.notifier).load(),
       color: AppColors.primary,
       child: ListView(
         padding: const EdgeInsets.all(16),
@@ -90,7 +94,7 @@ class _StaffListScreenState extends ConsumerState<StaffListScreen> {
               child: StaffMemberTile(
                 member: member,
                 onToggleActive: isOnline
-                    ? () => _confirmToggleActive(member)
+                    ? () => _confirmToggleActive(member, strings)
                     : null,
               ),
             );
@@ -100,25 +104,26 @@ class _StaffListScreenState extends ConsumerState<StaffListScreen> {
     );
   }
 
-  /// Diálogo de confirmación para activar/desactivar un miembro.
-  Future<void> _confirmToggleActive(dynamic member) async {
-    final confirmed = await showDialog<bool>(
+  Future<void> _confirmToggleActive(
+    StaffMember member,
+    AppStrings strings,
+  ) async {
+    final confirmed = await showConfirmDialog(
       context: context,
-      builder: (context) => ConfirmDialog(
-        title: member.isActive
-            ? AppStrings.staffDeactivateConfirmTitle
-            : AppStrings.staffActivateConfirmTitle,
-        description: member.isActive
-            ? AppStrings.staffDeactivateConfirmBody
-            : AppStrings.staffActivateConfirmBody,
-        confirmLabel: member.isActive
-            ? AppStrings.staffActionDeactivate
-            : AppStrings.staffActionActivate,
-        cancelLabel: AppStrings.commonCancel,
-        isDestructive: member.isActive,
-      ),
+      title: member.isActive
+          ? strings.staffDeactivateConfirmTitle
+          : strings.staffActivateConfirmTitle,
+      message: member.isActive
+          ? strings.staffDeactivateConfirmBody
+          : strings.staffActivateConfirmBody,
+      confirmLabel: member.isActive
+          ? strings.staffActionDeactivate
+          : strings.staffActionActivate,
+      cancelLabel: strings.commonCancel,
+      isDestructive: member.isActive,
     );
 
+    // CORRECCIÓN CLAVE: confirmed == true en lugar de solo confirmed
     if (confirmed == true && mounted) {
       try {
         await ref
@@ -126,20 +131,24 @@ class _StaffListScreenState extends ConsumerState<StaffListScreen> {
             .setStaffActive(member.id, !member.isActive);
 
         if (mounted) {
-          PesaoToast.show(
-            context: context,
+          showPesaoToast(
+            context,
             message: member.isActive
-                ? AppStrings.staffDeactivatedSuccess
-                : AppStrings.staffActivatedSuccess,
-            type: ToastType.success,
+                ? strings.staffDeactivatedSuccess
+                : strings.staffActivatedSuccess,
+            semanticLabel: member.isActive
+                ? 'Miembro desactivado'
+                : 'Miembro activado',
+            variant: PesaoToastVariant.success,
           );
         }
-      } catch (e) {
+      } catch (_) {
         if (mounted) {
-          PesaoToast.show(
-            context: context,
-            message: AppStrings.staffActionError,
-            type: ToastType.error,
+          showPesaoToast(
+            context,
+            message: strings.staffActionError,
+            semanticLabel: 'Error al completar la acción',
+            variant: PesaoToastVariant.error,
           );
         }
       }
@@ -147,7 +156,6 @@ class _StaffListScreenState extends ConsumerState<StaffListScreen> {
   }
 }
 
-/// Estado de carga: skeleton replicando el layout real.
 class _LoadingState extends StatelessWidget {
   const _LoadingState();
 
@@ -159,29 +167,11 @@ class _LoadingState extends StatelessWidget {
         children: [
           SkeletonLoader(child: SizedBox(height: 100, width: double.infinity)),
           SizedBox(height: 16),
-          SkeletonLoader(child: SizedBox(height: 80, width: double.infinity)),
+          SkeletonLoader(child: SizedBox(height: 72, width: double.infinity)),
           SizedBox(height: 8),
-          SkeletonLoader(child: SizedBox(height: 80, width: double.infinity)),
-          SizedBox(height: 8),
-          SkeletonLoader(child: SizedBox(height: 80, width: double.infinity)),
+          SkeletonLoader(child: SizedBox(height: 72, width: double.infinity)),
         ],
       ),
-    );
-  }
-}
-
-/// Estado de error: muestra el error y permite reintentar.
-class _ErrorState extends StatelessWidget {
-  final VoidCallback onRetry;
-
-  const _ErrorState({required this.onRetry});
-
-  @override
-  Widget build(BuildContext context) {
-    return ErrorState(
-      title: AppStrings.staffErrorTitle,
-      description: AppStrings.staffErrorBody,
-      onRetry: onRetry,
     );
   }
 }
