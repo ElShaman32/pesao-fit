@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../domain/entities/create_staff_request.dart';
+import '../../domain/entities/staff_invitation_result.dart';
 import '../../domain/entities/staff_member.dart';
 
 /// Fuente de datos remota para staff. Usa Supabase client.
@@ -114,5 +116,66 @@ class StaffRemoteDatasource {
       avatarUrl: profile?['avatar_url'] as String?,
       phone: profile?['phone'] as String?,
     );
+  }
+
+  /// Crea un nuevo usuario (signUp) y lo agrega como miembro del staff.
+  /// Devuelve las credenciales temporales para que el dueño las comparta.
+  Future<StaffInvitationResult> inviteStaff(CreateStaffRequest request) async {
+    try {
+      debugPrint(
+        '🔍 STAFF REMOTE: Inviting ${request.email} as ${request.role}',
+      );
+
+      // 1. Validar que hay cupo en el plan.
+      final canAdd = await _client.rpc(
+        'can_add_staff',
+        params: {'p_gym_id': request.gymId},
+      );
+      if (canAdd != true) {
+        throw Exception('plan_limit_reached');
+      }
+
+      // 2. Crear el usuario en auth.users.
+      //    El trigger handle_new_user creará automáticamente el profile.
+      final authResponse = await _client.auth.signUp(
+        email: request.email,
+        password: request.tempPassword,
+        data: {'full_name': request.fullName},
+      );
+
+      final userId = authResponse.user?.id;
+      if (userId == null) {
+        throw Exception('user_creation_failed');
+      }
+
+      // 3. Crear la membership como trainer/nutritionist.
+      final membershipResponse = await _client
+          .from('memberships')
+          .insert({
+            'user_id': userId,
+            'gym_id': request.gymId,
+            'role': request.role,
+            'is_active': true,
+          })
+          .select()
+          .single();
+
+      final membershipId = membershipResponse['id'] as String;
+
+      debugPrint(
+        '✅ STAFF REMOTE: Staff created. userId=$userId, membershipId=$membershipId',
+      );
+
+      return StaffInvitationResult(
+        userId: userId,
+        membershipId: membershipId,
+        email: request.email,
+        tempPassword: request.tempPassword,
+      );
+    } catch (e, stack) {
+      debugPrint('❌ STAFF REMOTE INVITE ERROR: ${e.toString()}');
+      debugPrint('❌ STAFF REMOTE INVITE STACK: $stack');
+      rethrow;
+    }
   }
 }

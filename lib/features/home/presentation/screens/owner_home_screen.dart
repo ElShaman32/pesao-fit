@@ -274,7 +274,10 @@ class _OwnerSuccessSliver extends StatelessWidget {
           const SizedBox(height: AppDimens.xl),
 
           // Sección últimos clientes
-          SectionHeader(title: l10n.ownerDashRecentSection, onSeeAll: () {}),
+          SectionHeader(
+            title: l10n.ownerDashRecentSection,
+            onSeeAll: () => context.go(RouteNames.ownerClients),
+          ),
           const SizedBox(height: AppDimens.m),
           if (stats.recentClients.isEmpty)
             Padding(

@@ -1,6 +1,8 @@
 import 'package:pesao_fit/core/exceptions/app_exception.dart';
 import 'package:pesao_fit/core/utils/result.dart';
 
+import '../../domain/entities/create_staff_request.dart';
+import '../../domain/entities/staff_invitation_result.dart';
 import '../../domain/entities/staff_overview.dart';
 import '../../domain/repositories/staff_repository.dart';
 import '../datasources/staff_local_datasource.dart';
@@ -24,26 +26,31 @@ class StaffRepositoryImpl implements StaffRepository {
     bool refresh = false,
   }) async {
     try {
-      // Si no pide refresh, intenta leer de caché primero.
       if (!refresh) {
         final cachedMembers = await _local.readStaffMembers(gymId);
         if (cachedMembers.isNotEmpty) {
+          // FIX: obtener el límite desde remoto incluso con caché.
+          int? staffLimit;
+          try {
+            staffLimit = await _remote.fetchStaffLimit(gymId);
+          } catch (_) {
+            staffLimit = null;
+          }
           return Result.success(
             StaffOverview(
               members: cachedMembers,
               staffCount: cachedMembers.where((m) => m.isActive).length,
+              staffLimit: staffLimit,
               isStale: true,
             ),
           );
         }
       }
 
-      // Lectura remota.
       final members = await _remote.fetchStaffMembers(gymId);
       final staffCount = await _remote.fetchActiveStaffCount(gymId);
       final staffLimit = await _remote.fetchStaffLimit(gymId);
 
-      // Actualiza caché local.
       await _local.cacheStaffMembers(members);
 
       return Result.success(
@@ -57,7 +64,6 @@ class StaffRepositoryImpl implements StaffRepository {
     } on AppException catch (e) {
       return Result.failure(e);
     } catch (e) {
-      // Si falla la lectura remota, intenta fallback a caché local.
       try {
         final cachedMembers = await _local.readStaffMembers(gymId);
         if (cachedMembers.isNotEmpty) {
@@ -69,9 +75,8 @@ class StaffRepositoryImpl implements StaffRepository {
             ),
           );
         }
-      } catch (_) {
-        // Ignoramos el error de caché y devolvemos el error original.
-      }
+      } catch (_) {}
+
       return Result.failure(
         UnknownException(
           code: 'staff/reject-error',
@@ -97,6 +102,48 @@ class StaffRepositoryImpl implements StaffRepository {
         UnknownException(
           code: 'staff/reject-error',
           message: 'No se pudo actualizar el estado',
+          cause: e,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Result<StaffInvitationResult>> inviteStaff({
+    required CreateStaffRequest request,
+  }) async {
+    try {
+      final result = await _remote.inviteStaff(request);
+      return Result.success(result);
+    } on AppException catch (e) {
+      return Result.failure(e);
+    } catch (e) {
+      final message = e.toString();
+      // Traducimos errores técnicos a mensajes amigables.
+      if (message.contains('plan_limit_reached')) {
+        return Result.failure(
+          UnknownException(
+            code: 'staff/reject-error',
+            message:
+                'Ya llegaste al límite de tu plan. Actualiza a Hierro para agregar más miembros.',
+            cause: e,
+          ),
+        );
+      }
+      if (message.contains('email') || message.contains('already')) {
+        return Result.failure(
+          UnknownException(
+            code: 'staff/reject-error',
+            message:
+                'Ese correo ya está registrado. Pídele que entre con su cuenta.',
+            cause: e,
+          ),
+        );
+      }
+      return Result.failure(
+        UnknownException(
+          code: 'staff/reject-error',
+          message: 'No se pudo invitar al miembro.',
           cause: e,
         ),
       );

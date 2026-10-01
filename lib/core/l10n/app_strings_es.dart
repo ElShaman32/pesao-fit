@@ -786,6 +786,9 @@ class AppStringsEs extends AppStrings {
   String get staffActionError => 'No se pudo completar la acción';
 
   @override
+  String get fabAddStaff => 'Agregar miembro del equipo';
+
+  @override
   String get signalWeak =>
       'Parece que la señal está débil. Tus datos se guardan y se sincronizan solos 📶';
 
@@ -872,6 +875,231 @@ class AppStringsEs extends AppStrings {
   String statNextWorkoutSemantic(String title) {
     return 'Próximo entreno: $title.';
   }
+
+  @override
+  String get staffAddTitle => 'Agregar miembro';
+
+  @override
+  String get staffAddNameLabel => 'Nombre completo';
+
+  @override
+  String get staffAddNameHint => 'Ej: María Pérez';
+
+  @override
+  String get staffAddNameError => 'El nombre es obligatorio';
+
+  @override
+  String get staffAddEmailLabel => 'Correo electrónico';
+
+  @override
+  String get staffAddEmailHint => 'correo@ejemplo.com';
+
+  @override
+  String get staffAddEmailErrorEmpty => 'El correo es obligatorio';
+
+  @override
+  String get staffAddEmailErrorInvalid => 'Ese correo no parece válido';
+
+  @override
+  String get staffAddRoleLabel => 'Rol';
+
+  @override
+  String get staffAddPasswordLabel => 'Contraseña temporal';
+
+  @override
+  String get staffAddPasswordHint => 'Se genera automáticamente';
+
+  @override
+  String get staffAddPasswordError => 'Mínimo 6 caracteres';
+
+  @override
+  String get staffAddPasswordRegenerate => 'Generar otra contraseña';
+
+  @override
+  String get staffAddSubmit => 'Invitar al equipo';
+
+  @override
+  String get staffAddSubmitting => 'Invitando...';
+
+  @override
+  String get staffAddSuccessTitle => '¡Miembro invitado!';
+
+  @override
+  String get staffAddSuccessBody =>
+      'Comparte estos datos con tu nuevo miembro del equipo. La contraseña solo se muestra una vez.';
+
+  @override
+  String get staffAddCredentialEmail => 'Correo';
+
+  @override
+  String get staffAddCredentialPassword => 'Contraseña temporal';
+
+  @override
+  String get staffAddCopyTooltip => 'Copiar contraseña';
+
+  @override
+  String get staffAddCopied => 'Contraseña copiada ✅';
+
+  @override
+  String get staffAddCopiedSemantics => 'Contraseña copiada';
+
+  @override
+  String get staffAddDone => 'Listo, volver al equipo';
+
+  @override
+  String get staffAddNoGym => 'No tienes un gimnasio asignado.';
+
+  @override
+  String get staffAddNoGymSemantics => 'Error de gimnasio asignado';
+
+  @override
+  String get clientsScreenTitle => 'Clientes';
+
+  @override
+  String get clientsStatActive => 'Activos';
+
+  @override
+  String get clientsStatActiveSub => 'En tu gimnasio';
+
+  @override
+  String get clientsLimitTitle => 'Cupos de clientes';
+
+  @override
+  String get clientsLimitUnlimited => 'Clientes ilimitados';
+
+  @override
+  String get clientsLimitNearLimit => '¡Casi al límite!';
+
+  @override
+  String get clientsEmptyTitle => 'Aún no tienes clientes';
+
+  @override
+  String get clientsEmptyBody =>
+      'Cuando alguien se una a tu gimnasio, aparece aquí 💪';
+
+  @override
+  String get clientsErrorTitle => 'No se pudo cargar los clientes';
+
+  @override
+  String get clientsErrorBody => 'Revisa tu conexión e intenta de nuevo';
+
+  @override
+  String get clientsSearchHint => 'Buscar por nombre...';
+
+  @override
+  String get clientDetailTitle => 'Detalle del cliente';
+
+  @override
+  String get clientDetailJoined => 'Miembro desde';
+
+  @override
+  String get clientDetailStatusActive => 'Activo';
+
+  @override
+  String get clientDetailStatusInactive => 'Inactivo';
+
+  @override
+  String get clientDetailDeactivate => 'Desactivar membresía';
+
+  @override
+  String get clientDetailActivate => 'Activar membresía';
+
+  @override
+  String get clientDetailDeactivateConfirmTitle => '¿Desactivar este cliente?';
+
+  @override
+  String get clientDetailDeactivateConfirmBody =>
+      'El cliente perderá acceso a la app hasta que lo actives de nuevo.';
+
+  @override
+  String get clientDetailActivateConfirmTitle => '¿Activar este cliente?';
+
+  @override
+  String get clientDetailActivateConfirmBody =>
+      'El cliente recuperará el acceso a la app.';
+
+  @override
+  String get clientDeactivatedSuccess => 'Cliente desactivado';
+
+  @override
+  String get clientActivatedSuccess => 'Cliente activado';
+
+  @override
+  String get clientAddTitle => 'Agregar cliente';
+
+  @override
+  String get clientAddNameLabel => 'Nombre completo';
+
+  @override
+  String get clientAddNameHint => 'Ej: Carlos Rodríguez';
+
+  @override
+  String get clientAddNameError => 'El nombre es obligatorio';
+
+  @override
+  String get clientAddEmailLabel => 'Correo electrónico';
+
+  @override
+  String get clientAddEmailHint => 'correo@ejemplo.com';
+
+  @override
+  String get clientAddEmailErrorEmpty => 'El correo es obligatorio';
+
+  @override
+  String get clientAddEmailErrorInvalid => 'Ese correo no parece válido';
+
+  @override
+  String get clientAddPasswordLabel => 'Contraseña temporal';
+
+  @override
+  String get clientAddPasswordHint => 'Se genera automáticamente';
+
+  @override
+  String get clientAddPasswordError => 'Mínimo 6 caracteres';
+
+  @override
+  String get clientAddPasswordRegenerate => 'Generar otra contraseña';
+
+  @override
+  String get clientAddSubmit => 'Agregar cliente';
+
+  @override
+  String get clientAddSubmitting => 'Agregando...';
+
+  @override
+  String get clientAddSuccessTitle => '¡Cliente agregado!';
+
+  @override
+  String get clientAddSuccessBody =>
+      'Comparte estos datos con tu cliente. La contraseña solo se muestra una vez.';
+
+  @override
+  String get clientAddCredentialEmail => 'Correo';
+
+  @override
+  String get clientAddCredentialPassword => 'Contraseña temporal';
+
+  @override
+  String get clientAddCopyTooltip => 'Copiar contraseña';
+
+  @override
+  String get clientAddCopied => 'Contraseña copiada ✅';
+
+  @override
+  String get clientAddCopiedSemantics => 'Contraseña copiada';
+
+  @override
+  String get clientAddDone => 'Listo, volver a clientes';
+
+  @override
+  String get clientAddNoGym => 'No tienes un gimnasio asignado.';
+
+  @override
+  String get clientAddNoGymSemantics => 'Error de gimnasio asignado';
+
+  @override
+  String get clientAddLimitReached =>
+      'Ya llegaste al límite de clientes de tu plan. Actualiza a Hierro para agregar más.';
 }
 
 /// The translations for Spanish Castilian, as used in Venezuela (`es_VE`).
@@ -1656,6 +1884,9 @@ class AppStringsEsVe extends AppStringsEs {
   String get staffActionError => 'No se pudo completar la acción';
 
   @override
+  String get fabAddStaff => 'Agregar miembro del equipo';
+
+  @override
   String get signalWeak =>
       'Parece que la señal está débil. Tus datos se guardan y se sincronizan solos 📶';
 
@@ -1742,4 +1973,229 @@ class AppStringsEsVe extends AppStringsEs {
   String statNextWorkoutSemantic(String title) {
     return 'Próximo entreno: $title.';
   }
+
+  @override
+  String get staffAddTitle => 'Agregar miembro';
+
+  @override
+  String get staffAddNameLabel => 'Nombre completo';
+
+  @override
+  String get staffAddNameHint => 'Ej: María Pérez';
+
+  @override
+  String get staffAddNameError => 'El nombre es obligatorio';
+
+  @override
+  String get staffAddEmailLabel => 'Correo electrónico';
+
+  @override
+  String get staffAddEmailHint => 'correo@ejemplo.com';
+
+  @override
+  String get staffAddEmailErrorEmpty => 'El correo es obligatorio';
+
+  @override
+  String get staffAddEmailErrorInvalid => 'Ese correo no parece válido';
+
+  @override
+  String get staffAddRoleLabel => 'Rol';
+
+  @override
+  String get staffAddPasswordLabel => 'Contraseña temporal';
+
+  @override
+  String get staffAddPasswordHint => 'Se genera automáticamente';
+
+  @override
+  String get staffAddPasswordError => 'Mínimo 6 caracteres';
+
+  @override
+  String get staffAddPasswordRegenerate => 'Generar otra contraseña';
+
+  @override
+  String get staffAddSubmit => 'Invitar al equipo';
+
+  @override
+  String get staffAddSubmitting => 'Invitando...';
+
+  @override
+  String get staffAddSuccessTitle => '¡Miembro invitado!';
+
+  @override
+  String get staffAddSuccessBody =>
+      'Comparte estos datos con tu nuevo miembro del equipo. La contraseña solo se muestra una vez.';
+
+  @override
+  String get staffAddCredentialEmail => 'Correo';
+
+  @override
+  String get staffAddCredentialPassword => 'Contraseña temporal';
+
+  @override
+  String get staffAddCopyTooltip => 'Copiar contraseña';
+
+  @override
+  String get staffAddCopied => 'Contraseña copiada ✅';
+
+  @override
+  String get staffAddCopiedSemantics => 'Contraseña copiada';
+
+  @override
+  String get staffAddDone => 'Listo, volver al equipo';
+
+  @override
+  String get staffAddNoGym => 'No tienes un gimnasio asignado.';
+
+  @override
+  String get staffAddNoGymSemantics => 'Error de gimnasio asignado';
+
+  @override
+  String get clientsScreenTitle => 'Clientes';
+
+  @override
+  String get clientsStatActive => 'Activos';
+
+  @override
+  String get clientsStatActiveSub => 'En tu gimnasio';
+
+  @override
+  String get clientsLimitTitle => 'Cupos de clientes';
+
+  @override
+  String get clientsLimitUnlimited => 'Clientes ilimitados';
+
+  @override
+  String get clientsLimitNearLimit => '¡Casi al límite!';
+
+  @override
+  String get clientsEmptyTitle => 'Aún no tienes clientes';
+
+  @override
+  String get clientsEmptyBody =>
+      'Cuando alguien se una a tu gimnasio, aparece aquí 💪';
+
+  @override
+  String get clientsErrorTitle => 'No se pudo cargar los clientes';
+
+  @override
+  String get clientsErrorBody => 'Revisa tu conexión e intenta de nuevo';
+
+  @override
+  String get clientsSearchHint => 'Buscar por nombre...';
+
+  @override
+  String get clientDetailTitle => 'Detalle del cliente';
+
+  @override
+  String get clientDetailJoined => 'Miembro desde';
+
+  @override
+  String get clientDetailStatusActive => 'Activo';
+
+  @override
+  String get clientDetailStatusInactive => 'Inactivo';
+
+  @override
+  String get clientDetailDeactivate => 'Desactivar membresía';
+
+  @override
+  String get clientDetailActivate => 'Activar membresía';
+
+  @override
+  String get clientDetailDeactivateConfirmTitle => '¿Desactivar este cliente?';
+
+  @override
+  String get clientDetailDeactivateConfirmBody =>
+      'El cliente perderá acceso a la app hasta que lo actives de nuevo.';
+
+  @override
+  String get clientDetailActivateConfirmTitle => '¿Activar este cliente?';
+
+  @override
+  String get clientDetailActivateConfirmBody =>
+      'El cliente recuperará el acceso a la app.';
+
+  @override
+  String get clientDeactivatedSuccess => 'Cliente desactivado';
+
+  @override
+  String get clientActivatedSuccess => 'Cliente activado';
+
+  @override
+  String get clientAddTitle => 'Agregar cliente';
+
+  @override
+  String get clientAddNameLabel => 'Nombre completo';
+
+  @override
+  String get clientAddNameHint => 'Ej: Carlos Rodríguez';
+
+  @override
+  String get clientAddNameError => 'El nombre es obligatorio';
+
+  @override
+  String get clientAddEmailLabel => 'Correo electrónico';
+
+  @override
+  String get clientAddEmailHint => 'correo@ejemplo.com';
+
+  @override
+  String get clientAddEmailErrorEmpty => 'El correo es obligatorio';
+
+  @override
+  String get clientAddEmailErrorInvalid => 'Ese correo no parece válido';
+
+  @override
+  String get clientAddPasswordLabel => 'Contraseña temporal';
+
+  @override
+  String get clientAddPasswordHint => 'Se genera automáticamente';
+
+  @override
+  String get clientAddPasswordError => 'Mínimo 6 caracteres';
+
+  @override
+  String get clientAddPasswordRegenerate => 'Generar otra contraseña';
+
+  @override
+  String get clientAddSubmit => 'Agregar cliente';
+
+  @override
+  String get clientAddSubmitting => 'Agregando...';
+
+  @override
+  String get clientAddSuccessTitle => '¡Cliente agregado!';
+
+  @override
+  String get clientAddSuccessBody =>
+      'Comparte estos datos con tu cliente. La contraseña solo se muestra una vez.';
+
+  @override
+  String get clientAddCredentialEmail => 'Correo';
+
+  @override
+  String get clientAddCredentialPassword => 'Contraseña temporal';
+
+  @override
+  String get clientAddCopyTooltip => 'Copiar contraseña';
+
+  @override
+  String get clientAddCopied => 'Contraseña copiada ✅';
+
+  @override
+  String get clientAddCopiedSemantics => 'Contraseña copiada';
+
+  @override
+  String get clientAddDone => 'Listo, volver a clientes';
+
+  @override
+  String get clientAddNoGym => 'No tienes un gimnasio asignado.';
+
+  @override
+  String get clientAddNoGymSemantics => 'Error de gimnasio asignado';
+
+  @override
+  String get clientAddLimitReached =>
+      'Ya llegaste al límite de clientes de tu plan. Actualiza a Hierro para agregar más.';
 }

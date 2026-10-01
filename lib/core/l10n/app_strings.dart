@@ -1531,6 +1531,12 @@ abstract class AppStrings {
   /// **'No se pudo completar la acción'**
   String get staffActionError;
 
+  /// FAB contextual para agregar staff en la pantalla Mi equipo.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Agregar miembro del equipo'**
+  String get fabAddStaff;
+
   /// Aviso amable de conexión débil.
   ///
   /// In es_VE, this message translates to:
@@ -1674,6 +1680,444 @@ abstract class AppStrings {
   /// In es_VE, this message translates to:
   /// **'Próximo entreno: {title}.'**
   String statNextWorkoutSemantic(String title);
+
+  /// No description provided for @staffAddTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Agregar miembro'**
+  String get staffAddTitle;
+
+  /// No description provided for @staffAddNameLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nombre completo'**
+  String get staffAddNameLabel;
+
+  /// No description provided for @staffAddNameHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: María Pérez'**
+  String get staffAddNameHint;
+
+  /// No description provided for @staffAddNameError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El nombre es obligatorio'**
+  String get staffAddNameError;
+
+  /// No description provided for @staffAddEmailLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Correo electrónico'**
+  String get staffAddEmailLabel;
+
+  /// No description provided for @staffAddEmailHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'correo@ejemplo.com'**
+  String get staffAddEmailHint;
+
+  /// No description provided for @staffAddEmailErrorEmpty.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El correo es obligatorio'**
+  String get staffAddEmailErrorEmpty;
+
+  /// No description provided for @staffAddEmailErrorInvalid.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ese correo no parece válido'**
+  String get staffAddEmailErrorInvalid;
+
+  /// No description provided for @staffAddRoleLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Rol'**
+  String get staffAddRoleLabel;
+
+  /// No description provided for @staffAddPasswordLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Contraseña temporal'**
+  String get staffAddPasswordLabel;
+
+  /// No description provided for @staffAddPasswordHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Se genera automáticamente'**
+  String get staffAddPasswordHint;
+
+  /// No description provided for @staffAddPasswordError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Mínimo 6 caracteres'**
+  String get staffAddPasswordError;
+
+  /// No description provided for @staffAddPasswordRegenerate.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Generar otra contraseña'**
+  String get staffAddPasswordRegenerate;
+
+  /// No description provided for @staffAddSubmit.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Invitar al equipo'**
+  String get staffAddSubmit;
+
+  /// No description provided for @staffAddSubmitting.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Invitando...'**
+  String get staffAddSubmitting;
+
+  /// No description provided for @staffAddSuccessTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¡Miembro invitado!'**
+  String get staffAddSuccessTitle;
+
+  /// No description provided for @staffAddSuccessBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Comparte estos datos con tu nuevo miembro del equipo. La contraseña solo se muestra una vez.'**
+  String get staffAddSuccessBody;
+
+  /// No description provided for @staffAddCredentialEmail.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Correo'**
+  String get staffAddCredentialEmail;
+
+  /// No description provided for @staffAddCredentialPassword.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Contraseña temporal'**
+  String get staffAddCredentialPassword;
+
+  /// No description provided for @staffAddCopyTooltip.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Copiar contraseña'**
+  String get staffAddCopyTooltip;
+
+  /// No description provided for @staffAddCopied.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Contraseña copiada ✅'**
+  String get staffAddCopied;
+
+  /// No description provided for @staffAddCopiedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Contraseña copiada'**
+  String get staffAddCopiedSemantics;
+
+  /// No description provided for @staffAddDone.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Listo, volver al equipo'**
+  String get staffAddDone;
+
+  /// No description provided for @staffAddNoGym.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No tienes un gimnasio asignado.'**
+  String get staffAddNoGym;
+
+  /// No description provided for @staffAddNoGymSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Error de gimnasio asignado'**
+  String get staffAddNoGymSemantics;
+
+  /// No description provided for @clientsScreenTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Clientes'**
+  String get clientsScreenTitle;
+
+  /// No description provided for @clientsStatActive.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Activos'**
+  String get clientsStatActive;
+
+  /// No description provided for @clientsStatActiveSub.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'En tu gimnasio'**
+  String get clientsStatActiveSub;
+
+  /// No description provided for @clientsLimitTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cupos de clientes'**
+  String get clientsLimitTitle;
+
+  /// No description provided for @clientsLimitUnlimited.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Clientes ilimitados'**
+  String get clientsLimitUnlimited;
+
+  /// No description provided for @clientsLimitNearLimit.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¡Casi al límite!'**
+  String get clientsLimitNearLimit;
+
+  /// No description provided for @clientsEmptyTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Aún no tienes clientes'**
+  String get clientsEmptyTitle;
+
+  /// No description provided for @clientsEmptyBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cuando alguien se una a tu gimnasio, aparece aquí 💪'**
+  String get clientsEmptyBody;
+
+  /// No description provided for @clientsErrorTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No se pudo cargar los clientes'**
+  String get clientsErrorTitle;
+
+  /// No description provided for @clientsErrorBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Revisa tu conexión e intenta de nuevo'**
+  String get clientsErrorBody;
+
+  /// No description provided for @clientsSearchHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Buscar por nombre...'**
+  String get clientsSearchHint;
+
+  /// No description provided for @clientDetailTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Detalle del cliente'**
+  String get clientDetailTitle;
+
+  /// No description provided for @clientDetailJoined.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Miembro desde'**
+  String get clientDetailJoined;
+
+  /// No description provided for @clientDetailStatusActive.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Activo'**
+  String get clientDetailStatusActive;
+
+  /// No description provided for @clientDetailStatusInactive.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Inactivo'**
+  String get clientDetailStatusInactive;
+
+  /// No description provided for @clientDetailDeactivate.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Desactivar membresía'**
+  String get clientDetailDeactivate;
+
+  /// No description provided for @clientDetailActivate.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Activar membresía'**
+  String get clientDetailActivate;
+
+  /// No description provided for @clientDetailDeactivateConfirmTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¿Desactivar este cliente?'**
+  String get clientDetailDeactivateConfirmTitle;
+
+  /// No description provided for @clientDetailDeactivateConfirmBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El cliente perderá acceso a la app hasta que lo actives de nuevo.'**
+  String get clientDetailDeactivateConfirmBody;
+
+  /// No description provided for @clientDetailActivateConfirmTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¿Activar este cliente?'**
+  String get clientDetailActivateConfirmTitle;
+
+  /// No description provided for @clientDetailActivateConfirmBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El cliente recuperará el acceso a la app.'**
+  String get clientDetailActivateConfirmBody;
+
+  /// No description provided for @clientDeactivatedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cliente desactivado'**
+  String get clientDeactivatedSuccess;
+
+  /// No description provided for @clientActivatedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cliente activado'**
+  String get clientActivatedSuccess;
+
+  /// No description provided for @clientAddTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Agregar cliente'**
+  String get clientAddTitle;
+
+  /// No description provided for @clientAddNameLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nombre completo'**
+  String get clientAddNameLabel;
+
+  /// No description provided for @clientAddNameHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: Carlos Rodríguez'**
+  String get clientAddNameHint;
+
+  /// No description provided for @clientAddNameError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El nombre es obligatorio'**
+  String get clientAddNameError;
+
+  /// No description provided for @clientAddEmailLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Correo electrónico'**
+  String get clientAddEmailLabel;
+
+  /// No description provided for @clientAddEmailHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'correo@ejemplo.com'**
+  String get clientAddEmailHint;
+
+  /// No description provided for @clientAddEmailErrorEmpty.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El correo es obligatorio'**
+  String get clientAddEmailErrorEmpty;
+
+  /// No description provided for @clientAddEmailErrorInvalid.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ese correo no parece válido'**
+  String get clientAddEmailErrorInvalid;
+
+  /// No description provided for @clientAddPasswordLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Contraseña temporal'**
+  String get clientAddPasswordLabel;
+
+  /// No description provided for @clientAddPasswordHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Se genera automáticamente'**
+  String get clientAddPasswordHint;
+
+  /// No description provided for @clientAddPasswordError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Mínimo 6 caracteres'**
+  String get clientAddPasswordError;
+
+  /// No description provided for @clientAddPasswordRegenerate.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Generar otra contraseña'**
+  String get clientAddPasswordRegenerate;
+
+  /// No description provided for @clientAddSubmit.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Agregar cliente'**
+  String get clientAddSubmit;
+
+  /// No description provided for @clientAddSubmitting.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Agregando...'**
+  String get clientAddSubmitting;
+
+  /// No description provided for @clientAddSuccessTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¡Cliente agregado!'**
+  String get clientAddSuccessTitle;
+
+  /// No description provided for @clientAddSuccessBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Comparte estos datos con tu cliente. La contraseña solo se muestra una vez.'**
+  String get clientAddSuccessBody;
+
+  /// No description provided for @clientAddCredentialEmail.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Correo'**
+  String get clientAddCredentialEmail;
+
+  /// No description provided for @clientAddCredentialPassword.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Contraseña temporal'**
+  String get clientAddCredentialPassword;
+
+  /// No description provided for @clientAddCopyTooltip.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Copiar contraseña'**
+  String get clientAddCopyTooltip;
+
+  /// No description provided for @clientAddCopied.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Contraseña copiada ✅'**
+  String get clientAddCopied;
+
+  /// No description provided for @clientAddCopiedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Contraseña copiada'**
+  String get clientAddCopiedSemantics;
+
+  /// No description provided for @clientAddDone.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Listo, volver a clientes'**
+  String get clientAddDone;
+
+  /// No description provided for @clientAddNoGym.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No tienes un gimnasio asignado.'**
+  String get clientAddNoGym;
+
+  /// No description provided for @clientAddNoGymSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Error de gimnasio asignado'**
+  String get clientAddNoGymSemantics;
+
+  /// No description provided for @clientAddLimitReached.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ya llegaste al límite de clientes de tu plan. Actualiza a Hierro para agregar más.'**
+  String get clientAddLimitReached;
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {
