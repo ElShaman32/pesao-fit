@@ -34,6 +34,7 @@ abstract final class RouteNames {
   static const String ownerClients = '/owner/clients';
   static const String ownerPayments = '/owner/payments';
   static const String ownerProfile = '/owner/profile';
+  static const String ownerStaff = '/owner/staff';
 
   // --- Nutricionista --------------------------------------------------------
 

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -32,7 +33,14 @@ class OwnerStaffController extends _$OwnerStaffController {
 
   Future<void> load() async {
     final gymId = authProvider.userGymId;
-    if (gymId == null) return;
+    debugPrint('🔍 STAFF LOAD: Intentando cargar para gymId = $gymId');
+
+    if (gymId == null) {
+      debugPrint(
+        '⚠️ STAFF LOAD: gymId es null. El usuario no tiene un gimnasio asignado como owner.',
+      );
+      return;
+    }
 
     state = const Result.loading();
     final result = await _repository.getStaffOverview(gymId: gymId);
@@ -41,9 +49,15 @@ class OwnerStaffController extends _$OwnerStaffController {
       idle: () {},
       loading: () {},
       success: (overview) {
+        debugPrint(
+          '✅ STAFF LOAD: Éxito. Miembros encontrados: ${overview.members.length}',
+        );
         state = Result.success(overview);
       },
       failure: (error) {
+        debugPrint(
+          '❌ STAFF LOAD: Fallo. Detalle del error: ${error.toString()}',
+        );
         state = Result.failure(error);
       },
     );
@@ -59,9 +73,10 @@ class OwnerStaffController extends _$OwnerStaffController {
       idle: () {},
       loading: () {},
       success: (_) {
-        load(); // Recargar después de la mutación
+        load();
       },
       failure: (error) {
+        debugPrint('❌ STAFF MUTATION: Fallo. Detalle: ${error.toString()}');
         state = Result.failure(error);
       },
     );

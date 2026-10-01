@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../features/gym/presentation/screens/staff_list_screen.dart';
 import '../../../features/home/presentation/screens/owner_home_screen.dart';
 import '../../../shared/widgets/pesao_bottom_nav.dart';
 import '../../l10n/app_strings.dart';
@@ -60,6 +61,11 @@ StatefulShellRoute buildOwnerShell() {
             path: RouteNames.ownerHome,
             name: RouteNames.ownerHome,
             builder: (context, state) => const OwnerHomeScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.ownerStaff,
+            name: RouteNames.ownerStaff,
+            builder: (context, state) => const StaffListScreen(),
           ),
         ],
       ),

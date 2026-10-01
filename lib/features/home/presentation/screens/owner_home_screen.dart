@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/app_strings.dart';
 import '../../../../core/providers/auth_provider.dart';
 import '../../../../core/providers/connectivity_provider.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/widgets/offline_banner.dart';
 import '../../../../shared/widgets/pesao_avatar.dart';
 import '../../../../shared/widgets/pesao_button.dart';
+import '../../../../shared/widgets/pesao_card.dart';
 import '../../../../shared/widgets/pesao_stat_card.dart';
 import '../../../../shared/widgets/section_header.dart';
+import '../../../gym/presentation/providers/staff_providers.dart';
 import '../../domain/entities/owner_dashboard_stats.dart';
 import '../providers/owner_dashboard_controller.dart';
 
 /// Dashboard del dueño (tab Inicio del shell).
 ///
-/// design-system.md §10: avatar+saludo, 3 StatCards (clientes/pagos/ingresos),
-/// PrimaryCard "Comprobantes por verificar", sección "Últimos clientes".
+/// design-system.md §10: avatar+saludo, 3 StatCards, PrimaryCard,
+/// Resumen de Mi Equipo, sección "Últimos clientes".
 class OwnerHomeScreen extends ConsumerWidget {
   const OwnerHomeScreen({super.key});
 
@@ -135,6 +139,8 @@ class _OwnerSkeletonSliver extends StatelessWidget {
           ),
           const SizedBox(height: AppDimens.xl),
           const _SkeletonBox(height: 160),
+          const SizedBox(height: AppDimens.xl),
+          const _SkeletonBox(height: 80), // Nuevo skeleton para staff
           const SizedBox(height: AppDimens.xl),
           const _SkeletonBox(height: 24),
           const SizedBox(height: AppDimens.m),
@@ -263,6 +269,10 @@ class _OwnerSuccessSliver extends StatelessWidget {
           _OwnerPrimaryCard(stats: stats),
           const SizedBox(height: AppDimens.xl),
 
+          // === NUEVO: Resumen de Mi Equipo ===
+          const _OwnerStaffSummaryCard(),
+          const SizedBox(height: AppDimens.xl),
+
           // Sección últimos clientes
           SectionHeader(title: l10n.ownerDashRecentSection, onSeeAll: () {}),
           const SizedBox(height: AppDimens.m),
@@ -355,6 +365,98 @@ class _OwnerPrimaryCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ============================================================================
+// WIDGETS AUXILIARES PARA STAFF EN DASHBOARD
+// ============================================================================
+
+class _OwnerStaffSummaryCard extends ConsumerWidget {
+  const _OwnerStaffSummaryCard();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppStrings.of(context);
+    final staffResult = ref.watch(ownerStaffControllerProvider);
+
+    return staffResult.when(
+      idle: () => const SizedBox.shrink(),
+      loading: () => const _StaffSummarySkeleton(),
+      success: (overview) {
+        final limitText = overview.isUnlimited
+            ? '∞'
+            : overview.staffLimit.toString();
+        final subtitle = '${overview.staffCount} de $limitText miembros';
+
+        return PesaoCard(
+          child: Padding(
+            padding: const EdgeInsets.all(AppDimens.l),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(AppDimens.m),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.1),
+                    borderRadius: AppDimens.cardBorderRadius,
+                  ),
+                  child: const Icon(
+                    Icons.people_rounded,
+                    color: AppColors.primary,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: AppDimens.m),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n.staffScreenTitle,
+                        style: AppTypography.title.copyWith(
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        subtitle,
+                        style: AppTypography.bodySmall.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                PesaoButton(
+                  label: l10n.commonSeeAll,
+                  variant: PesaoButtonVariant.secondary,
+                  isExpanded: false,
+                  onPressed: () => context.push(RouteNames.ownerStaff),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      failure: (_) =>
+          const SizedBox.shrink(), // Fallo silencioso para no bloquear el dashboard
+    );
+  }
+}
+
+class _StaffSummarySkeleton extends StatelessWidget {
+  const _StaffSummarySkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 80,
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: AppDimens.cardBorderRadius,
+        border: Border.all(color: AppColors.outline),
       ),
     );
   }

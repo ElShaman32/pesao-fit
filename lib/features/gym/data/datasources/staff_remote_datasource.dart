@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../domain/entities/staff_member.dart';
@@ -9,57 +10,94 @@ class StaffRemoteDatasource {
   const StaffRemoteDatasource(this._client);
 
   /// Obtiene el staff activo e inactivo de un gimnasio.
-  /// Hace join con profiles para traer nombre, email, avatar y teléfono.
   Future<List<StaffMember>> fetchStaffMembers(String gymId) async {
-    final response = await _client
-        .from('memberships')
-        .select('''
-          id,
-          user_id,
-          gym_id,
-          role,
-          is_active,
-          profiles:user_id (
-            id,
-            full_name,
-            email,
-            avatar_url,
-            phone
-          )
-        ''')
-        .eq('gym_id', gymId)
-        .inFilter('role', ['trainer', 'nutritionist'])
-        .order('is_active', ascending: false)
-        .order('created_at', ascending: false);
+    try {
+      debugPrint('🔍 STAFF REMOTE: Fetching members for gymId=$gymId');
 
-    return response.map(_mapToStaffMember).toList();
+      final response = await _client
+          .from('memberships')
+          .select('''
+            id,
+            user_id,
+            gym_id,
+            role,
+            is_active,
+            profiles:user_id (
+              id,
+              full_name,
+              email,
+              avatar_url,
+              phone
+            )
+          ''')
+          .eq('gym_id', gymId)
+          .inFilter('role', ['trainer', 'nutritionist'])
+          .order('is_active', ascending: false)
+          .order('created_at', ascending: false);
+
+      debugPrint('✅ STAFF REMOTE: Found ${response.length} members');
+      return response.map(_mapToStaffMember).toList();
+    } catch (e, stack) {
+      debugPrint('❌ STAFF REMOTE ERROR: ${e.toString()}');
+      debugPrint('❌ STAFF REMOTE STACK: $stack');
+      rethrow;
+    }
   }
 
   /// Cuenta el staff activo de un gimnasio.
   Future<int> fetchActiveStaffCount(String gymId) async {
-    final response = await _client.rpc(
-      'get_active_staff_count',
-      params: {'p_gym_id': gymId},
-    );
-    return (response.data as int?) ?? 0;
+    try {
+      debugPrint('🔍 STAFF REMOTE: Fetching active count for gymId=$gymId');
+      final response = await _client.rpc(
+        'get_active_staff_count',
+        params: {'p_gym_id': gymId},
+      );
+      // Supabase 2.x: rpc() devuelve el valor directo, no un objeto con .data
+      final count = (response as int?) ?? 0;
+      debugPrint('✅ STAFF REMOTE: Active count = $count');
+      return count;
+    } catch (e, stack) {
+      debugPrint('❌ STAFF REMOTE COUNT ERROR: ${e.toString()}');
+      debugPrint('❌ STAFF REMOTE COUNT STACK: $stack');
+      rethrow;
+    }
   }
 
   /// Obtiene el límite de staff del gimnasio según su suscripción activa.
-  /// null = ilimitado.
   Future<int?> fetchStaffLimit(String gymId) async {
-    final response = await _client.rpc(
-      'get_staff_limit',
-      params: {'p_gym_id': gymId},
-    );
-    return response.data as int?;
+    try {
+      debugPrint('🔍 STAFF REMOTE: Fetching limit for gymId=$gymId');
+      final response = await _client.rpc(
+        'get_staff_limit',
+        params: {'p_gym_id': gymId},
+      );
+      // Supabase 2.x: rpc() devuelve el valor directo (int o null)
+      final limit = response as int?;
+      debugPrint('✅ STAFF REMOTE: Limit = $limit');
+      return limit;
+    } catch (e, stack) {
+      debugPrint('❌ STAFF REMOTE LIMIT ERROR: ${e.toString()}');
+      debugPrint('❌ STAFF REMOTE LIMIT STACK: $stack');
+      rethrow;
+    }
   }
 
   /// Activa o desactiva un miembro del staff.
   Future<void> setStaffActive(String membershipId, bool isActive) async {
-    await _client.rpc(
-      'set_staff_active',
-      params: {'p_membership_id': membershipId, 'p_is_active': isActive},
-    );
+    try {
+      debugPrint(
+        '🔍 STAFF REMOTE: Setting active=$isActive for membership=$membershipId',
+      );
+      await _client.rpc(
+        'set_staff_active',
+        params: {'p_membership_id': membershipId, 'p_is_active': isActive},
+      );
+      debugPrint('✅ STAFF REMOTE: Status updated successfully');
+    } catch (e, stack) {
+      debugPrint('❌ STAFF REMOTE SET ACTIVE ERROR: ${e.toString()}');
+      debugPrint('❌ STAFF REMOTE SET ACTIVE STACK: $stack');
+      rethrow;
+    }
   }
 
   /// Mapea la respuesta de Supabase a StaffMember.
