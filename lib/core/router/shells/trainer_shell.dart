@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../features/home/presentation/screens/trainer_home_screen.dart';
 import '../../../shared/widgets/pesao_bottom_nav.dart';
 import '../../l10n/app_strings.dart';
+import '../../providers/fab_config.dart';
 import '../../theme/app_icons.dart';
 import '../route_names.dart';
 import 'shell_scaffold.dart';
@@ -17,35 +18,53 @@ final GlobalKey<NavigatorState> _trainerRoutinesNavigatorKey =
 final GlobalKey<NavigatorState> _trainerProfileNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'trainerProfile');
 
+/// Controlador del FAB del dueño. Se accede desde cualquier pantalla del shell.
+final trainerFabController = OwnerFabController(
+  defaultConfig: const FabConfig(
+    icon: Icons.add_rounded,
+    semanticLabel: 'Nueva Rutina',
+  ),
+);
+
 /// Shell del rol ENTRENADOR.
 StatefulShellRoute buildTrainerShell() {
   return StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
       final strings = AppStrings.of(context);
 
-      return RoleShellScaffold(
-        navigationShell: navigationShell,
-        items: [
-          PesaoBottomNavItem(
-            icon: AppIcons.homeOutline,
-            activeIcon: AppIcons.home,
-            label: strings.tabHome,
-          ),
-          PesaoBottomNavItem(
-            icon: AppIcons.clientsOutline,
-            activeIcon: AppIcons.clients,
-            label: strings.tabClients,
-          ),
-          PesaoBottomNavItem(icon: AppIcons.routine, label: strings.tabRoutine),
-          PesaoBottomNavItem(
-            icon: AppIcons.profileOutline,
-            activeIcon: AppIcons.profile,
-            label: strings.tabProfile,
-          ),
-        ],
-        fabIcon: AppIcons.add,
-        fabSemanticLabel: strings.fabNewRoutine,
-        onFabPressed: () {},
+      return ListenableBuilder(
+        listenable: trainerFabController,
+        builder: (context, _) {
+          final fab = trainerFabController.current;
+
+          return RoleShellScaffold(
+            navigationShell: navigationShell,
+            items: [
+              PesaoBottomNavItem(
+                icon: AppIcons.homeOutline,
+                activeIcon: AppIcons.home,
+                label: strings.tabHome,
+              ),
+              PesaoBottomNavItem(
+                icon: AppIcons.clientsOutline,
+                activeIcon: AppIcons.clients,
+                label: strings.tabClients,
+              ),
+              PesaoBottomNavItem(
+                icon: AppIcons.routine,
+                label: strings.tabRoutine,
+              ),
+              PesaoBottomNavItem(
+                icon: AppIcons.profileOutline,
+                activeIcon: AppIcons.profile,
+                label: strings.tabProfile,
+              ),
+            ],
+            fabIcon: fab.icon,
+            fabSemanticLabel: fab.semanticLabel,
+            onFabPressed: fab.onPressed ?? () {},
+          );
+        },
       );
     },
     branches: [

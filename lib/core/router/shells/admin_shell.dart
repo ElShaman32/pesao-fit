@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pesao_fit/core/providers/fab_config.dart';
 
 import '../../../features/admin/presentation/screens/admin_home_screen.dart';
 import '../../../features/admin/presentation/screens/applications_list_screen.dart';
@@ -18,39 +19,54 @@ final GlobalKey<NavigatorState> _adminPaymentsNavigatorKey =
 final GlobalKey<NavigatorState> _adminProfileNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'adminProfile');
 
+/// Controlador del FAB del dueño. Se accede desde cualquier pantalla del shell.
+final adminFabController = OwnerFabController(
+  defaultConfig: const FabConfig(
+    icon: Icons.add_rounded,
+    semanticLabel: 'Agregar Gimnasio',
+  ),
+);
+
 /// Shell del rol SUPERADMIN (Leonel).
 StatefulShellRoute buildAdminShell() {
   return StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
       final strings = AppStrings.of(context);
 
-      return RoleShellScaffold(
-        navigationShell: navigationShell,
-        items: [
-          PesaoBottomNavItem(
-            icon: AppIcons.homeOutline,
-            activeIcon: AppIcons.home,
-            label: strings.tabHome,
-          ),
-          PesaoBottomNavItem(
-            icon: AppIcons.gymsOutline,
-            activeIcon: AppIcons.gyms,
-            label: strings.tabGyms,
-          ),
-          PesaoBottomNavItem(
-            icon: AppIcons.paymentsOutline,
-            activeIcon: AppIcons.payments,
-            label: strings.tabPayments,
-          ),
-          PesaoBottomNavItem(
-            icon: AppIcons.profileOutline,
-            activeIcon: AppIcons.profile,
-            label: strings.tabProfile,
-          ),
-        ],
-        fabIcon: AppIcons.add,
-        fabSemanticLabel: strings.fabAddGym,
-        onFabPressed: () {},
+      return ListenableBuilder(
+        listenable: adminFabController,
+        builder: (context, _) {
+          final fab = adminFabController.current;
+
+          return RoleShellScaffold(
+            navigationShell: navigationShell,
+            items: [
+              PesaoBottomNavItem(
+                icon: AppIcons.homeOutline,
+                activeIcon: AppIcons.home,
+                label: strings.tabHome,
+              ),
+              PesaoBottomNavItem(
+                icon: AppIcons.gymsOutline,
+                activeIcon: AppIcons.gyms,
+                label: strings.tabGyms,
+              ),
+              PesaoBottomNavItem(
+                icon: AppIcons.paymentsOutline,
+                activeIcon: AppIcons.payments,
+                label: strings.tabPayments,
+              ),
+              PesaoBottomNavItem(
+                icon: AppIcons.profileOutline,
+                activeIcon: AppIcons.profile,
+                label: strings.tabProfile,
+              ),
+            ],
+            fabIcon: fab.icon,
+            fabSemanticLabel: strings.fabAddGym,
+            onFabPressed: () {},
+          );
+        },
       );
     },
     branches: [
