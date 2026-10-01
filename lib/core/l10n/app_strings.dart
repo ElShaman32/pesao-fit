@@ -1405,6 +1405,132 @@ abstract class AppStrings {
   /// **'Tranquilo, suele pasar. Inténtalo de nuevo.'**
   String get nutriDashErrorBody;
 
+  /// Título de la pantalla de equipo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Mi equipo'**
+  String get staffScreenTitle;
+
+  /// Rol de entrenador en el equipo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Entrenador'**
+  String get staffRoleTrainer;
+
+  /// Rol de nutricionista en el equipo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nutricionista'**
+  String get staffRoleNutritionist;
+
+  /// Estado activo de un miembro
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Activo'**
+  String get staffStatusActive;
+
+  /// Estado inactivo de un miembro
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Inactivo'**
+  String get staffStatusInactive;
+
+  /// Acción para activar a un miembro
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Activar'**
+  String get staffActionActivate;
+
+  /// Acción para desactivar a un miembro
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Desactivar'**
+  String get staffActionDeactivate;
+
+  /// Título de la sección de cupos del equipo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cupos del equipo'**
+  String get staffLimitTitle;
+
+  /// Estado de cupos ilimitados
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cupos ilimitados'**
+  String get staffLimitUnlimited;
+
+  /// Aviso cuando los cupos están por agotarse
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¡Casi al límite!'**
+  String get staffLimitNearLimit;
+
+  /// Título estado vacío de equipo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Aún no tienes equipo'**
+  String get staffEmptyTitle;
+
+  /// Body estado vacío de equipo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Invita a tu primer entrenador o nutricionista y empieza a mover tu gimnasio 💪'**
+  String get staffEmptyBody;
+
+  /// Título estado error de equipo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No se pudo cargar el equipo'**
+  String get staffErrorTitle;
+
+  /// Body estado error de equipo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Revisa tu conexión e intenta de nuevo'**
+  String get staffErrorBody;
+
+  /// Título diálogo confirmación desactivar miembro
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¿Desactivar a esta persona?'**
+  String get staffDeactivateConfirmTitle;
+
+  /// Body diálogo confirmación desactivar miembro
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Dejará de aparecer como parte activa del equipo.'**
+  String get staffDeactivateConfirmBody;
+
+  /// Título diálogo confirmación activar miembro
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¿Activar a esta persona?'**
+  String get staffActivateConfirmTitle;
+
+  /// Body diálogo confirmación activar miembro
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Volverá a aparecer como parte activa del equipo.'**
+  String get staffActivateConfirmBody;
+
+  /// Mensaje de éxito al desactivar miembro
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Miembro desactivado'**
+  String get staffDeactivatedSuccess;
+
+  /// Mensaje de éxito al activar miembro
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Miembro activado'**
+  String get staffActivatedSuccess;
+
+  /// Mensaje de error genérico al realizar una acción
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No se pudo completar la acción'**
+  String get staffActionError;
+
   /// Aviso amable de conexión débil.
   ///
   /// In es_VE, this message translates to:

@@ -900,6 +900,90 @@
   "@nutriDashErrorBody": { 
     "description": "Body estado error nutri" 
   },
+  "staffScreenTitle": "Mi equipo",
+  "@staffScreenTitle": {
+    "description": "Título de la pantalla de equipo"
+  },
+  "staffRoleTrainer": "Entrenador",
+  "@staffRoleTrainer": {
+    "description": "Rol de entrenador en el equipo"
+  },
+  "staffRoleNutritionist": "Nutricionista",
+  "@staffRoleNutritionist": {
+    "description": "Rol de nutricionista en el equipo"
+  },
+  "staffStatusActive": "Activo",
+  "@staffStatusActive": {
+    "description": "Estado activo de un miembro"
+  },
+  "staffStatusInactive": "Inactivo",
+  "@staffStatusInactive": {
+    "description": "Estado inactivo de un miembro"
+  },
+  "staffActionActivate": "Activar",
+  "@staffActionActivate": {
+    "description": "Acción para activar a un miembro"
+  },
+  "staffActionDeactivate": "Desactivar",
+  "@staffActionDeactivate": {
+    "description": "Acción para desactivar a un miembro"
+  },
+  "staffLimitTitle": "Cupos del equipo",
+  "@staffLimitTitle": {
+    "description": "Título de la sección de cupos del equipo"
+  },
+  "staffLimitUnlimited": "Cupos ilimitados",
+  "@staffLimitUnlimited": {
+    "description": "Estado de cupos ilimitados"
+  },
+  "staffLimitNearLimit": "¡Casi al límite!",
+  "@staffLimitNearLimit": {
+    "description": "Aviso cuando los cupos están por agotarse"
+  },
+  "staffEmptyTitle": "Aún no tienes equipo",
+  "@staffEmptyTitle": {
+    "description": "Título estado vacío de equipo"
+  },
+  "staffEmptyBody": "Invita a tu primer entrenador o nutricionista y empieza a mover tu gimnasio 💪",
+  "@staffEmptyBody": {
+    "description": "Body estado vacío de equipo"
+  },
+  "staffErrorTitle": "No se pudo cargar el equipo",
+  "@staffErrorTitle": {
+    "description": "Título estado error de equipo"
+  },
+  "staffErrorBody": "Revisa tu conexión e intenta de nuevo",
+  "@staffErrorBody": {
+    "description": "Body estado error de equipo"
+  },
+  "staffDeactivateConfirmTitle": "¿Desactivar a esta persona?",
+  "@staffDeactivateConfirmTitle": {
+    "description": "Título diálogo confirmación desactivar miembro"
+  },
+  "staffDeactivateConfirmBody": "Dejará de aparecer como parte activa del equipo.",
+  "@staffDeactivateConfirmBody": {
+    "description": "Body diálogo confirmación desactivar miembro"
+  },
+  "staffActivateConfirmTitle": "¿Activar a esta persona?",
+  "@staffActivateConfirmTitle": {
+    "description": "Título diálogo confirmación activar miembro"
+  },
+  "staffActivateConfirmBody": "Volverá a aparecer como parte activa del equipo.",
+  "@staffActivateConfirmBody": {
+    "description": "Body diálogo confirmación activar miembro"
+  },
+  "staffDeactivatedSuccess": "Miembro desactivado",
+  "@staffDeactivatedSuccess": {
+    "description": "Mensaje de éxito al desactivar miembro"
+  },
+  "staffActivatedSuccess": "Miembro activado",
+  "@staffActivatedSuccess": {
+    "description": "Mensaje de éxito al activar miembro"
+  },
+  "staffActionError": "No se pudo completar la acción",
+  "@staffActionError": {
+    "description": "Mensaje de error genérico al realizar una acción"
+  },
   "signalWeak": "Parece que la señal está débil. Tus datos se guardan y se sincronizan solos 📶",
   "@signalWeak": {
     "description": "Aviso amable de conexión débil."

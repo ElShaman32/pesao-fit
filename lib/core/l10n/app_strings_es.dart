@@ -720,6 +720,72 @@ class AppStringsEs extends AppStrings {
       'Tranquilo, suele pasar. Inténtalo de nuevo.';
 
   @override
+  String get staffScreenTitle => 'Mi equipo';
+
+  @override
+  String get staffRoleTrainer => 'Entrenador';
+
+  @override
+  String get staffRoleNutritionist => 'Nutricionista';
+
+  @override
+  String get staffStatusActive => 'Activo';
+
+  @override
+  String get staffStatusInactive => 'Inactivo';
+
+  @override
+  String get staffActionActivate => 'Activar';
+
+  @override
+  String get staffActionDeactivate => 'Desactivar';
+
+  @override
+  String get staffLimitTitle => 'Cupos del equipo';
+
+  @override
+  String get staffLimitUnlimited => 'Cupos ilimitados';
+
+  @override
+  String get staffLimitNearLimit => '¡Casi al límite!';
+
+  @override
+  String get staffEmptyTitle => 'Aún no tienes equipo';
+
+  @override
+  String get staffEmptyBody =>
+      'Invita a tu primer entrenador o nutricionista y empieza a mover tu gimnasio 💪';
+
+  @override
+  String get staffErrorTitle => 'No se pudo cargar el equipo';
+
+  @override
+  String get staffErrorBody => 'Revisa tu conexión e intenta de nuevo';
+
+  @override
+  String get staffDeactivateConfirmTitle => '¿Desactivar a esta persona?';
+
+  @override
+  String get staffDeactivateConfirmBody =>
+      'Dejará de aparecer como parte activa del equipo.';
+
+  @override
+  String get staffActivateConfirmTitle => '¿Activar a esta persona?';
+
+  @override
+  String get staffActivateConfirmBody =>
+      'Volverá a aparecer como parte activa del equipo.';
+
+  @override
+  String get staffDeactivatedSuccess => 'Miembro desactivado';
+
+  @override
+  String get staffActivatedSuccess => 'Miembro activado';
+
+  @override
+  String get staffActionError => 'No se pudo completar la acción';
+
+  @override
   String get signalWeak =>
       'Parece que la señal está débil. Tus datos se guardan y se sincronizan solos 📶';
 
@@ -1522,6 +1588,72 @@ class AppStringsEsVe extends AppStringsEs {
   @override
   String get nutriDashErrorBody =>
       'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String get staffScreenTitle => 'Mi equipo';
+
+  @override
+  String get staffRoleTrainer => 'Entrenador';
+
+  @override
+  String get staffRoleNutritionist => 'Nutricionista';
+
+  @override
+  String get staffStatusActive => 'Activo';
+
+  @override
+  String get staffStatusInactive => 'Inactivo';
+
+  @override
+  String get staffActionActivate => 'Activar';
+
+  @override
+  String get staffActionDeactivate => 'Desactivar';
+
+  @override
+  String get staffLimitTitle => 'Cupos del equipo';
+
+  @override
+  String get staffLimitUnlimited => 'Cupos ilimitados';
+
+  @override
+  String get staffLimitNearLimit => '¡Casi al límite!';
+
+  @override
+  String get staffEmptyTitle => 'Aún no tienes equipo';
+
+  @override
+  String get staffEmptyBody =>
+      'Invita a tu primer entrenador o nutricionista y empieza a mover tu gimnasio 💪';
+
+  @override
+  String get staffErrorTitle => 'No se pudo cargar el equipo';
+
+  @override
+  String get staffErrorBody => 'Revisa tu conexión e intenta de nuevo';
+
+  @override
+  String get staffDeactivateConfirmTitle => '¿Desactivar a esta persona?';
+
+  @override
+  String get staffDeactivateConfirmBody =>
+      'Dejará de aparecer como parte activa del equipo.';
+
+  @override
+  String get staffActivateConfirmTitle => '¿Activar a esta persona?';
+
+  @override
+  String get staffActivateConfirmBody =>
+      'Volverá a aparecer como parte activa del equipo.';
+
+  @override
+  String get staffDeactivatedSuccess => 'Miembro desactivado';
+
+  @override
+  String get staffActivatedSuccess => 'Miembro activado';
+
+  @override
+  String get staffActionError => 'No se pudo completar la acción';
 
   @override
   String get signalWeak =>
