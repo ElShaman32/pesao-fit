@@ -1,6 +1,5 @@
 import '../../../../core/utils/result.dart';
 import '../entities/routine.dart';
-import '../entities/routine_exercise.dart';
 
 /// Contrato para gestionar rutinas del entrenador.
 abstract interface class RoutinesRepository {

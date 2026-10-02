@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../features/home/presentation/screens/trainer_home_screen.dart';
+import '../../../features/routines/presentation/screens/exercises_list_screen.dart';
+import '../../../features/routines/presentation/screens/routine_form_screen.dart';
+import '../../../features/routines/presentation/screens/routines_list_screen.dart';
 import '../../../shared/widgets/pesao_bottom_nav.dart';
 import '../../l10n/app_strings.dart';
-import '../../providers/fab_config.dart';
 import '../../theme/app_icons.dart';
 import '../route_names.dart';
 import 'shell_scaffold.dart';
@@ -18,53 +20,89 @@ final GlobalKey<NavigatorState> _trainerRoutinesNavigatorKey =
 final GlobalKey<NavigatorState> _trainerProfileNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'trainerProfile');
 
-/// Controlador del FAB del dueño. Se accede desde cualquier pantalla del shell.
-final trainerFabController = PesaoFabController(
-  defaultConfig: const FabConfig(
+/// Configuración del FAB para una ruta del entrenador.
+class _TrainerFabConfig {
+  final IconData icon;
+  final String semanticLabel;
+  final VoidCallback? onPressed;
+
+  const _TrainerFabConfig({
+    required this.icon,
+    required this.semanticLabel,
+    this.onPressed,
+  });
+}
+
+/// Deriva el FAB según la ruta visible.
+_TrainerFabConfig _trainerFabForRoute(String path, BuildContext context) {
+  final strings = AppStrings.of(context);
+
+  // Lista de rutinas: nueva rutina.
+  if (path == RouteNames.trainerRoutines) {
+    return _TrainerFabConfig(
+      icon: Icons.add_rounded,
+      semanticLabel: strings.fabCreateRoutine,
+      onPressed: () => context.push(RouteNames.trainerRoutineCreate),
+    );
+  }
+
+  // Crear/editar rutina: sin acción (el form tiene su propio botón).
+  if (path == RouteNames.trainerRoutineCreate ||
+      path.startsWith('${RouteNames.trainerRoutines}/')) {
+    return _TrainerFabConfig(
+      icon: Icons.add_rounded,
+      semanticLabel: strings.fabCreateRoutine,
+      onPressed: null,
+    );
+  }
+
+  // Lista de ejercicios: crear ejercicio personalizado.
+  if (path == RouteNames.trainerExercises) {
+    return _TrainerFabConfig(
+      icon: Icons.fitness_center_rounded,
+      semanticLabel: strings.fabCreateExercise,
+      onPressed: () => context.push(RouteNames.trainerExerciseCreate),
+    );
+  }
+
+  // Default: nueva rutina.
+  return _TrainerFabConfig(
     icon: Icons.add_rounded,
-    semanticLabel: 'Nueva Rutina',
-  ),
-);
+    semanticLabel: strings.fabCreateRoutine,
+    onPressed: null,
+  );
+}
 
 /// Shell del rol ENTRENADOR.
 StatefulShellRoute buildTrainerShell() {
   return StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
       final strings = AppStrings.of(context);
+      final fab = _trainerFabForRoute(state.uri.path, context);
 
-      return ListenableBuilder(
-        listenable: trainerFabController,
-        builder: (context, _) {
-          final fab = trainerFabController.current;
-
-          return RoleShellScaffold(
-            navigationShell: navigationShell,
-            items: [
-              PesaoBottomNavItem(
-                icon: AppIcons.homeOutline,
-                activeIcon: AppIcons.home,
-                label: strings.tabHome,
-              ),
-              PesaoBottomNavItem(
-                icon: AppIcons.clientsOutline,
-                activeIcon: AppIcons.clients,
-                label: strings.tabClients,
-              ),
-              PesaoBottomNavItem(
-                icon: AppIcons.routine,
-                label: strings.tabRoutine,
-              ),
-              PesaoBottomNavItem(
-                icon: AppIcons.profileOutline,
-                activeIcon: AppIcons.profile,
-                label: strings.tabProfile,
-              ),
-            ],
-            fabIcon: fab.icon,
-            fabSemanticLabel: fab.semanticLabel,
-            onFabPressed: fab.onPressed ?? () {},
-          );
-        },
+      return RoleShellScaffold(
+        navigationShell: navigationShell,
+        items: [
+          PesaoBottomNavItem(
+            icon: AppIcons.homeOutline,
+            activeIcon: AppIcons.home,
+            label: strings.tabHome,
+          ),
+          PesaoBottomNavItem(
+            icon: AppIcons.clientsOutline,
+            activeIcon: AppIcons.clients,
+            label: strings.tabClients,
+          ),
+          PesaoBottomNavItem(icon: AppIcons.routine, label: strings.tabRoutine),
+          PesaoBottomNavItem(
+            icon: AppIcons.profileOutline,
+            activeIcon: AppIcons.profile,
+            label: strings.tabProfile,
+          ),
+        ],
+        fabIcon: fab.icon,
+        fabSemanticLabel: fab.semanticLabel,
+        onFabPressed: fab.onPressed ?? () {},
       );
     },
     branches: [
@@ -96,9 +134,22 @@ StatefulShellRoute buildTrainerShell() {
           GoRoute(
             path: RouteNames.trainerRoutines,
             name: RouteNames.trainerRoutines,
-            builder: (context, state) => ShellPlaceholderScreen(
-              title: AppStrings.of(context).tabRoutine,
-            ),
+            builder: (context, state) => const RoutinesListScreen(),
+            routes: [
+              GoRoute(
+                path: 'create',
+                name: RouteNames.trainerRoutineCreate,
+                builder: (context, state) => const RoutineFormScreen(),
+              ),
+              GoRoute(
+                path: ':routineId',
+                name: RouteNames.trainerRoutineEdit,
+                builder: (context, state) {
+                  final routineId = state.pathParameters['routineId']!;
+                  return RoutineFormScreen(routineId: routineId);
+                },
+              ),
+            ],
           ),
         ],
       ),
@@ -111,6 +162,12 @@ StatefulShellRoute buildTrainerShell() {
             builder: (context, state) => ShellPlaceholderScreen(
               title: AppStrings.of(context).tabProfile,
             ),
+          ),
+          // Ejercicios accesibles desde la pantalla de rutinas (no en tab).
+          GoRoute(
+            path: RouteNames.trainerExercises,
+            name: RouteNames.trainerExercises,
+            builder: (context, state) => const ExercisesListScreen(),
           ),
         ],
       ),

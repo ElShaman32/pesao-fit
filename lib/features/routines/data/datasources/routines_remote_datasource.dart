@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../domain/entities/routine.dart';
-import '../../domain/entities/routine_exercise.dart';
 import '../../domain/repositories/routines_repository.dart';
 
 /// Fuente remota de rutinas.
@@ -24,9 +23,7 @@ class RoutinesRemoteDatasource {
           .eq('is_active', true)
           .order('created_at', ascending: false);
 
-      return response
-          .map((e) => Routine.fromJson(e as Map<String, dynamic>))
-          .toList();
+      return response.map((e) => Routine.fromJson(e)).toList();
     } catch (e, stack) {
       debugPrint('❌ ROUTINES fetchRoutines: $e');
       debugPrint('❌ STACK: $stack');
@@ -103,7 +100,7 @@ class RoutinesRemoteDatasource {
       }
 
       // 3) Retornar la rutina completa.
-      return fetchRoutine(routineId);
+      return await fetchRoutine(routineId);
     } catch (e, stack) {
       debugPrint('❌ ROUTINES createRoutine: $e');
       debugPrint('❌ STACK: $stack');
@@ -152,7 +149,7 @@ class RoutinesRemoteDatasource {
       }
 
       // 3) Retornar la rutina actualizada.
-      return fetchRoutine(routine.id);
+      return await fetchRoutine(routine.id);
     } catch (e, stack) {
       debugPrint('❌ ROUTINES updateRoutine: $e');
       debugPrint('❌ STACK: $stack');

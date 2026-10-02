@@ -68,7 +68,8 @@ class RoutinesController extends _$RoutinesController {
     required List<RoutineExerciseDraft> exercises,
   }) async {
     final gymId = authProvider.userGymId;
-    final trainerId = authProvider.userId;
+    // trainerId lo usa el datasource si se requiere auditoría futura.
+    // final trainerId = authProvider.userId;
 
     if (gymId == null) {
       return const Result.failure(

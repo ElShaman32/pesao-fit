@@ -27,6 +27,10 @@ abstract final class RouteNames {
   static const String trainerClients = '/trainer/clients';
   static const String trainerRoutines = '/trainer/routines';
   static const String trainerProfile = '/trainer/profile';
+  static const String trainerRoutineCreate = '/trainer/routines/create';
+  static const String trainerRoutineEdit = '/trainer/routines/:routineId';
+  static const String trainerExercises = '/trainer/exercises';
+  static const String trainerExerciseCreate = '/trainer/exercises/create';
 
   // --- Dueño ----------------------------------------------------------------
 

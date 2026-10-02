@@ -19,9 +19,7 @@ class ExercisesRemoteDatasource {
           .order('is_global', ascending: false)
           .order('name', ascending: true);
 
-      return response
-          .map((e) => Exercise.fromJson(e as Map<String, dynamic>))
-          .toList();
+      return response.map((e) => Exercise.fromJson(e)).toList();
     } catch (e, stack) {
       debugPrint('❌ EXERCISES fetchExercises: $e');
       debugPrint('❌ STACK: $stack');

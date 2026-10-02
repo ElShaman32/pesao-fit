@@ -33,7 +33,7 @@ class PesaoInput extends StatelessWidget {
     this.focusNode,
     this.autocorrect = true,
     this.textCapitalization = TextCapitalization.none,
-    this.inputFormatters, // ← AGREGAR
+    this.inputFormatters,
   });
 
   final TextEditingController? controller;
