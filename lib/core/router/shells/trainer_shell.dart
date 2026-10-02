@@ -4,8 +4,11 @@ import 'package:go_router/go_router.dart';
 import '../../../features/home/presentation/screens/trainer_home_screen.dart';
 import '../../../features/routines/presentation/screens/exercise_form_screen.dart';
 import '../../../features/routines/presentation/screens/exercises_list_screen.dart';
+import '../../../features/routines/presentation/screens/plan_week_editor_screen.dart';
 import '../../../features/routines/presentation/screens/routine_form_screen.dart';
 import '../../../features/routines/presentation/screens/routines_list_screen.dart';
+import '../../../features/routines/presentation/screens/training_plan_form_screen.dart';
+import '../../../features/routines/presentation/screens/training_plans_list_screen.dart';
 import '../../../shared/widgets/pesao_bottom_nav.dart';
 import '../../l10n/app_strings.dart';
 import '../../theme/app_icons.dart';
@@ -38,34 +41,33 @@ class _TrainerFabConfig {
 _TrainerFabConfig _trainerFabForRoute(String path, BuildContext context) {
   final strings = AppStrings.of(context);
 
-  // Lista de rutinas: nueva rutina.
+  // Lista de planes (tab Rutinas): nuevo plan.
   if (path == RouteNames.trainerRoutines) {
+    return _TrainerFabConfig(
+      icon: Icons.add_rounded,
+      semanticLabel: strings.fabCreatePlan,
+      onPressed: () => context.push(RouteNames.trainerPlanForm),
+    );
+  }
+
+  // Crear/editar plan: sin acción.
+  if (path == RouteNames.trainerPlanForm ||
+      path.startsWith('${RouteNames.trainerRoutines}/plan/')) {
+    return _TrainerFabConfig(
+      icon: Icons.add_rounded,
+      semanticLabel: strings.fabCreatePlan,
+      onPressed: null,
+    );
+  }
+
+  // Plantillas de rutina: nueva rutina.
+  if (path == RouteNames.trainerRoutineTemplates) {
     return _TrainerFabConfig(
       icon: Icons.add_rounded,
       semanticLabel: strings.fabCreateRoutine,
       onPressed: () => context.push(RouteNames.trainerRoutineCreate),
     );
   }
-
-  // Crear/editar rutina: sin acción (el form tiene su propio botón).
-  if (path == RouteNames.trainerRoutineCreate ||
-      path.startsWith('${RouteNames.trainerRoutines}/')) {
-    return _TrainerFabConfig(
-      icon: Icons.add_rounded,
-      semanticLabel: strings.fabCreateRoutine,
-      onPressed: null,
-    );
-  }
-
-  // Lista de ejercicios: crear ejercicio personalizado.
-  if (path == RouteNames.trainerExercises) {
-    return _TrainerFabConfig(
-      icon: Icons.fitness_center_rounded,
-      semanticLabel: strings.fabCreateExercise,
-      onPressed: () => context.push(RouteNames.trainerExerciseCreate),
-    );
-  }
-
   // Default: nueva rutina.
   return _TrainerFabConfig(
     icon: Icons.add_rounded,
@@ -135,20 +137,40 @@ StatefulShellRoute buildTrainerShell() {
           GoRoute(
             path: RouteNames.trainerRoutines,
             name: RouteNames.trainerRoutines,
-            builder: (context, state) => const RoutinesListScreen(),
+            builder: (context, state) => const TrainingPlansListScreen(),
             routes: [
               GoRoute(
-                path: 'create',
-                name: RouteNames.trainerRoutineCreate,
-                builder: (context, state) => const RoutineFormScreen(),
+                path: 'plan-create',
+                name: RouteNames.trainerPlanForm,
+                builder: (context, state) => const TrainingPlanFormScreen(),
               ),
               GoRoute(
-                path: ':routineId',
-                name: RouteNames.trainerRoutineEdit,
+                path: 'plan/:planId',
+                name: RouteNames.trainerPlanEdit,
                 builder: (context, state) {
-                  final routineId = state.pathParameters['routineId']!;
-                  return RoutineFormScreen(routineId: routineId);
+                  final planId = state.pathParameters['planId']!;
+                  return PlanWeekEditorScreen(planId: planId);
                 },
+              ),
+              GoRoute(
+                path: 'templates',
+                name: RouteNames.trainerRoutineTemplates,
+                builder: (context, state) => const RoutinesListScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'create',
+                    name: RouteNames.trainerRoutineCreate,
+                    builder: (context, state) => const RoutineFormScreen(),
+                  ),
+                  GoRoute(
+                    path: ':routineId',
+                    name: RouteNames.trainerRoutineEdit,
+                    builder: (context, state) {
+                      final routineId = state.pathParameters['routineId']!;
+                      return RoutineFormScreen(routineId: routineId);
+                    },
+                  ),
+                ],
               ),
             ],
           ),

@@ -2878,7 +2878,7 @@ abstract class AppStrings {
   /// No description provided for @fabCreatePlan.
   ///
   /// In es_VE, this message translates to:
-  /// **'Crear plan'**
+  /// **'Nuevo plan'**
   String get fabCreatePlan;
 
   /// No description provided for @exercisesScreenTitle.
@@ -3348,6 +3348,318 @@ abstract class AppStrings {
   /// In es_VE, this message translates to:
   /// **'Sin rutina'**
   String get clientDashPrimaryRoutineCtaNone;
+
+  /// No description provided for @plansTabTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Planes'**
+  String get plansTabTitle;
+
+  /// No description provided for @routinesTabTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Rutinas'**
+  String get routinesTabTitle;
+
+  /// No description provided for @trainingPlansScreenTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Planes de entrenamiento'**
+  String get trainingPlansScreenTitle;
+
+  /// No description provided for @trainingPlansEmptyTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Aún no tienes planes'**
+  String get trainingPlansEmptyTitle;
+
+  /// No description provided for @trainingPlansEmptyBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Crea un plan semanal para tus clientes y olvídate de asignar rutinas a diario 💪'**
+  String get trainingPlansEmptyBody;
+
+  /// No description provided for @trainingPlansErrorTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No pudimos cargar los planes'**
+  String get trainingPlansErrorTitle;
+
+  /// No description provided for @trainingPlansErrorBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tranquilo, suele pasar. Inténtalo de nuevo.'**
+  String get trainingPlansErrorBody;
+
+  /// No description provided for @trainingPlanFormCreateTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nuevo plan'**
+  String get trainingPlanFormCreateTitle;
+
+  /// No description provided for @trainingPlanFormEditTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Editar plan'**
+  String get trainingPlanFormEditTitle;
+
+  /// No description provided for @trainingPlanFormNameLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nombre del plan'**
+  String get trainingPlanFormNameLabel;
+
+  /// No description provided for @trainingPlanFormNameHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: Plan de Juan - Mes 1'**
+  String get trainingPlanFormNameHint;
+
+  /// No description provided for @trainingPlanFormNameError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El nombre es obligatorio'**
+  String get trainingPlanFormNameError;
+
+  /// No description provided for @trainingPlanFormDescriptionLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Descripción (opcional)'**
+  String get trainingPlanFormDescriptionLabel;
+
+  /// No description provided for @trainingPlanFormDescriptionHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Objetivo del plan'**
+  String get trainingPlanFormDescriptionHint;
+
+  /// No description provided for @trainingPlanFormClientLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cliente'**
+  String get trainingPlanFormClientLabel;
+
+  /// No description provided for @trainingPlanFormClientError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Selecciona un cliente'**
+  String get trainingPlanFormClientError;
+
+  /// No description provided for @trainingPlanFormSubmit.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Guardar plan'**
+  String get trainingPlanFormSubmit;
+
+  /// No description provided for @trainingPlanFormSubmitting.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Guardando...'**
+  String get trainingPlanFormSubmitting;
+
+  /// No description provided for @trainingPlanCreatedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan creado ✅'**
+  String get trainingPlanCreatedSuccess;
+
+  /// No description provided for @trainingPlanCreatedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan creado'**
+  String get trainingPlanCreatedSemantics;
+
+  /// No description provided for @trainingPlanUpdatedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan actualizado ✅'**
+  String get trainingPlanUpdatedSuccess;
+
+  /// No description provided for @trainingPlanUpdatedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan actualizado'**
+  String get trainingPlanUpdatedSemantics;
+
+  /// No description provided for @trainingPlanWeekLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Semana {number}'**
+  String trainingPlanWeekLabel(Object number);
+
+  /// No description provided for @trainingPlanWeekNameHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: Fuerza, Volumen, Descarga'**
+  String get trainingPlanWeekNameHint;
+
+  /// No description provided for @trainingPlanAddWeek.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Agregar semana'**
+  String get trainingPlanAddWeek;
+
+  /// No description provided for @trainingPlanDuplicateWeek.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Duplicar'**
+  String get trainingPlanDuplicateWeek;
+
+  /// No description provided for @trainingPlanDeleteWeek.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Eliminar'**
+  String get trainingPlanDeleteWeek;
+
+  /// No description provided for @trainingPlanWeekLimitTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Límite de semanas'**
+  String get trainingPlanWeekLimitTitle;
+
+  /// No description provided for @trainingPlanWeekLimitBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu plan actual permite hasta {limit} semanas por plan. Actualiza a Hierro para más 💪'**
+  String trainingPlanWeekLimitBody(Object limit);
+
+  /// No description provided for @trainingPlanDuplicateLockedTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Duplicar semanas'**
+  String get trainingPlanDuplicateLockedTitle;
+
+  /// No description provided for @trainingPlanDuplicateLockedBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'La duplicación de semanas está disponible desde el plan Hierro 💪'**
+  String get trainingPlanDuplicateLockedBody;
+
+  /// No description provided for @trainingPlanDayRest.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Descanso'**
+  String get trainingPlanDayRest;
+
+  /// No description provided for @trainingPlanDayEmpty.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sin rutina'**
+  String get trainingPlanDayEmpty;
+
+  /// No description provided for @trainingPlanDayAssign.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Asignar rutina'**
+  String get trainingPlanDayAssign;
+
+  /// No description provided for @trainingPlanDayNotes.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Notas del día'**
+  String get trainingPlanDayNotes;
+
+  /// No description provided for @trainingPlanDayNotesHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: Subir peso en sentadilla'**
+  String get trainingPlanDayNotesHint;
+
+  /// No description provided for @trainingPlanSelectRoutine.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Elegir rutina'**
+  String get trainingPlanSelectRoutine;
+
+  /// No description provided for @trainingPlanCurrentWeek.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Semana {current} de {total}'**
+  String trainingPlanCurrentWeek(Object current, Object total);
+
+  /// No description provided for @trainingPlanAdvanceWeek.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Avanzar semana'**
+  String get trainingPlanAdvanceWeek;
+
+  /// No description provided for @trainingPlanClientViewTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Mi plan'**
+  String get trainingPlanClientViewTitle;
+
+  /// No description provided for @trainingPlanClientEmptyTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sin plan de entrenamiento'**
+  String get trainingPlanClientEmptyTitle;
+
+  /// No description provided for @trainingPlanClientEmptyBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu entrenador aún no te arma un plan. Cuando lo haga, aparece aquí 💪'**
+  String get trainingPlanClientEmptyBody;
+
+  /// No description provided for @trainingPlanClientToday.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Hoy'**
+  String get trainingPlanClientToday;
+
+  /// No description provided for @trainingPlanActiveBadge.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Activo'**
+  String get trainingPlanActiveBadge;
+
+  /// No description provided for @trainingPlanInactiveBadge.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Inactivo'**
+  String get trainingPlanInactiveBadge;
+
+  /// No description provided for @dayMonday.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Lunes'**
+  String get dayMonday;
+
+  /// No description provided for @dayTuesday.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Martes'**
+  String get dayTuesday;
+
+  /// No description provided for @dayWednesday.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Miércoles'**
+  String get dayWednesday;
+
+  /// No description provided for @dayThursday.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Jueves'**
+  String get dayThursday;
+
+  /// No description provided for @dayFriday.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Viernes'**
+  String get dayFriday;
+
+  /// No description provided for @daySaturday.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sábado'**
+  String get daySaturday;
+
+  /// No description provided for @daySunday.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Domingo'**
+  String get daySunday;
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {

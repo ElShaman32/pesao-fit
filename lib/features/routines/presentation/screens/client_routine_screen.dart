@@ -12,46 +12,45 @@ import '../../../../shared/widgets/offline_banner.dart';
 import '../../../../shared/widgets/pesao_app_bar.dart';
 import '../../../../shared/widgets/pesao_card.dart';
 import '../../../../shared/widgets/pesao_shell.dart';
-import '../../domain/entities/exercise.dart';
-import '../../domain/entities/routine.dart';
-import '../../domain/entities/routine_exercise.dart';
-import '../providers/client_routine_controller.dart';
-import '../widgets/muscle_group_chip.dart';
+import '../../domain/entities/training_plan.dart';
+import '../../domain/entities/training_plan_day.dart';
+import '../providers/client_training_plan_controller.dart';
 
-/// Pantalla de la rutina asignada al cliente (tab Rutina).
+/// Pantalla del plan de entrenamiento del cliente (tab Rutina).
 class ClientRoutineScreen extends ConsumerWidget {
   const ClientRoutineScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppStrings.of(context);
-    final routineAsync = ref.watch(clientRoutineControllerProvider);
+    final planAsync = ref.watch(clientTrainingPlanControllerProvider);
     final connectivityAsync = ref.watch(connectivityProvider);
     final isOnline = connectivityAsync.value ?? true;
 
     return PesaoShell(
-      appBar: PesaoAppBar(title: l10n.clientRoutineScreenTitle),
+      appBar: PesaoAppBar(title: l10n.trainingPlanClientViewTitle),
       body: Column(
         children: [
           if (!isOnline) const OfflineBanner(),
           Expanded(
-            child: routineAsync.when(
-              data: (routine) {
-                if (routine == null) {
+            child: planAsync.when(
+              data: (plan) {
+                if (plan == null) {
                   return EmptyState(
-                    title: l10n.clientRoutineEmptyTitle,
-                    body: l10n.clientRoutineEmptyBody,
-                    icon: Icons.fitness_center_rounded,
+                    title: l10n.trainingPlanClientEmptyTitle,
+                    body: l10n.trainingPlanClientEmptyBody,
+                    icon: Icons.calendar_month_rounded,
                   );
                 }
-                return _RoutineView(routine: routine);
+                return _ClientPlanView(plan: plan);
               },
-              loading: () => const _RoutineSkeleton(),
+              loading: () => const Center(child: CircularProgressIndicator()),
               error: (_, _) => ErrorState(
-                title: l10n.clientRoutineErrorTitle,
-                body: l10n.clientRoutineErrorBody,
-                onRetry: () =>
-                    ref.read(clientRoutineControllerProvider.notifier).load(),
+                title: l10n.trainingPlansErrorTitle,
+                body: l10n.trainingPlansErrorBody,
+                onRetry: () => ref
+                    .read(clientTrainingPlanControllerProvider.notifier)
+                    .load(),
               ),
             ),
           ),
@@ -61,25 +60,33 @@ class ClientRoutineScreen extends ConsumerWidget {
   }
 }
 
-class _RoutineView extends ConsumerWidget {
-  final Routine routine;
+class _ClientPlanView extends ConsumerWidget {
+  final TrainingPlan plan;
 
-  const _RoutineView({required this.routine});
+  const _ClientPlanView({required this.plan});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppStrings.of(context);
 
+    // Encontrar la semana actual.
+    final currentWeek = plan.weeks
+        .where((w) => w.weekNumber == plan.currentWeek)
+        .firstOrNull;
+
+    // Día actual de la semana (1=Lunes ... 7=Domingo).
+    final today = DateTime.now().weekday;
+
     return RefreshIndicator(
       color: AppColors.primary,
       backgroundColor: AppColors.surface,
       onRefresh: () =>
-          ref.read(clientRoutineControllerProvider.notifier).load(),
+          ref.read(clientTrainingPlanControllerProvider.notifier).load(),
       child: ListView(
         padding: const EdgeInsets.all(AppDimens.l),
         physics: const AlwaysScrollableScrollPhysics(),
         children: [
-          // Header de la rutina.
+          // Header del plan.
           PesaoCard(
             child: Padding(
               padding: const EdgeInsets.all(AppDimens.l),
@@ -87,39 +94,20 @@ class _RoutineView extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    routine.name,
+                    plan.name,
                     style: AppTypography.headline.copyWith(
                       color: AppColors.textPrimary,
                     ),
                   ),
-                  if (routine.description != null &&
-                      routine.description!.isNotEmpty) ...[
-                    const SizedBox(height: AppDimens.s),
-                    Text(
-                      routine.description!,
-                      style: AppTypography.body.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
+                  const SizedBox(height: AppDimens.s),
+                  Text(
+                    l10n.trainingPlanCurrentWeek(
+                      plan.currentWeek,
+                      plan.weeks.length,
                     ),
-                  ],
-                  const SizedBox(height: AppDimens.m),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.fitness_center_rounded,
-                        size: 16,
-                        color: AppColors.textSecondary,
-                      ),
-                      const SizedBox(width: AppDimens.xs),
-                      Text(
-                        l10n.clientRoutineExerciseCount(
-                          routine.exercises.length,
-                        ),
-                        style: AppTypography.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ],
+                    style: AppTypography.body.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                 ],
               ),
@@ -127,161 +115,138 @@ class _RoutineView extends ConsumerWidget {
           ),
           const SizedBox(height: AppDimens.l),
 
-          // Lista de ejercicios.
-          ...routine.exercises.map(
-            (exercise) => Padding(
-              padding: const EdgeInsets.only(bottom: AppDimens.s),
-              child: _ExerciseCard(exercise: exercise),
+          // Días de la semana actual.
+          if (currentWeek != null)
+            ...List.generate(7, (index) {
+              final dayOfWeek = index + 1;
+              final day = currentWeek.days
+                  .where((d) => d.dayOfWeek == dayOfWeek)
+                  .firstOrNull;
+              final isToday = dayOfWeek == today;
+
+              return Padding(
+                padding: const EdgeInsets.only(bottom: AppDimens.s),
+                child: _ClientDayCard(
+                  dayLabel: _dayLabel(context, dayOfWeek),
+                  day: day,
+                  isToday: isToday,
+                ),
+              );
+            })
+          else
+            Padding(
+              padding: const EdgeInsets.all(AppDimens.xl),
+              child: Text(
+                'Semana ${plan.currentWeek} no encontrada',
+                style: AppTypography.body.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
           const SizedBox(height: AppDimens.xxl),
         ],
       ),
     );
   }
+
+  String _dayLabel(BuildContext context, int dayOfWeek) {
+    final l10n = AppStrings.of(context);
+    return switch (dayOfWeek) {
+      1 => l10n.dayMonday,
+      2 => l10n.dayTuesday,
+      3 => l10n.dayWednesday,
+      4 => l10n.dayThursday,
+      5 => l10n.dayFriday,
+      6 => l10n.daySaturday,
+      7 => l10n.daySunday,
+      _ => '',
+    };
+  }
 }
 
-class _ExerciseCard extends StatelessWidget {
-  final RoutineExercise exercise;
+class _ClientDayCard extends StatelessWidget {
+  final String dayLabel;
+  final TrainingPlanDay? day;
+  final bool isToday;
 
-  const _ExerciseCard({required this.exercise});
+  const _ClientDayCard({
+    required this.dayLabel,
+    required this.day,
+    required this.isToday,
+  });
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppStrings.of(context);
 
-    return PesaoCard(
-      child: Padding(
-        padding: const EdgeInsets.all(AppDimens.l),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header: nombre + chip de grupo muscular.
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    exercise.exerciseName ?? 'Ejercicio',
-                    style: AppTypography.title.copyWith(
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                ),
-                if (exercise.exerciseMuscleGroup != null)
-                  MuscleGroupChip(
-                    group: MuscleGroup.fromDb(exercise.exerciseMuscleGroup),
-                    compact: true,
-                  ),
-              ],
-            ),
-            const SizedBox(height: AppDimens.m),
+    final String subtitle;
+    final Color subtitleColor;
 
-            // Parámetros del ejercicio.
-            Wrap(
-              spacing: AppDimens.m,
-              runSpacing: AppDimens.s,
-              children: [
-                _ParameterBadge(
-                  label: l10n.clientRoutineExerciseSets(exercise.sets),
-                ),
-                if (exercise.reps != null)
-                  _ParameterBadge(
-                    label: l10n.clientRoutineExerciseReps(exercise.reps!),
-                  ),
-                if (exercise.weightKg != null)
-                  _ParameterBadge(
-                    label: l10n.clientRoutineExerciseWeight(
-                      exercise.weightKg!.toStringAsFixed(1),
-                    ),
-                  ),
-                _ParameterBadge(
-                  label: l10n.clientRoutineExerciseRest(exercise.restSeconds),
-                ),
-              ],
-            ),
+    if (day == null) {
+      subtitle = l10n.trainingPlanDayEmpty;
+      subtitleColor = AppColors.textDisabled;
+    } else if (day!.isRestDay) {
+      subtitle = l10n.trainingPlanDayRest;
+      subtitleColor = AppColors.textSecondary;
+    } else if (day!.hasRoutine) {
+      final count = day!.exerciseCount;
+      subtitle = count != null
+          ? '${day!.routineName} · $count ejercicios'
+          : day!.routineName ?? '';
+      subtitleColor = AppColors.textPrimary;
+    } else {
+      subtitle = l10n.trainingPlanDayEmpty;
+      subtitleColor = AppColors.textDisabled;
+    }
 
-            // Notas.
-            if (exercise.notes != null && exercise.notes!.isNotEmpty) ...[
-              const SizedBox(height: AppDimens.m),
-              Text(
-                l10n.clientRoutineExerciseNotes,
-                style: AppTypography.label.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-              ),
-              const SizedBox(height: AppDimens.xs),
-              Text(
-                exercise.notes!,
-                style: AppTypography.bodySmall.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ],
-          ],
+    return Container(
+      padding: const EdgeInsets.all(AppDimens.l),
+      decoration: BoxDecoration(
+        color: isToday
+            ? AppColors.primary.withValues(alpha: 0.08)
+            : AppColors.surface,
+        borderRadius: AppDimens.cardBorderRadius,
+        border: Border.all(
+          color: isToday ? AppColors.primary : AppColors.outline,
+          width: isToday ? 2 : 1,
         ),
       ),
-    );
-  }
-}
-
-class _ParameterBadge extends StatelessWidget {
-  final String label;
-
-  const _ParameterBadge({required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppDimens.m,
-        vertical: AppDimens.xs,
-      ),
-      decoration: const BoxDecoration(
-        color: AppColors.surfaceHigh,
-        borderRadius: AppDimens.pillBorderRadius,
-      ),
-      child: Text(
-        label,
-        style: AppTypography.label.copyWith(color: AppColors.textPrimary),
-      ),
-    );
-  }
-}
-
-class _RoutineSkeleton extends StatelessWidget {
-  const _RoutineSkeleton();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(AppDimens.l),
-      child: Column(
+      child: Row(
         children: [
-          _SkeletonBox(height: 120),
-          SizedBox(height: AppDimens.l),
-          _SkeletonBox(height: 100),
-          SizedBox(height: AppDimens.s),
-          _SkeletonBox(height: 100),
-          SizedBox(height: AppDimens.s),
-          _SkeletonBox(height: 100),
+          SizedBox(
+            width: 90,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  dayLabel,
+                  style: AppTypography.label.copyWith(
+                    color: isToday
+                        ? AppColors.primaryText
+                        : AppColors.textSecondary,
+                  ),
+                ),
+                if (isToday)
+                  Text(
+                    l10n.trainingPlanClientToday,
+                    style: AppTypography.label.copyWith(
+                      color: AppColors.primaryText,
+                      fontSize: 10,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Text(
+              subtitle,
+              style: AppTypography.body.copyWith(color: subtitleColor),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
-      ),
-    );
-  }
-}
-
-class _SkeletonBox extends StatelessWidget {
-  const _SkeletonBox({required this.height});
-  final double height;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppDimens.cardBorderRadius,
-        border: Border.all(color: AppColors.outline),
       ),
     );
   }

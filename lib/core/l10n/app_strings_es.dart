@@ -1498,7 +1498,7 @@ class AppStringsEs extends AppStrings {
   String get ownerClientNoPlan => 'Sin plan asignado';
 
   @override
-  String get fabCreatePlan => 'Crear plan';
+  String get fabCreatePlan => 'Nuevo plan';
 
   @override
   String get exercisesScreenTitle => 'Ejercicios';
@@ -1749,6 +1749,172 @@ class AppStringsEs extends AppStrings {
 
   @override
   String get clientDashPrimaryRoutineCtaNone => 'Sin rutina';
+
+  @override
+  String get plansTabTitle => 'Planes';
+
+  @override
+  String get routinesTabTitle => 'Rutinas';
+
+  @override
+  String get trainingPlansScreenTitle => 'Planes de entrenamiento';
+
+  @override
+  String get trainingPlansEmptyTitle => 'Aún no tienes planes';
+
+  @override
+  String get trainingPlansEmptyBody =>
+      'Crea un plan semanal para tus clientes y olvídate de asignar rutinas a diario 💪';
+
+  @override
+  String get trainingPlansErrorTitle => 'No pudimos cargar los planes';
+
+  @override
+  String get trainingPlansErrorBody =>
+      'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String get trainingPlanFormCreateTitle => 'Nuevo plan';
+
+  @override
+  String get trainingPlanFormEditTitle => 'Editar plan';
+
+  @override
+  String get trainingPlanFormNameLabel => 'Nombre del plan';
+
+  @override
+  String get trainingPlanFormNameHint => 'Ej: Plan de Juan - Mes 1';
+
+  @override
+  String get trainingPlanFormNameError => 'El nombre es obligatorio';
+
+  @override
+  String get trainingPlanFormDescriptionLabel => 'Descripción (opcional)';
+
+  @override
+  String get trainingPlanFormDescriptionHint => 'Objetivo del plan';
+
+  @override
+  String get trainingPlanFormClientLabel => 'Cliente';
+
+  @override
+  String get trainingPlanFormClientError => 'Selecciona un cliente';
+
+  @override
+  String get trainingPlanFormSubmit => 'Guardar plan';
+
+  @override
+  String get trainingPlanFormSubmitting => 'Guardando...';
+
+  @override
+  String get trainingPlanCreatedSuccess => 'Plan creado ✅';
+
+  @override
+  String get trainingPlanCreatedSemantics => 'Plan creado';
+
+  @override
+  String get trainingPlanUpdatedSuccess => 'Plan actualizado ✅';
+
+  @override
+  String get trainingPlanUpdatedSemantics => 'Plan actualizado';
+
+  @override
+  String trainingPlanWeekLabel(Object number) {
+    return 'Semana $number';
+  }
+
+  @override
+  String get trainingPlanWeekNameHint => 'Ej: Fuerza, Volumen, Descarga';
+
+  @override
+  String get trainingPlanAddWeek => 'Agregar semana';
+
+  @override
+  String get trainingPlanDuplicateWeek => 'Duplicar';
+
+  @override
+  String get trainingPlanDeleteWeek => 'Eliminar';
+
+  @override
+  String get trainingPlanWeekLimitTitle => 'Límite de semanas';
+
+  @override
+  String trainingPlanWeekLimitBody(Object limit) {
+    return 'Tu plan actual permite hasta $limit semanas por plan. Actualiza a Hierro para más 💪';
+  }
+
+  @override
+  String get trainingPlanDuplicateLockedTitle => 'Duplicar semanas';
+
+  @override
+  String get trainingPlanDuplicateLockedBody =>
+      'La duplicación de semanas está disponible desde el plan Hierro 💪';
+
+  @override
+  String get trainingPlanDayRest => 'Descanso';
+
+  @override
+  String get trainingPlanDayEmpty => 'Sin rutina';
+
+  @override
+  String get trainingPlanDayAssign => 'Asignar rutina';
+
+  @override
+  String get trainingPlanDayNotes => 'Notas del día';
+
+  @override
+  String get trainingPlanDayNotesHint => 'Ej: Subir peso en sentadilla';
+
+  @override
+  String get trainingPlanSelectRoutine => 'Elegir rutina';
+
+  @override
+  String trainingPlanCurrentWeek(Object current, Object total) {
+    return 'Semana $current de $total';
+  }
+
+  @override
+  String get trainingPlanAdvanceWeek => 'Avanzar semana';
+
+  @override
+  String get trainingPlanClientViewTitle => 'Mi plan';
+
+  @override
+  String get trainingPlanClientEmptyTitle => 'Sin plan de entrenamiento';
+
+  @override
+  String get trainingPlanClientEmptyBody =>
+      'Tu entrenador aún no te arma un plan. Cuando lo haga, aparece aquí 💪';
+
+  @override
+  String get trainingPlanClientToday => 'Hoy';
+
+  @override
+  String get trainingPlanActiveBadge => 'Activo';
+
+  @override
+  String get trainingPlanInactiveBadge => 'Inactivo';
+
+  @override
+  String get dayMonday => 'Lunes';
+
+  @override
+  String get dayTuesday => 'Martes';
+
+  @override
+  String get dayWednesday => 'Miércoles';
+
+  @override
+  String get dayThursday => 'Jueves';
+
+  @override
+  String get dayFriday => 'Viernes';
+
+  @override
+  String get daySaturday => 'Sábado';
+
+  @override
+  String get daySunday => 'Domingo';
 }
 
 /// The translations for Spanish Castilian, as used in Venezuela (`es_VE`).
@@ -3245,7 +3411,7 @@ class AppStringsEsVe extends AppStringsEs {
   String get ownerClientNoPlan => 'Sin plan asignado';
 
   @override
-  String get fabCreatePlan => 'Crear plan';
+  String get fabCreatePlan => 'Nuevo plan';
 
   @override
   String get exercisesScreenTitle => 'Ejercicios';
@@ -3496,4 +3662,170 @@ class AppStringsEsVe extends AppStringsEs {
 
   @override
   String get clientDashPrimaryRoutineCtaNone => 'Sin rutina';
+
+  @override
+  String get plansTabTitle => 'Planes';
+
+  @override
+  String get routinesTabTitle => 'Rutinas';
+
+  @override
+  String get trainingPlansScreenTitle => 'Planes de entrenamiento';
+
+  @override
+  String get trainingPlansEmptyTitle => 'Aún no tienes planes';
+
+  @override
+  String get trainingPlansEmptyBody =>
+      'Crea un plan semanal para tus clientes y olvídate de asignar rutinas a diario 💪';
+
+  @override
+  String get trainingPlansErrorTitle => 'No pudimos cargar los planes';
+
+  @override
+  String get trainingPlansErrorBody =>
+      'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String get trainingPlanFormCreateTitle => 'Nuevo plan';
+
+  @override
+  String get trainingPlanFormEditTitle => 'Editar plan';
+
+  @override
+  String get trainingPlanFormNameLabel => 'Nombre del plan';
+
+  @override
+  String get trainingPlanFormNameHint => 'Ej: Plan de Juan - Mes 1';
+
+  @override
+  String get trainingPlanFormNameError => 'El nombre es obligatorio';
+
+  @override
+  String get trainingPlanFormDescriptionLabel => 'Descripción (opcional)';
+
+  @override
+  String get trainingPlanFormDescriptionHint => 'Objetivo del plan';
+
+  @override
+  String get trainingPlanFormClientLabel => 'Cliente';
+
+  @override
+  String get trainingPlanFormClientError => 'Selecciona un cliente';
+
+  @override
+  String get trainingPlanFormSubmit => 'Guardar plan';
+
+  @override
+  String get trainingPlanFormSubmitting => 'Guardando...';
+
+  @override
+  String get trainingPlanCreatedSuccess => 'Plan creado ✅';
+
+  @override
+  String get trainingPlanCreatedSemantics => 'Plan creado';
+
+  @override
+  String get trainingPlanUpdatedSuccess => 'Plan actualizado ✅';
+
+  @override
+  String get trainingPlanUpdatedSemantics => 'Plan actualizado';
+
+  @override
+  String trainingPlanWeekLabel(Object number) {
+    return 'Semana $number';
+  }
+
+  @override
+  String get trainingPlanWeekNameHint => 'Ej: Fuerza, Volumen, Descarga';
+
+  @override
+  String get trainingPlanAddWeek => 'Agregar semana';
+
+  @override
+  String get trainingPlanDuplicateWeek => 'Duplicar';
+
+  @override
+  String get trainingPlanDeleteWeek => 'Eliminar';
+
+  @override
+  String get trainingPlanWeekLimitTitle => 'Límite de semanas';
+
+  @override
+  String trainingPlanWeekLimitBody(Object limit) {
+    return 'Tu plan actual permite hasta $limit semanas por plan. Actualiza a Hierro para más 💪';
+  }
+
+  @override
+  String get trainingPlanDuplicateLockedTitle => 'Duplicar semanas';
+
+  @override
+  String get trainingPlanDuplicateLockedBody =>
+      'La duplicación de semanas está disponible desde el plan Hierro 💪';
+
+  @override
+  String get trainingPlanDayRest => 'Descanso';
+
+  @override
+  String get trainingPlanDayEmpty => 'Sin rutina';
+
+  @override
+  String get trainingPlanDayAssign => 'Asignar rutina';
+
+  @override
+  String get trainingPlanDayNotes => 'Notas del día';
+
+  @override
+  String get trainingPlanDayNotesHint => 'Ej: Subir peso en sentadilla';
+
+  @override
+  String get trainingPlanSelectRoutine => 'Elegir rutina';
+
+  @override
+  String trainingPlanCurrentWeek(Object current, Object total) {
+    return 'Semana $current de $total';
+  }
+
+  @override
+  String get trainingPlanAdvanceWeek => 'Avanzar semana';
+
+  @override
+  String get trainingPlanClientViewTitle => 'Mi plan';
+
+  @override
+  String get trainingPlanClientEmptyTitle => 'Sin plan de entrenamiento';
+
+  @override
+  String get trainingPlanClientEmptyBody =>
+      'Tu entrenador aún no te arma un plan. Cuando lo haga, aparece aquí 💪';
+
+  @override
+  String get trainingPlanClientToday => 'Hoy';
+
+  @override
+  String get trainingPlanActiveBadge => 'Activo';
+
+  @override
+  String get trainingPlanInactiveBadge => 'Inactivo';
+
+  @override
+  String get dayMonday => 'Lunes';
+
+  @override
+  String get dayTuesday => 'Martes';
+
+  @override
+  String get dayWednesday => 'Miércoles';
+
+  @override
+  String get dayThursday => 'Jueves';
+
+  @override
+  String get dayFriday => 'Viernes';
+
+  @override
+  String get daySaturday => 'Sábado';
+
+  @override
+  String get daySunday => 'Domingo';
 }
