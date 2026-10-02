@@ -20,6 +20,7 @@ abstract final class RouteNames {
   static const String clientRoutine = '/client/routine';
   static const String clientNutrition = '/client/nutrition';
   static const String clientProfile = '/client/profile';
+  static const String clientWorkout = '/client/routine/workout/:workoutId';
 
   // --- Entrenador -----------------------------------------------------------
 

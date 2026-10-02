@@ -15,6 +15,7 @@ import '../../../../shared/widgets/pesao_shell.dart';
 import '../../domain/entities/training_plan.dart';
 import '../../domain/entities/training_plan_day.dart';
 import '../providers/client_training_plan_controller.dart';
+import '../widgets/start_workout_button.dart';
 
 /// Pantalla del plan de entrenamiento del cliente (tab Rutina).
 class ClientRoutineScreen extends ConsumerWidget {
@@ -200,6 +201,8 @@ class _ClientDayCard extends StatelessWidget {
       subtitleColor = AppColors.textDisabled;
     }
 
+    final showStart = isToday && day != null && day!.hasRoutine;
+
     return Container(
       padding: const EdgeInsets.all(AppDimens.l),
       decoration: BoxDecoration(
@@ -212,40 +215,52 @@ class _ClientDayCard extends StatelessWidget {
           width: isToday ? 2 : 1,
         ),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 90,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  dayLabel,
-                  style: AppTypography.label.copyWith(
-                    color: isToday
-                        ? AppColors.primaryText
-                        : AppColors.textSecondary,
-                  ),
-                ),
-                if (isToday)
-                  Text(
-                    l10n.trainingPlanClientToday,
-                    style: AppTypography.label.copyWith(
-                      color: AppColors.primaryText,
-                      fontSize: 10,
+          Row(
+            children: [
+              SizedBox(
+                width: 90,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      dayLabel,
+                      style: AppTypography.label.copyWith(
+                        color: isToday
+                            ? AppColors.primaryText
+                            : AppColors.textSecondary,
+                      ),
                     ),
-                  ),
-              ],
-            ),
+                    if (isToday)
+                      Text(
+                        l10n.trainingPlanClientToday,
+                        style: AppTypography.label.copyWith(
+                          color: AppColors.primaryText,
+                          fontSize: 10,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  subtitle,
+                  style: AppTypography.body.copyWith(color: subtitleColor),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: Text(
-              subtitle,
-              style: AppTypography.body.copyWith(color: subtitleColor),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+          if (showStart) ...[
+            const SizedBox(height: AppDimens.m),
+            Align(
+              alignment: Alignment.centerRight,
+              child: StartWorkoutButton(routineId: day!.routineId!),
             ),
-          ),
+          ],
         ],
       ),
     );

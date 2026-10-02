@@ -1445,5 +1445,45 @@
   "dayFriday": "Viernes",
   "daySaturday": "Sábado",
   "daySunday": "Domingo",
-  "fabCreatePlan": "Nuevo plan"
+  "fabCreatePlan": "Nuevo plan",
+  "workoutScreenTitle": "Entreno en curso",
+  "workoutStartCta": "Comenzar",
+  "workoutStartSemantics": "Comenzar entrenamiento",
+  "workoutFinishCta": "Terminar entreno",
+  "workoutFinishConfirmTitle": "¿Terminar entreno?",
+  "workoutFinishConfirmBody": "Vas a guardar tu progreso. Podrás verlo en tu historial 💪",
+  "workoutStartedSuccess": "¡A darle! Entreno iniciado 🔥",
+  "workoutStartedSemantics": "Entreno iniciado",
+  "workoutFinishedSuccess": "¡Entreno completado! Buen trabajo ✅",
+  "workoutFinishedSemantics": "Entreno completado",
+  "workoutSetsProgress": "{done} de {total} series",
+  "@workoutSetsProgress": {
+    "placeholders": {
+      "done": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "workoutRestTitle": "Descanso",
+  "workoutRestSubtitle": "Recupera el aliento, que viene la próxima 💪",
+  "workoutRestSkip": "Saltar",
+  "workoutRestAddMinute": "+1 min",
+  "workoutRestDone": "¡A darle!",
+  "workoutAlreadyActiveTitle": "Ya tienes un entreno en curso",
+  "workoutAlreadyActiveBody": "Te llevamos a donde lo dejaste 💪",
+  "workoutErrorTitle": "No pudimos cargar tu entreno",
+  "workoutEmptyTitle": "Este entreno no tiene series",
+  "workoutEmptyBody": "Pídele a tu coach que le agregue ejercicios 💪",
+  "workoutErrorBody": "Tranquilo, suele pasar. Inténtalo de nuevo.",
+  "workoutSetWeight": "{kg} kg",
+  "@workoutSetWeight": {
+    "placeholders": {"kg": {"type": "String"}}
+  },
+  "workoutSetReps": "{reps} reps",
+  "@workoutSetReps": {
+    "placeholders": {"reps": {"type": "int"}}
+  },
+  "workoutDurationMinutes": "{minutes} min",
+  "@workoutDurationMinutes": {
+    "placeholders": {"minutes": {"type": "int"}}
+  }
 }

@@ -1915,6 +1915,92 @@ class AppStringsEs extends AppStrings {
 
   @override
   String get daySunday => 'Domingo';
+
+  @override
+  String get workoutScreenTitle => 'Entreno en curso';
+
+  @override
+  String get workoutStartCta => 'Comenzar';
+
+  @override
+  String get workoutStartSemantics => 'Comenzar entrenamiento';
+
+  @override
+  String get workoutFinishCta => 'Terminar entreno';
+
+  @override
+  String get workoutFinishConfirmTitle => '¿Terminar entreno?';
+
+  @override
+  String get workoutFinishConfirmBody =>
+      'Vas a guardar tu progreso. Podrás verlo en tu historial 💪';
+
+  @override
+  String get workoutStartedSuccess => '¡A darle! Entreno iniciado 🔥';
+
+  @override
+  String get workoutStartedSemantics => 'Entreno iniciado';
+
+  @override
+  String get workoutFinishedSuccess => '¡Entreno completado! Buen trabajo ✅';
+
+  @override
+  String get workoutFinishedSemantics => 'Entreno completado';
+
+  @override
+  String workoutSetsProgress(int done, int total) {
+    return '$done de $total series';
+  }
+
+  @override
+  String get workoutRestTitle => 'Descanso';
+
+  @override
+  String get workoutRestSubtitle =>
+      'Recupera el aliento, que viene la próxima 💪';
+
+  @override
+  String get workoutRestSkip => 'Saltar';
+
+  @override
+  String get workoutRestAddMinute => '+1 min';
+
+  @override
+  String get workoutRestDone => '¡A darle!';
+
+  @override
+  String get workoutAlreadyActiveTitle => 'Ya tienes un entreno en curso';
+
+  @override
+  String get workoutAlreadyActiveBody => 'Te llevamos a donde lo dejaste 💪';
+
+  @override
+  String get workoutErrorTitle => 'No pudimos cargar tu entreno';
+
+  @override
+  String get workoutEmptyTitle => 'Este entreno no tiene series';
+
+  @override
+  String get workoutEmptyBody =>
+      'Pídele a tu coach que le agregue ejercicios 💪';
+
+  @override
+  String get workoutErrorBody => 'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String workoutSetWeight(String kg) {
+    return '$kg kg';
+  }
+
+  @override
+  String workoutSetReps(int reps) {
+    return '$reps reps';
+  }
+
+  @override
+  String workoutDurationMinutes(int minutes) {
+    return '$minutes min';
+  }
 }
 
 /// The translations for Spanish Castilian, as used in Venezuela (`es_VE`).
@@ -3828,4 +3914,90 @@ class AppStringsEsVe extends AppStringsEs {
 
   @override
   String get daySunday => 'Domingo';
+
+  @override
+  String get workoutScreenTitle => 'Entreno en curso';
+
+  @override
+  String get workoutStartCta => 'Comenzar';
+
+  @override
+  String get workoutStartSemantics => 'Comenzar entrenamiento';
+
+  @override
+  String get workoutFinishCta => 'Terminar entreno';
+
+  @override
+  String get workoutFinishConfirmTitle => '¿Terminar entreno?';
+
+  @override
+  String get workoutFinishConfirmBody =>
+      'Vas a guardar tu progreso. Podrás verlo en tu historial 💪';
+
+  @override
+  String get workoutStartedSuccess => '¡A darle! Entreno iniciado 🔥';
+
+  @override
+  String get workoutStartedSemantics => 'Entreno iniciado';
+
+  @override
+  String get workoutFinishedSuccess => '¡Entreno completado! Buen trabajo ✅';
+
+  @override
+  String get workoutFinishedSemantics => 'Entreno completado';
+
+  @override
+  String workoutSetsProgress(int done, int total) {
+    return '$done de $total series';
+  }
+
+  @override
+  String get workoutRestTitle => 'Descanso';
+
+  @override
+  String get workoutRestSubtitle =>
+      'Recupera el aliento, que viene la próxima 💪';
+
+  @override
+  String get workoutRestSkip => 'Saltar';
+
+  @override
+  String get workoutRestAddMinute => '+1 min';
+
+  @override
+  String get workoutRestDone => '¡A darle!';
+
+  @override
+  String get workoutAlreadyActiveTitle => 'Ya tienes un entreno en curso';
+
+  @override
+  String get workoutAlreadyActiveBody => 'Te llevamos a donde lo dejaste 💪';
+
+  @override
+  String get workoutErrorTitle => 'No pudimos cargar tu entreno';
+
+  @override
+  String get workoutEmptyTitle => 'Este entreno no tiene series';
+
+  @override
+  String get workoutEmptyBody =>
+      'Pídele a tu coach que le agregue ejercicios 💪';
+
+  @override
+  String get workoutErrorBody => 'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String workoutSetWeight(String kg) {
+    return '$kg kg';
+  }
+
+  @override
+  String workoutSetReps(int reps) {
+    return '$reps reps';
+  }
+
+  @override
+  String workoutDurationMinutes(int minutes) {
+    return '$minutes min';
+  }
 }

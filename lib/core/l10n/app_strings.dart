@@ -3660,6 +3660,156 @@ abstract class AppStrings {
   /// In es_VE, this message translates to:
   /// **'Domingo'**
   String get daySunday;
+
+  /// No description provided for @workoutScreenTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Entreno en curso'**
+  String get workoutScreenTitle;
+
+  /// No description provided for @workoutStartCta.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Comenzar'**
+  String get workoutStartCta;
+
+  /// No description provided for @workoutStartSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Comenzar entrenamiento'**
+  String get workoutStartSemantics;
+
+  /// No description provided for @workoutFinishCta.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Terminar entreno'**
+  String get workoutFinishCta;
+
+  /// No description provided for @workoutFinishConfirmTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¿Terminar entreno?'**
+  String get workoutFinishConfirmTitle;
+
+  /// No description provided for @workoutFinishConfirmBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Vas a guardar tu progreso. Podrás verlo en tu historial 💪'**
+  String get workoutFinishConfirmBody;
+
+  /// No description provided for @workoutStartedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¡A darle! Entreno iniciado 🔥'**
+  String get workoutStartedSuccess;
+
+  /// No description provided for @workoutStartedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Entreno iniciado'**
+  String get workoutStartedSemantics;
+
+  /// No description provided for @workoutFinishedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¡Entreno completado! Buen trabajo ✅'**
+  String get workoutFinishedSuccess;
+
+  /// No description provided for @workoutFinishedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Entreno completado'**
+  String get workoutFinishedSemantics;
+
+  /// No description provided for @workoutSetsProgress.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{done} de {total} series'**
+  String workoutSetsProgress(int done, int total);
+
+  /// No description provided for @workoutRestTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Descanso'**
+  String get workoutRestTitle;
+
+  /// No description provided for @workoutRestSubtitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Recupera el aliento, que viene la próxima 💪'**
+  String get workoutRestSubtitle;
+
+  /// No description provided for @workoutRestSkip.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Saltar'**
+  String get workoutRestSkip;
+
+  /// No description provided for @workoutRestAddMinute.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'+1 min'**
+  String get workoutRestAddMinute;
+
+  /// No description provided for @workoutRestDone.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¡A darle!'**
+  String get workoutRestDone;
+
+  /// No description provided for @workoutAlreadyActiveTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ya tienes un entreno en curso'**
+  String get workoutAlreadyActiveTitle;
+
+  /// No description provided for @workoutAlreadyActiveBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Te llevamos a donde lo dejaste 💪'**
+  String get workoutAlreadyActiveBody;
+
+  /// No description provided for @workoutErrorTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No pudimos cargar tu entreno'**
+  String get workoutErrorTitle;
+
+  /// No description provided for @workoutEmptyTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Este entreno no tiene series'**
+  String get workoutEmptyTitle;
+
+  /// No description provided for @workoutEmptyBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pídele a tu coach que le agregue ejercicios 💪'**
+  String get workoutEmptyBody;
+
+  /// No description provided for @workoutErrorBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tranquilo, suele pasar. Inténtalo de nuevo.'**
+  String get workoutErrorBody;
+
+  /// No description provided for @workoutSetWeight.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{kg} kg'**
+  String workoutSetWeight(String kg);
+
+  /// No description provided for @workoutSetReps.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{reps} reps'**
+  String workoutSetReps(int reps);
+
+  /// No description provided for @workoutDurationMinutes.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{minutes} min'**
+  String workoutDurationMinutes(int minutes);
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {
