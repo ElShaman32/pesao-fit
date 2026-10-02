@@ -17,6 +17,7 @@ import '../../../../shared/widgets/pesao_button.dart';
 import '../../../../shared/widgets/pesao_card.dart';
 import '../../../../shared/widgets/pesao_shell.dart';
 import '../../../../shared/widgets/pesao_toast.dart';
+import '../../../memberships/presentation/widgets/assign_plan_sheet.dart';
 import '../providers/clients_providers.dart';
 
 /// Pantalla de detalle de cliente.
@@ -102,6 +103,29 @@ class ClientDetailScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: AppDimens.xl),
 
+                    // Plan del cliente.
+                    Text(
+                      l10n.ownerClientPlanSection,
+                      style: AppTypography.title.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: AppDimens.m),
+                    PesaoButton(
+                      label: l10n.assignPlanAssignCta,
+                      variant: PesaoButtonVariant.secondary,
+                      icon: Icons.playlist_add_rounded,
+                      onPressed: () async {
+                        final result = await showAssignPlanSheet(
+                          context,
+                          userId: client.userId,
+                          gymId: client.gymId,
+                        );
+                        if (result && context.mounted) {
+                          // Refrescar si es necesario.
+                        }
+                      },
+                    ),
                     // Botón activar/desactivar.
                     PesaoButton(
                       label: client.isActive

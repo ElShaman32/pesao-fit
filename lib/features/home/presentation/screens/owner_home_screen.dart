@@ -16,6 +16,7 @@ import '../../../../shared/widgets/pesao_card.dart';
 import '../../../../shared/widgets/pesao_stat_card.dart';
 import '../../../../shared/widgets/section_header.dart';
 import '../../../gym/presentation/providers/staff_providers.dart';
+import '../../../memberships/presentation/providers/membership_plans_controller.dart';
 import '../../domain/entities/owner_dashboard_stats.dart';
 import '../providers/owner_dashboard_controller.dart';
 
@@ -140,7 +141,9 @@ class _OwnerSkeletonSliver extends StatelessWidget {
           const SizedBox(height: AppDimens.xl),
           const _SkeletonBox(height: 160),
           const SizedBox(height: AppDimens.xl),
-          const _SkeletonBox(height: 80), // Nuevo skeleton para staff
+          const _SkeletonBox(height: 80),
+          const SizedBox(height: AppDimens.xl),
+          const _SkeletonBox(height: 80),
           const SizedBox(height: AppDimens.xl),
           const _SkeletonBox(height: 24),
           const SizedBox(height: AppDimens.m),
@@ -271,6 +274,10 @@ class _OwnerSuccessSliver extends StatelessWidget {
 
           // === NUEVO: Resumen de Mi Equipo ===
           const _OwnerStaffSummaryCard(),
+          const SizedBox(height: AppDimens.xl),
+
+          // === NUEVO: Resumen de Planes del Gimnasio ===
+          const _OwnerPlansSummaryCard(),
           const SizedBox(height: AppDimens.xl),
 
           // Sección últimos clientes
@@ -451,6 +458,96 @@ class _OwnerStaffSummaryCard extends ConsumerWidget {
 
 class _StaffSummarySkeleton extends StatelessWidget {
   const _StaffSummarySkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 80,
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: AppDimens.cardBorderRadius,
+        border: Border.all(color: AppColors.outline),
+      ),
+    );
+  }
+}
+// ============================================================================
+// WIDGET AUXILIAR PARA PLANES EN DASHBOARD
+// ============================================================================
+
+/// Card resumen de "Planes del gimnasio" en el dashboard del dueño.
+///
+/// Muestra el conteo de planes activos y ofrece navegación a la lista completa.
+class _OwnerPlansSummaryCard extends ConsumerWidget {
+  const _OwnerPlansSummaryCard();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppStrings.of(context);
+    final plansAsync = ref.watch(membershipPlansControllerProvider);
+
+    return plansAsync.when(
+      data: (plans) {
+        final activeCount = plans.where((p) => p.isActive).length;
+        final totalCount = plans.length;
+
+        return PesaoCard(
+          child: Padding(
+            padding: const EdgeInsets.all(AppDimens.l),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(AppDimens.m),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.1),
+                    borderRadius: AppDimens.cardBorderRadius,
+                  ),
+                  child: const Icon(
+                    Icons.playlist_add_rounded,
+                    color: AppColors.primary,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: AppDimens.m),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n.plansScreenTitle,
+                        style: AppTypography.title.copyWith(
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '$activeCount ${totalCount == 1 ? "plan activo" : "planes activos"}',
+                        style: AppTypography.bodySmall.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                PesaoButton(
+                  label: l10n.commonSeeAll,
+                  variant: PesaoButtonVariant.secondary,
+                  isExpanded: false,
+                  onPressed: () => context.push(RouteNames.ownerPlans),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      loading: () => const _PlansSummarySkeleton(),
+      error: (_, _) => const SizedBox.shrink(),
+    );
+  }
+}
+
+class _PlansSummarySkeleton extends StatelessWidget {
+  const _PlansSummarySkeleton();
 
   @override
   Widget build(BuildContext context) {

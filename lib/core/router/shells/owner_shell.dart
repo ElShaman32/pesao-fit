@@ -7,6 +7,8 @@ import '../../../features/clients/presentation/screens/clients_list_screen.dart'
 import '../../../features/gym/presentation/screens/staff_add_screen.dart';
 import '../../../features/gym/presentation/screens/staff_list_screen.dart';
 import '../../../features/home/presentation/screens/owner_home_screen.dart';
+import '../../../features/memberships/presentation/screens/membership_plan_form_screen.dart';
+import '../../../features/memberships/presentation/screens/membership_plans_screen.dart';
 import '../../../features/payments/presentation/screens/payment_detail_screen.dart';
 import '../../../features/payments/presentation/screens/payments_list_screen.dart';
 import '../../../shared/widgets/pesao_bottom_nav.dart';
@@ -104,6 +106,15 @@ _OwnerFabConfig _ownerFabForRoute(String path, BuildContext context) {
     );
   }
 
+  // Planes del gimnasio.
+  if (path == RouteNames.ownerPlans) {
+    return _OwnerFabConfig(
+      icon: Icons.playlist_add_rounded,
+      semanticLabel: strings.fabCreatePlan,
+      onPressed: () => context.pushNamed(RouteNames.ownerPlanCreate),
+    );
+  }
+
   // Default: agregar cliente.
   return _OwnerFabConfig(
     icon: AppIcons.add,
@@ -168,6 +179,16 @@ StatefulShellRoute buildOwnerShell() {
             path: RouteNames.ownerStaffAdd,
             name: RouteNames.ownerStaffAdd,
             builder: (context, state) => const StaffAddScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.ownerPlans,
+            name: RouteNames.ownerPlans,
+            builder: (context, state) => const MembershipPlansScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.ownerPlanCreate,
+            name: RouteNames.ownerPlanCreate,
+            builder: (context, state) => const MembershipPlanFormScreen(),
           ),
         ],
       ),

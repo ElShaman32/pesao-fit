@@ -2496,6 +2496,390 @@ abstract class AppStrings {
   /// In es_VE, this message translates to:
   /// **'Subir pago'**
   String get clientDashUploadFab;
+
+  /// No description provided for @plansScreenTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Planes del gimnasio'**
+  String get plansScreenTitle;
+
+  /// No description provided for @plansEmptyTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Aún no tienes planes'**
+  String get plansEmptyTitle;
+
+  /// No description provided for @plansEmptyBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Crea tu primer plan para que tus clientes elijan cuánto pagar 💪'**
+  String get plansEmptyBody;
+
+  /// No description provided for @plansCreateFab.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Crear plan'**
+  String get plansCreateFab;
+
+  /// No description provided for @plansErrorTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No pudimos cargar los planes'**
+  String get plansErrorTitle;
+
+  /// No description provided for @plansErrorBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tranquilo, suele pasar. Inténtalo de nuevo.'**
+  String get plansErrorBody;
+
+  /// No description provided for @planFormCreateTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Crear plan'**
+  String get planFormCreateTitle;
+
+  /// No description provided for @planFormEditTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Editar plan'**
+  String get planFormEditTitle;
+
+  /// No description provided for @planFormNameLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nombre del plan'**
+  String get planFormNameLabel;
+
+  /// No description provided for @planFormNameHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: Con Coach'**
+  String get planFormNameHint;
+
+  /// No description provided for @planFormNameError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El nombre es obligatorio'**
+  String get planFormNameError;
+
+  /// No description provided for @planFormDescriptionLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Descripción (opcional)'**
+  String get planFormDescriptionLabel;
+
+  /// No description provided for @planFormDescriptionHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Qué incluye este plan'**
+  String get planFormDescriptionHint;
+
+  /// No description provided for @planFormPriceLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Precio en USD'**
+  String get planFormPriceLabel;
+
+  /// No description provided for @planFormPriceHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: 30'**
+  String get planFormPriceHint;
+
+  /// No description provided for @planFormPriceError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El precio debe ser mayor a cero'**
+  String get planFormPriceError;
+
+  /// No description provided for @planFormDurationLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Duración (días)'**
+  String get planFormDurationLabel;
+
+  /// No description provided for @planFormDurationHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: 30'**
+  String get planFormDurationHint;
+
+  /// No description provided for @planFormDurationError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'La duración debe ser al menos 1 día'**
+  String get planFormDurationError;
+
+  /// No description provided for @planFormIncludesTrainer.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Incluye entrenador personal'**
+  String get planFormIncludesTrainer;
+
+  /// No description provided for @planFormIncludesNutritionist.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Incluye nutricionista'**
+  String get planFormIncludesNutritionist;
+
+  /// No description provided for @planFormSubmit.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Guardar plan'**
+  String get planFormSubmit;
+
+  /// No description provided for @planFormSubmitting.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Guardando...'**
+  String get planFormSubmitting;
+
+  /// No description provided for @planCreatedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan creado ✅'**
+  String get planCreatedSuccess;
+
+  /// No description provided for @planCreatedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan creado'**
+  String get planCreatedSemantics;
+
+  /// No description provided for @planUpdatedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan actualizado ✅'**
+  String get planUpdatedSuccess;
+
+  /// No description provided for @planUpdatedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan actualizado'**
+  String get planUpdatedSemantics;
+
+  /// No description provided for @planLimitReachedTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Límite de planes alcanzado'**
+  String get planLimitReachedTitle;
+
+  /// No description provided for @planLimitReachedBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu plan actual no permite más planes. Actualiza a Hierro para crear más.'**
+  String get planLimitReachedBody;
+
+  /// No description provided for @planDeactivateConfirmTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¿Desactivar este plan?'**
+  String get planDeactivateConfirmTitle;
+
+  /// No description provided for @planDeactivateConfirmBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Los clientes actuales lo mantienen, pero no se podrá asignar a nuevos clientes.'**
+  String get planDeactivateConfirmBody;
+
+  /// No description provided for @planDeactivatedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan desactivado'**
+  String get planDeactivatedSuccess;
+
+  /// No description provided for @planDeactivatedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan desactivado'**
+  String get planDeactivatedSemantics;
+
+  /// No description provided for @planActiveBadge.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Activo'**
+  String get planActiveBadge;
+
+  /// No description provided for @planInactiveBadge.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Inactivo'**
+  String get planInactiveBadge;
+
+  /// No description provided for @planPerMonth.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'/mes'**
+  String get planPerMonth;
+
+  /// No description provided for @planDurationDays.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{days} días'**
+  String planDurationDays(Object days);
+
+  /// No description provided for @subscriptionCardTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu plan'**
+  String get subscriptionCardTitle;
+
+  /// No description provided for @subscriptionCardNoPlanTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sin plan asignado'**
+  String get subscriptionCardNoPlanTitle;
+
+  /// No description provided for @subscriptionCardNoPlanBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu gimnasio aún no te asigna un plan. Pregúntale al dueño 💪'**
+  String get subscriptionCardNoPlanBody;
+
+  /// No description provided for @subscriptionBalanceOwed.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Debes'**
+  String get subscriptionBalanceOwed;
+
+  /// No description provided for @subscriptionBalancePaid.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Estás al día'**
+  String get subscriptionBalancePaid;
+
+  /// No description provided for @subscriptionBalanceCredit.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tienes a favor'**
+  String get subscriptionBalanceCredit;
+
+  /// No description provided for @subscriptionExpiresLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Vence'**
+  String get subscriptionExpiresLabel;
+
+  /// No description provided for @subscriptionPayCta.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pagar'**
+  String get subscriptionPayCta;
+
+  /// No description provided for @subscriptionStatusActive.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Activo'**
+  String get subscriptionStatusActive;
+
+  /// No description provided for @subscriptionStatusExpired.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Vencido'**
+  String get subscriptionStatusExpired;
+
+  /// No description provided for @subscriptionStatusSuspended.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Suspendido'**
+  String get subscriptionStatusSuspended;
+
+  /// No description provided for @assignPlanTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Asignar plan'**
+  String get assignPlanTitle;
+
+  /// No description provided for @assignPlanSubtitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Elige el plan para este cliente'**
+  String get assignPlanSubtitle;
+
+  /// No description provided for @assignPlanNoPlansTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No tienes planes creados'**
+  String get assignPlanNoPlansTitle;
+
+  /// No description provided for @assignPlanNoPlansBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Primero crea un plan en la sección de planes.'**
+  String get assignPlanNoPlansBody;
+
+  /// No description provided for @assignPlanConfirm.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Asignar'**
+  String get assignPlanConfirm;
+
+  /// No description provided for @assignPlanSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan asignado ✅'**
+  String get assignPlanSuccess;
+
+  /// No description provided for @assignPlanSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan asignado'**
+  String get assignPlanSemantics;
+
+  /// No description provided for @assignPlanCurrentLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan actual'**
+  String get assignPlanCurrentLabel;
+
+  /// No description provided for @assignPlanChangeCta.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cambiar plan'**
+  String get assignPlanChangeCta;
+
+  /// No description provided for @assignPlanAssignCta.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Asignar plan'**
+  String get assignPlanAssignCta;
+
+  /// No description provided for @uploadPaymentPlanLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan'**
+  String get uploadPaymentPlanLabel;
+
+  /// No description provided for @uploadPaymentBalanceLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Saldo pendiente'**
+  String get uploadPaymentBalanceLabel;
+
+  /// No description provided for @uploadPaymentCreditLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Saldo a favor'**
+  String get uploadPaymentCreditLabel;
+
+  /// No description provided for @ownerClientPlanSection.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan del cliente'**
+  String get ownerClientPlanSection;
+
+  /// No description provided for @ownerClientNoPlan.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sin plan asignado'**
+  String get ownerClientNoPlan;
+
+  /// No description provided for @fabCreatePlan.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Crear plan'**
+  String get fabCreatePlan;
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {

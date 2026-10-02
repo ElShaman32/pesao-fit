@@ -7,6 +7,7 @@ class UploadPaymentRequest {
   final double amountUsd;
   final double rateUsed;
   final Uint8List receiptBytes;
+  final String? subscriptionId;
 
   const UploadPaymentRequest({
     required this.gymId,
@@ -14,5 +15,6 @@ class UploadPaymentRequest {
     required this.amountUsd,
     required this.rateUsed,
     required this.receiptBytes,
+    this.subscriptionId,
   });
 }

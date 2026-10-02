@@ -12,6 +12,7 @@ import '../../../../shared/widgets/pesao_avatar.dart';
 import '../../../../shared/widgets/pesao_button.dart';
 import '../../../../shared/widgets/pesao_stat_card.dart';
 import '../../../../shared/widgets/section_header.dart';
+import '../../../memberships/presentation/widgets/subscription_card.dart';
 import '../../../payments/presentation/screens/upload_payment_sheet.dart';
 import '../../domain/entities/client_dashboard_stats.dart';
 import '../providers/client_dashboard_controller.dart';
@@ -240,6 +241,12 @@ class _SuccessSliver extends StatelessWidget {
         delegate: SliverChildListDelegate([
           _StatsRow(stats: stats),
           const SizedBox(height: AppDimens.xl),
+          SubscriptionCard(
+            onPay: () async {
+              await showUploadPaymentSheet(context);
+            },
+          ),
+          const SizedBox(height: AppDimens.xl),
           _PrimaryCard(stats: stats),
           const SizedBox(height: AppDimens.xl),
           SectionHeader(
@@ -382,18 +389,6 @@ class _PrimaryCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppDimens.m),
-          Align(
-            alignment: Alignment.centerRight,
-            child: PesaoButton(
-              label: l10n.clientDashPrimaryCtaUpload,
-              variant: PesaoButtonVariant.secondary,
-              icon: Icons.upload_file_rounded,
-              isExpanded: false,
-              onPressed: () async {
-                await showUploadPaymentSheet(context);
-              },
-            ),
-          ),
         ],
       ),
     );

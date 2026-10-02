@@ -1300,6 +1300,205 @@ class AppStringsEs extends AppStrings {
 
   @override
   String get clientDashUploadFab => 'Subir pago';
+
+  @override
+  String get plansScreenTitle => 'Planes del gimnasio';
+
+  @override
+  String get plansEmptyTitle => 'Aún no tienes planes';
+
+  @override
+  String get plansEmptyBody =>
+      'Crea tu primer plan para que tus clientes elijan cuánto pagar 💪';
+
+  @override
+  String get plansCreateFab => 'Crear plan';
+
+  @override
+  String get plansErrorTitle => 'No pudimos cargar los planes';
+
+  @override
+  String get plansErrorBody => 'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String get planFormCreateTitle => 'Crear plan';
+
+  @override
+  String get planFormEditTitle => 'Editar plan';
+
+  @override
+  String get planFormNameLabel => 'Nombre del plan';
+
+  @override
+  String get planFormNameHint => 'Ej: Con Coach';
+
+  @override
+  String get planFormNameError => 'El nombre es obligatorio';
+
+  @override
+  String get planFormDescriptionLabel => 'Descripción (opcional)';
+
+  @override
+  String get planFormDescriptionHint => 'Qué incluye este plan';
+
+  @override
+  String get planFormPriceLabel => 'Precio en USD';
+
+  @override
+  String get planFormPriceHint => 'Ej: 30';
+
+  @override
+  String get planFormPriceError => 'El precio debe ser mayor a cero';
+
+  @override
+  String get planFormDurationLabel => 'Duración (días)';
+
+  @override
+  String get planFormDurationHint => 'Ej: 30';
+
+  @override
+  String get planFormDurationError => 'La duración debe ser al menos 1 día';
+
+  @override
+  String get planFormIncludesTrainer => 'Incluye entrenador personal';
+
+  @override
+  String get planFormIncludesNutritionist => 'Incluye nutricionista';
+
+  @override
+  String get planFormSubmit => 'Guardar plan';
+
+  @override
+  String get planFormSubmitting => 'Guardando...';
+
+  @override
+  String get planCreatedSuccess => 'Plan creado ✅';
+
+  @override
+  String get planCreatedSemantics => 'Plan creado';
+
+  @override
+  String get planUpdatedSuccess => 'Plan actualizado ✅';
+
+  @override
+  String get planUpdatedSemantics => 'Plan actualizado';
+
+  @override
+  String get planLimitReachedTitle => 'Límite de planes alcanzado';
+
+  @override
+  String get planLimitReachedBody =>
+      'Tu plan actual no permite más planes. Actualiza a Hierro para crear más.';
+
+  @override
+  String get planDeactivateConfirmTitle => '¿Desactivar este plan?';
+
+  @override
+  String get planDeactivateConfirmBody =>
+      'Los clientes actuales lo mantienen, pero no se podrá asignar a nuevos clientes.';
+
+  @override
+  String get planDeactivatedSuccess => 'Plan desactivado';
+
+  @override
+  String get planDeactivatedSemantics => 'Plan desactivado';
+
+  @override
+  String get planActiveBadge => 'Activo';
+
+  @override
+  String get planInactiveBadge => 'Inactivo';
+
+  @override
+  String get planPerMonth => '/mes';
+
+  @override
+  String planDurationDays(Object days) {
+    return '$days días';
+  }
+
+  @override
+  String get subscriptionCardTitle => 'Tu plan';
+
+  @override
+  String get subscriptionCardNoPlanTitle => 'Sin plan asignado';
+
+  @override
+  String get subscriptionCardNoPlanBody =>
+      'Tu gimnasio aún no te asigna un plan. Pregúntale al dueño 💪';
+
+  @override
+  String get subscriptionBalanceOwed => 'Debes';
+
+  @override
+  String get subscriptionBalancePaid => 'Estás al día';
+
+  @override
+  String get subscriptionBalanceCredit => 'Tienes a favor';
+
+  @override
+  String get subscriptionExpiresLabel => 'Vence';
+
+  @override
+  String get subscriptionPayCta => 'Pagar';
+
+  @override
+  String get subscriptionStatusActive => 'Activo';
+
+  @override
+  String get subscriptionStatusExpired => 'Vencido';
+
+  @override
+  String get subscriptionStatusSuspended => 'Suspendido';
+
+  @override
+  String get assignPlanTitle => 'Asignar plan';
+
+  @override
+  String get assignPlanSubtitle => 'Elige el plan para este cliente';
+
+  @override
+  String get assignPlanNoPlansTitle => 'No tienes planes creados';
+
+  @override
+  String get assignPlanNoPlansBody =>
+      'Primero crea un plan en la sección de planes.';
+
+  @override
+  String get assignPlanConfirm => 'Asignar';
+
+  @override
+  String get assignPlanSuccess => 'Plan asignado ✅';
+
+  @override
+  String get assignPlanSemantics => 'Plan asignado';
+
+  @override
+  String get assignPlanCurrentLabel => 'Plan actual';
+
+  @override
+  String get assignPlanChangeCta => 'Cambiar plan';
+
+  @override
+  String get assignPlanAssignCta => 'Asignar plan';
+
+  @override
+  String get uploadPaymentPlanLabel => 'Plan';
+
+  @override
+  String get uploadPaymentBalanceLabel => 'Saldo pendiente';
+
+  @override
+  String get uploadPaymentCreditLabel => 'Saldo a favor';
+
+  @override
+  String get ownerClientPlanSection => 'Plan del cliente';
+
+  @override
+  String get ownerClientNoPlan => 'Sin plan asignado';
+
+  @override
+  String get fabCreatePlan => 'Crear plan';
 }
 
 /// The translations for Spanish Castilian, as used in Venezuela (`es_VE`).
@@ -2598,4 +2797,203 @@ class AppStringsEsVe extends AppStringsEs {
 
   @override
   String get clientDashUploadFab => 'Subir pago';
+
+  @override
+  String get plansScreenTitle => 'Planes del gimnasio';
+
+  @override
+  String get plansEmptyTitle => 'Aún no tienes planes';
+
+  @override
+  String get plansEmptyBody =>
+      'Crea tu primer plan para que tus clientes elijan cuánto pagar 💪';
+
+  @override
+  String get plansCreateFab => 'Crear plan';
+
+  @override
+  String get plansErrorTitle => 'No pudimos cargar los planes';
+
+  @override
+  String get plansErrorBody => 'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String get planFormCreateTitle => 'Crear plan';
+
+  @override
+  String get planFormEditTitle => 'Editar plan';
+
+  @override
+  String get planFormNameLabel => 'Nombre del plan';
+
+  @override
+  String get planFormNameHint => 'Ej: Con Coach';
+
+  @override
+  String get planFormNameError => 'El nombre es obligatorio';
+
+  @override
+  String get planFormDescriptionLabel => 'Descripción (opcional)';
+
+  @override
+  String get planFormDescriptionHint => 'Qué incluye este plan';
+
+  @override
+  String get planFormPriceLabel => 'Precio en USD';
+
+  @override
+  String get planFormPriceHint => 'Ej: 30';
+
+  @override
+  String get planFormPriceError => 'El precio debe ser mayor a cero';
+
+  @override
+  String get planFormDurationLabel => 'Duración (días)';
+
+  @override
+  String get planFormDurationHint => 'Ej: 30';
+
+  @override
+  String get planFormDurationError => 'La duración debe ser al menos 1 día';
+
+  @override
+  String get planFormIncludesTrainer => 'Incluye entrenador personal';
+
+  @override
+  String get planFormIncludesNutritionist => 'Incluye nutricionista';
+
+  @override
+  String get planFormSubmit => 'Guardar plan';
+
+  @override
+  String get planFormSubmitting => 'Guardando...';
+
+  @override
+  String get planCreatedSuccess => 'Plan creado ✅';
+
+  @override
+  String get planCreatedSemantics => 'Plan creado';
+
+  @override
+  String get planUpdatedSuccess => 'Plan actualizado ✅';
+
+  @override
+  String get planUpdatedSemantics => 'Plan actualizado';
+
+  @override
+  String get planLimitReachedTitle => 'Límite de planes alcanzado';
+
+  @override
+  String get planLimitReachedBody =>
+      'Tu plan actual no permite más planes. Actualiza a Hierro para crear más.';
+
+  @override
+  String get planDeactivateConfirmTitle => '¿Desactivar este plan?';
+
+  @override
+  String get planDeactivateConfirmBody =>
+      'Los clientes actuales lo mantienen, pero no se podrá asignar a nuevos clientes.';
+
+  @override
+  String get planDeactivatedSuccess => 'Plan desactivado';
+
+  @override
+  String get planDeactivatedSemantics => 'Plan desactivado';
+
+  @override
+  String get planActiveBadge => 'Activo';
+
+  @override
+  String get planInactiveBadge => 'Inactivo';
+
+  @override
+  String get planPerMonth => '/mes';
+
+  @override
+  String planDurationDays(Object days) {
+    return '$days días';
+  }
+
+  @override
+  String get subscriptionCardTitle => 'Tu plan';
+
+  @override
+  String get subscriptionCardNoPlanTitle => 'Sin plan asignado';
+
+  @override
+  String get subscriptionCardNoPlanBody =>
+      'Tu gimnasio aún no te asigna un plan. Pregúntale al dueño 💪';
+
+  @override
+  String get subscriptionBalanceOwed => 'Debes';
+
+  @override
+  String get subscriptionBalancePaid => 'Estás al día';
+
+  @override
+  String get subscriptionBalanceCredit => 'Tienes a favor';
+
+  @override
+  String get subscriptionExpiresLabel => 'Vence';
+
+  @override
+  String get subscriptionPayCta => 'Pagar';
+
+  @override
+  String get subscriptionStatusActive => 'Activo';
+
+  @override
+  String get subscriptionStatusExpired => 'Vencido';
+
+  @override
+  String get subscriptionStatusSuspended => 'Suspendido';
+
+  @override
+  String get assignPlanTitle => 'Asignar plan';
+
+  @override
+  String get assignPlanSubtitle => 'Elige el plan para este cliente';
+
+  @override
+  String get assignPlanNoPlansTitle => 'No tienes planes creados';
+
+  @override
+  String get assignPlanNoPlansBody =>
+      'Primero crea un plan en la sección de planes.';
+
+  @override
+  String get assignPlanConfirm => 'Asignar';
+
+  @override
+  String get assignPlanSuccess => 'Plan asignado ✅';
+
+  @override
+  String get assignPlanSemantics => 'Plan asignado';
+
+  @override
+  String get assignPlanCurrentLabel => 'Plan actual';
+
+  @override
+  String get assignPlanChangeCta => 'Cambiar plan';
+
+  @override
+  String get assignPlanAssignCta => 'Asignar plan';
+
+  @override
+  String get uploadPaymentPlanLabel => 'Plan';
+
+  @override
+  String get uploadPaymentBalanceLabel => 'Saldo pendiente';
+
+  @override
+  String get uploadPaymentCreditLabel => 'Saldo a favor';
+
+  @override
+  String get ownerClientPlanSection => 'Plan del cliente';
+
+  @override
+  String get ownerClientNoPlan => 'Sin plan asignado';
+
+  @override
+  String get fabCreatePlan => 'Crear plan';
 }

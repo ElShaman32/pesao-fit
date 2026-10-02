@@ -30,6 +30,7 @@ class ClientPaymentsRemoteDatasource {
     required double amountUsd,
     required double rateUsed,
     required Uint8List receiptBytes,
+    String? subscriptionId, // ← NUEVO
   }) async {
     try {
       final paymentId = const Uuid().v4();
@@ -59,6 +60,7 @@ class ClientPaymentsRemoteDatasource {
             'receipt_url': uploadResult.secureUrl,
             'status': 'pending',
             'payment_kind': 'client_membership',
+            'subscription_id': subscriptionId, // ← NUEVO
           })
           .select('''
             id,
