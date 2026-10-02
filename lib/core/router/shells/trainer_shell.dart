@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../features/home/presentation/screens/trainer_home_screen.dart';
+import '../../../features/routines/presentation/screens/exercise_form_screen.dart';
 import '../../../features/routines/presentation/screens/exercises_list_screen.dart';
 import '../../../features/routines/presentation/screens/routine_form_screen.dart';
 import '../../../features/routines/presentation/screens/routines_list_screen.dart';
@@ -163,11 +164,17 @@ StatefulShellRoute buildTrainerShell() {
               title: AppStrings.of(context).tabProfile,
             ),
           ),
-          // Ejercicios accesibles desde la pantalla de rutinas (no en tab).
           GoRoute(
             path: RouteNames.trainerExercises,
             name: RouteNames.trainerExercises,
             builder: (context, state) => const ExercisesListScreen(),
+            routes: [
+              GoRoute(
+                path: 'create',
+                name: RouteNames.trainerExerciseCreate,
+                builder: (context, state) => const ExerciseFormScreen(),
+              ),
+            ],
           ),
         ],
       ),
