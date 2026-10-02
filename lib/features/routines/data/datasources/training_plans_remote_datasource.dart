@@ -185,7 +185,7 @@ class TrainingPlansRemoteDatasource {
         'routine_id': routineId,
         'is_rest_day': isRestDay,
         'notes': notes,
-      });
+      }, onConflict: 'week_id,day_of_week');
     } catch (e) {
       debugPrint('❌ TPLANS assignDay: $e');
       rethrow;

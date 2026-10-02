@@ -27,13 +27,15 @@ abstract final class RouteNames {
   static const String trainerClients = '/trainer/clients';
   static const String trainerRoutines = '/trainer/routines';
   static const String trainerProfile = '/trainer/profile';
-  static const String trainerRoutineCreate = '/trainer/routines/create';
-  static const String trainerRoutineEdit = '/trainer/routines/:routineId';
-  static const String trainerExercises = '/trainer/exercises';
-  static const String trainerExerciseCreate = '/trainer/exercises/create';
   static const String trainerPlanForm = '/trainer/routines/plan-create';
   static const String trainerPlanEdit = '/trainer/routines/plan/:planId';
   static const String trainerRoutineTemplates = '/trainer/routines/templates';
+  static const String trainerRoutineCreate =
+      '/trainer/routines/templates/create';
+  static const String trainerRoutineEdit =
+      '/trainer/routines/templates/:routineId';
+  static const String trainerExercises = '/trainer/exercises';
+  static const String trainerExerciseCreate = '/trainer/exercises/create';
 
   // --- Dueño ----------------------------------------------------------------
 

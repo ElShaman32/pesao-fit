@@ -68,6 +68,36 @@ _TrainerFabConfig _trainerFabForRoute(String path, BuildContext context) {
       onPressed: () => context.push(RouteNames.trainerRoutineCreate),
     );
   }
+
+  // Crear/editar rutina: sin acción (el form tiene su propio botón).
+  if (path == RouteNames.trainerRoutineCreate ||
+      path.startsWith('${RouteNames.trainerRoutineTemplates}/')) {
+    return _TrainerFabConfig(
+      icon: Icons.add_rounded,
+      semanticLabel: strings.fabCreateRoutine,
+      onPressed: null,
+    );
+  }
+
+  // Lista de ejercicios: crear ejercicio personalizado.
+  if (path == RouteNames.trainerExercises) {
+    return _TrainerFabConfig(
+      icon: Icons.fitness_center_rounded,
+      semanticLabel: strings.fabCreateExercise,
+      onPressed: () => context.push(RouteNames.trainerExerciseCreate),
+    );
+  }
+
+  // Crear/editar ejercicio: sin acción.
+  if (path == RouteNames.trainerExerciseCreate ||
+      path.startsWith('${RouteNames.trainerExercises}/')) {
+    return _TrainerFabConfig(
+      icon: Icons.fitness_center_rounded,
+      semanticLabel: strings.fabCreateExercise,
+      onPressed: null,
+    );
+  }
+
   // Default: nueva rutina.
   return _TrainerFabConfig(
     icon: Icons.add_rounded,

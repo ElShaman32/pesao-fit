@@ -80,6 +80,37 @@ PesaoProgress, SkeletonLoader (shimmer morado, replica layout real), EmptyState 
 CTA), ErrorState (microcopy suave + PesaoButton "Reintentar"), PesaoToast (borde semántico),
 ConfirmDialog, PesaoBottomSheet (r24 top), SectionHeader (título + "Ver todo"), PesaoListTile,
 PesaoTabs, ChartCard (fl_chart línea, relleno gradiente primary 20%).
+| `PesaoBadge` | `PesaoBadgeVariant` | Etiqueta de estado semántica |
+| `PesaoTabs` | — | Tabs internos para sub-vistas |
+| `PesaoChip` | — | Chip de filtro seleccionable |
+| `PesaoSkeleton` | — | Placeholder de carga con forma |
+| `PesaoProgressBar` | — | Barra de progreso con label |
+| `PesaoEmptyState` | icon, title, body, cta | Estado vacío con CTA |
+| `PesaoErrorState` | title, body, onRetry | Estado de error con reintento |
+| `PesaoBottomSheet` | title, child | Sheet modal estándar |
+| `PesaoDropdown` | label, options, selected | Selector desplegable |
+| `PesaoSegmentedControl` | options, selected | Control segmentado |
+
+### Componentes de negocio (features)
+
+Estos NO van en `shared/widgets/`. Viven en su feature correspondiente.
+
+| Componente | Feature | Uso |
+|---|---|---|
+| `SubscriptionCard` | `memberships/` | Card de suscripción del cliente: plan, saldo, vencimiento, CTA pagar |
+| `PaymentStatusBadge` | `payments/` | Badge de estado de pago (pending/verified/rejected) |
+| `PaymentListTile` | `payments/` | Tile de pago en lista del dueño |
+| `MuscleGroupChip` | `routines/` | Chip de grupo muscular (pecho, espalda, piernas...) |
+| `ExerciseListTile` | `routines/` | Tile de ejercicio en listas con badge global/personalizado |
+| `RoutineExerciseEditor` | `routines/` | Editor inline de ejercicio dentro de rutina (series/reps/peso/descanso/notas) |
+| `ExercisePickerSheet` | `routines/` | Bottom sheet para elegir ejercicios con filtro por grupo muscular y búsqueda |
+| `DayAssignmentSheet` | `routines/` | Bottom sheet para asignar rutina/descanso a un día del planificador |
+| `PlanCard` | `routines/` | Card de plan de entrenamiento en lista del entrenador |
+| `DayCard` | `routines/` | Card de día en el editor semanal del planificador |
+| `AssignPlanSheet` | `memberships/` | Bottom sheet para asignar plan de membresía a un cliente |
+| `ImagePickerField` | `shared/widgets/` | Campo de selección de imagen (cámara/galería) con preview |
+| `UploadPaymentSheet` | `payments/` | Sheet completo de subida de comprobante de pago |
+| `ClientSelector` | `shared/widgets/` | Bottom sheet para seleccionar un cliente del gym |
 
 ## 8. Componentes fitness (shared/components/)
 ExerciseCard, SetTracker (fila kg/reps/check; check completo=success), RestTimerSheet (bottom sheet
@@ -96,27 +127,56 @@ con anillo primary countdown, botón +1min, vibración al fin), MealCard, MacroT
 | superadmin | Inicio | Gimnasios | Pagos | Perfil | Agregar gimnasio |
 El FAB es UNO por shell, pero su acción se adapta a la pantalla visible dentro de ese shell. Tabs conservan estado (indexedStack).
 
-### FAB contextual por pantalla
+### FAB contextual por ruta (v4)
 
-ejemplo
+El FAB se deriva de la ruta actual en cada shell mediante `_fabForRoute()`.
+No se usa `PesaoFabController` global (ADR-045).
 
-| Pantalla actual | FAB debe hacer |
-|---|---|
-| Dashboard del dueño (Inicio) | Agregar cliente |
-| Pantalla "Mi equipo" | Agregar staff |
-| Pantalla "Clientes" | Agregar cliente |
-| Pantalla "Pagos" | Subir comprobante (futuro F4) |
+**Cliente:**
 
-Y lo mismo para los demás roles:
-
-| Rol | Pantalla | FAB |
+| Ruta | Icono | Acción |
 |---|---|---|
-| Entrenador | Dashboard | Nueva rutina |
-| Entrenador | Clientes | Asignar cliente |
-| Nutricionista | Dashboard | Nuevo plan |
-| Nutricionista | Clientes | Asignar plan |
-| Superadmin | Dashboard | Agregar gimnasio |
-| Superadmin | Gimnasios | Agregar gimnasio |
+| `/client/home` | `upload_file` | Abre sheet de subida de pago |
+| `/client/routine` | `add` | Futuro: registrar ejercicio (F2-D) |
+| `/client/nutrition` | `add` | Futuro: registrar comida (F3) |
+| `/client/profile` | `add` | Sin acción |
+
+**Entrenador:**
+
+| Ruta | Icono | Acción |
+|---|---|---|
+| `/trainer/routines` | `add` | Nuevo plan de entrenamiento |
+| `/trainer/routines/plan-create` | `add` | Sin acción (form tiene botón) |
+| `/trainer/routines/plan/:planId` | `add` | Sin acción |
+| `/trainer/routines/templates` | `add` | Nueva rutina (plantilla) |
+| `/trainer/routines/templates/create` | `add` | Sin acción |
+| `/trainer/routines/templates/:routineId` | `add` | Sin acción |
+| `/trainer/exercises` | `fitness_center` | Crear ejercicio personalizado |
+| `/trainer/exercises/create` | `fitness_center` | Sin acción |
+
+**Dueño:**
+
+| Ruta | Icono | Acción |
+|---|---|---|
+| `/owner/home` | `add` | Agregar cliente |
+| `/owner/staff` | `person_add` | Agregar staff |
+| `/owner/staff/add` | `add` | Sin acción |
+| `/owner/clients` | `person_add` | Agregar cliente |
+| `/owner/clients/add` | `add` | Sin acción |
+| `/owner/clients/:membershipId` | `add` | Sin acción |
+| `/owner/payments` | `add` | Sin acción (futuro: registrar pago manual) |
+| `/owner/payments/:paymentId` | `add` | Sin acción |
+| `/owner/plans` | `playlist_add` | Crear plan de membresía |
+| `/owner/plans/create` | `add` | Sin acción |
+
+**Nutricionista:**
+
+| Ruta | Icono | Acción |
+|---|---|---|
+| `/nutritionist/home` | `add` | Futuro F3 |
+| `/nutritionist/clients` | `add` | Futuro F3 |
+| `/nutritionist/plans` | `add` | Futuro F3 |
+| `/nutritionist/profile` | `add` | Sin acción |
 
 ## 10. Plantilla de Dashboard (pantalla Inicio de cada rol, en orden)
 1) AppBar: PesaoAvatar + saludo por hora ("¡Buenos días, {nombre}! 👋") + campana con badge.
@@ -128,6 +188,25 @@ nutricionista: planes activos; superadmin: gimnasios / suscripciones activas).
 por verificar"; entrenador: "Sesiones de hoy"; etc.) con glow primary.
 5) Sección secundaria (SectionHeader + lista corta).
 6) Bajo el fold: feed/comunidad con paginación infinita.
+
+### Estado actual de dashboards (v4)
+
+| Rol | Stats | PrimaryCard | Sección secundaria |
+|---|---|---|---|
+| **Superadmin** | Gyms activos, solicitudes pending, suscripciones activas | Solicitudes KYC pendientes | Últimos gyms registrados |
+| **Dueño** | Clientes activos, pagos pendientes, ingresos Bs | Comprobantes por verificar | Mi equipo (staff) + Planes del gym |
+| **Entrenador** | Sesiones hoy, rutinas activas, clientes asignados | Próxima sesión del día | Planificador semanal |
+| **Cliente** | Kcal hoy, racha días, próximo entreno | Tu rutina (plan activo) + Suscripción del gym | Sección "Hoy" |
+| **Nutricionista** | Todo placeholder hasta F3 | Todo placeholder hasta F3 | Todo placeholder hasta F3 |
+
+**Dashboard del cliente (v4):**
+- `SubscriptionCard`: muestra plan de membresía, saldo (debe/al día/crédito),
+  vencimiento, botón "Pagar" que abre `UploadPaymentSheet`.
+- StatCard "Próximo entreno": muestra el nombre de la rutina del día actual
+  desde el planificador semanal. Si no hay plan, muestra "—".
+- PrimaryCard: muestra "Tu rutina" con conteo de ejercicios y CTA "Ver rutina"
+  que navega a la tab Rutina. Si no hay plan, muestra estado vacío.
+
 
 ## 11. Plantilla de pantalla (TODA pantalla sin excepción)
 Estructura: PesaoShell o Scaffold con PesaoAppBar → body SingleChildScrollView/CustomScroll con
@@ -162,3 +241,47 @@ const constructors; listas lazy + paginación; cached_network_image con transfor
 Hardcodear hex/fuentes fuera de tokens | setState para lógica de negocio | Supabase o Cloudinary en
 widgets | spinners clásicos (usar skeletons) | textos en inglés en UI | mensajes agresivos |
 más de 1 FAB por shell | verde como acción genérica | blurs/shaders | OAuth (solo email/password).
+
+
+## §27 Estado de implementación de pantallas (v4)
+
+### Construidas y funcionales
+
+**Públicas (10):**
+Splash, Onboarding, Términos, Login, Registro, Forgot Password,
+Gym Discovery, Gym Detail, Owner Application (KYC), Application Pending.
+
+**Superadmin (3):**
+Dashboard, Gym Applications list, Application detail.
+
+**Dueño (13):**
+Dashboard, Staff list, Staff add, Clients list, Client add, Client detail,
+Payments list, Payment detail, Membership Plans list, Membership Plan form,
+Training Plans list, Training Plan form, Plan Week Editor.
+
+**Cliente (3):**
+Dashboard, Client Routine Screen, Upload Payment Sheet.
+
+**Entrenador (8):**
+Dashboard, Routines list, Routine form, Exercises list,
+Exercise form, Training Plans list, Training Plan form, Plan Week Editor.
+
+**Nutricionista (1):**
+Dashboard (placeholder).
+
+**Modales/Sheets (7):**
+Confirm Dialog, Upload Payment Sheet, Exercise Picker Sheet,
+Day Assignment Sheet, Assign Plan Sheet, Client Selector, Image Picker Field.
+
+**Total: ~45 pantallas/modales.**
+
+### Pendientes
+
+| Módulo | Pantallas pendientes |
+|---|---|
+| F2-D Ejecución | Marcar sets, rest timer, workout activo, historial |
+| F3 Nutrición | Todas las pantallas del nutricionista y del cliente |
+| F5 Comunidad | Insignias, retos, rankings, feed |
+| F6 Avanzado | Wearables, QR, reportes |
+| Perfil | Edición de perfil, avatar, cambio de password (todos los roles) |
+| Configuración | Configuración del gym (tasa manual, datos del gym) |
