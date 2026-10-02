@@ -90,7 +90,7 @@ final class RoutinesControllerProvider
 }
 
 String _$routinesControllerHash() =>
-    r'dcc11c4dc84fc7caaf3e15f61fc30ef695ac7bc8';
+    r'e34047e5b5bf1219f898506fc8e259501861147d';
 
 abstract class _$RoutinesController
     extends $Notifier<AsyncValue<List<Routine>>> {

@@ -170,4 +170,30 @@ class RoutinesRemoteDatasource {
       rethrow;
     }
   }
+
+  /// Obtiene la rutina activa asignada al cliente.
+  Future<Routine?> fetchClientRoutine(String userId) async {
+    try {
+      final response = await _client
+          .from('routines')
+          .select('''
+            *,
+            profiles:client_id (full_name),
+            routine_exercises (
+              *,
+              exercises (name, muscle_group)
+            )
+          ''')
+          .eq('client_id', userId)
+          .eq('is_active', true)
+          .maybeSingle();
+
+      if (response == null) return null;
+      return Routine.fromJson(response);
+    } catch (e, stack) {
+      debugPrint('❌ ROUTINES fetchClientRoutine: $e');
+      debugPrint('❌ STACK: $stack');
+      rethrow;
+    }
+  }
 }

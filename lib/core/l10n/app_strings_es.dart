@@ -1690,6 +1690,65 @@ class AppStringsEs extends AppStrings {
 
   @override
   String get fabCreateRoutine => 'Nueva rutina';
+
+  @override
+  String get clientRoutineScreenTitle => 'Mi rutina';
+
+  @override
+  String get clientRoutineEmptyTitle => 'Sin rutina asignada';
+
+  @override
+  String get clientRoutineEmptyBody =>
+      'Tu entrenador aún no te asigna una rutina. Cuando lo haga, aparece aquí 💪';
+
+  @override
+  String get clientRoutineErrorTitle => 'No pudimos cargar tu rutina';
+
+  @override
+  String get clientRoutineErrorBody =>
+      'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String clientRoutineExerciseCount(Object count) {
+    return '$count ejercicios';
+  }
+
+  @override
+  String clientRoutineExerciseSets(Object sets) {
+    return '$sets series';
+  }
+
+  @override
+  String clientRoutineExerciseReps(Object reps) {
+    return '$reps reps';
+  }
+
+  @override
+  String clientRoutineExerciseWeight(Object weight) {
+    return '$weight kg';
+  }
+
+  @override
+  String clientRoutineExerciseRest(Object rest) {
+    return '${rest}s descanso';
+  }
+
+  @override
+  String get clientRoutineExerciseNotes => 'Notas';
+
+  @override
+  String get clientDashPrimaryRoutineTitle => 'Tu rutina';
+
+  @override
+  String clientDashPrimaryRoutineBody(Object count) {
+    return 'Tienes $count ejercicios por hacer hoy';
+  }
+
+  @override
+  String get clientDashPrimaryRoutineCta => 'Ver rutina';
+
+  @override
+  String get clientDashPrimaryRoutineCtaNone => 'Sin rutina';
 }
 
 /// The translations for Spanish Castilian, as used in Venezuela (`es_VE`).
@@ -3378,4 +3437,63 @@ class AppStringsEsVe extends AppStringsEs {
 
   @override
   String get fabCreateRoutine => 'Nueva rutina';
+
+  @override
+  String get clientRoutineScreenTitle => 'Mi rutina';
+
+  @override
+  String get clientRoutineEmptyTitle => 'Sin rutina asignada';
+
+  @override
+  String get clientRoutineEmptyBody =>
+      'Tu entrenador aún no te asigna una rutina. Cuando lo haga, aparece aquí 💪';
+
+  @override
+  String get clientRoutineErrorTitle => 'No pudimos cargar tu rutina';
+
+  @override
+  String get clientRoutineErrorBody =>
+      'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String clientRoutineExerciseCount(Object count) {
+    return '$count ejercicios';
+  }
+
+  @override
+  String clientRoutineExerciseSets(Object sets) {
+    return '$sets series';
+  }
+
+  @override
+  String clientRoutineExerciseReps(Object reps) {
+    return '$reps reps';
+  }
+
+  @override
+  String clientRoutineExerciseWeight(Object weight) {
+    return '$weight kg';
+  }
+
+  @override
+  String clientRoutineExerciseRest(Object rest) {
+    return '${rest}s descanso';
+  }
+
+  @override
+  String get clientRoutineExerciseNotes => 'Notas';
+
+  @override
+  String get clientDashPrimaryRoutineTitle => 'Tu rutina';
+
+  @override
+  String clientDashPrimaryRoutineBody(Object count) {
+    return 'Tienes $count ejercicios por hacer hoy';
+  }
+
+  @override
+  String get clientDashPrimaryRoutineCta => 'Ver rutina';
+
+  @override
+  String get clientDashPrimaryRoutineCtaNone => 'Sin rutina';
 }

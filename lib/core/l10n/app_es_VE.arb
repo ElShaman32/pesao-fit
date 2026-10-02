@@ -1377,6 +1377,20 @@
   "muscleGroupFullBody": "Full body",
   "muscleGroupAll": "Todos",
   "fabCreateExercise": "Crear ejercicio",
-  "fabCreateRoutine": "Nueva rutina"
-
+  "fabCreateRoutine": "Nueva rutina",
+  "clientRoutineScreenTitle": "Mi rutina",
+  "clientRoutineEmptyTitle": "Sin rutina asignada",
+  "clientRoutineEmptyBody": "Tu entrenador aún no te asigna una rutina. Cuando lo haga, aparece aquí 💪",
+  "clientRoutineErrorTitle": "No pudimos cargar tu rutina",
+  "clientRoutineErrorBody": "Tranquilo, suele pasar. Inténtalo de nuevo.",
+  "clientRoutineExerciseCount": "{count} ejercicios",
+  "clientRoutineExerciseSets": "{sets} series",
+  "clientRoutineExerciseReps": "{reps} reps",
+  "clientRoutineExerciseWeight": "{weight} kg",
+  "clientRoutineExerciseRest": "{rest}s descanso",
+  "clientRoutineExerciseNotes": "Notas",
+  "clientDashPrimaryRoutineTitle": "Tu rutina",
+  "clientDashPrimaryRoutineBody": "Tienes {count} ejercicios por hacer hoy",
+  "clientDashPrimaryRoutineCta": "Ver rutina",
+  "clientDashPrimaryRoutineCtaNone": "Sin rutina"
 }

@@ -9,6 +9,9 @@ abstract interface class RoutinesRepository {
   /// Obtiene una rutina con sus ejercicios.
   Future<Result<Routine>> getRoutine({required String routineId});
 
+  /// Obtiene la rutina asignada al cliente actual.
+  Future<Result<Routine?>> getClientRoutine({required String userId});
+
   /// Crea una rutina con sus ejercicios.
   Future<Result<Routine>> createRoutine({
     required String gymId,

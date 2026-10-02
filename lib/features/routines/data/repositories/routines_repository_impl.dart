@@ -118,4 +118,22 @@ class RoutinesRepositoryImpl implements RoutinesRepository {
       );
     }
   }
+
+  @override
+  Future<Result<Routine?>> getClientRoutine({required String userId}) async {
+    try {
+      final routine = await _remote.fetchClientRoutine(userId);
+      return Result.success(routine);
+    } on AppException catch (e) {
+      return Result.failure(e);
+    } catch (e) {
+      return Result.failure(
+        UnknownException(
+          code: 'Routines/fetch-client-error',
+          message: 'Error al cargar la rutina del cliente',
+          cause: e,
+        ),
+      );
+    }
+  }
 }

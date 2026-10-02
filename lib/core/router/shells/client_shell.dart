@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../features/home/presentation/screens/client_home_screen.dart';
 import '../../../features/payments/presentation/screens/upload_payment_sheet.dart';
+import '../../../features/routines/presentation/screens/client_routine_screen.dart';
 import '../../../shared/widgets/pesao_bottom_nav.dart';
 import '../../l10n/app_strings.dart';
 import '../../theme/app_icons.dart';
@@ -136,9 +137,7 @@ StatefulShellRoute buildClientShell() {
           GoRoute(
             path: RouteNames.clientRoutine,
             name: RouteNames.clientRoutine,
-            builder: (context, state) => ShellPlaceholderScreen(
-              title: AppStrings.of(context).tabRoutine,
-            ),
+            builder: (context, state) => const ClientRoutineScreen(),
           ),
         ],
       ),

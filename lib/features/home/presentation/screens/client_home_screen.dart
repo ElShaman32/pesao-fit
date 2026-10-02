@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/app_strings.dart';
 import '../../../../core/providers/auth_provider.dart';
 import '../../../../core/providers/connectivity_provider.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -14,6 +16,8 @@ import '../../../../shared/widgets/pesao_stat_card.dart';
 import '../../../../shared/widgets/section_header.dart';
 import '../../../memberships/presentation/widgets/subscription_card.dart';
 import '../../../payments/presentation/screens/upload_payment_sheet.dart';
+import '../../../routines/domain/entities/routine.dart';
+import '../../../routines/presentation/providers/client_routine_controller.dart';
 import '../../domain/entities/client_dashboard_stats.dart';
 import '../providers/client_dashboard_controller.dart';
 
@@ -226,20 +230,21 @@ class _ErrorSliver extends StatelessWidget {
 }
 
 /// Sliver de éxito.
-class _SuccessSliver extends StatelessWidget {
+class _SuccessSliver extends ConsumerWidget {
   const _SuccessSliver({required this.stats});
 
   final ClientDashboardStats stats;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppStrings.of(context);
+    final routineAsync = ref.watch(clientRoutineControllerProvider);
 
     return SliverPadding(
       padding: const EdgeInsets.all(AppDimens.l),
       sliver: SliverList(
         delegate: SliverChildListDelegate([
-          _StatsRow(stats: stats),
+          _StatsRow(stats: stats, routineAsync: routineAsync),
           const SizedBox(height: AppDimens.xl),
           SubscriptionCard(
             onPay: () async {
@@ -247,7 +252,7 @@ class _SuccessSliver extends StatelessWidget {
             },
           ),
           const SizedBox(height: AppDimens.xl),
-          _PrimaryCard(stats: stats),
+          _PrimaryCard(stats: stats, routineAsync: routineAsync),
           const SizedBox(height: AppDimens.xl),
           SectionHeader(
             title: l10n.clientDashTodaySection,
@@ -275,13 +280,15 @@ class _SuccessSliver extends StatelessWidget {
 
 /// Fila de 3 StatCards.
 class _StatsRow extends StatelessWidget {
-  const _StatsRow({required this.stats});
+  const _StatsRow({required this.stats, required this.routineAsync});
 
   final ClientDashboardStats stats;
+  final AsyncValue<Routine?> routineAsync;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppStrings.of(context);
+    final routine = routineAsync.value;
 
     return Row(
       children: [
@@ -306,8 +313,10 @@ class _StatsRow extends StatelessWidget {
         Expanded(
           child: PesaoStatCard(
             label: l10n.clientDashStatNext,
-            value: stats.nextWorkoutLabel ?? '—',
-            sub: l10n.clientDashStatNextSub,
+            value: routine?.name ?? '—',
+            sub: routine != null
+                ? l10n.clientRoutineExerciseCount(routine.exercises.length)
+                : l10n.clientDashStatNextSub,
             icon: Icons.event_note_rounded,
           ),
         ),
@@ -317,15 +326,17 @@ class _StatsRow extends StatelessWidget {
 }
 
 /// PrimaryCard con CTA.
-class _PrimaryCard extends StatelessWidget {
-  const _PrimaryCard({required this.stats});
+class _PrimaryCard extends ConsumerWidget {
+  const _PrimaryCard({required this.stats, required this.routineAsync});
 
   final ClientDashboardStats stats;
+  final AsyncValue<Routine?> routineAsync;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppStrings.of(context);
-    final hasWorkout = stats.hasWorkoutToday;
+    final routine = routineAsync.value;
+    final hasRoutine = routine != null;
 
     return Container(
       padding: const EdgeInsets.all(AppDimens.l),
@@ -333,7 +344,7 @@ class _PrimaryCard extends StatelessWidget {
         color: AppColors.surface,
         borderRadius: AppDimens.cardBorderRadius,
         border: Border.all(color: AppColors.outline),
-        boxShadow: hasWorkout
+        boxShadow: hasRoutine
             ? [
                 BoxShadow(
                   color: AppColors.primary.withValues(alpha: 0.2),
@@ -348,16 +359,16 @@ class _PrimaryCard extends StatelessWidget {
           Row(
             children: [
               Icon(
-                hasWorkout
+                hasRoutine
                     ? Icons.fitness_center_rounded
                     : Icons.event_busy_rounded,
-                color: hasWorkout ? AppColors.primary : AppColors.textDisabled,
+                color: hasRoutine ? AppColors.primary : AppColors.textDisabled,
                 size: 24,
               ),
               const SizedBox(width: AppDimens.s),
               Expanded(
                 child: Text(
-                  l10n.clientDashPrimaryTitle,
+                  l10n.clientDashPrimaryRoutineTitle,
                   style: AppTypography.title.copyWith(
                     color: AppColors.textPrimary,
                   ),
@@ -367,28 +378,27 @@ class _PrimaryCard extends StatelessWidget {
           ),
           const SizedBox(height: AppDimens.m),
           Text(
-            l10n.clientDashPrimaryBody,
+            hasRoutine
+                ? l10n.clientDashPrimaryRoutineBody(routine.exercises.length)
+                : l10n.clientRoutineEmptyBody,
             style: AppTypography.body.copyWith(color: AppColors.textSecondary),
           ),
           const SizedBox(height: AppDimens.m),
           Align(
             alignment: Alignment.centerRight,
             child: PesaoButton(
-              label: hasWorkout
-                  ? l10n.clientDashPrimaryCta
-                  : l10n.clientDashPrimaryCtaNone,
-              variant: hasWorkout
+              label: hasRoutine
+                  ? l10n.clientDashPrimaryRoutineCta
+                  : l10n.clientDashPrimaryRoutineCtaNone,
+              variant: hasRoutine
                   ? PesaoButtonVariant.primary
                   : PesaoButtonVariant.secondary,
               isExpanded: false,
-              onPressed: hasWorkout
-                  ? () {
-                      // Futuro: navegar al workout activo (F2).
-                    }
+              onPressed: hasRoutine
+                  ? () => context.go(RouteNames.clientRoutine)
                   : null,
             ),
           ),
-          const SizedBox(height: AppDimens.m),
         ],
       ),
     );

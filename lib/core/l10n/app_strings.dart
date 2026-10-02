@@ -3258,6 +3258,96 @@ abstract class AppStrings {
   /// In es_VE, this message translates to:
   /// **'Nueva rutina'**
   String get fabCreateRoutine;
+
+  /// No description provided for @clientRoutineScreenTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Mi rutina'**
+  String get clientRoutineScreenTitle;
+
+  /// No description provided for @clientRoutineEmptyTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sin rutina asignada'**
+  String get clientRoutineEmptyTitle;
+
+  /// No description provided for @clientRoutineEmptyBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu entrenador aún no te asigna una rutina. Cuando lo haga, aparece aquí 💪'**
+  String get clientRoutineEmptyBody;
+
+  /// No description provided for @clientRoutineErrorTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No pudimos cargar tu rutina'**
+  String get clientRoutineErrorTitle;
+
+  /// No description provided for @clientRoutineErrorBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tranquilo, suele pasar. Inténtalo de nuevo.'**
+  String get clientRoutineErrorBody;
+
+  /// No description provided for @clientRoutineExerciseCount.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{count} ejercicios'**
+  String clientRoutineExerciseCount(Object count);
+
+  /// No description provided for @clientRoutineExerciseSets.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{sets} series'**
+  String clientRoutineExerciseSets(Object sets);
+
+  /// No description provided for @clientRoutineExerciseReps.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{reps} reps'**
+  String clientRoutineExerciseReps(Object reps);
+
+  /// No description provided for @clientRoutineExerciseWeight.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{weight} kg'**
+  String clientRoutineExerciseWeight(Object weight);
+
+  /// No description provided for @clientRoutineExerciseRest.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{rest}s descanso'**
+  String clientRoutineExerciseRest(Object rest);
+
+  /// No description provided for @clientRoutineExerciseNotes.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Notas'**
+  String get clientRoutineExerciseNotes;
+
+  /// No description provided for @clientDashPrimaryRoutineTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu rutina'**
+  String get clientDashPrimaryRoutineTitle;
+
+  /// No description provided for @clientDashPrimaryRoutineBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tienes {count} ejercicios por hacer hoy'**
+  String clientDashPrimaryRoutineBody(Object count);
+
+  /// No description provided for @clientDashPrimaryRoutineCta.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ver rutina'**
+  String get clientDashPrimaryRoutineCta;
+
+  /// No description provided for @clientDashPrimaryRoutineCtaNone.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sin rutina'**
+  String get clientDashPrimaryRoutineCtaNone;
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {
