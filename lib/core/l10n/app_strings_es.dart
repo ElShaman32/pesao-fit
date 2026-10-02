@@ -1499,6 +1499,197 @@ class AppStringsEs extends AppStrings {
 
   @override
   String get fabCreatePlan => 'Crear plan';
+
+  @override
+  String get exercisesScreenTitle => 'Ejercicios';
+
+  @override
+  String get exercisesSearchHint => 'Buscar ejercicio...';
+
+  @override
+  String get exercisesEmptyTitle => 'Aún no hay ejercicios';
+
+  @override
+  String get exercisesEmptyBody =>
+      'Crea tu primer ejercicio personalizado o usa la biblioteca base 💪';
+
+  @override
+  String get exercisesErrorTitle => 'No pudimos cargar los ejercicios';
+
+  @override
+  String get exercisesErrorBody =>
+      'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String get exercisesGlobalBadge => 'Biblioteca';
+
+  @override
+  String get exercisesCustomBadge => 'Del gym';
+
+  @override
+  String get exerciseFormCreateTitle => 'Crear ejercicio';
+
+  @override
+  String get exerciseFormEditTitle => 'Editar ejercicio';
+
+  @override
+  String get exerciseFormNameLabel => 'Nombre del ejercicio';
+
+  @override
+  String get exerciseFormNameHint => 'Ej: Sentadilla búlgara';
+
+  @override
+  String get exerciseFormNameError => 'El nombre es obligatorio';
+
+  @override
+  String get exerciseFormDescriptionLabel => 'Descripción (opcional)';
+
+  @override
+  String get exerciseFormDescriptionHint => 'Cómo se hace, qué trabaja';
+
+  @override
+  String get exerciseFormMuscleGroupLabel => 'Grupo muscular';
+
+  @override
+  String get exerciseFormSubmit => 'Guardar ejercicio';
+
+  @override
+  String get exerciseFormSubmitting => 'Guardando...';
+
+  @override
+  String get exerciseCreatedSuccess => 'Ejercicio creado ✅';
+
+  @override
+  String get exerciseCreatedSemantics => 'Ejercicio creado';
+
+  @override
+  String get exerciseUpdatedSuccess => 'Ejercicio actualizado ✅';
+
+  @override
+  String get exerciseUpdatedSemantics => 'Ejercicio actualizado';
+
+  @override
+  String get routinesScreenTitle => 'Rutinas';
+
+  @override
+  String get routinesEmptyTitle => 'Aún no tienes rutinas';
+
+  @override
+  String get routinesEmptyBody => 'Crea la primera rutina para tus clientes 💪';
+
+  @override
+  String get routinesErrorTitle => 'No pudimos cargar las rutinas';
+
+  @override
+  String get routinesErrorBody => 'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String get routineFormCreateTitle => 'Nueva rutina';
+
+  @override
+  String get routineFormEditTitle => 'Editar rutina';
+
+  @override
+  String get routineFormNameLabel => 'Nombre de la rutina';
+
+  @override
+  String get routineFormNameHint => 'Ej: Tren superior - Día 1';
+
+  @override
+  String get routineFormNameError => 'El nombre es obligatorio';
+
+  @override
+  String get routineFormDescriptionLabel => 'Descripción (opcional)';
+
+  @override
+  String get routineFormDescriptionHint => 'Objetivo de la rutina';
+
+  @override
+  String get routineFormClientLabel => 'Cliente';
+
+  @override
+  String get routineFormClientError => 'Selecciona un cliente';
+
+  @override
+  String get routineFormExercisesLabel => 'Ejercicios';
+
+  @override
+  String get routineFormAddExercise => 'Agregar ejercicio';
+
+  @override
+  String get routineFormNoExercises => 'Agrega al menos un ejercicio';
+
+  @override
+  String get routineFormSubmit => 'Guardar rutina';
+
+  @override
+  String get routineFormSubmitting => 'Guardando...';
+
+  @override
+  String get routineCreatedSuccess => 'Rutina creada ✅';
+
+  @override
+  String get routineCreatedSemantics => 'Rutina creada';
+
+  @override
+  String get routineUpdatedSuccess => 'Rutina actualizada ✅';
+
+  @override
+  String get routineUpdatedSemantics => 'Rutina actualizada';
+
+  @override
+  String get routineExerciseSets => 'Series';
+
+  @override
+  String get routineExerciseReps => 'Reps';
+
+  @override
+  String get routineExerciseWeight => 'Peso (kg)';
+
+  @override
+  String get routineExerciseRest => 'Descanso (seg)';
+
+  @override
+  String get routineExerciseNotes => 'Notas';
+
+  @override
+  String get muscleGroupChest => 'Pecho';
+
+  @override
+  String get muscleGroupBack => 'Espalda';
+
+  @override
+  String get muscleGroupShoulders => 'Hombros';
+
+  @override
+  String get muscleGroupBiceps => 'Bíceps';
+
+  @override
+  String get muscleGroupTriceps => 'Tríceps';
+
+  @override
+  String get muscleGroupLegs => 'Piernas';
+
+  @override
+  String get muscleGroupGlutes => 'Glúteos';
+
+  @override
+  String get muscleGroupCore => 'Core';
+
+  @override
+  String get muscleGroupCardio => 'Cardio';
+
+  @override
+  String get muscleGroupFullBody => 'Full body';
+
+  @override
+  String get muscleGroupAll => 'Todos';
+
+  @override
+  String get fabCreateExercise => 'Crear ejercicio';
+
+  @override
+  String get fabCreateRoutine => 'Nueva rutina';
 }
 
 /// The translations for Spanish Castilian, as used in Venezuela (`es_VE`).
@@ -2996,4 +3187,195 @@ class AppStringsEsVe extends AppStringsEs {
 
   @override
   String get fabCreatePlan => 'Crear plan';
+
+  @override
+  String get exercisesScreenTitle => 'Ejercicios';
+
+  @override
+  String get exercisesSearchHint => 'Buscar ejercicio...';
+
+  @override
+  String get exercisesEmptyTitle => 'Aún no hay ejercicios';
+
+  @override
+  String get exercisesEmptyBody =>
+      'Crea tu primer ejercicio personalizado o usa la biblioteca base 💪';
+
+  @override
+  String get exercisesErrorTitle => 'No pudimos cargar los ejercicios';
+
+  @override
+  String get exercisesErrorBody =>
+      'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String get exercisesGlobalBadge => 'Biblioteca';
+
+  @override
+  String get exercisesCustomBadge => 'Del gym';
+
+  @override
+  String get exerciseFormCreateTitle => 'Crear ejercicio';
+
+  @override
+  String get exerciseFormEditTitle => 'Editar ejercicio';
+
+  @override
+  String get exerciseFormNameLabel => 'Nombre del ejercicio';
+
+  @override
+  String get exerciseFormNameHint => 'Ej: Sentadilla búlgara';
+
+  @override
+  String get exerciseFormNameError => 'El nombre es obligatorio';
+
+  @override
+  String get exerciseFormDescriptionLabel => 'Descripción (opcional)';
+
+  @override
+  String get exerciseFormDescriptionHint => 'Cómo se hace, qué trabaja';
+
+  @override
+  String get exerciseFormMuscleGroupLabel => 'Grupo muscular';
+
+  @override
+  String get exerciseFormSubmit => 'Guardar ejercicio';
+
+  @override
+  String get exerciseFormSubmitting => 'Guardando...';
+
+  @override
+  String get exerciseCreatedSuccess => 'Ejercicio creado ✅';
+
+  @override
+  String get exerciseCreatedSemantics => 'Ejercicio creado';
+
+  @override
+  String get exerciseUpdatedSuccess => 'Ejercicio actualizado ✅';
+
+  @override
+  String get exerciseUpdatedSemantics => 'Ejercicio actualizado';
+
+  @override
+  String get routinesScreenTitle => 'Rutinas';
+
+  @override
+  String get routinesEmptyTitle => 'Aún no tienes rutinas';
+
+  @override
+  String get routinesEmptyBody => 'Crea la primera rutina para tus clientes 💪';
+
+  @override
+  String get routinesErrorTitle => 'No pudimos cargar las rutinas';
+
+  @override
+  String get routinesErrorBody => 'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String get routineFormCreateTitle => 'Nueva rutina';
+
+  @override
+  String get routineFormEditTitle => 'Editar rutina';
+
+  @override
+  String get routineFormNameLabel => 'Nombre de la rutina';
+
+  @override
+  String get routineFormNameHint => 'Ej: Tren superior - Día 1';
+
+  @override
+  String get routineFormNameError => 'El nombre es obligatorio';
+
+  @override
+  String get routineFormDescriptionLabel => 'Descripción (opcional)';
+
+  @override
+  String get routineFormDescriptionHint => 'Objetivo de la rutina';
+
+  @override
+  String get routineFormClientLabel => 'Cliente';
+
+  @override
+  String get routineFormClientError => 'Selecciona un cliente';
+
+  @override
+  String get routineFormExercisesLabel => 'Ejercicios';
+
+  @override
+  String get routineFormAddExercise => 'Agregar ejercicio';
+
+  @override
+  String get routineFormNoExercises => 'Agrega al menos un ejercicio';
+
+  @override
+  String get routineFormSubmit => 'Guardar rutina';
+
+  @override
+  String get routineFormSubmitting => 'Guardando...';
+
+  @override
+  String get routineCreatedSuccess => 'Rutina creada ✅';
+
+  @override
+  String get routineCreatedSemantics => 'Rutina creada';
+
+  @override
+  String get routineUpdatedSuccess => 'Rutina actualizada ✅';
+
+  @override
+  String get routineUpdatedSemantics => 'Rutina actualizada';
+
+  @override
+  String get routineExerciseSets => 'Series';
+
+  @override
+  String get routineExerciseReps => 'Reps';
+
+  @override
+  String get routineExerciseWeight => 'Peso (kg)';
+
+  @override
+  String get routineExerciseRest => 'Descanso (seg)';
+
+  @override
+  String get routineExerciseNotes => 'Notas';
+
+  @override
+  String get muscleGroupChest => 'Pecho';
+
+  @override
+  String get muscleGroupBack => 'Espalda';
+
+  @override
+  String get muscleGroupShoulders => 'Hombros';
+
+  @override
+  String get muscleGroupBiceps => 'Bíceps';
+
+  @override
+  String get muscleGroupTriceps => 'Tríceps';
+
+  @override
+  String get muscleGroupLegs => 'Piernas';
+
+  @override
+  String get muscleGroupGlutes => 'Glúteos';
+
+  @override
+  String get muscleGroupCore => 'Core';
+
+  @override
+  String get muscleGroupCardio => 'Cardio';
+
+  @override
+  String get muscleGroupFullBody => 'Full body';
+
+  @override
+  String get muscleGroupAll => 'Todos';
+
+  @override
+  String get fabCreateExercise => 'Crear ejercicio';
+
+  @override
+  String get fabCreateRoutine => 'Nueva rutina';
 }

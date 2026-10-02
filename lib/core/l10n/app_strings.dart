@@ -2880,6 +2880,384 @@ abstract class AppStrings {
   /// In es_VE, this message translates to:
   /// **'Crear plan'**
   String get fabCreatePlan;
+
+  /// No description provided for @exercisesScreenTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ejercicios'**
+  String get exercisesScreenTitle;
+
+  /// No description provided for @exercisesSearchHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Buscar ejercicio...'**
+  String get exercisesSearchHint;
+
+  /// No description provided for @exercisesEmptyTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Aún no hay ejercicios'**
+  String get exercisesEmptyTitle;
+
+  /// No description provided for @exercisesEmptyBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Crea tu primer ejercicio personalizado o usa la biblioteca base 💪'**
+  String get exercisesEmptyBody;
+
+  /// No description provided for @exercisesErrorTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No pudimos cargar los ejercicios'**
+  String get exercisesErrorTitle;
+
+  /// No description provided for @exercisesErrorBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tranquilo, suele pasar. Inténtalo de nuevo.'**
+  String get exercisesErrorBody;
+
+  /// No description provided for @exercisesGlobalBadge.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Biblioteca'**
+  String get exercisesGlobalBadge;
+
+  /// No description provided for @exercisesCustomBadge.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Del gym'**
+  String get exercisesCustomBadge;
+
+  /// No description provided for @exerciseFormCreateTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Crear ejercicio'**
+  String get exerciseFormCreateTitle;
+
+  /// No description provided for @exerciseFormEditTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Editar ejercicio'**
+  String get exerciseFormEditTitle;
+
+  /// No description provided for @exerciseFormNameLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nombre del ejercicio'**
+  String get exerciseFormNameLabel;
+
+  /// No description provided for @exerciseFormNameHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: Sentadilla búlgara'**
+  String get exerciseFormNameHint;
+
+  /// No description provided for @exerciseFormNameError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El nombre es obligatorio'**
+  String get exerciseFormNameError;
+
+  /// No description provided for @exerciseFormDescriptionLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Descripción (opcional)'**
+  String get exerciseFormDescriptionLabel;
+
+  /// No description provided for @exerciseFormDescriptionHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cómo se hace, qué trabaja'**
+  String get exerciseFormDescriptionHint;
+
+  /// No description provided for @exerciseFormMuscleGroupLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Grupo muscular'**
+  String get exerciseFormMuscleGroupLabel;
+
+  /// No description provided for @exerciseFormSubmit.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Guardar ejercicio'**
+  String get exerciseFormSubmit;
+
+  /// No description provided for @exerciseFormSubmitting.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Guardando...'**
+  String get exerciseFormSubmitting;
+
+  /// No description provided for @exerciseCreatedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ejercicio creado ✅'**
+  String get exerciseCreatedSuccess;
+
+  /// No description provided for @exerciseCreatedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ejercicio creado'**
+  String get exerciseCreatedSemantics;
+
+  /// No description provided for @exerciseUpdatedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ejercicio actualizado ✅'**
+  String get exerciseUpdatedSuccess;
+
+  /// No description provided for @exerciseUpdatedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ejercicio actualizado'**
+  String get exerciseUpdatedSemantics;
+
+  /// No description provided for @routinesScreenTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Rutinas'**
+  String get routinesScreenTitle;
+
+  /// No description provided for @routinesEmptyTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Aún no tienes rutinas'**
+  String get routinesEmptyTitle;
+
+  /// No description provided for @routinesEmptyBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Crea la primera rutina para tus clientes 💪'**
+  String get routinesEmptyBody;
+
+  /// No description provided for @routinesErrorTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No pudimos cargar las rutinas'**
+  String get routinesErrorTitle;
+
+  /// No description provided for @routinesErrorBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tranquilo, suele pasar. Inténtalo de nuevo.'**
+  String get routinesErrorBody;
+
+  /// No description provided for @routineFormCreateTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nueva rutina'**
+  String get routineFormCreateTitle;
+
+  /// No description provided for @routineFormEditTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Editar rutina'**
+  String get routineFormEditTitle;
+
+  /// No description provided for @routineFormNameLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nombre de la rutina'**
+  String get routineFormNameLabel;
+
+  /// No description provided for @routineFormNameHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: Tren superior - Día 1'**
+  String get routineFormNameHint;
+
+  /// No description provided for @routineFormNameError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El nombre es obligatorio'**
+  String get routineFormNameError;
+
+  /// No description provided for @routineFormDescriptionLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Descripción (opcional)'**
+  String get routineFormDescriptionLabel;
+
+  /// No description provided for @routineFormDescriptionHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Objetivo de la rutina'**
+  String get routineFormDescriptionHint;
+
+  /// No description provided for @routineFormClientLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cliente'**
+  String get routineFormClientLabel;
+
+  /// No description provided for @routineFormClientError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Selecciona un cliente'**
+  String get routineFormClientError;
+
+  /// No description provided for @routineFormExercisesLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ejercicios'**
+  String get routineFormExercisesLabel;
+
+  /// No description provided for @routineFormAddExercise.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Agregar ejercicio'**
+  String get routineFormAddExercise;
+
+  /// No description provided for @routineFormNoExercises.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Agrega al menos un ejercicio'**
+  String get routineFormNoExercises;
+
+  /// No description provided for @routineFormSubmit.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Guardar rutina'**
+  String get routineFormSubmit;
+
+  /// No description provided for @routineFormSubmitting.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Guardando...'**
+  String get routineFormSubmitting;
+
+  /// No description provided for @routineCreatedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Rutina creada ✅'**
+  String get routineCreatedSuccess;
+
+  /// No description provided for @routineCreatedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Rutina creada'**
+  String get routineCreatedSemantics;
+
+  /// No description provided for @routineUpdatedSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Rutina actualizada ✅'**
+  String get routineUpdatedSuccess;
+
+  /// No description provided for @routineUpdatedSemantics.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Rutina actualizada'**
+  String get routineUpdatedSemantics;
+
+  /// No description provided for @routineExerciseSets.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Series'**
+  String get routineExerciseSets;
+
+  /// No description provided for @routineExerciseReps.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Reps'**
+  String get routineExerciseReps;
+
+  /// No description provided for @routineExerciseWeight.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Peso (kg)'**
+  String get routineExerciseWeight;
+
+  /// No description provided for @routineExerciseRest.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Descanso (seg)'**
+  String get routineExerciseRest;
+
+  /// No description provided for @routineExerciseNotes.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Notas'**
+  String get routineExerciseNotes;
+
+  /// No description provided for @muscleGroupChest.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pecho'**
+  String get muscleGroupChest;
+
+  /// No description provided for @muscleGroupBack.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Espalda'**
+  String get muscleGroupBack;
+
+  /// No description provided for @muscleGroupShoulders.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Hombros'**
+  String get muscleGroupShoulders;
+
+  /// No description provided for @muscleGroupBiceps.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Bíceps'**
+  String get muscleGroupBiceps;
+
+  /// No description provided for @muscleGroupTriceps.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tríceps'**
+  String get muscleGroupTriceps;
+
+  /// No description provided for @muscleGroupLegs.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Piernas'**
+  String get muscleGroupLegs;
+
+  /// No description provided for @muscleGroupGlutes.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Glúteos'**
+  String get muscleGroupGlutes;
+
+  /// No description provided for @muscleGroupCore.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Core'**
+  String get muscleGroupCore;
+
+  /// No description provided for @muscleGroupCardio.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cardio'**
+  String get muscleGroupCardio;
+
+  /// No description provided for @muscleGroupFullBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Full body'**
+  String get muscleGroupFullBody;
+
+  /// No description provided for @muscleGroupAll.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Todos'**
+  String get muscleGroupAll;
+
+  /// No description provided for @fabCreateExercise.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Crear ejercicio'**
+  String get fabCreateExercise;
+
+  /// No description provided for @fabCreateRoutine.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nueva rutina'**
+  String get fabCreateRoutine;
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {

@@ -96,7 +96,7 @@ final class MembershipPlansControllerProvider
 }
 
 String _$membershipPlansControllerHash() =>
-    r'b6206fb422628ab24bf037db4ff0105deb618a51';
+    r'c1854be90d88fca5e41cedfc7594608053ac0eb7';
 
 abstract class _$MembershipPlansController
     extends $Notifier<AsyncValue<List<GymMembershipPlan>>> {
