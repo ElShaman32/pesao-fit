@@ -42,7 +42,7 @@ class _WorkoutExecutionScreenState
   @override
   void initState() {
     super.initState();
-    _loadIfNecessary();
+    Future.microtask(_loadIfNecessary);
     _durationTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (mounted) setState(() {});
     });

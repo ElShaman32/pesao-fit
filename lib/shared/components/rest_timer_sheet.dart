@@ -22,6 +22,8 @@ class RestTimerSheet extends StatefulWidget {
     return showModalBottomSheet<bool>(
       context: context,
       backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      useSafeArea: true,
       isDismissible: true,
       builder: (_) => RestTimerSheet(initialSeconds: seconds),
     );
@@ -104,86 +106,80 @@ class _RestTimerSheetState extends State<RestTimerSheet> {
         color: AppColors.surface,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      padding: const EdgeInsets.all(AppDimens.xl),
-      child: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 40,
-              height: 4,
-              decoration: const BoxDecoration(
-                color: AppColors.outline,
-                borderRadius: AppDimens.pillBorderRadius,
-              ),
+      padding: const EdgeInsets.all(AppDimens.l),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 40,
+            height: 4,
+            decoration: const BoxDecoration(
+              color: AppColors.outline,
+              borderRadius: AppDimens.pillBorderRadius,
             ),
-            const SizedBox(height: AppDimens.l),
-            Text(
-              _isDone ? l10n.workoutRestDone : l10n.workoutRestTitle,
-              style: AppTypography.headline.copyWith(
-                color: AppColors.textPrimary,
-              ),
+          ),
+          const SizedBox(height: AppDimens.l),
+          Text(
+            _isDone ? l10n.workoutRestDone : l10n.workoutRestTitle,
+            style: AppTypography.headline.copyWith(
+              color: AppColors.textPrimary,
             ),
-            const SizedBox(height: AppDimens.xs),
-            Text(
-              l10n.workoutRestSubtitle,
-              style: AppTypography.body.copyWith(
-                color: AppColors.textSecondary,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: AppDimens.xl),
-            // Anillo countdown con glow primary.
-            Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.2),
-                    blurRadius: 24,
-                  ),
-                ],
-              ),
-              child: CustomPaint(
-                painter: _CountdownRingPainter(
-                  progress: _isDone ? 0 : _progress,
+          ),
+          const SizedBox(height: AppDimens.xs),
+          Text(
+            l10n.workoutRestSubtitle,
+            style: AppTypography.body.copyWith(color: AppColors.textSecondary),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: AppDimens.xl),
+          // Anillo countdown con glow primary.
+          Container(
+            width: 180,
+            height: 180,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primary.withValues(alpha: 0.2),
+                  blurRadius: 24,
                 ),
-                child: Center(
-                  child: _isDone
-                      ? const Icon(
-                          Icons.check_rounded,
-                          size: 48,
-                          color: AppColors.success,
-                        )
-                      : Text(
-                          '${minutes.toString().padLeft(2, '0')}:'
-                          '${seconds.toString().padLeft(2, '0')}',
-                          style: AppTypography.numberL.copyWith(
-                            color: AppColors.textPrimary,
-                            fontFeatures: const [FontFeature.tabularFigures()],
-                          ),
+              ],
+            ),
+            child: CustomPaint(
+              painter: _CountdownRingPainter(progress: _isDone ? 0 : _progress),
+              child: Center(
+                child: _isDone
+                    ? const Icon(
+                        Icons.check_rounded,
+                        size: 48,
+                        color: AppColors.success,
+                      )
+                    : Text(
+                        '${minutes.toString().padLeft(2, '0')}:'
+                        '${seconds.toString().padLeft(2, '0')}',
+                        style: AppTypography.numberL.copyWith(
+                          color: AppColors.textPrimary,
+                          fontFeatures: const [FontFeature.tabularFigures()],
                         ),
-                ),
+                      ),
               ),
             ),
-            const SizedBox(height: AppDimens.xl),
-            if (!_isDone) ...[
-              PesaoButton(
-                label: l10n.workoutRestAddMinute,
-                variant: PesaoButtonVariant.secondary,
-                onPressed: _addMinute,
-              ),
-              const SizedBox(height: AppDimens.s),
-              PesaoButton(
-                label: l10n.workoutRestSkip,
-                variant: PesaoButtonVariant.ghost,
-                onPressed: () => Navigator.of(context).pop(true),
-              ),
-            ],
+          ),
+          const SizedBox(height: AppDimens.xl),
+          if (!_isDone) ...[
+            PesaoButton(
+              label: l10n.workoutRestAddMinute,
+              variant: PesaoButtonVariant.secondary,
+              onPressed: _addMinute,
+            ),
+            const SizedBox(height: AppDimens.s),
+            PesaoButton(
+              label: l10n.workoutRestSkip,
+              variant: PesaoButtonVariant.ghost,
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
           ],
-        ),
+        ],
       ),
     );
   }

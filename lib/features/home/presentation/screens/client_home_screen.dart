@@ -16,8 +16,10 @@ import '../../../../shared/widgets/pesao_stat_card.dart';
 import '../../../../shared/widgets/section_header.dart';
 import '../../../memberships/presentation/widgets/subscription_card.dart';
 import '../../../payments/presentation/screens/upload_payment_sheet.dart';
-import '../../../routines/domain/entities/routine.dart';
-import '../../../routines/presentation/providers/client_routine_controller.dart';
+import '../../../routines/domain/entities/training_plan.dart';
+import '../../../routines/domain/entities/training_plan_day.dart';
+import '../../../routines/presentation/providers/client_training_plan_controller.dart';
+import '../../../routines/presentation/widgets/start_workout_button.dart';
 import '../../domain/entities/client_dashboard_stats.dart';
 import '../providers/client_dashboard_controller.dart';
 
@@ -238,13 +240,13 @@ class _SuccessSliver extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppStrings.of(context);
-    final routineAsync = ref.watch(clientRoutineControllerProvider);
+    final planAsync = ref.watch(clientTrainingPlanControllerProvider);
 
     return SliverPadding(
       padding: const EdgeInsets.all(AppDimens.l),
       sliver: SliverList(
         delegate: SliverChildListDelegate([
-          _StatsRow(stats: stats, routineAsync: routineAsync),
+          _StatsRow(stats: stats, planAsync: planAsync),
           const SizedBox(height: AppDimens.xl),
           SubscriptionCard(
             onPay: () async {
@@ -252,7 +254,7 @@ class _SuccessSliver extends ConsumerWidget {
             },
           ),
           const SizedBox(height: AppDimens.xl),
-          _PrimaryCard(stats: stats, routineAsync: routineAsync),
+          _PrimaryCard(stats: stats, planAsync: planAsync),
           const SizedBox(height: AppDimens.xl),
           SectionHeader(
             title: l10n.clientDashTodaySection,
@@ -280,15 +282,29 @@ class _SuccessSliver extends ConsumerWidget {
 
 /// Fila de 3 StatCards.
 class _StatsRow extends StatelessWidget {
-  const _StatsRow({required this.stats, required this.routineAsync});
+  const _StatsRow({required this.stats, required this.planAsync});
 
   final ClientDashboardStats stats;
-  final AsyncValue<Routine?> routineAsync;
+  final AsyncValue<TrainingPlan?> planAsync;
+
+  TrainingPlanDay? _todayRoutine(TrainingPlan? plan) {
+    if (plan == null) return null;
+    final currentWeek = plan.weeks
+        .where((w) => w.weekNumber == plan.currentWeek)
+        .firstOrNull;
+    if (currentWeek == null) return null;
+    final today = DateTime.now().weekday; // 1=Lunes ... 7=Domingo
+    return currentWeek.days
+        .where((d) => d.dayOfWeek == today && d.hasRoutine)
+        .firstOrNull;
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppStrings.of(context);
-    final routine = routineAsync.value;
+    final plan = planAsync.value;
+    final today = _todayRoutine(plan);
+    final exerciseCount = today?.exerciseCount;
 
     return Row(
       children: [
@@ -313,9 +329,9 @@ class _StatsRow extends StatelessWidget {
         Expanded(
           child: PesaoStatCard(
             label: l10n.clientDashStatNext,
-            value: routine?.name ?? '—',
-            sub: routine != null
-                ? l10n.clientRoutineExerciseCount(routine.exercises.length)
+            value: today?.routineName ?? '—',
+            sub: today != null && exerciseCount != null
+                ? l10n.clientRoutineExerciseCount(exerciseCount)
                 : l10n.clientDashStatNextSub,
             icon: Icons.event_note_rounded,
           ),
@@ -326,17 +342,31 @@ class _StatsRow extends StatelessWidget {
 }
 
 /// PrimaryCard con CTA.
-class _PrimaryCard extends ConsumerWidget {
-  const _PrimaryCard({required this.stats, required this.routineAsync});
+class _PrimaryCard extends StatelessWidget {
+  const _PrimaryCard({required this.stats, required this.planAsync});
 
   final ClientDashboardStats stats;
-  final AsyncValue<Routine?> routineAsync;
+  final AsyncValue<TrainingPlan?> planAsync;
+
+  TrainingPlanDay? _todayRoutine(TrainingPlan? plan) {
+    if (plan == null) return null;
+    final currentWeek = plan.weeks
+        .where((w) => w.weekNumber == plan.currentWeek)
+        .firstOrNull;
+    if (currentWeek == null) return null;
+    final today = DateTime.now().weekday;
+    return currentWeek.days
+        .where((d) => d.dayOfWeek == today && d.hasRoutine)
+        .firstOrNull;
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppStrings.of(context);
-    final routine = routineAsync.value;
-    final hasRoutine = routine != null;
+    final plan = planAsync.value;
+    final today = _todayRoutine(plan);
+    final hasRoutine = today != null;
+    final exerciseCount = today?.exerciseCount;
 
     return Container(
       padding: const EdgeInsets.all(AppDimens.l),
@@ -379,25 +409,32 @@ class _PrimaryCard extends ConsumerWidget {
           const SizedBox(height: AppDimens.m),
           Text(
             hasRoutine
-                ? l10n.clientDashPrimaryRoutineBody(routine.exercises.length)
+                ? l10n.clientDashPrimaryRoutineBody(exerciseCount ?? 0)
                 : l10n.clientRoutineEmptyBody,
             style: AppTypography.body.copyWith(color: AppColors.textSecondary),
           ),
           const SizedBox(height: AppDimens.m),
-          Align(
-            alignment: Alignment.centerRight,
-            child: PesaoButton(
-              label: hasRoutine
-                  ? l10n.clientDashPrimaryRoutineCta
-                  : l10n.clientDashPrimaryRoutineCtaNone,
-              variant: hasRoutine
-                  ? PesaoButtonVariant.primary
-                  : PesaoButtonVariant.secondary,
-              isExpanded: false,
-              onPressed: hasRoutine
-                  ? () => context.go(RouteNames.clientRoutine)
-                  : null,
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: PesaoButton(
+                  label: hasRoutine
+                      ? l10n.clientDashPrimaryRoutineCta
+                      : l10n.clientDashPrimaryRoutineCtaNone,
+                  variant: hasRoutine
+                      ? PesaoButtonVariant.secondary
+                      : PesaoButtonVariant.secondary,
+                  isExpanded: false,
+                  onPressed: hasRoutine
+                      ? () => context.go(RouteNames.clientRoutine)
+                      : null,
+                ),
+              ),
+              if (hasRoutine) ...[
+                const SizedBox(width: AppDimens.s),
+                StartWorkoutButton(routineId: today.routineId!),
+              ],
+            ],
           ),
         ],
       ),
