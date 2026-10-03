@@ -280,7 +280,6 @@ Day Assignment Sheet, Assign Plan Sheet, Client Selector, Image Picker Field. Re
 
 | Módulo | Pantallas pendientes |
 |---|---|
-| F2-D Ejecución | Historial + gráficos (ejecución y rest timer ya hechos) |
 | F3 Nutrición | Todas las pantallas del nutricionista y del cliente |
 | F5 Comunidad | Insignias, retos, rankings, feed |
 | F6 Avanzado | Wearables, QR, reportes |

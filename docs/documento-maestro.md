@@ -59,7 +59,7 @@ El cliente ve su plan activo con la semana actual y el día de hoy resaltado.
 | F4-C Membresías del gym | ✅ Completo | Planes del gym, suscripciones, saldo, assign_plan_to_client |
 | Gestión de Staff | ✅ Completo | Listar, invitar, activar/desactivar, límites por tier |
 | Gestión de Clientes | ✅ Completo | Listar, agregar, detalle, activar/desactivar |
-| F2-D Ejecución de rutina | ✅ Ejecución+RestTimer | Marcar sets ✅, rest timer ✅, workout ✅. Historial+gráficos ⏳ |
+| F2-D Ejecución de rutina | ✅ Ejecución+RestTimer | Marcar sets ✅, rest timer ✅, workout ✅. Historial+gráficos ✅. |
 | F3 Nutrición | ⏳ Pendiente | Alimentos, planes, macros |
 | F5 Comunidad | ⏳ Pendiente | Insignias, retos, rankings |
 | F6 Avanzado | ⏳ Pendiente | Wearables, QR, reportes |
@@ -87,7 +87,7 @@ gym discovery, shells por rol con FAB contextual, dashboards.
 - F2-C ✅: Planificador semanal. Entrenador crea planes por cliente con semanas y días.
   Duplicación de semanas (Hierro/Macizo). Límites por tier.
 F2-D ✅ (parcial): Ejecución de rutina, rest timer con anillo countdown, registro de workouts ✅.
-Historial + gráficos ⏳.
+Historial + gráficos ✅.
 
 ### F3 Nutrición ⏳
 Alimentos, planes semanales, macros, consultas.
@@ -214,7 +214,7 @@ Assign Plan Sheet, Client Selector, Image Picker Field, Rest Timer Sheet.
 
 ### Pendientes de construir
 - Nutricionista: todas las pantallas de F3.
-- Cliente: historial de workouts + gráficos (F2-D restante), nutrición (F3), perfil editable.
+- Cliente: nutrición (F3), perfil editable.
 - Dueño: perfil editable, configuración del gym.
 - Superadmin: panel de pagos de suscripciones de gyms.
 
