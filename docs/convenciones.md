@@ -78,8 +78,11 @@ un solo feature, se queda en `features/X/presentation/widgets/`.
   - `membershipPlansControllerProvider`, `clientSubscriptionControllerProvider` (F4-C)
   - `ownerPaymentsControllerProvider`, `clientPaymentUploadControllerProvider` (F4-A/B)
   - `ownerStaffControllerProvider`, `ownerClientsControllerProvider` (Staff/Clientes)
+  `workoutsRepositoryProvider`, `workoutExecutionControllerProvider` (F2-D)
 
 ## §6 Manejo de errores
+
+| Workouts/* | fetch-error, fetch-active-error, fetch-sets-error, start-error, already-active, toggle-set-error, finish-error, no-active |
 
 ### Jerarquía de excepciones
 

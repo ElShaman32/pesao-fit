@@ -1,6 +1,7 @@
 import '../../../../core/exceptions/app_exception.dart';
 import '../../../../core/utils/result.dart';
 import '../../domain/entities/workout.dart';
+import '../../domain/entities/workout_history_entry.dart';
 import '../../domain/entities/workout_set.dart';
 import '../../domain/repositories/workouts_repository.dart';
 import '../datasources/workouts_remote_datasource.dart';
@@ -135,6 +136,29 @@ class WorkoutsRepositoryImpl implements WorkoutsRepository {
         UnknownException(
           code: 'Workouts/finish-error',
           message: 'Error al finalizar workout',
+          cause: e,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Result<List<WorkoutHistoryEntry>>> getHistory({
+    required String userId,
+  }) async {
+    try {
+      final response = await _remote.fetchHistory(userId);
+      final entries = response
+          .map((e) => WorkoutHistoryEntry.fromJson(e as Map<String, dynamic>))
+          .toList();
+      return Result.success(entries);
+    } on AppException catch (e) {
+      return Result.failure(e);
+    } catch (e) {
+      return Result.failure(
+        UnknownException(
+          code: 'Workouts/fetch-history-error',
+          message: 'Error al cargar historial',
           cause: e,
         ),
       );

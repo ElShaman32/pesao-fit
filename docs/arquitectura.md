@@ -97,7 +97,7 @@ El FAB del shell deriva su acción de la ruta actual:
 - Pantalla Plantillas de rutina → Nueva rutina
 - Pantalla Ejercicios → Crear ejercicio personalizado
 - Dashboard del cliente → Subir comprobante de pago
-- Tab Rutina del cliente → (futuro: registrar ejercicio F2-D)
+Tab Rutina del cliente → Comenzar/retomar workout del día
 
 ## Offline-first
 
@@ -179,6 +179,15 @@ Edge Function `approve-gym` garantiza transaccionalidad.
 6. Cliente ve su plan activo con la semana actual y el día de hoy resaltado.
 7. Dashboard del cliente muestra "Próximo entreno" real desde el plan.
 
+## Flujo de ejecución de workout (F2-D)
+
+1. Cliente ve su plan en tab Rutina → día de hoy tiene botón "Comenzar".
+2. Toca "Comenzar" → start_workout() crea workout y pre-carga sets desde la rutina.
+3. Navega a WorkoutExecutionScreen → marca sets completados (toggle optimista).
+4. Después de cada set con descanso → RestTimerSheet (anillo countdown, +1min, vibración).
+5. "Terminar entreno" → finish_workout() → toast de éxito.
+6. Si sale a mitad, el workout queda activo y puede retomarse con get_active_workout().
+
 ## Integraciones y escalabilidad
 
 - Tasa BCV: dolarAPI vía Edge Function `sync-exchange-rate` + override manual
@@ -223,19 +232,3 @@ futuro por región.
 22. `upsert()` de Supabase usa PK por defecto; para UPSERT por otras columnas
     se requiere `onConflict: 'col1,col2'` explícito.
 ```
-
----
-
-## Resumen de cambios en arquitectura.md v4
-
-| Sección | Cambio |
-|---|---|
-| Base de datos | 20 → **25 tablas** |
-| Integraciones | Tasa BCV: dolarAPI + override manual |
-| Cloudinary | Documentada cuenta 2 para receipts (ya implementada) |
-| Nuevas secciones | Flujo de pagos manuales, Flujo de membresías, Flujo de planificador |
-| FAB contextual | Documentadas todas las acciones por pantalla |
-| Drift | 15 en Drift / 10 NO en Drift (antes eran 5) |
-| Errores conocidos | +1 (#22): upsert con `onConflict` explícito |
-| Sentry | ✅ Se mantiene sin cambios |
-

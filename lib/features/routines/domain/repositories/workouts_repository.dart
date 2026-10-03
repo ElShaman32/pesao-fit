@@ -1,5 +1,6 @@
 import '../../../../core/utils/result.dart';
 import '../entities/workout.dart';
+import '../entities/workout_history_entry.dart';
 import '../entities/workout_set.dart';
 
 /// Contrato para la ejecución de workouts (F2-D).
@@ -27,4 +28,9 @@ abstract interface class WorkoutsRepository {
 
   /// Finaliza el workout (setea ended_at).
   Future<Result<void>> finishWorkout({required String workoutId});
+
+  /// Lista de workouts finalizados del cliente (ordenados por fecha desc).
+  Future<Result<List<WorkoutHistoryEntry>>> getHistory({
+    required String userId,
+  });
 }

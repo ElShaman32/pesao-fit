@@ -2001,6 +2001,47 @@ class AppStringsEs extends AppStrings {
   String workoutDurationMinutes(int minutes) {
     return '$minutes min';
   }
+
+  @override
+  String get workoutHistoryScreenTitle => 'Historial';
+
+  @override
+  String get workoutHistoryEmptyTitle => 'Aún no tienes entrenos';
+
+  @override
+  String get workoutHistoryEmptyBody =>
+      'Cuando completes tu primer entreno, aparece aquí 💪';
+
+  @override
+  String get workoutHistoryErrorTitle => 'No pudimos cargar tu historial';
+
+  @override
+  String get workoutHistoryErrorBody =>
+      'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String get workoutHistoryVolumeChart => 'Volumen semanal';
+
+  @override
+  String get workoutHistoryVolumeSub => 'Total de series completadas';
+
+  @override
+  String workoutHistoryDate(int day, int month, int year) {
+    return '$day/$month/$year';
+  }
+
+  @override
+  String workoutHistoryDuration(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String workoutHistoryExercises(int count) {
+    return '$count ejercicios';
+  }
+
+  @override
+  String get workoutHistorySeeAll => 'Ver historial';
 }
 
 /// The translations for Spanish Castilian, as used in Venezuela (`es_VE`).
@@ -4000,4 +4041,45 @@ class AppStringsEsVe extends AppStringsEs {
   String workoutDurationMinutes(int minutes) {
     return '$minutes min';
   }
+
+  @override
+  String get workoutHistoryScreenTitle => 'Historial';
+
+  @override
+  String get workoutHistoryEmptyTitle => 'Aún no tienes entrenos';
+
+  @override
+  String get workoutHistoryEmptyBody =>
+      'Cuando completes tu primer entreno, aparece aquí 💪';
+
+  @override
+  String get workoutHistoryErrorTitle => 'No pudimos cargar tu historial';
+
+  @override
+  String get workoutHistoryErrorBody =>
+      'Tranquilo, suele pasar. Inténtalo de nuevo.';
+
+  @override
+  String get workoutHistoryVolumeChart => 'Volumen semanal';
+
+  @override
+  String get workoutHistoryVolumeSub => 'Total de series completadas';
+
+  @override
+  String workoutHistoryDate(int day, int month, int year) {
+    return '$day/$month/$year';
+  }
+
+  @override
+  String workoutHistoryDuration(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String workoutHistoryExercises(int count) {
+    return '$count ejercicios';
+  }
+
+  @override
+  String get workoutHistorySeeAll => 'Ver historial';
 }

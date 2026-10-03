@@ -94,4 +94,25 @@ class WorkoutsRemoteDatasource {
       rethrow;
     }
   }
+
+  /// Lista de workouts finalizados con nombre de rutina y sets.
+  Future<List<dynamic>> fetchHistory(String userId) async {
+    try {
+      final response = await _client
+          .from('workouts')
+          .select('''
+            *,
+            routines (name),
+            workout_exercises (exercise_id, completed)
+          ''')
+          .eq('user_id', userId)
+          .not('ended_at', 'is', null)
+          .order('started_at', ascending: false)
+          .limit(50);
+      return response;
+    } catch (e) {
+      debugPrint('❌ WORKOUTS fetchHistory: $e');
+      rethrow;
+    }
+  }
 }

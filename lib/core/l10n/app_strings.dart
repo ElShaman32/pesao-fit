@@ -3810,6 +3810,72 @@ abstract class AppStrings {
   /// In es_VE, this message translates to:
   /// **'{minutes} min'**
   String workoutDurationMinutes(int minutes);
+
+  /// No description provided for @workoutHistoryScreenTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Historial'**
+  String get workoutHistoryScreenTitle;
+
+  /// No description provided for @workoutHistoryEmptyTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Aún no tienes entrenos'**
+  String get workoutHistoryEmptyTitle;
+
+  /// No description provided for @workoutHistoryEmptyBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cuando completes tu primer entreno, aparece aquí 💪'**
+  String get workoutHistoryEmptyBody;
+
+  /// No description provided for @workoutHistoryErrorTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No pudimos cargar tu historial'**
+  String get workoutHistoryErrorTitle;
+
+  /// No description provided for @workoutHistoryErrorBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tranquilo, suele pasar. Inténtalo de nuevo.'**
+  String get workoutHistoryErrorBody;
+
+  /// No description provided for @workoutHistoryVolumeChart.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Volumen semanal'**
+  String get workoutHistoryVolumeChart;
+
+  /// No description provided for @workoutHistoryVolumeSub.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Total de series completadas'**
+  String get workoutHistoryVolumeSub;
+
+  /// No description provided for @workoutHistoryDate.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{day}/{month}/{year}'**
+  String workoutHistoryDate(int day, int month, int year);
+
+  /// No description provided for @workoutHistoryDuration.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{minutes} min'**
+  String workoutHistoryDuration(int minutes);
+
+  /// No description provided for @workoutHistoryExercises.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{count} ejercicios'**
+  String workoutHistoryExercises(int count);
+
+  /// No description provided for @workoutHistorySeeAll.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ver historial'**
+  String get workoutHistorySeeAll;
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {

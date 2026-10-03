@@ -226,3 +226,8 @@
 **Contexto:** El patrón anterior con `PesaoFabController` global era propenso a desincronización.
 **Decisión:** Cada shell tiene una función `_fabForRoute(path, context)` que deriva el FAB de la ruta actual. Sin controlador global.
 **Consecuencias:** El FAB siempre refleja la pantalla visible. Sin estado compartido entre pantallas. Más fácil de mantener.
+
+## ADR-046: Ejecución de workout con sets pre-cargados y toggle optimista
+Contexto: El cliente necesita ejecutar su rutina marcando sets, con respuesta instantánea.
+Decisión: start_workout() pre-carga todos los sets en workout_exercises. El toggle de sets es optimista (actualiza UI inmediatamente, persiste en background, revierte si falla). Rest timer con anillo CustomPainter + HapticFeedback.
+Consecuencias: UI responsiva sin esperar red. RestTimerSheet sin dependencias externas (vibración nativa).

@@ -137,7 +137,7 @@ No se usa `PesaoFabController` global (ADR-045).
 | Ruta | Icono | Acción |
 |---|---|---|
 | `/client/home` | `upload_file` | Abre sheet de subida de pago |
-| `/client/routine` | `add` | Futuro: registrar ejercicio (F2-D) |
+| `/client/routine` | `add` | Comenzar/retomar workout del día |
 | `/client/nutrition` | `add` | Futuro: registrar comida (F3) |
 | `/client/profile` | `add` | Sin acción |
 
@@ -259,8 +259,9 @@ Dashboard, Staff list, Staff add, Clients list, Client add, Client detail,
 Payments list, Payment detail, Membership Plans list, Membership Plan form,
 Training Plans list, Training Plan form, Plan Week Editor.
 
-**Cliente (3):**
+**Cliente (4):**
 Dashboard, Client Routine Screen, Upload Payment Sheet.
+Workout Execution Screen.
 
 **Entrenador (8):**
 Dashboard, Routines list, Routine form, Exercises list,
@@ -269,9 +270,9 @@ Exercise form, Training Plans list, Training Plan form, Plan Week Editor.
 **Nutricionista (1):**
 Dashboard (placeholder).
 
-**Modales/Sheets (7):**
+**Modales/Sheets (8):**
 Confirm Dialog, Upload Payment Sheet, Exercise Picker Sheet,
-Day Assignment Sheet, Assign Plan Sheet, Client Selector, Image Picker Field.
+Day Assignment Sheet, Assign Plan Sheet, Client Selector, Image Picker Field. Rest Timer Sheet.
 
 **Total: ~45 pantallas/modales.**
 
@@ -279,7 +280,7 @@ Day Assignment Sheet, Assign Plan Sheet, Client Selector, Image Picker Field.
 
 | Módulo | Pantallas pendientes |
 |---|---|
-| F2-D Ejecución | Marcar sets, rest timer, workout activo, historial |
+| F2-D Ejecución | Historial + gráficos (ejecución y rest timer ya hechos) |
 | F3 Nutrición | Todas las pantallas del nutricionista y del cliente |
 | F5 Comunidad | Insignias, retos, rankings, feed |
 | F6 Avanzado | Wearables, QR, reportes |

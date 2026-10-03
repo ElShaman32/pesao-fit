@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/app_strings.dart';
 import '../../../../core/providers/connectivity_provider.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -112,6 +114,15 @@ class _ClientPlanView extends ConsumerWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+          // Botón ver historial.
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton.icon(
+              icon: const Icon(Icons.history_rounded, size: 18),
+              label: Text(l10n.workoutHistorySeeAll),
+              onPressed: () => context.push(RouteNames.clientWorkoutHistory),
             ),
           ),
           const SizedBox(height: AppDimens.l),

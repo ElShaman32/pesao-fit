@@ -59,7 +59,7 @@ El cliente ve su plan activo con la semana actual y el día de hoy resaltado.
 | F4-C Membresías del gym | ✅ Completo | Planes del gym, suscripciones, saldo, assign_plan_to_client |
 | Gestión de Staff | ✅ Completo | Listar, invitar, activar/desactivar, límites por tier |
 | Gestión de Clientes | ✅ Completo | Listar, agregar, detalle, activar/desactivar |
-| F2-D Ejecución de rutina | ⏳ Pendiente | Marcar sets, rest timer, registrar workout |
+| F2-D Ejecución de rutina | ✅ Ejecución+RestTimer | Marcar sets ✅, rest timer ✅, workout ✅. Historial+gráficos ⏳ |
 | F3 Nutrición | ⏳ Pendiente | Alimentos, planes, macros |
 | F5 Comunidad | ⏳ Pendiente | Insignias, retos, rankings |
 | F6 Avanzado | ⏳ Pendiente | Wearables, QR, reportes |
@@ -86,8 +86,8 @@ gym discovery, shells por rol con FAB contextual, dashboards.
 - F2-B ✅: El cliente ve su rutina/plan asignado en tab Rutina. Dashboard muestra próximo entreno.
 - F2-C ✅: Planificador semanal. Entrenador crea planes por cliente con semanas y días.
   Duplicación de semanas (Hierro/Macizo). Límites por tier.
-- F2-D ⏳: Ejecución de rutina (marcar sets completados), rest timer, registro de workouts,
-  historial, gráficos.
+F2-D ✅ (parcial): Ejecución de rutina, rest timer con anillo countdown, registro de workouts ✅.
+Historial + gráficos ⏳.
 
 ### F3 Nutrición ⏳
 Alimentos, planes semanales, macros, consultas.
@@ -146,6 +146,8 @@ notifications, chats, messages, gym_settings, audit_logs, exchange_rates, gym_ap
 | `routines` | `client_id` ahora NULLABLE (plantillas), `description`, `is_active` |
 | `exercises` | `muscle_group`, `image_url`, `updated_at` |
 | `gym_settings` | `bcv_rate` |
+| `workouts` | `updated_at` |
+| `workout_exercises` | `rest_seconds, order_index` |
 
 ### RLS
 `is_gym_member` / `get_gym_role` / `is_active_gym_owner` / `is_superadmin` /
@@ -174,6 +176,9 @@ client_subscriptions, training_plans), `on_auth_user_created`, `handle_new_user`
 | `can_add_staff / can_add_client / can_add_membership_plan` | Validan límites de tier |
 | `can_add_routine_template / can_add_plan_week / can_duplicate_weeks` | Validan límites del planificador |
 | `set_staff_active / set_client_active` | Activar/desactivar membresías |
+| start_workout(gym_id, routine_id) | Inicia workout y pre-carga todos los sets desde la rutina |
+| finish_workout(workout_id) | Finaliza el workout (setea ended_at) |
+| get_active_workout() | Devuelve el workout activo del cliente (si existe) |
 
 ## Pantallas — Estado real
 
@@ -191,8 +196,8 @@ Dashboard, Staff list, Staff add, Clients list, Client add, Client detail,
 Payments list, Payment detail, Membership Plans list, Membership Plan form,
 Training Plans list, Training Plan form, Plan Week Editor.
 
-**Cliente (3):**
-Dashboard, Client Routine Screen (tab Rutina), Upload Payment Sheet.
+**Cliente (4):**
+Dashboard, Client Routine Screen (tab Rutina), Upload Payment Sheet, Workout Execution Screen.
 
 **Entrenador (8):**
 Dashboard, Routines list (plantillas), Routine form, Exercises list,
@@ -201,15 +206,15 @@ Exercise form, Training Plans list, Training Plan form, Plan Week Editor.
 **Nutricionista (1):**
 Dashboard (placeholder).
 
-**Modales/Sheets (7):**
+**Modales/Sheets (8):**
 Confirm Dialog, Upload Payment Sheet, Exercise Picker Sheet, Day Assignment Sheet,
-Assign Plan Sheet, Client Selector, Image Picker Field.
+Assign Plan Sheet, Client Selector, Image Picker Field, Rest Timer Sheet.
 
 **Total construido: ~45 pantallas/modales.**
 
 ### Pendientes de construir
 - Nutricionista: todas las pantallas de F3.
-- Cliente: ejecución de rutina (F2-D), nutrición (F3), perfil editable.
+- Cliente: historial de workouts + gráficos (F2-D restante), nutrición (F3), perfil editable.
 - Dueño: perfil editable, configuración del gym.
 - Superadmin: panel de pagos de suscripciones de gyms.
 

@@ -1485,5 +1485,33 @@
   "workoutDurationMinutes": "{minutes} min",
   "@workoutDurationMinutes": {
     "placeholders": {"minutes": {"type": "int"}}
-  }
+  },
+    "workoutHistoryScreenTitle": "Historial",
+  "workoutHistoryEmptyTitle": "Aún no tienes entrenos",
+  "workoutHistoryEmptyBody": "Cuando completes tu primer entreno, aparece aquí 💪",
+  "workoutHistoryErrorTitle": "No pudimos cargar tu historial",
+  "workoutHistoryErrorBody": "Tranquilo, suele pasar. Inténtalo de nuevo.",
+  "workoutHistoryVolumeChart": "Volumen semanal",
+  "workoutHistoryVolumeSub": "Total de series completadas",
+  "workoutHistoryDate": "{day}/{month}/{year}",
+  "@workoutHistoryDate": {
+    "placeholders": {
+      "day": {"type": "int"},
+      "month": {"type": "int"},
+      "year": {"type": "int"}
+    }
+  },
+  "workoutHistoryDuration": "{minutes} min",
+  "@workoutHistoryDuration": {
+    "placeholders": {
+      "minutes": {"type": "int"}
+    }
+  },
+  "workoutHistoryExercises": "{count} ejercicios",
+  "@workoutHistoryExercises": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "workoutHistorySeeAll": "Ver historial"
 }
