@@ -11,7 +11,6 @@ import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/widgets/pesao_app_bar.dart';
 import '../../../../shared/widgets/pesao_button.dart';
-import '../../../../shared/widgets/pesao_card.dart';
 import '../../../../shared/widgets/pesao_icon_button.dart';
 import '../../../../shared/widgets/pesao_input.dart';
 import '../../../../shared/widgets/pesao_list_tile.dart';

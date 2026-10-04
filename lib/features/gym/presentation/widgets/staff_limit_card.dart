@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/l10n/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_dimens.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/widgets/pesao_card.dart';
 import '../../../../shared/widgets/pesao_progress.dart';
@@ -23,47 +25,44 @@ class StaffLimitCard extends StatelessWidget {
     final isNearLimit = !isUnlimited && progress >= 0.8;
 
     return PesaoCard(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            strings.staffLimitTitle,
+            style: AppTypography.title.copyWith(color: AppColors.textPrimary),
+          ),
+          const SizedBox(height: AppDimens.m),
+          if (isUnlimited)
             Text(
-              strings.staffLimitTitle,
-              style: AppTypography.title.copyWith(color: AppColors.textPrimary),
-            ),
-            const SizedBox(height: 12),
-            if (isUnlimited)
-              Text(
-                strings.staffLimitUnlimited,
-                style: AppTypography.body.copyWith(
-                  color: AppColors.textSecondary,
+              strings.staffLimitUnlimited,
+              style: AppTypography.body.copyWith(
+                color: AppColors.textSecondary,
+              ),
+            )
+          else ...[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '$staffCount / $staffLimit',
+                  style: AppTypography.numberM.copyWith(
+                    color: AppColors.textPrimary,
+                  ),
                 ),
-              )
-            else ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                if (isNearLimit)
                   Text(
-                    '$staffCount / $staffLimit',
-                    style: AppTypography.numberM.copyWith(
-                      color: AppColors.textPrimary,
+                    strings.staffLimitNearLimit,
+                    style: AppTypography.bodySmall.copyWith(
+                      color: AppColors.warning,
                     ),
                   ),
-                  if (isNearLimit)
-                    Text(
-                      strings.staffLimitNearLimit,
-                      style: AppTypography.bodySmall.copyWith(
-                        color: AppColors.warning,
-                      ),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              PesaoProgress(value: progress),
-            ],
+              ],
+            ),
+            const SizedBox(height: AppDimens.s),
+            PesaoProgress(value: progress),
           ],
-        ),
+        ],
       ),
     );
   }

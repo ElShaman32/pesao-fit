@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/l10n/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_dimens.dart';
+import '../../../../core/theme/app_icons.dart';
 import '../../../../shared/widgets/pesao_avatar.dart';
 import '../../../../shared/widgets/pesao_badge.dart';
+import '../../../../shared/widgets/pesao_icon_button.dart';
 import '../../../../shared/widgets/pesao_list_tile.dart';
 import '../../domain/entities/staff_member.dart';
 
@@ -46,17 +50,15 @@ class StaffMemberTile extends StatelessWidget {
                 ? PesaoBadgeVariant.success
                 : PesaoBadgeVariant.warning,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppDimens.s),
           if (onToggleActive != null)
-            IconButton(
-              icon: Icon(
-                member.isActive ? Icons.visibility_off : Icons.visibility,
-                color: AppColors.textSecondary,
-              ),
-              onPressed: onToggleActive,
-              tooltip: member.isActive
+            PesaoIconButton(
+              icon: member.isActive ? AppIcons.eyeOff : AppIcons.eye,
+              iconColor: AppColors.textSecondary,
+              semanticLabel: member.isActive
                   ? strings.staffActionDeactivate
                   : strings.staffActionActivate,
+              onPressed: onToggleActive,
             ),
         ],
       ),

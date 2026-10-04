@@ -7,12 +7,13 @@ import '../../../../core/l10n/app_strings.dart';
 import '../../../../core/providers/auth_provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
+import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/widgets/pesao_app_bar.dart';
 import '../../../../shared/widgets/pesao_button.dart';
-import '../../../../shared/widgets/pesao_card.dart';
+import '../../../../shared/widgets/pesao_icon_button.dart';
 import '../../../../shared/widgets/pesao_input.dart';
-import '../../../../shared/widgets/pesao_shell.dart';
+import '../../../../shared/widgets/pesao_list_tile.dart';
 import '../../../../shared/widgets/pesao_toast.dart';
 import '../../domain/entities/create_staff_request.dart';
 import '../../domain/entities/staff_invitation_result.dart';
@@ -60,26 +61,29 @@ class _StaffAddScreenState extends ConsumerState<StaffAddScreen> {
   Widget build(BuildContext context) {
     final l10n = AppStrings.of(context);
 
-    return PesaoShell(
+    return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: PesaoAppBar(title: l10n.staffAddTitle),
-      body: _invitationResult != null
-          ? _SuccessView(
-              result: _invitationResult!,
-              onClose: () => Navigator.of(context).pop(),
-            )
-          : _FormView(
-              nameController: _nameController,
-              emailController: _emailController,
-              passwordController: _passwordController,
-              selectedRole: _selectedRole,
-              onRoleChanged: (role) => setState(() => _selectedRole = role),
-              isSubmitting: _isSubmitting,
-              onSubmit: _submit,
-              nameError: _nameError,
-              emailError: _emailError,
-              passwordError: _passwordError,
-              onRegeneratePassword: _regeneratePassword,
-            ),
+      body: SafeArea(
+        child: _invitationResult != null
+            ? _SuccessView(
+                result: _invitationResult!,
+                onClose: () => Navigator.of(context).pop(),
+              )
+            : _FormView(
+                nameController: _nameController,
+                emailController: _emailController,
+                passwordController: _passwordController,
+                selectedRole: _selectedRole,
+                onRoleChanged: (role) => setState(() => _selectedRole = role),
+                isSubmitting: _isSubmitting,
+                onSubmit: _submit,
+                nameError: _nameError,
+                emailError: _emailError,
+                passwordError: _passwordError,
+                onRegeneratePassword: _regeneratePassword,
+              ),
+      ),
     );
   }
 
@@ -168,7 +172,10 @@ class _StaffAddScreenState extends ConsumerState<StaffAddScreen> {
   }
 }
 
-/// Vista del formulario de invitación.
+// ============================================================================
+// FORM VIEW
+// ============================================================================
+
 class _FormView extends StatelessWidget {
   const _FormView({
     required this.nameController,
@@ -206,19 +213,19 @@ class _FormView extends StatelessWidget {
         PesaoInput(
           label: l10n.staffAddNameLabel,
           hint: l10n.staffAddNameHint,
-          prefixIcon: const Icon(Icons.person),
+          prefixIcon: const Icon(AppIcons.profile),
           controller: nameController,
+          errorText: nameError,
         ),
-        if (nameError != null) _InlineError(text: nameError!),
         const SizedBox(height: AppDimens.m),
         PesaoInput(
           label: l10n.staffAddEmailLabel,
           hint: l10n.staffAddEmailHint,
-          prefixIcon: const Icon(Icons.email),
+          prefixIcon: const Icon(AppIcons.mail),
           controller: emailController,
           keyboardType: TextInputType.emailAddress,
+          errorText: emailError,
         ),
-        if (emailError != null) _InlineError(text: emailError!),
         const SizedBox(height: AppDimens.m),
         Text(
           l10n.staffAddRoleLabel,
@@ -248,44 +255,31 @@ class _FormView extends StatelessWidget {
         PesaoInput(
           label: l10n.staffAddPasswordLabel,
           hint: l10n.staffAddPasswordHint,
-          prefixIcon: const Icon(Icons.lock),
+          prefixIcon: const Icon(AppIcons.lock),
           controller: passwordController,
-          suffixIcon: IconButton(
-            icon: const Icon(Icons.refresh_rounded),
-            tooltip: l10n.staffAddPasswordRegenerate,
+          errorText: passwordError,
+          suffixIcon: PesaoIconButton(
+            icon: Icons.refresh, // TODO: promover a AppIcons.
+            semanticLabel: l10n.staffAddPasswordRegenerate,
             onPressed: onRegeneratePassword,
           ),
         ),
-        if (passwordError != null) _InlineError(text: passwordError!),
         const SizedBox(height: AppDimens.xl),
         PesaoButton(
-          label: isSubmitting ? l10n.staffAddSubmitting : l10n.staffAddSubmit,
-          onPressed: isSubmitting ? null : onSubmit,
+          label: l10n.staffAddSubmit,
+          loading: isSubmitting,
+          onPressed: onSubmit,
         ),
       ],
     );
   }
 }
 
-/// Texto de error suave debajo de un campo.
-class _InlineError extends StatelessWidget {
-  const _InlineError({required this.text});
+// ============================================================================
+// ROLE OPTION
+// ============================================================================
 
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: AppDimens.xs),
-      child: Text(
-        text,
-        style: AppTypography.bodySmall.copyWith(color: AppColors.errorText),
-      ),
-    );
-  }
-}
-
-/// Opción seleccionable para el rol.
+/// Opción seleccionable para el rol (radio visual en caja).
 class _RoleOption extends StatelessWidget {
   const _RoleOption({
     required this.label,
@@ -330,6 +324,10 @@ class _RoleOption extends StatelessWidget {
   }
 }
 
+// ============================================================================
+// SUCCESS VIEW
+// ============================================================================
+
 /// Vista de éxito: muestra las credenciales UNA VEZ.
 class _SuccessView extends StatelessWidget {
   const _SuccessView({required this.result, required this.onClose});
@@ -345,11 +343,7 @@ class _SuccessView extends StatelessWidget {
       padding: const EdgeInsets.all(AppDimens.l),
       children: [
         const SizedBox(height: AppDimens.l),
-        const Icon(
-          Icons.check_circle_outline_rounded,
-          color: AppColors.success,
-          size: 64,
-        ),
+        const Icon(AppIcons.success, color: AppColors.success, size: 64),
         const SizedBox(height: AppDimens.l),
         Text(
           l10n.staffAddSuccessTitle,
@@ -363,25 +357,15 @@ class _SuccessView extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppDimens.xl),
-        PesaoCard(
-          child: Padding(
-            padding: const EdgeInsets.all(AppDimens.l),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _CredentialRow(
-                  label: l10n.staffAddCredentialEmail,
-                  value: result.email,
-                ),
-                const SizedBox(height: AppDimens.m),
-                _CredentialRow(
-                  label: l10n.staffAddCredentialPassword,
-                  value: result.tempPassword,
-                  showCopyButton: true,
-                ),
-              ],
-            ),
-          ),
+        _CredentialRow(
+          label: l10n.staffAddCredentialEmail,
+          value: result.email,
+        ),
+        const SizedBox(height: AppDimens.s),
+        _CredentialRow(
+          label: l10n.staffAddCredentialPassword,
+          value: result.tempPassword,
+          showCopyButton: true,
         ),
         const SizedBox(height: AppDimens.xl),
         PesaoButton(label: l10n.staffAddDone, onPressed: onClose),
@@ -389,6 +373,10 @@ class _SuccessView extends StatelessWidget {
     );
   }
 }
+
+// ============================================================================
+// CREDENTIAL ROW
+// ============================================================================
 
 /// Fila de credencial con botón de copiar opcional.
 class _CredentialRow extends StatelessWidget {
@@ -406,45 +394,25 @@ class _CredentialRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppStrings.of(context);
 
-    return Row(
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: AppTypography.label.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                value,
-                style: AppTypography.body.copyWith(
-                  color: AppColors.textPrimary,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-        ),
-        if (showCopyButton)
-          IconButton(
-            icon: const Icon(Icons.copy_rounded),
-            color: AppColors.primary,
-            tooltip: l10n.staffAddCopyTooltip,
-            onPressed: () {
-              Clipboard.setData(ClipboardData(text: value));
-              showPesaoToast(
-                context,
-                message: l10n.staffAddCopied,
-                semanticLabel: l10n.staffAddCopiedSemantics,
-                variant: PesaoToastVariant.success,
-              );
-            },
-          ),
-      ],
+    return PesaoListTile(
+      title: value,
+      subtitle: label,
+      trailing: showCopyButton
+          ? PesaoIconButton(
+              icon: Icons.copy_rounded, // TODO: promover a AppIcons.
+              iconColor: AppColors.primary,
+              semanticLabel: l10n.staffAddCopyTooltip,
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: value));
+                showPesaoToast(
+                  context,
+                  message: l10n.staffAddCopied,
+                  semanticLabel: l10n.staffAddCopiedSemantics,
+                  variant: PesaoToastVariant.success,
+                );
+              },
+            )
+          : null,
     );
   }
 }
