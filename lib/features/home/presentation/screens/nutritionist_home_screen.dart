@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/app_strings.dart';
 import '../../../../core/providers/auth_provider.dart';
 import '../../../../core/providers/connectivity_provider.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
+import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../shared/widgets/error_state.dart';
 import '../../../../shared/widgets/offline_banner.dart';
 import '../../../../shared/widgets/pesao_avatar.dart';
 import '../../../../shared/widgets/pesao_button.dart';
+import '../../../../shared/widgets/pesao_card.dart';
+import '../../../../shared/widgets/pesao_icon_button.dart';
 import '../../../../shared/widgets/pesao_stat_card.dart';
 import '../../../../shared/widgets/section_header.dart';
+import '../../../../shared/widgets/skeleton_loader.dart';
 import '../../domain/entities/nutritionist_dashboard_stats.dart';
 import '../providers/nutritionist_dashboard_controller.dart';
 
@@ -29,8 +36,8 @@ class NutritionistHomeScreen extends ConsumerWidget {
     final controller = ref.read(
       nutritionistDashboardControllerProvider.notifier,
     );
-    final connectivity = ref.watch(connectivityProvider);
-    final isOnline = connectivity is bool ? connectivity : true;
+    final connectivityAsync = ref.watch(connectivityProvider);
+    final isOnline = connectivityAsync.value ?? true;
     final greeting = _greetingForHour(l10n);
 
     return Scaffold(
@@ -43,6 +50,7 @@ class NutritionistHomeScreen extends ConsumerWidget {
           child: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
+              // Fila superior: avatar + saludo + campana.
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(
@@ -67,32 +75,38 @@ class NutritionistHomeScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.notifications_outlined,
-                          color: AppColors.textSecondary,
-                        ),
-                        tooltip: l10n.notificationsLabel,
-                        onPressed: () {},
+                      PesaoIconButton(
+                        icon: AppIcons.notificationsOutline,
+                        semanticLabel: l10n.notificationsLabel,
+                        onPressed: () {
+                          // Placeholder: notificaciones en F4.
+                        },
                       ),
                     ],
                   ),
                 ),
               ),
-              if (isOnline == false)
+
+              // OfflineBanner.
+              if (!isOnline)
                 const SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.all(AppDimens.l),
                     child: OfflineBanner(),
                   ),
                 ),
+
+              // Contenido según estado.
               if (state.isLoading && state.stats == null)
                 const _NutriSkeletonSliver()
               else if (state.error != null && state.stats == null)
-                _NutriErrorSliver(
-                  title: l10n.nutriDashErrorTitle,
-                  body: l10n.nutriDashErrorBody,
-                  onRetry: controller.load,
+                SliverFillRemaining(
+                  child: ErrorState(
+                    title: l10n.nutriDashErrorTitle,
+                    body: l10n.nutriDashErrorBody,
+                    actionLabel: l10n.commonRetry,
+                    onRetry: controller.load,
+                  ),
                 )
               else if (state.hasData)
                 _NutriSuccessSliver(stats: state.stats!),
@@ -112,95 +126,37 @@ class NutritionistHomeScreen extends ConsumerWidget {
   }
 }
 
+// ============================================================================
+// SKELETON
+// ============================================================================
+
 class _NutriSkeletonSliver extends StatelessWidget {
   const _NutriSkeletonSliver();
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.all(AppDimens.l),
-      sliver: SliverList(
-        delegate: SliverChildListDelegate([
-          const Row(
-            children: [
-              Expanded(child: _SkeletonBox(height: 110)),
-              SizedBox(width: AppDimens.s),
-              Expanded(child: _SkeletonBox(height: 110)),
-              SizedBox(width: AppDimens.s),
-              Expanded(child: _SkeletonBox(height: 110)),
-            ],
-          ),
-          const SizedBox(height: AppDimens.xl),
-          const _SkeletonBox(height: 160),
-          const SizedBox(height: AppDimens.xl),
-          const _SkeletonBox(height: 24),
-          const SizedBox(height: AppDimens.m),
-          const _SkeletonBox(height: 72),
-        ]),
-      ),
-    );
-  }
-}
-
-class _SkeletonBox extends StatelessWidget {
-  const _SkeletonBox({required this.height});
-  final double height;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppDimens.cardBorderRadius,
-        border: Border.all(color: AppColors.outline),
-      ),
-    );
-  }
-}
-
-class _NutriErrorSliver extends StatelessWidget {
-  const _NutriErrorSliver({
-    required this.title,
-    required this.body,
-    required this.onRetry,
-  });
-  final String title;
-  final String body;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverFillRemaining(
-      child: Center(
+    return const SliverToBoxAdapter(
+      child: SkeletonLoader(
         child: Padding(
-          padding: const EdgeInsets.all(AppDimens.xxl),
+          padding: EdgeInsets.all(AppDimens.l),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Icon(Icons.error_outline, color: AppColors.error, size: 48),
-              const SizedBox(height: AppDimens.m),
-              Text(
-                title,
-                style: AppTypography.title.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-                textAlign: TextAlign.center,
+              Row(
+                children: [
+                  Expanded(child: SkeletonBox(height: 110)),
+                  SizedBox(width: AppDimens.s),
+                  Expanded(child: SkeletonBox(height: 110)),
+                  SizedBox(width: AppDimens.s),
+                  Expanded(child: SkeletonBox(height: 110)),
+                ],
               ),
-              const SizedBox(height: AppDimens.s),
-              Text(
-                body,
-                style: AppTypography.body.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: AppDimens.l),
-              PesaoButton(
-                label: AppStrings.of(context).commonRetry,
-                isExpanded: false,
-                onPressed: onRetry,
-              ),
+              SizedBox(height: AppDimens.xl),
+              SkeletonBox(height: 160),
+              SizedBox(height: AppDimens.xl),
+              SkeletonBox(height: 24),
+              SizedBox(height: AppDimens.m),
+              SkeletonBox(height: 72),
             ],
           ),
         ),
@@ -208,6 +164,10 @@ class _NutriErrorSliver extends StatelessWidget {
     );
   }
 }
+
+// ============================================================================
+// SUCCESS
+// ============================================================================
 
 class _NutriSuccessSliver extends StatelessWidget {
   const _NutriSuccessSliver({required this.stats});
@@ -221,6 +181,7 @@ class _NutriSuccessSliver extends StatelessWidget {
       padding: const EdgeInsets.all(AppDimens.l),
       sliver: SliverList(
         delegate: SliverChildListDelegate([
+          // StatCards tappables.
           Row(
             children: [
               Expanded(
@@ -228,7 +189,9 @@ class _NutriSuccessSliver extends StatelessWidget {
                   label: l10n.nutriDashStatPlans,
                   value: stats.activePlansCount.toString(),
                   sub: l10n.nutriDashStatPlansSub,
+                  // TODO: promover a AppIcons.nutritionMenu.
                   icon: Icons.restaurant_menu_rounded,
+                  onTap: () => context.go(RouteNames.nutritionistPlans),
                 ),
               ),
               const SizedBox(width: AppDimens.s),
@@ -237,7 +200,8 @@ class _NutriSuccessSliver extends StatelessWidget {
                   label: l10n.nutriDashStatClients,
                   value: stats.clientsWithPlanCount.toString(),
                   sub: l10n.nutriDashStatClientsSub,
-                  icon: Icons.people_rounded,
+                  icon: AppIcons.clients,
+                  onTap: () => context.go(RouteNames.nutritionistClients),
                 ),
               ),
               const SizedBox(width: AppDimens.s),
@@ -246,15 +210,25 @@ class _NutriSuccessSliver extends StatelessWidget {
                   label: l10n.nutriDashStatConsults,
                   value: stats.consultsTodayCount.toString(),
                   sub: l10n.nutriDashStatConsultsSub,
-                  icon: Icons.event_note_rounded,
+                  icon: AppIcons.calendar,
+                  // Sin onTap: no hay pantalla de consultas aún.
                 ),
               ),
             ],
           ),
           const SizedBox(height: AppDimens.xl),
+
+          // PrimaryCard.
           _NutriPrimaryCard(stats: stats),
           const SizedBox(height: AppDimens.xl),
-          SectionHeader(title: l10n.nutriDashRecentSection, onSeeAll: () {}),
+
+          // Últimos planes.
+          SectionHeader(
+            title: l10n.nutriDashRecentSection,
+            onSeeAll: () {
+              // Futuro: vista completa de planes (F3).
+            },
+          ),
           const SizedBox(height: AppDimens.m),
           if (stats.recentPlans.isEmpty)
             Padding(
@@ -274,6 +248,10 @@ class _NutriSuccessSliver extends StatelessWidget {
   }
 }
 
+// ============================================================================
+// PRIMARY CARD
+// ============================================================================
+
 class _NutriPrimaryCard extends StatelessWidget {
   const _NutriPrimaryCard({required this.stats});
   final NutritionistDashboardStats stats;
@@ -283,21 +261,8 @@ class _NutriPrimaryCard extends StatelessWidget {
     final l10n = AppStrings.of(context);
     final hasPlans = stats.hasPlansToReview;
 
-    return Container(
-      padding: const EdgeInsets.all(AppDimens.l),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppDimens.cardBorderRadius,
-        border: Border.all(color: AppColors.outline),
-        boxShadow: hasPlans
-            ? [
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.2),
-                  blurRadius: 24,
-                ),
-              ]
-            : null,
-      ),
+    return PesaoCard(
+      glow: hasPlans,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -305,8 +270,9 @@ class _NutriPrimaryCard extends StatelessWidget {
             children: [
               Icon(
                 hasPlans
+                    // TODO: promover a AppIcons.nutritionMenu.
                     ? Icons.restaurant_menu_rounded
-                    : Icons.check_circle_outline_rounded,
+                    : AppIcons.success,
                 color: hasPlans ? AppColors.primary : AppColors.success,
                 size: 24,
               ),
@@ -340,8 +306,10 @@ class _NutriPrimaryCard extends StatelessWidget {
                   : PesaoButtonVariant.secondary,
               isExpanded: false,
               onPressed: hasPlans
-                  ? () {}
-                  : null, // Futuro: navegar a planes (F3)
+                  ? () {
+                      // Futuro: navegar a planes (F3).
+                    }
+                  : null,
             ),
           ),
         ],

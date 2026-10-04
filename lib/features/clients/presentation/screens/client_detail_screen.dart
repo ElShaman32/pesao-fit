@@ -8,6 +8,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
 import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../shared/widgets/pesao_info_row.dart';
 import '../../domain/entities/client_member.dart';
 import '../../../../shared/widgets/confirm_dialog.dart';
 import '../../../../shared/widgets/error_state.dart';
@@ -114,17 +115,17 @@ class _ClientDetailContent extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _InfoRow(
+              PesaoInfoRow(
                 label: l10n.clientAddEmailLabel,
                 value: client.email ?? '—',
               ),
               const SizedBox(height: AppDimens.m),
-              _InfoRow(
+              PesaoInfoRow(
                 label: l10n.ownerAppPhoneLabel,
                 value: client.phone ?? '—',
               ),
               const SizedBox(height: AppDimens.m),
-              _InfoRow(
+              PesaoInfoRow(
                 label: l10n.clientDetailJoined,
                 value: DateFormat.yMMMMd('es_VE').format(client.joinedAt),
               ),
@@ -229,35 +230,6 @@ class _ClientDetailContent extends ConsumerWidget {
         }
       }
     }
-  }
-}
-
-// ============================================================================
-// INFO ROW
-// ============================================================================
-
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTypography.label.copyWith(color: AppColors.textSecondary),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: AppTypography.body.copyWith(color: AppColors.textPrimary),
-        ),
-      ],
-    );
   }
 }
 

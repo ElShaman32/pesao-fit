@@ -7,12 +7,13 @@ import '../../../../core/providers/connectivity_provider.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
-import '../../../../core/theme/app_typography.dart';
+import '../../../../core/theme/app_icons.dart';
 import '../../../../shared/widgets/empty_state.dart';
 import '../../../../shared/widgets/error_state.dart';
 import '../../../../shared/widgets/offline_banner.dart';
 import '../../../../shared/widgets/pesao_app_bar.dart';
-import '../../../../shared/widgets/pesao_shell.dart';
+import '../../../../shared/widgets/pesao_chip.dart';
+import '../../../../shared/widgets/skeleton_loader.dart';
 import '../providers/payments_providers.dart';
 import '../widgets/payment_list_tile.dart';
 
@@ -42,14 +43,31 @@ class _PaymentsListScreenState extends ConsumerState<PaymentsListScreen> {
     final connectivityAsync = ref.watch(connectivityProvider);
     final isOnline = connectivityAsync.value ?? true;
 
-    return PesaoShell(
+    return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: PesaoAppBar(title: l10n.paymentsScreenTitle),
-      body: Column(
-        children: [
-          if (!isOnline) const OfflineBanner(),
-          _FilterRow(selected: state.filter, onSelected: controller.setFilter),
-          Expanded(child: _buildContent(context, state, controller, isOnline)),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            if (!isOnline) const OfflineBanner(),
+            _FilterRow(
+              selected: state.filter,
+              onSelected: controller.setFilter,
+            ),
+            Expanded(
+              child: RefreshIndicator(
+                color: AppColors.primary,
+                backgroundColor: AppColors.surface,
+                onRefresh: () async {
+                  if (isOnline) {
+                    await controller.load();
+                  }
+                },
+                child: _buildContent(context, state, controller, isOnline),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -67,56 +85,69 @@ class _PaymentsListScreenState extends ConsumerState<PaymentsListScreen> {
     }
 
     if (!isOnline && !state.hasData) {
-      return EmptyState(
-        title: l10n.paymentsOfflineEmpty,
-        body: l10n.offlineBannerSemantics,
-        icon: Icons.wifi_off_rounded,
+      return _scrollable(
+        EmptyState(
+          title: l10n.paymentsOfflineEmpty,
+          body: l10n.offlineBannerSemantics,
+          icon: AppIcons.offline,
+        ),
       );
     }
 
     if (state.error != null && !state.hasData) {
-      return ErrorState(
-        title: l10n.paymentsErrorTitle,
-        body: '${l10n.paymentsErrorBody}\n\n${state.error}',
-        onRetry: controller.load,
+      return _scrollable(
+        ErrorState(
+          title: l10n.paymentsErrorTitle,
+          body: '${l10n.paymentsErrorBody}\n\n${state.error}',
+          onRetry: controller.load,
+        ),
       );
     }
 
     final payments = state.filteredPayments;
 
     if (payments.isEmpty) {
-      return _EmptyByFilter(filter: state.filter);
+      return _scrollable(_EmptyByFilter(filter: state.filter));
     }
 
-    return RefreshIndicator(
-      color: AppColors.primary,
-      backgroundColor: AppColors.surface,
-      onRefresh: () async {
-        if (isOnline) {
-          await controller.load();
-        }
+    return ListView.separated(
+      padding: const EdgeInsets.all(AppDimens.l),
+      physics: const AlwaysScrollableScrollPhysics(),
+      itemCount: payments.length,
+      separatorBuilder: (_, _) => const SizedBox(height: AppDimens.s),
+      itemBuilder: (context, index) {
+        final payment = payments[index];
+        return PaymentListTile(
+          payment: payment,
+          onTap: () {
+            context.pushNamed(
+              RouteNames.ownerPaymentDetail,
+              pathParameters: {'paymentId': payment.id},
+            );
+          },
+        );
       },
-      child: ListView.separated(
-        padding: const EdgeInsets.all(AppDimens.l),
-        physics: const AlwaysScrollableScrollPhysics(),
-        itemCount: payments.length,
-        separatorBuilder: (_, _) => const SizedBox(height: AppDimens.s),
-        itemBuilder: (context, index) {
-          final payment = payments[index];
-          return PaymentListTile(
-            payment: payment,
-            onTap: () {
-              context.pushNamed(
-                RouteNames.ownerPaymentDetail,
-                pathParameters: {'paymentId': payment.id},
-              );
-            },
-          );
-        },
-      ),
+    );
+  }
+
+  /// Envuelve estados no-scrollables en un ListView para que
+  /// RefreshIndicator funcione con pull-to-refresh.
+  Widget _scrollable(Widget child) {
+    return ListView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.6,
+          child: child,
+        ),
+      ],
     );
   }
 }
+
+// ============================================================================
+// FILTER ROW
+// ============================================================================
 
 /// Fila de filtros.
 class _FilterRow extends StatelessWidget {
@@ -142,9 +173,9 @@ class _FilterRow extends StatelessWidget {
 
           return Padding(
             padding: const EdgeInsets.only(right: AppDimens.s),
-            child: _FilterChip(
+            child: PesaoChip(
               label: label,
-              isSelected: isSelected,
+              selected: isSelected,
               onTap: () => onSelected(filter),
             ),
           );
@@ -167,47 +198,9 @@ class _FilterRow extends StatelessWidget {
   }
 }
 
-/// Chip simple construido con tokens del design system.
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppDimens.m,
-          vertical: AppDimens.s,
-        ),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.primary.withValues(alpha: 0.12)
-              : AppColors.surface,
-          borderRadius: AppDimens.pillBorderRadius,
-          border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.outline,
-            width: isSelected ? 2 : 1,
-          ),
-        ),
-        child: Text(
-          label,
-          style: AppTypography.label.copyWith(
-            color: isSelected ? AppColors.primaryText : AppColors.textSecondary,
-          ),
-        ),
-      ),
-    );
-  }
-}
+// ============================================================================
+// EMPTY BY FILTER
+// ============================================================================
 
 /// Estado vacío según filtro activo.
 class _EmptyByFilter extends StatelessWidget {
@@ -224,23 +217,27 @@ class _EmptyByFilter extends StatelessWidget {
         return EmptyState(
           title: l10n.paymentsEmptyPendingTitle,
           body: l10n.paymentsEmptyPendingBody,
-          icon: Icons.receipt_long_rounded,
+          icon: AppIcons.payments,
         );
       case PaymentFilter.verified:
         return EmptyState(
           title: l10n.paymentsEmptyVerifiedTitle,
           body: l10n.paymentsEmptyVerifiedBody,
-          icon: Icons.check_circle_outline_rounded,
+          icon: AppIcons.success,
         );
       case PaymentFilter.rejected:
         return EmptyState(
           title: l10n.paymentsEmptyRejectedTitle,
           body: l10n.paymentsEmptyRejectedBody,
-          icon: Icons.cancel_outlined,
+          icon: Icons.cancel_outlined, // TODO: promover a AppIcons.
         );
     }
   }
 }
+
+// ============================================================================
+// SKELETON
+// ============================================================================
 
 /// Skeleton de pagos.
 class _PaymentsSkeleton extends StatelessWidget {
@@ -250,34 +247,19 @@ class _PaymentsSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.all(AppDimens.l),
-      child: Column(
-        children: [
-          _SkeletonBox(height: 72),
-          SizedBox(height: AppDimens.s),
-          _SkeletonBox(height: 72),
-          SizedBox(height: AppDimens.s),
-          _SkeletonBox(height: 72),
-          SizedBox(height: AppDimens.s),
-          _SkeletonBox(height: 72),
-        ],
-      ),
-    );
-  }
-}
-
-class _SkeletonBox extends StatelessWidget {
-  const _SkeletonBox({required this.height});
-
-  final double height;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppDimens.cardBorderRadius,
-        border: Border.all(color: AppColors.outline),
+      child: SkeletonLoader(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SkeletonBox(height: 72),
+            SizedBox(height: AppDimens.s),
+            SkeletonBox(height: 72),
+            SizedBox(height: AppDimens.s),
+            SkeletonBox(height: 72),
+            SizedBox(height: AppDimens.s),
+            SkeletonBox(height: 72),
+          ],
+        ),
       ),
     );
   }

@@ -13,11 +13,13 @@ import '../../../../shared/widgets/error_state.dart';
 import '../../../../shared/widgets/offline_banner.dart';
 import '../../../../shared/widgets/pesao_app_bar.dart';
 import '../../../../shared/widgets/pesao_avatar.dart';
+import '../../../../shared/widgets/pesao_bottom_sheet.dart';
 import '../../../../shared/widgets/pesao_button.dart';
 import '../../../../shared/widgets/pesao_card.dart';
+import '../../../../shared/widgets/pesao_info_row.dart';
 import '../../../../shared/widgets/pesao_input.dart';
-import '../../../../shared/widgets/pesao_shell.dart';
 import '../../../../shared/widgets/pesao_toast.dart';
+import '../../../../shared/widgets/skeleton_loader.dart';
 import '../../domain/entities/payment.dart';
 import '../providers/payments_providers.dart';
 import '../widgets/payment_status_badge.dart';
@@ -51,24 +53,27 @@ class _PaymentDetailScreenState extends ConsumerState<PaymentDetailScreen> {
       }
     }
 
-    return PesaoShell(
+    return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: PesaoAppBar(title: l10n.paymentDetailTitle),
-      body: Column(
-        children: [
-          if (!isOnline) const OfflineBanner(),
-          Expanded(
-            child: payment == null
-                ? _buildMissingPayment(state, controller, l10n)
-                : _buildContent(
-                    context,
-                    payment,
-                    state,
-                    controller,
-                    isOnline,
-                    l10n,
-                  ),
-          ),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            if (!isOnline) const OfflineBanner(),
+            Expanded(
+              child: payment == null
+                  ? _buildMissingPayment(state, controller, l10n)
+                  : _buildContent(
+                      context,
+                      payment,
+                      state,
+                      controller,
+                      isOnline,
+                      l10n,
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -79,7 +84,21 @@ class _PaymentDetailScreenState extends ConsumerState<PaymentDetailScreen> {
     AppStrings l10n,
   ) {
     if (state.isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const Padding(
+        padding: EdgeInsets.all(AppDimens.l),
+        child: SkeletonLoader(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SkeletonBox(height: 72),
+              SizedBox(height: AppDimens.l),
+              SkeletonBox(height: 240),
+              SizedBox(height: AppDimens.l),
+              SkeletonBox(height: 200),
+            ],
+          ),
+        ),
+      );
     }
 
     return ErrorState(
@@ -149,14 +168,14 @@ class _PaymentDetailScreenState extends ConsumerState<PaymentDetailScreen> {
               height: 240,
               color: AppColors.surfaceHigh,
               alignment: Alignment.center,
-              child: const CircularProgressIndicator(),
+              child: const SkeletonLoader(child: SkeletonBox(height: 240)),
             ),
             errorWidget: (context, url, error) => Container(
               height: 240,
               color: AppColors.surfaceHigh,
               alignment: Alignment.center,
               child: const Icon(
-                Icons.broken_image_rounded,
+                Icons.broken_image_rounded, // TODO: promover a AppIcons.
                 color: AppColors.textSecondary,
                 size: 48,
               ),
@@ -167,37 +186,34 @@ class _PaymentDetailScreenState extends ConsumerState<PaymentDetailScreen> {
 
         // Datos del pago.
         PesaoCard(
-          child: Padding(
-            padding: const EdgeInsets.all(AppDimens.l),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _InfoRow(
-                  label: l10n.paymentDetailAmountUsd,
-                  value: '\$${payment.amountUsd.toStringAsFixed(2)}',
-                ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              PesaoInfoRow(
+                label: l10n.paymentDetailAmountUsd,
+                value: '\$${payment.amountUsd.toStringAsFixed(2)}',
+              ),
+              const SizedBox(height: AppDimens.m),
+              PesaoInfoRow(
+                label: l10n.paymentDetailAmountBs,
+                value: 'Bs. ${payment.amountBs.toStringAsFixed(2)}',
+              ),
+              const SizedBox(height: AppDimens.m),
+              PesaoInfoRow(
+                label: l10n.paymentDetailRate,
+                value: 'Bs. ${payment.rateUsed.toStringAsFixed(2)}',
+              ),
+              const SizedBox(height: AppDimens.m),
+              PesaoInfoRow(label: l10n.paymentDetailDate, value: dateLabel),
+              if (payment.status == PaymentStatus.rejected &&
+                  payment.rejectedReason != null) ...[
                 const SizedBox(height: AppDimens.m),
-                _InfoRow(
-                  label: l10n.paymentDetailAmountBs,
-                  value: 'Bs. ${payment.amountBs.toStringAsFixed(2)}',
+                PesaoInfoRow(
+                  label: l10n.paymentRejectReasonLabel,
+                  value: payment.rejectedReason!,
                 ),
-                const SizedBox(height: AppDimens.m),
-                _InfoRow(
-                  label: l10n.paymentDetailRate,
-                  value: 'Bs. ${payment.rateUsed.toStringAsFixed(2)}',
-                ),
-                const SizedBox(height: AppDimens.m),
-                _InfoRow(label: l10n.paymentDetailDate, value: dateLabel),
-                if (payment.status == PaymentStatus.rejected &&
-                    payment.rejectedReason != null) ...[
-                  const SizedBox(height: AppDimens.m),
-                  _InfoRow(
-                    label: l10n.paymentRejectReasonLabel,
-                    value: payment.rejectedReason!,
-                  ),
-                ],
               ],
-            ),
+            ],
           ),
         ),
 
@@ -205,10 +221,9 @@ class _PaymentDetailScreenState extends ConsumerState<PaymentDetailScreen> {
         if (isPending) ...[
           const SizedBox(height: AppDimens.xl),
           PesaoButton(
-            label: state.isActing
-                ? l10n.commonLoading
-                : l10n.paymentDetailApprove,
+            label: l10n.paymentDetailApprove,
             variant: PesaoButtonVariant.primary,
+            loading: state.isActing,
             onPressed: canAct
                 ? () => _approvePayment(controller, payment, l10n)
                 : null,
@@ -274,7 +289,7 @@ class _PaymentDetailScreenState extends ConsumerState<PaymentDetailScreen> {
     Payment payment,
     AppStrings l10n,
   ) async {
-    final reason = await _showRejectDialog(l10n);
+    final reason = await _showRejectSheet(l10n);
     if (reason == null || !mounted) return;
 
     final result = await controller.rejectPayment(payment.id, reason);
@@ -304,121 +319,58 @@ class _PaymentDetailScreenState extends ConsumerState<PaymentDetailScreen> {
     );
   }
 
-  Future<String?> _showRejectDialog(AppStrings l10n) async {
+  Future<String?> _showRejectSheet(AppStrings l10n) async {
     final reasonController = TextEditingController();
-    String? dialogError;
 
-    return showDialog<String>(
+    final result = await showPesaoBottomSheet<String>(
       context: context,
-      builder: (dialogContext) {
-        return StatefulBuilder(
-          builder: (context, setDialogState) {
-            return Dialog(
-              backgroundColor: AppColors.surface,
-              elevation: 0,
-              shape: const RoundedRectangleBorder(
-                borderRadius: AppDimens.cardBorderRadius,
-                side: BorderSide(color: AppColors.outline),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(AppDimens.l),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      l10n.paymentRejectDialogTitle,
-                      style: AppTypography.title.copyWith(
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                    const SizedBox(height: AppDimens.s),
-                    Text(
-                      l10n.paymentRejectDialogBody,
-                      style: AppTypography.body.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                    const SizedBox(height: AppDimens.l),
-                    PesaoInput(
-                      label: l10n.paymentRejectReasonLabel,
-                      hint: l10n.paymentRejectReasonHint,
-                      controller: reasonController,
-                    ),
-                    if (dialogError != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: AppDimens.xs),
-                        child: Text(
-                          dialogError!,
-                          style: AppTypography.bodySmall.copyWith(
-                            color: AppColors.errorText,
-                          ),
-                        ),
-                      ),
-                    const SizedBox(height: AppDimens.l),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: PesaoButton(
-                            label: l10n.commonCancel,
-                            variant: PesaoButtonVariant.secondary,
-                            onPressed: () => Navigator.of(dialogContext).pop(),
-                          ),
-                        ),
-                        const SizedBox(width: AppDimens.m),
-                        Expanded(
-                          child: PesaoButton(
-                            label: l10n.paymentDetailReject,
-                            variant: PesaoButtonVariant.danger,
-                            onPressed: () {
-                              final text = reasonController.text.trim();
-
-                              if (text.isEmpty) {
-                                setDialogState(() {
-                                  dialogError = l10n.paymentRejectReasonError;
-                                });
-                                return;
-                              }
-
-                              Navigator.of(dialogContext).pop(text);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+      builder: (sheetContext) {
+        return Padding(
+          padding: EdgeInsets.only(
+            left: AppDimens.l,
+            right: AppDimens.l,
+            bottom: MediaQuery.of(sheetContext).viewInsets.bottom + AppDimens.l,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              PesaoBottomSheetHeader(title: l10n.paymentRejectDialogTitle),
+              const SizedBox(height: AppDimens.s),
+              Text(
+                l10n.paymentRejectDialogBody,
+                style: AppTypography.body.copyWith(
+                  color: AppColors.textSecondary,
                 ),
               ),
-            );
-          },
+              const SizedBox(height: AppDimens.l),
+              PesaoInput(
+                label: l10n.paymentRejectReasonLabel,
+                hint: l10n.paymentRejectReasonHint,
+                controller: reasonController,
+              ),
+              const SizedBox(height: AppDimens.l),
+              PesaoButton(
+                label: l10n.paymentDetailReject,
+                variant: PesaoButtonVariant.danger,
+                onPressed: () {
+                  final text = reasonController.text.trim();
+                  if (text.isEmpty) return;
+                  Navigator.of(sheetContext).pop(text);
+                },
+              ),
+              const SizedBox(height: AppDimens.s),
+              PesaoButton(
+                label: l10n.commonCancel,
+                variant: PesaoButtonVariant.ghost,
+                onPressed: () => Navigator.of(sheetContext).pop(),
+              ),
+            ],
+          ),
         );
       },
     );
-  }
-}
 
-/// Fila simple de información.
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTypography.label.copyWith(color: AppColors.textSecondary),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: AppTypography.body.copyWith(color: AppColors.textPrimary),
-        ),
-      ],
-    );
+    return result;
   }
 }

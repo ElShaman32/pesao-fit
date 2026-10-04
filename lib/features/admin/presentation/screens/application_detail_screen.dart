@@ -11,6 +11,7 @@ import '../../../../shared/widgets/pesao_app_bar.dart';
 import '../../../../shared/widgets/pesao_bottom_sheet.dart';
 import '../../../../shared/widgets/pesao_button.dart';
 import '../../../../shared/widgets/pesao_card.dart';
+import '../../../../shared/widgets/pesao_info_row.dart';
 import '../../../../shared/widgets/pesao_input.dart';
 import '../../../../shared/widgets/pesao_toast.dart';
 import '../../domain/entities/gym_application.dart';
@@ -58,13 +59,13 @@ class ApplicationDetailScreen extends ConsumerWidget {
             PesaoCard(
               child: Column(
                 children: [
-                  _InfoRow(label: 'Nombre', value: application.ownerName),
-                  _InfoRow(
+                  PesaoInfoRow(label: 'Nombre', value: application.ownerName),
+                  PesaoInfoRow(
                     label: l10n.adminAppsFieldPhone,
                     value: application.ownerPhone,
                   ),
                   if (application.ownerDocument != null)
-                    _InfoRow(
+                    PesaoInfoRow(
                       label: l10n.adminAppsFieldDocument,
                       value: application.ownerDocument!,
                     ),
@@ -79,35 +80,35 @@ class ApplicationDetailScreen extends ConsumerWidget {
             PesaoCard(
               child: Column(
                 children: [
-                  _InfoRow(label: 'Nombre', value: application.gymName),
-                  _InfoRow(
+                  PesaoInfoRow(label: 'Nombre', value: application.gymName),
+                  PesaoInfoRow(
                     label: l10n.adminAppsFieldAddress,
                     value: application.gymAddress,
                   ),
-                  _InfoRow(
+                  PesaoInfoRow(
                     label: l10n.adminAppsFieldCity,
                     value: application.gymCity,
                   ),
-                  _InfoRow(
+                  PesaoInfoRow(
                     label: l10n.adminAppsFieldState,
                     value: application.gymState,
                   ),
-                  _InfoRow(
+                  PesaoInfoRow(
                     label: l10n.adminAppsFieldPhone,
                     value: application.gymPhone,
                   ),
                   if (application.gymRif != null)
-                    _InfoRow(
+                    PesaoInfoRow(
                       label: l10n.adminAppsFieldRif,
                       value: application.gymRif!,
                     ),
                   if (application.gymInstagram != null)
-                    _InfoRow(
+                    PesaoInfoRow(
                       label: l10n.adminAppsFieldInstagram,
                       value: application.gymInstagram!,
                     ),
                   if (application.gymDescription != null)
-                    _InfoRow(
+                    PesaoInfoRow(
                       label: l10n.adminAppsFieldDescription,
                       value: application.gymDescription!,
                     ),
@@ -251,45 +252,6 @@ class _SectionTitle extends StatelessWidget {
     return Text(
       text.toUpperCase(),
       style: AppTypography.overline.copyWith(color: AppColors.primaryText),
-    );
-  }
-}
-
-// ============================================================================
-// INFO ROW
-// ============================================================================
-
-/// Fila de etiqueta + valor para mostrar datos.
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppDimens.xs),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 90,
-            child: Text(
-              label,
-              style: AppTypography.bodySmall.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              style: AppTypography.body.copyWith(color: AppColors.textPrimary),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

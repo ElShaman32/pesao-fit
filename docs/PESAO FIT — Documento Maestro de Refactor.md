@@ -149,6 +149,24 @@ Todas las homes (`OwnerHome`, `NutritionistHome`, `ClientHome`, `TrainerHome`, `
 ### 🔴 Descartados
 Ninguno confirmado hasta ahora. `PesaoFab` y `PesaoShell` **NO están descartados** — son infraestructura del shell.
 
+**🟢 En uso (desde esta pasada):**
+
+| Widget | Uso |
+|---|---|
+| `PesaoInfoRow` | Fila etiqueta+valor en pantallas de detalle (`client_detail`, `application_detail`, `payment_detail`) |
+
+**Nuevo archivo:** `lib/shared/widgets/pesao_info_row.dart`
+
+```dart
+PesaoInfoRow({
+  required String label,
+  required String value,
+})
+```
+
+- **Cuándo usar**: datos etiquetados en pantallas de detalle (dentro de `PesaoCard`).
+- **Cuándo NO usar**: si solo tienes 1 fila, un `Text` directo es suficiente.
+
 ---
 
 ## 6. Anti-patrones (prohibidos)
@@ -237,6 +255,8 @@ Icon(Icons.event_busy_rounded, ...) // TODO: promover a AppIcons
 - ⏳ Migrar saludo hardcodeado de `NutritionistHomeScreen` (quedó en `AppStrings` en el último pase, así que ya no aplica 
 - ⏳ Migrar textos hardcodeados (`'Solicitudes'`, `'Cancelar'`, `'Reintentar'`, `'Pendiente'`, `'No encontramos esta solicitud'`, `'Nombre'`) a `AppStrings` en una pasada futura.
 - ⏳ Evaluar promover a `AppIcons`: `hourglass_top`, `card_membership`, `pending_actions`, `inbox`, `dashboard_outlined`, `event_busy`.
+- ⏳ Promover `Icons.restaurant_menu_rounded` → `AppIcons.nutritionMenu` (3 usos: home nutricionista ×2, próximo uso por confirmar).
+- ⏳ Verificar si `NutritionistStats` (entidad) queda huérfana tras eliminar la pantalla duplicada.
 
 ### Archivos que NO tengo pero puedo necesitar
 - `AppStrings` (para confirmar keys cuando falle).

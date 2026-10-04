@@ -30,7 +30,7 @@ class ApplicationPendingScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Ícono de éxito
+                // Ícono de espera.
                 Container(
                   width: 96,
                   height: 96,
@@ -39,14 +39,14 @@ class ApplicationPendingScreen extends ConsumerWidget {
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
-                    Icons.hourglass_top_rounded,
+                    Icons.hourglass_top_rounded, // TODO: promover a AppIcons.
                     color: AppColors.primary,
                     size: 48,
                   ),
                 ),
                 const SizedBox(height: AppDimens.xl),
 
-                // Título
+                // Título.
                 Text(
                   l10n.ownerAppSuccessTitle,
                   textAlign: TextAlign.center,
@@ -56,7 +56,7 @@ class ApplicationPendingScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: AppDimens.m),
 
-                // Mensaje
+                // Mensaje.
                 Text(
                   l10n.ownerAppSuccessMessage,
                   textAlign: TextAlign.center,
@@ -66,7 +66,7 @@ class ApplicationPendingScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: AppDimens.xxxl),
 
-                // Botón volver
+                // Botón volver.
                 PesaoButton(
                   label: l10n.ownerAppSuccessBack,
                   variant: PesaoButtonVariant.secondary,

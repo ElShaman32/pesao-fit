@@ -6,11 +6,14 @@ import '../../../../core/l10n/app_strings.dart';
 import '../../../../core/providers/auth_provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
+import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/widgets/image_picker_field.dart';
+import '../../../../shared/widgets/pesao_bottom_sheet.dart';
 import '../../../../shared/widgets/pesao_button.dart';
 import '../../../../shared/widgets/pesao_input.dart';
 import '../../../../shared/widgets/pesao_toast.dart';
+import '../../../../shared/widgets/skeleton_loader.dart';
 import '../../domain/entities/upload_payment_request.dart';
 import '../providers/client_payments_controller.dart';
 
@@ -18,16 +21,12 @@ import '../providers/client_payments_controller.dart';
 ///
 /// Devuelve `true` si el pago se subió con éxito (para que el caller
 /// pueda refrescar sus listas).
-Future<bool> showUploadPaymentSheet(BuildContext context) {
-  return showModalBottomSheet<bool>(
+Future<bool> showUploadPaymentSheet(BuildContext context) async {
+  final result = await showPesaoBottomSheet<bool>(
     context: context,
-    isScrollControlled: true,
-    backgroundColor: AppColors.surface,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-    ),
     builder: (_) => const _UploadPaymentSheet(),
-  ).then((value) => value ?? false);
+  );
+  return result ?? false;
 }
 
 class _UploadPaymentSheet extends ConsumerStatefulWidget {
@@ -104,18 +103,8 @@ class _UploadPaymentSheetState extends ConsumerState<_UploadPaymentSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Handle del sheet.
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: const BoxDecoration(
-                  color: AppColors.outline,
-                  borderRadius: AppDimens.pillBorderRadius,
-                ),
-              ),
-            ),
-            const SizedBox(height: AppDimens.l),
+            const PesaoBottomSheetHeader(),
+            const SizedBox(height: AppDimens.s),
 
             // Header.
             Text(
@@ -135,7 +124,7 @@ class _UploadPaymentSheetState extends ConsumerState<_UploadPaymentSheet> {
 
             // Sin tasa configurada.
             if (_rateLoaded && _rate == null) ...[
-              _NoRateWarning(),
+              const _NoRateWarning(),
               const SizedBox(height: AppDimens.l),
               PesaoButton(
                 label: l10n.commonClose,
@@ -143,13 +132,25 @@ class _UploadPaymentSheetState extends ConsumerState<_UploadPaymentSheet> {
                 onPressed: () => Navigator.of(context).pop(false),
               ),
             ] else if (!_rateLoaded) ...[
-              const Center(child: CircularProgressIndicator()),
+              const SkeletonLoader(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SkeletonBox(height: 52),
+                    SizedBox(height: AppDimens.m),
+                    SkeletonBox(height: 52),
+                    SizedBox(height: AppDimens.l),
+                    SkeletonBox(height: 200),
+                  ],
+                ),
+              ),
               const SizedBox(height: AppDimens.l),
             ] else ...[
               // Monto Bs.
               PesaoInput(
                 label: l10n.uploadPaymentAmountBsLabel,
                 hint: l10n.uploadPaymentAmountBsHint,
+                prefixIcon: const Icon(Icons.account_balance_wallet),
                 controller: _amountBsController,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
@@ -158,22 +159,16 @@ class _UploadPaymentSheetState extends ConsumerState<_UploadPaymentSheet> {
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
                 ],
                 onChanged: _onAmountBsChanged,
+                errorText: _amountBsError,
               ),
-              if (_amountBsError != null) ...[
-                const SizedBox(height: AppDimens.xs),
-                Text(
-                  _amountBsError!,
-                  style: AppTypography.bodySmall.copyWith(
-                    color: AppColors.errorText,
-                  ),
-                ),
-              ],
               const SizedBox(height: AppDimens.m),
 
               // Monto USD calculado.
               PesaoInput(
                 label: l10n.uploadPaymentAmountUsdLabel,
                 hint: l10n.uploadPaymentAmountUsdHint,
+                prefixIcon: const Icon(Icons.paid),
+
                 controller: _amountUsdController,
                 enabled: false,
               ),
@@ -203,13 +198,10 @@ class _UploadPaymentSheetState extends ConsumerState<_UploadPaymentSheet> {
 
               // Botón submit.
               PesaoButton(
-                label: state.isUploading
-                    ? l10n.uploadPaymentSubmitting
-                    : l10n.uploadPaymentSubmit,
+                label: l10n.uploadPaymentSubmit,
                 variant: PesaoButtonVariant.primary,
-                onPressed: state.isUploading
-                    ? null
-                    : () => _submit(controller, l10n),
+                loading: state.isUploading,
+                onPressed: () => _submit(controller, l10n),
               ),
             ],
             const SizedBox(height: AppDimens.l),
@@ -288,7 +280,14 @@ class _UploadPaymentSheetState extends ConsumerState<_UploadPaymentSheet> {
   }
 }
 
+// ============================================================================
+// NO RATE WARNING
+// ============================================================================
+
+/// Caja de advertencia cuando no hay tasa configurada (P2: se queda custom).
 class _NoRateWarning extends StatelessWidget {
+  const _NoRateWarning();
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppStrings.of(context);
@@ -305,7 +304,7 @@ class _NoRateWarning extends StatelessWidget {
           Row(
             children: [
               const Icon(
-                Icons.warning_amber_rounded,
+                AppIcons.warning,
                 color: AppColors.warningText,
                 size: 20,
               ),

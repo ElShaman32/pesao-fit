@@ -6,10 +6,13 @@ import '../../../../core/l10n/app_strings.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
+import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/utils/input_formatters.dart';
+import '../../../../shared/widgets/pesao_app_bar.dart';
 import '../../../../shared/widgets/pesao_button.dart';
 import '../../../../shared/widgets/pesao_input.dart';
+import '../../../../shared/widgets/pesao_toast.dart';
 import '../providers/owner_application_controller.dart';
 
 /// Lista de estados de Venezuela para el dropdown.
@@ -40,9 +43,6 @@ const _venezuelanStates = [
 ];
 
 /// Pantalla de solicitud KYC para dueños de gimnasio (ADR-036).
-///
-/// Recoge datos personales y del gimnasio, y envía la solicitud a
-/// gym_applications para revisión manual del superadmin.
 class OwnerApplicationScreen extends ConsumerStatefulWidget {
   const OwnerApplicationScreen({super.key});
 
@@ -84,7 +84,6 @@ class _OwnerApplicationScreenState
     final state = ref.watch(ownerApplicationControllerProvider);
     final controller = ref.read(ownerApplicationControllerProvider.notifier);
 
-    // Al enviar con éxito, navegar a la pantalla de espera.
     ref.listen(ownerApplicationControllerProvider, (previous, next) {
       final justSubmitted =
           next.isSubmitted && !(previous?.isSubmitted ?? false);
@@ -95,251 +94,267 @@ class _OwnerApplicationScreenState
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        foregroundColor: AppColors.textPrimary,
-        title: Text(
-          l10n.ownerAppTitle,
-          style: AppTypography.title.copyWith(color: AppColors.textPrimary),
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppDimens.l),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Subtítulo
-            Text(
-              l10n.ownerAppSubtitle,
-              style: AppTypography.body.copyWith(
-                color: AppColors.textSecondary,
+      appBar: PesaoAppBar(title: l10n.ownerAppTitle),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(AppDimens.l),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                l10n.ownerAppSubtitle,
+                style: AppTypography.body.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
-            ),
-            const SizedBox(height: AppDimens.xl),
+              const SizedBox(height: AppDimens.xl),
 
-            // === SECCIÓN: Datos personales ===
-            _SectionTitle(text: l10n.ownerAppPersonalSection),
-            const SizedBox(height: AppDimens.m),
+              // === SECCIÓN: Datos personales ===
+              _SectionTitle(text: l10n.ownerAppPersonalSection),
+              const SizedBox(height: AppDimens.m),
 
-            PesaoInput(
-              controller: _ownerPhoneController,
-              label: l10n.ownerAppPhoneLabel,
-              hint: l10n.ownerAppPhoneHint,
-              prefixIcon: const Icon(Icons.phone_outlined),
-              keyboardType: TextInputType.phone,
-              textInputAction: TextInputAction.next,
-              onChanged: controller.setOwnerPhone,
-              enabled: !state.isSubmitting,
-              inputFormatters: [VenezuelanPhoneFormatter()], // ← AGREGAR
-            ),
-            const SizedBox(height: AppDimens.m),
+              PesaoInput(
+                controller: _ownerPhoneController,
+                label: l10n.ownerAppPhoneLabel,
+                hint: l10n.ownerAppPhoneHint,
+                prefixIcon: const Icon(
+                  Icons.phone_outlined,
+                ), // TODO: promover a AppIcons.
+                keyboardType: TextInputType.phone,
+                textInputAction: TextInputAction.next,
+                onChanged: controller.setOwnerPhone,
+                enabled: !state.isSubmitting,
+                inputFormatters: [VenezuelanPhoneFormatter()],
+              ),
+              const SizedBox(height: AppDimens.m),
 
-            // Dropdown de tipo de documento + input
-            Row(
-              children: [
-                // Dropdown V/J/E
-                Container(
-                  width: 80,
-                  height: AppDimens.inputHeight,
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceHigh,
-                    borderRadius: AppDimens.inputBorderRadius,
-                    border: Border.all(color: AppColors.outline),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value: _documentType,
-                      isExpanded: true,
-                      icon: const Icon(Icons.arrow_drop_down, size: 20),
-                      focusColor: AppColors.textSecondary,
-                      dropdownColor: AppColors.surfaceHigh,
-                      style: AppTypography.body.copyWith(
-                        color: AppColors.textPrimary,
+              // Dropdown de tipo de documento + input.
+              Row(
+                children: [
+                  Container(
+                    width: 80,
+                    height: AppDimens.inputHeight,
+                    decoration: BoxDecoration(
+                      color: AppColors.surfaceHigh,
+                      borderRadius: AppDimens.inputBorderRadius,
+                      border: Border.all(color: AppColors.outline),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: _documentType,
+                        isExpanded: true,
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                          size: 20,
+                        ), // TODO: promover a AppIcons.
+                        focusColor: AppColors.textSecondary,
+                        dropdownColor: AppColors.surfaceHigh,
+                        style: AppTypography.body.copyWith(
+                          color: AppColors.textPrimary,
+                        ),
+                        onChanged: state.isSubmitting
+                            ? null
+                            : (value) {
+                                setState(() {
+                                  _documentType = value!;
+                                  _ownerDocumentController.clear();
+                                  controller.setOwnerDocument('');
+                                });
+                              },
+                        items: const [
+                          DropdownMenuItem(value: 'V', child: Text('V')),
+                          DropdownMenuItem(value: 'J', child: Text('J')),
+                          DropdownMenuItem(value: 'E', child: Text('E')),
+                        ],
                       ),
-                      onChanged: state.isSubmitting
-                          ? null
-                          : (value) {
-                              setState(() {
-                                _documentType = value!;
-                                _ownerDocumentController.clear();
-                                controller.setOwnerDocument('');
-                              });
-                            },
-                      items: const [
-                        DropdownMenuItem(value: 'V', child: Text('V')),
-                        DropdownMenuItem(value: 'J', child: Text('J')),
-                        DropdownMenuItem(value: 'E', child: Text('E')),
+                    ),
+                  ),
+                  const SizedBox(width: AppDimens.s),
+                  Expanded(
+                    child: PesaoInput(
+                      controller: _ownerDocumentController,
+                      label: l10n.ownerAppDocumentLabel,
+                      hint: _documentType == 'J' ? '12345678-9' : '1.234.567',
+                      prefixIcon: const Icon(
+                        Icons.badge,
+                      ), // TODO: promover a AppIcons.
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      onChanged: controller.setOwnerDocument,
+                      enabled: !state.isSubmitting,
+                      inputFormatters: [
+                        VenezuelanDocumentFormatter(_documentType),
                       ],
                     ),
                   ),
-                ),
-                const SizedBox(width: AppDimens.s),
+                ],
+              ),
+              const SizedBox(height: AppDimens.xl),
 
-                // Input de documento
-                Expanded(
-                  child: PesaoInput(
-                    controller: _ownerDocumentController,
-                    label: l10n.ownerAppDocumentLabel,
-                    hint: _documentType == 'J' ? '12345678-9' : '1.234.567',
-                    prefixIcon: const Icon(Icons.badge),
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    onChanged: controller.setOwnerDocument,
-                    enabled: !state.isSubmitting,
-                    inputFormatters: [
-                      VenezuelanDocumentFormatter(_documentType),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppDimens.xl),
-
-            // === SECCIÓN: Datos del gimnasio ===
-            _SectionTitle(text: l10n.ownerAppGymSection),
-            const SizedBox(height: AppDimens.m),
-
-            PesaoInput(
-              controller: _gymNameController,
-              label: l10n.ownerAppGymNameLabel,
-              hint: l10n.ownerAppGymNameHint,
-              prefixIcon: const Icon(Icons.fitness_center_outlined),
-              textCapitalization: TextCapitalization.words,
-              textInputAction: TextInputAction.next,
-              onChanged: controller.setGymName,
-              enabled: !state.isSubmitting,
-            ),
-            const SizedBox(height: AppDimens.m),
-
-            PesaoInput(
-              controller: _gymRifController,
-              label: l10n.ownerAppGymRifLabel,
-              hint: l10n.ownerAppGymRifHint,
-              prefixIcon: const Icon(Icons.receipt_long_outlined),
-              textInputAction: TextInputAction.next,
-              onChanged: controller.setGymRif,
-              enabled: !state.isSubmitting,
-            ),
-            const SizedBox(height: AppDimens.m),
-
-            PesaoInput(
-              controller: _gymAddressController,
-              label: l10n.ownerAppGymAddressLabel,
-              hint: l10n.ownerAppGymAddressHint,
-              prefixIcon: const Icon(Icons.location_on_outlined),
-              textInputAction: TextInputAction.next,
-              onChanged: controller.setGymAddress,
-              enabled: !state.isSubmitting,
-            ),
-            const SizedBox(height: AppDimens.m),
-
-            // Dropdown de estado
-            _StateDropdown(
-              label: l10n.ownerAppGymStateLabel,
-              value: state.gymState.isEmpty ? null : state.gymState,
-              onChanged: state.isSubmitting ? null : controller.setGymState,
-            ),
-            const SizedBox(height: AppDimens.m),
-
-            PesaoInput(
-              controller: _gymCityController,
-              label: l10n.ownerAppGymCityLabel,
-              hint: l10n.ownerAppGymCityHint,
-              prefixIcon: const Icon(Icons.location_city_outlined),
-              textCapitalization: TextCapitalization.words,
-              textInputAction: TextInputAction.next,
-              onChanged: controller.setGymCity,
-              enabled: !state.isSubmitting,
-            ),
-            const SizedBox(height: AppDimens.m),
-
-            PesaoInput(
-              controller: _gymPhoneController,
-              label: l10n.ownerAppGymPhoneLabel,
-              hint: l10n.ownerAppGymPhoneHint,
-              prefixIcon: const Icon(Icons.phone_outlined),
-              keyboardType: TextInputType.phone,
-              textInputAction: TextInputAction.next,
-              onChanged: controller.setGymPhone,
-              enabled: !state.isSubmitting,
-              inputFormatters: [VenezuelanLandlineFormatter()],
-            ),
-            const SizedBox(height: AppDimens.m),
-
-            PesaoInput(
-              controller: _gymInstagramController,
-              label: l10n.ownerAppGymInstagramLabel,
-              hint: l10n.ownerAppGymInstagramHint,
-              prefixIcon: const Icon(Icons.alternate_email_outlined),
-              textInputAction: TextInputAction.next,
-              onChanged: controller.setGymInstagram,
-              enabled: !state.isSubmitting,
-            ),
-            const SizedBox(height: AppDimens.m),
-
-            PesaoInput(
-              controller: _gymDescriptionController,
-              label: l10n.ownerAppGymDescriptionLabel,
-              hint: l10n.ownerAppGymDescriptionHint,
-              prefixIcon: const Icon(Icons.notes_outlined),
-              onChanged: controller.setGymDescription,
-              enabled: !state.isSubmitting,
-            ),
-            const SizedBox(height: AppDimens.xl),
-
-            // === Foto y GPS (opcionales, placeholders) ===
-            _OptionalActionTile(
-              icon: Icons.photo_camera_outlined,
-              label: l10n.ownerAppGymPhotoLabel,
-              buttonLabel: l10n.ownerAppGymPhotoButton,
-              onTap: () {
-                // TODO: integración con Cloudinary en próxima iteración.
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Foto del local: disponible muy pronto'),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: AppDimens.m),
-
-            _OptionalActionTile(
-              icon: Icons.my_location_outlined,
-              label: 'Ubicación GPS (opcional)',
-              buttonLabel: l10n.ownerAppGymLocationButton,
-              onTap: () {
-                // TODO: integración con geolocator en próxima iteración.
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Ubicación GPS: disponible muy pronto'),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: AppDimens.xl),
-
-            // === Error box ===
-            if (state.error != null) ...[
-              _ErrorBox(message: state.error!),
+              // === SECCIÓN: Datos del gimnasio ===
+              _SectionTitle(text: l10n.ownerAppGymSection),
               const SizedBox(height: AppDimens.m),
-            ],
 
-            // === Botón de envío ===
-            PesaoButton(
-              label: l10n.ownerAppSubmit,
-              onPressed: state.isValid ? controller.submit : null,
-              loading: state.isSubmitting,
-            ),
-            const SizedBox(height: AppDimens.xxl),
-          ],
+              PesaoInput(
+                controller: _gymNameController,
+                label: l10n.ownerAppGymNameLabel,
+                hint: l10n.ownerAppGymNameHint,
+                prefixIcon: const Icon(AppIcons.routine),
+                textCapitalization: TextCapitalization.words,
+                textInputAction: TextInputAction.next,
+                onChanged: controller.setGymName,
+                enabled: !state.isSubmitting,
+              ),
+              const SizedBox(height: AppDimens.m),
+
+              PesaoInput(
+                controller: _gymRifController,
+                label: l10n.ownerAppGymRifLabel,
+                hint: l10n.ownerAppGymRifHint,
+                prefixIcon: const Icon(AppIcons.payments),
+                textInputAction: TextInputAction.next,
+                onChanged: controller.setGymRif,
+                enabled: !state.isSubmitting,
+              ),
+              const SizedBox(height: AppDimens.m),
+
+              PesaoInput(
+                controller: _gymAddressController,
+                label: l10n.ownerAppGymAddressLabel,
+                hint: l10n.ownerAppGymAddressHint,
+                prefixIcon: const Icon(
+                  Icons.location_on_outlined,
+                ), // TODO: promover a AppIcons.
+                textInputAction: TextInputAction.next,
+                onChanged: controller.setGymAddress,
+                enabled: !state.isSubmitting,
+              ),
+              const SizedBox(height: AppDimens.m),
+
+              _StateDropdown(
+                label: l10n.ownerAppGymStateLabel,
+                value: state.gymState.isEmpty ? null : state.gymState,
+                onChanged: state.isSubmitting ? null : controller.setGymState,
+              ),
+              const SizedBox(height: AppDimens.m),
+
+              PesaoInput(
+                controller: _gymCityController,
+                label: l10n.ownerAppGymCityLabel,
+                hint: l10n.ownerAppGymCityHint,
+                prefixIcon: const Icon(
+                  Icons.location_city_outlined,
+                ), // TODO: promover a AppIcons.
+                textCapitalization: TextCapitalization.words,
+                textInputAction: TextInputAction.next,
+                onChanged: controller.setGymCity,
+                enabled: !state.isSubmitting,
+              ),
+              const SizedBox(height: AppDimens.m),
+
+              PesaoInput(
+                controller: _gymPhoneController,
+                label: l10n.ownerAppGymPhoneLabel,
+                hint: l10n.ownerAppGymPhoneHint,
+                prefixIcon: const Icon(
+                  Icons.phone_outlined,
+                ), // TODO: promover a AppIcons.
+                keyboardType: TextInputType.phone,
+                textInputAction: TextInputAction.next,
+                onChanged: controller.setGymPhone,
+                enabled: !state.isSubmitting,
+                inputFormatters: [VenezuelanLandlineFormatter()],
+              ),
+              const SizedBox(height: AppDimens.m),
+
+              PesaoInput(
+                controller: _gymInstagramController,
+                label: l10n.ownerAppGymInstagramLabel,
+                hint: l10n.ownerAppGymInstagramHint,
+                prefixIcon: const Icon(
+                  Icons.alternate_email_outlined,
+                ), // TODO: promover a AppIcons.
+                textInputAction: TextInputAction.next,
+                onChanged: controller.setGymInstagram,
+                enabled: !state.isSubmitting,
+              ),
+              const SizedBox(height: AppDimens.m),
+
+              PesaoInput(
+                controller: _gymDescriptionController,
+                label: l10n.ownerAppGymDescriptionLabel,
+                hint: l10n.ownerAppGymDescriptionHint,
+                prefixIcon: const Icon(
+                  Icons.notes_outlined,
+                ), // TODO: promover a AppIcons.
+                onChanged: controller.setGymDescription,
+                enabled: !state.isSubmitting,
+              ),
+              const SizedBox(height: AppDimens.xl),
+
+              // === Foto y GPS (opcionales, placeholders) ===
+              _OptionalActionTile(
+                icon: AppIcons.camera,
+                label: l10n.ownerAppGymPhotoLabel,
+                buttonLabel: l10n.ownerAppGymPhotoButton,
+                onTap: () {
+                  // TODO: integración con Cloudinary en próxima iteración.
+                  showPesaoToast(
+                    context,
+                    message:
+                        'Foto del local: disponible muy pronto', // TODO: mover a AppStrings.
+                    semanticLabel:
+                        'Función foto del local próximamente', // TODO: mover a AppStrings.
+                    variant: PesaoToastVariant.brand,
+                  );
+                },
+              ),
+              const SizedBox(height: AppDimens.m),
+
+              _OptionalActionTile(
+                icon: Icons.my_location_outlined, // TODO: promover a AppIcons.
+                label: 'Ubicación GPS (opcional)', // TODO: mover a AppStrings.
+                buttonLabel: l10n.ownerAppGymLocationButton,
+                onTap: () {
+                  // TODO: integración con geolocator en próxima iteración.
+                  showPesaoToast(
+                    context,
+                    message:
+                        'Ubicación GPS: disponible muy pronto', // TODO: mover a AppStrings.
+                    semanticLabel:
+                        'Función ubicación GPS próximamente', // TODO: mover a AppStrings.
+                    variant: PesaoToastVariant.brand,
+                  );
+                },
+              ),
+              const SizedBox(height: AppDimens.xl),
+
+              // === Error box ===
+              if (state.error != null) ...[
+                _ErrorBox(message: state.error!),
+                const SizedBox(height: AppDimens.m),
+              ],
+
+              // === Botón de envío ===
+              PesaoButton(
+                label: l10n.ownerAppSubmit,
+                onPressed: state.isValid ? controller.submit : null,
+                loading: state.isSubmitting,
+              ),
+              const SizedBox(height: AppDimens.xxl),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-/// Título de sección con tipografía label y color primario.
+// ============================================================================
+// SECTION TITLE
+// ============================================================================
+
+/// Título de sección usando `overline` del DS.
 class _SectionTitle extends StatelessWidget {
   const _SectionTitle({required this.text});
 
@@ -349,13 +364,14 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text.toUpperCase(),
-      style: AppTypography.label.copyWith(
-        color: AppColors.primaryText,
-        letterSpacing: 1.5,
-      ),
+      style: AppTypography.overline.copyWith(color: AppColors.primaryText),
     );
   }
 }
+
+// ============================================================================
+// STATE DROPDOWN
+// ============================================================================
 
 /// Dropdown de estados con estilo consistente al kit Pesao*.
 class _StateDropdown extends StatelessWidget {
@@ -391,11 +407,13 @@ class _StateDropdown extends StatelessWidget {
             child: DropdownButton<String>(
               value: value,
               isExpanded: true,
-              icon: const Icon(Icons.arrow_drop_down),
+              icon: const Icon(
+                Icons.arrow_drop_down,
+              ), // TODO: promover a AppIcons.
               focusColor: AppColors.textSecondary,
               dropdownColor: AppColors.surfaceHigh,
               hint: Text(
-                'Selecciona un estado',
+                'Selecciona un estado', // TODO: mover a AppStrings.
                 style: AppTypography.body.copyWith(
                   color: AppColors.textDisabled,
                 ),
@@ -415,6 +433,10 @@ class _StateDropdown extends StatelessWidget {
     );
   }
 }
+
+// ============================================================================
+// OPTIONAL ACTION TILE
+// ============================================================================
 
 /// Tile para acciones opcionales (foto, GPS) aún no implementadas.
 class _OptionalActionTile extends StatelessWidget {
@@ -449,12 +471,11 @@ class _OptionalActionTile extends StatelessWidget {
               style: AppTypography.body.copyWith(color: AppColors.textPrimary),
             ),
           ),
-          TextButton(
+          PesaoButton(
+            label: buttonLabel,
+            variant: PesaoButtonVariant.ghost,
+            isExpanded: false,
             onPressed: onTap,
-            child: Text(
-              buttonLabel,
-              style: AppTypography.label.copyWith(color: AppColors.primaryText),
-            ),
           ),
         ],
       ),
@@ -462,7 +483,11 @@ class _OptionalActionTile extends StatelessWidget {
   }
 }
 
-/// Caja de error con ícono.
+// ============================================================================
+// ERROR BOX
+// ============================================================================
+
+/// Caja de error inline (E4: se queda custom).
 class _ErrorBox extends StatelessWidget {
   const _ErrorBox({required this.message});
 
@@ -474,13 +499,13 @@ class _ErrorBox extends StatelessWidget {
       padding: const EdgeInsets.all(AppDimens.m),
       decoration: BoxDecoration(
         color: AppColors.error.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(AppDimens.radiusButton),
         border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.error_outline, color: AppColors.error, size: 20),
+          const Icon(AppIcons.error, color: AppColors.error, size: 20),
           const SizedBox(width: AppDimens.s),
           Expanded(
             child: Text(
