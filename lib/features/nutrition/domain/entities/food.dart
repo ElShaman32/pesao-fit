@@ -1,42 +1,41 @@
 import 'package:equatable/equatable.dart';
 
-/// Fuente de origen del alimento.
-/// Mapea el CHECK constraint de foods.source.
-enum FoodSource {
-  local,
-  usda,
-  openfoodfacts,
-  custom;
-
-  String get dbValue => name;
-
-  static FoodSource fromDb(String? value) {
-    return FoodSource.values.firstWhere(
-      (s) => s.name == value,
-      orElse: () => FoodSource.local,
-    );
-  }
-}
-
-/// Alimento del catálogo (global del sistema o personalizado por gym).
-/// POCO + Equatable (ADR-037). Mapea la tabla `foods`.
-///
-/// Nota: la BD usa `serving_size` (numeric) + `serving_unit` (text)
-/// en lugar de un solo campo `serving_size_g`.
+/// Alimento del catálogo (tabla `foods`).
+/// Puede ser global (is_system=true, gym_id=null) o del gimnasio.
 class Food extends Equatable {
+  const Food({
+    required this.id,
+    required this.name,
+    required this.servingSize,
+    required this.servingUnit,
+    required this.caloriesKcal,
+    required this.proteinG,
+    required this.carbsG,
+    required this.fatsG,
+    required this.isVerified,
+    required this.isSystem,
+    required this.source,
+    required this.isActive,
+    required this.createdAt,
+    required this.updatedAt,
+    this.gymId,
+    this.brand,
+    this.barcode,
+    this.fiberG,
+    this.sugarG,
+    this.sodiumMg,
+    this.createdBy,
+    this.externalId,
+    this.imageUrl,
+  });
+
   final String id;
   final String? gymId;
   final String name;
   final String? brand;
   final String? barcode;
-
-  /// Tamaño de la porción de referencia (default 100 en BD).
   final double servingSize;
-
-  /// Unidad de la porción: 'g', 'ml', 'unidad', etc.
   final String servingUnit;
-
-  // --- Macronutrientes por porción de referencia ---
   final double caloriesKcal;
   final double proteinG;
   final double carbsG;
@@ -44,95 +43,25 @@ class Food extends Equatable {
   final double? fiberG;
   final double? sugarG;
   final double? sodiumMg;
-
-  /// true = alimento verificado por el nutricionista del gym.
   final bool isVerified;
-
-  /// true = alimento del catálogo global del sistema (seed).
   final bool isSystem;
-
-  /// Origen del alimento: local, usda, openfoodfacts, custom.
-  final FoodSource source;
-
-  /// ID externo (fdcId de USDA o code de OpenFoodFacts) para evitar duplicados.
-  final String? externalId;
-
-  final String? imageUrl;
   final String? createdBy;
+  final String source;
+  final String? externalId;
+  final String? imageUrl;
+  final bool isActive;
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  const Food({
-    required this.id,
-    this.gymId,
-    required this.name,
-    this.brand,
-    this.barcode,
-    this.servingSize = 100,
-    this.servingUnit = 'g',
-    required this.caloriesKcal,
-    required this.proteinG,
-    required this.carbsG,
-    required this.fatsG,
-    this.fiberG,
-    this.sugarG,
-    this.sodiumMg,
-    this.isVerified = false,
-    this.isSystem = false,
-    this.source = FoodSource.local,
-    this.externalId,
-    this.imageUrl,
-    this.createdBy,
-    required this.createdAt,
-    required this.updatedAt,
-  });
+  /// Si es alimento del sistema (catálogo global).
+  bool get isGlobal => isSystem;
 
-  /// true si es un alimento del catálogo global (visible para todos los gyms).
-  bool get isGlobal => isSystem || gymId == null;
-
-  /// Label legible de la porción: "100g", "240ml", "1 unidad".
-  String get servingLabel => '$servingSize$servingUnit';
-
-  /// Calcula macros proporcionales para una cantidad dada.
-  /// Se usa en FoodPickerSheet y en add_food_to_log().
-  FoodMacros macrosForQuantity(double quantity) {
-    final factor = servingSize == 0 ? 1.0 : quantity / servingSize;
-    return FoodMacros(
-      caloriesKcal: caloriesKcal * factor,
-      proteinG: proteinG * factor,
-      carbsG: carbsG * factor,
-      fatsG: fatsG * factor,
-    );
-  }
-
-  factory Food.fromJson(Map<String, dynamic> json) {
-    return Food(
-      id: json['id'] as String,
-      gymId: json['gym_id'] as String?,
-      name: json['name'] as String,
-      brand: json['brand'] as String?,
-      barcode: json['barcode'] as String?,
-      servingSize: (json['serving_size'] as num?)?.toDouble() ?? 100,
-      servingUnit: json['serving_unit'] as String? ?? 'g',
-      caloriesKcal: (json['calories_kcal'] as num?)?.toDouble() ?? 0,
-      proteinG: (json['protein_g'] as num?)?.toDouble() ?? 0,
-      carbsG: (json['carbs_g'] as num?)?.toDouble() ?? 0,
-      fatsG: (json['fats_g'] as num?)?.toDouble() ?? 0,
-      fiberG: (json['fiber_g'] as num?)?.toDouble(),
-      sugarG: (json['sugar_g'] as num?)?.toDouble(),
-      sodiumMg: (json['sodium_mg'] as num?)?.toDouble(),
-      isVerified: json['is_verified'] as bool? ?? false,
-      isSystem: json['is_system'] as bool? ?? false,
-      source: FoodSource.fromDb(json['source'] as String?),
-      externalId: json['external_id'] as String?,
-      imageUrl: json['image_url'] as String?,
-      createdBy: json['created_by'] as String?,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-    );
-  }
+  /// Si es alimento del gimnasio.
+  bool get isGymFood => gymId != null && !isSystem;
 
   Food copyWith({
+    String? id,
+    String? gymId,
     String? name,
     String? brand,
     String? barcode,
@@ -146,84 +75,107 @@ class Food extends Equatable {
     double? sugarG,
     double? sodiumMg,
     bool? isVerified,
+    bool? isSystem,
+    String? createdBy,
+    String? source,
+    String? externalId,
     String? imageUrl,
+    bool? isActive,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool clearGymId = false,
+    bool clearBrand = false,
+    bool clearBarcode = false,
+    bool clearFiberG = false,
+    bool clearSugarG = false,
+    bool clearSodiumMg = false,
+    bool clearCreatedBy = false,
+    bool clearExternalId = false,
+    bool clearImageUrl = false,
   }) {
     return Food(
-      id: id,
-      gymId: gymId,
+      id: id ?? this.id,
+      gymId: clearGymId ? null : (gymId ?? this.gymId),
       name: name ?? this.name,
-      brand: brand ?? this.brand,
-      barcode: barcode ?? this.barcode,
+      brand: clearBrand ? null : (brand ?? this.brand),
+      barcode: clearBarcode ? null : (barcode ?? this.barcode),
       servingSize: servingSize ?? this.servingSize,
       servingUnit: servingUnit ?? this.servingUnit,
       caloriesKcal: caloriesKcal ?? this.caloriesKcal,
       proteinG: proteinG ?? this.proteinG,
       carbsG: carbsG ?? this.carbsG,
       fatsG: fatsG ?? this.fatsG,
-      fiberG: fiberG ?? this.fiberG,
-      sugarG: sugarG ?? this.sugarG,
-      sodiumMg: sodiumMg ?? this.sodiumMg,
+      fiberG: clearFiberG ? null : (fiberG ?? this.fiberG),
+      sugarG: clearSugarG ? null : (sugarG ?? this.sugarG),
+      sodiumMg: clearSodiumMg ? null : (sodiumMg ?? this.sodiumMg),
       isVerified: isVerified ?? this.isVerified,
-      isSystem: isSystem,
-      source: source,
-      externalId: externalId,
-      imageUrl: imageUrl ?? this.imageUrl,
-      createdBy: createdBy,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
+      isSystem: isSystem ?? this.isSystem,
+      createdBy: clearCreatedBy ? null : (createdBy ?? this.createdBy),
+      source: source ?? this.source,
+      externalId: clearExternalId ? null : (externalId ?? this.externalId),
+      imageUrl: clearImageUrl ? null : (imageUrl ?? this.imageUrl),
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
+  factory Food.fromJson(Map<String, dynamic> json) {
+    return Food(
+      id: json['id'] as String,
+      gymId: json['gym_id'] as String?,
+      name: json['name'] as String,
+      brand: json['brand'] as String?,
+      barcode: json['barcode'] as String?,
+      servingSize: (json['serving_size'] as num).toDouble(),
+      servingUnit: json['serving_unit'] as String,
+      caloriesKcal: (json['calories_kcal'] as num).toDouble(),
+      proteinG: (json['protein_g'] as num).toDouble(),
+      carbsG: (json['carbs_g'] as num).toDouble(),
+      fatsG: (json['fats_g'] as num).toDouble(),
+      fiberG: (json['fiber_g'] as num?)?.toDouble(),
+      sugarG: (json['sugar_g'] as num?)?.toDouble(),
+      sodiumMg: (json['sodium_mg'] as num?)?.toDouble(),
+      isVerified: json['is_verified'] as bool,
+      isSystem: json['is_system'] as bool,
+      createdBy: json['created_by'] as String?,
+      source: json['source'] as String,
+      externalId: json['external_id'] as String?,
+      imageUrl: json['image_url'] as String?,
+      isActive: json['is_active'] as bool,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'gym_id': gymId,
+      'name': name,
+      'brand': brand,
+      'barcode': barcode,
+      'serving_size': servingSize,
+      'serving_unit': servingUnit,
+      'calories_kcal': caloriesKcal,
+      'protein_g': proteinG,
+      'carbs_g': carbsG,
+      'fats_g': fatsG,
+      'fiber_g': fiberG,
+      'sugar_g': sugarG,
+      'sodium_mg': sodiumMg,
+      'is_verified': isVerified,
+      'is_system': isSystem,
+      'created_by': createdBy,
+      'source': source,
+      'external_id': externalId,
+      'image_url': imageUrl,
+      'is_active': isActive,
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
+    };
+  }
+
   @override
-  List<Object?> get props => [
-    id,
-    gymId,
-    name,
-    brand,
-    barcode,
-    servingSize,
-    servingUnit,
-    caloriesKcal,
-    proteinG,
-    carbsG,
-    fatsG,
-    fiberG,
-    sugarG,
-    sodiumMg,
-    isVerified,
-    isSystem,
-    source,
-    externalId,
-    imageUrl,
-    createdBy,
-    createdAt,
-    updatedAt,
-  ];
-}
-
-/// Macros calculados para una cantidad específica de un alimento.
-/// Se usa en FoodPickerSheet (preview en vivo) y en food_log_items.
-class FoodMacros extends Equatable {
-  final double caloriesKcal;
-  final double proteinG;
-  final double carbsG;
-  final double fatsG;
-
-  const FoodMacros({
-    required this.caloriesKcal,
-    required this.proteinG,
-    required this.carbsG,
-    required this.fatsG,
-  });
-
-  /// Redondeo a 1 decimal para display.
-  FoodMacros rounded() => FoodMacros(
-    caloriesKcal: double.parse(caloriesKcal.toStringAsFixed(1)),
-    proteinG: double.parse(proteinG.toStringAsFixed(1)),
-    carbsG: double.parse(carbsG.toStringAsFixed(1)),
-    fatsG: double.parse(fatsG.toStringAsFixed(1)),
-  );
-
-  @override
-  List<Object?> get props => [caloriesKcal, proteinG, carbsG, fatsG];
+  List<Object?> get props => [id, name, caloriesKcal, proteinG, carbsG, fatsG];
 }

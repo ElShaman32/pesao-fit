@@ -1,7 +1,7 @@
 import '../../../../core/utils/result.dart';
 import '../entities/nutritionist_dashboard_stats.dart';
 
-/// Contrato del repositorio del dashboard del nutricionista.
-abstract class NutritionistDashboardRepository {
+/// Repositorio abstracto del dashboard del nutricionista.
+abstract interface class NutritionistDashboardRepository {
   Future<Result<NutritionistDashboardStats>> fetchStats();
 }

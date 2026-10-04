@@ -18,15 +18,17 @@ abstract final class RouteNames {
 
   static const String clientHome = '/client/home';
   static const String clientRoutine = '/client/routine';
-  static const String clientNutrition = '/client/nutrition';
   static const String clientProfile = '/client/profile';
   static const String clientWorkout = '/client/routine/workout/:workoutId';
   static const String clientWorkoutHistory = '/client/routine/history';
 
-  // --- Cliente Nutrición (F3) ------------------------------------------------
+  // ==========================================================================
+  // RUTAS CLIENTE (NUTRICIÓN)
+  // ==========================================================================
 
+  static const String clientNutrition = '/client/nutrition';
   static const String clientNutritionLog = '/client/nutrition/log';
-  static const String clientNutritionPlan = '/client/nutrition/plan/:planId';
+  static const String clientNutritionPlan = '/client/nutrition/plan';
 
   // --- Entrenador -----------------------------------------------------------
 
@@ -59,22 +61,33 @@ abstract final class RouteNames {
   static const String ownerPlanForm = '/owner/plans/:planId';
   static const String ownerPlanCreate = '/owner/plans/create';
 
-  // --- Nutricionista --------------------------------------------------------
+  // ════════════════════════════════════════════════════════════════════════
+  // RUTAS NUTRICIONISTA
+  // ════════════════════════════════════════════════════════════════════════
 
   static const String nutritionistHome = '/nutritionist/home';
   static const String nutritionistClients = '/nutritionist/clients';
-  static const String nutritionistPlans = '/nutritionist/plans';
-  static const String nutritionistProfile = '/nutritionist/profile';
-
-  // --- Nutricionista F3 -------------------------------------------------------
-
   static const String nutritionistClientDetail =
       '/nutritionist/clients/:clientId';
+  static const String nutritionistPlans = '/nutritionist/plans';
   static const String nutritionistPlanCreate = '/nutritionist/plans/create';
   static const String nutritionistPlanEdit = '/nutritionist/plans/:planId';
   static const String nutritionistPlanDays = '/nutritionist/plans/:planId/days';
-  static const String nutritionistFoodCreate = '/nutritionist/foods/create';
-  static const String nutritionistFoodEdit = '/nutritionist/foods/:foodId';
+  static const String nutritionistProfile = '/nutritionist/profile';
+
+  // Alimentos → sub-rutas de plans (herramientas del planificador)
+  static const String nutritionistFoods = '/nutritionist/plans/foods';
+  static const String nutritionistFoodCreate =
+      '/nutritionist/plans/foods/create';
+  static const String nutritionistFoodEdit =
+      '/nutritionist/plans/foods/:foodId';
+
+  // Plantillas de comida → sub-rutas de plans
+  static const String nutritionistTemplates = '/nutritionist/plans/templates';
+  static const String nutritionistTemplateCreate =
+      '/nutritionist/plans/templates/create';
+  static const String nutritionistTemplateEdit =
+      '/nutritionist/plans/templates/:templateId';
 
   // --- Superadmin -----------------------------------------------------------
 

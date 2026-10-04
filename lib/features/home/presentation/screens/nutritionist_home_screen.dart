@@ -189,8 +189,7 @@ class _NutriSuccessSliver extends StatelessWidget {
                   label: l10n.nutriDashStatPlans,
                   value: stats.activePlansCount.toString(),
                   sub: l10n.nutriDashStatPlansSub,
-                  // TODO: promover a AppIcons.nutritionMenu.
-                  icon: Icons.restaurant_menu_rounded,
+                  icon: AppIcons.nutritionMenu,
                   onTap: () => context.go(RouteNames.nutritionistPlans),
                 ),
               ),
@@ -225,9 +224,7 @@ class _NutriSuccessSliver extends StatelessWidget {
           // Últimos planes.
           SectionHeader(
             title: l10n.nutriDashRecentSection,
-            onSeeAll: () {
-              // Futuro: vista completa de planes (F3).
-            },
+            onSeeAll: () => context.push(RouteNames.nutritionistPlans),
           ),
           const SizedBox(height: AppDimens.m),
           if (stats.recentPlans.isEmpty)
@@ -269,10 +266,7 @@ class _NutriPrimaryCard extends StatelessWidget {
           Row(
             children: [
               Icon(
-                hasPlans
-                    // TODO: promover a AppIcons.nutritionMenu.
-                    ? Icons.restaurant_menu_rounded
-                    : AppIcons.success,
+                hasPlans ? AppIcons.nutritionMenu : AppIcons.success,
                 color: hasPlans ? AppColors.primary : AppColors.success,
                 size: 24,
               ),
@@ -305,10 +299,9 @@ class _NutriPrimaryCard extends StatelessWidget {
                   ? PesaoButtonVariant.primary
                   : PesaoButtonVariant.secondary,
               isExpanded: false,
+
               onPressed: hasPlans
-                  ? () {
-                      // Futuro: navegar a planes (F3).
-                    }
+                  ? () => context.push(RouteNames.nutritionistPlans)
                   : null,
             ),
           ),

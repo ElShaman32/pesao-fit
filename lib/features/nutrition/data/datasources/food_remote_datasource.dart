@@ -1,161 +1,148 @@
-import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../domain/entities/food.dart';
+import '../../domain/entities/food_favorite.dart';
 
-/// Fuente remota de alimentos (Supabase).
-/// Usa borrado lógico (is_active = false) para preservar integridad referencial.
-class FoodsRemoteDatasource {
+/// DataSource del catálogo de alimentos y favoritos.
+class FoodRemoteDatasource {
+  FoodRemoteDatasource(this._client);
+
   final SupabaseClient _client;
 
-  const FoodsRemoteDatasource(this._client);
+  /// Busca alimentos por nombre/marca (global + del gimnasio).
+  Future<List<Food>> searchFoods({
+    required String query,
+    required String gymId,
+    int limit = 20,
+  }) async {
+    final response = await _client
+        .from('foods')
+        .select()
+        .or('name.ilike.%$query%,brand.ilike.%$query%')
+        .eq('is_active', true)
+        .or('gym_id.eq.$gymId,gym_id.is.null')
+        .order('is_system', ascending: false)
+        .order('name')
+        .limit(limit);
 
-  /// Obtiene alimentos activos del sistema + personalizados del gym.
-  Future<List<Food>> fetchFoods(String gymId) async {
-    try {
-      final response = await _client
-          .from('foods')
-          .select()
-          .eq('is_active', true)
-          .or('is_system.eq.true,gym_id.is.null,gym_id.eq.$gymId')
-          .order('is_system', ascending: false)
-          .order('name', ascending: true);
+    return (response as List)
+        .map((row) => Food.fromJson(row as Map<String, dynamic>))
+        .toList();
+  }
 
-      return response.map((e) => Food.fromJson(e)).toList();
-    } catch (e, stack) {
-      debugPrint('❌ FOODS fetchFoods: $e');
-      debugPrint('❌ STACK: $stack');
-      rethrow;
-    }
+  /// Obtiene todos los alimentos activos (global + gimnasio).
+  Future<List<Food>> fetchFoods({required String gymId}) async {
+    final response = await _client
+        .from('foods')
+        .select()
+        .eq('is_active', true)
+        .or('gym_id.eq.$gymId,gym_id.is.null')
+        .order('is_system', ascending: false)
+        .order('name');
+
+    return (response as List)
+        .map((row) => Food.fromJson(row as Map<String, dynamic>))
+        .toList();
   }
 
   /// Obtiene un alimento por ID.
   Future<Food> fetchFoodById(String foodId) async {
-    try {
-      final response = await _client
-          .from('foods')
-          .select()
-          .eq('id', foodId)
-          .eq('is_active', true)
-          .single();
-      return Food.fromJson(response);
-    } catch (e, stack) {
-      debugPrint('❌ FOODS fetchFoodById: $e');
-      debugPrint('❌ STACK: $stack');
-      rethrow;
-    }
+    final response = await _client
+        .from('foods')
+        .select()
+        .eq('id', foodId)
+        .single();
+
+    return Food.fromJson(response);
   }
 
-  /// Búsqueda por nombre (case-insensitive, usa índice trigram).
-  Future<List<Food>> searchFoods(String gymId, String query) async {
-    try {
-      final response = await _client
-          .from('foods')
-          .select()
-          .eq('is_active', true)
-          .or('is_system.eq.true,gym_id.is.null,gym_id.eq.$gymId')
-          .ilike('name', '%$query%')
-          .order('is_system', ascending: false)
-          .order('name', ascending: true)
-          .limit(50);
+  /// Crea un alimento del gimnasio.
+  Future<Food> createFood(Food food) async {
+    final response = await _client
+        .from('foods')
+        .insert(
+          food.toJson()
+            ..remove('id')
+            ..remove('created_at')
+            ..remove('updated_at'),
+        )
+        .select()
+        .single();
 
-      return response.map((e) => Food.fromJson(e)).toList();
-    } catch (e, stack) {
-      debugPrint('❌ FOODS searchFoods: $e');
-      debugPrint('❌ STACK: $stack');
-      rethrow;
-    }
-  }
-
-  /// Crea un alimento personalizado del gym (source = 'custom').
-  Future<Food> createFood({
-    required String gymId,
-    required String name,
-    String? brand,
-    String? barcode,
-    required double servingSize,
-    required String servingUnit,
-    required double caloriesKcal,
-    required double proteinG,
-    required double carbsG,
-    required double fatsG,
-    double? fiberG,
-    double? sugarG,
-    double? sodiumMg,
-  }) async {
-    try {
-      final response = await _client
-          .from('foods')
-          .insert({
-            'gym_id': gymId,
-            'name': name,
-            'brand': brand,
-            'barcode': barcode,
-            'serving_size': servingSize,
-            'serving_unit': servingUnit,
-            'calories_kcal': caloriesKcal,
-            'protein_g': proteinG,
-            'carbs_g': carbsG,
-            'fats_g': fatsG,
-            'fiber_g': fiberG,
-            'sugar_g': sugarG,
-            'sodium_mg': sodiumMg,
-            'is_system': false,
-            'is_active': true,
-            'source': 'custom',
-          })
-          .select()
-          .single();
-
-      return Food.fromJson(response);
-    } catch (e, stack) {
-      debugPrint('❌ FOODS createFood: $e');
-      debugPrint('❌ STACK: $stack');
-      rethrow;
-    }
+    return Food.fromJson(response);
   }
 
   /// Actualiza un alimento.
   Future<Food> updateFood(Food food) async {
-    try {
-      final response = await _client
-          .from('foods')
-          .update({
-            'name': food.name,
-            'brand': food.brand,
-            'barcode': food.barcode,
-            'serving_size': food.servingSize,
-            'serving_unit': food.servingUnit,
-            'calories_kcal': food.caloriesKcal,
-            'protein_g': food.proteinG,
-            'carbs_g': food.carbsG,
-            'fats_g': food.fatsG,
-            'fiber_g': food.fiberG,
-            'sugar_g': food.sugarG,
-            'sodium_mg': food.sodiumMg,
-            'image_url': food.imageUrl,
-          })
-          .eq('id', food.id)
-          .select()
-          .single();
+    final response = await _client
+        .from('foods')
+        .update({
+          'name': food.name,
+          'brand': food.brand,
+          'barcode': food.barcode,
+          'serving_size': food.servingSize,
+          'serving_unit': food.servingUnit,
+          'calories_kcal': food.caloriesKcal,
+          'protein_g': food.proteinG,
+          'carbs_g': food.carbsG,
+          'fats_g': food.fatsG,
+          'fiber_g': food.fiberG,
+          'sugar_g': food.sugarG,
+          'sodium_mg': food.sodiumMg,
+          'image_url': food.imageUrl,
+        })
+        .eq('id', food.id)
+        .select()
+        .single();
 
-      return Food.fromJson(response);
-    } catch (e, stack) {
-      debugPrint('❌ FOODS updateFood: $e');
-      debugPrint('❌ STACK: $stack');
-      rethrow;
-    }
+    return Food.fromJson(response);
   }
 
-  /// Borrado lógico: desactiva el alimento sin eliminarlo.
-  /// Preserva integridad con meal_template_foods y food_log_items.
-  Future<void> deleteFood(String foodId) async {
-    try {
-      await _client.from('foods').update({'is_active': false}).eq('id', foodId);
-    } catch (e, stack) {
-      debugPrint('❌ FOODS deleteFood: $e');
-      debugPrint('❌ STACK: $stack');
-      rethrow;
+  /// Desactiva un alimento (soft delete).
+  Future<void> deactivateFood(String foodId) async {
+    await _client.from('foods').update({'is_active': false}).eq('id', foodId);
+  }
+
+  /// Obtiene los alimentos favoritos del cliente.
+  Future<List<FoodFavorite>> fetchFavorites(String clientId) async {
+    final response = await _client
+        .from('food_favorites')
+        .select()
+        .eq('client_id', clientId)
+        .order('created_at', ascending: false);
+
+    return (response as List)
+        .map((row) => FoodFavorite.fromJson(row as Map<String, dynamic>))
+        .toList();
+  }
+
+  /// Toggle favorito. Retorna true si quedó como favorito.
+  Future<bool> toggleFavorite({
+    required String clientId,
+    required String foodId,
+  }) async {
+    // Verificar si ya existe.
+    final existing = await _client
+        .from('food_favorites')
+        .select('id')
+        .eq('client_id', clientId)
+        .eq('food_id', foodId)
+        .maybeSingle();
+
+    if (existing != null) {
+      // Ya existe → eliminar.
+      await _client
+          .from('food_favorites')
+          .delete()
+          .eq('id', existing['id'] as String);
+      return false;
+    } else {
+      // No existe → crear.
+      await _client.from('food_favorites').insert({
+        'client_id': clientId,
+        'food_id': foodId,
+      });
+      return true;
     }
   }
 }

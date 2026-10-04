@@ -1,42 +1,29 @@
 import 'package:equatable/equatable.dart';
 
-/// Tipo de objetivo calórico del cliente.
-enum GoalType {
-  lose,
-  maintain,
-  gain;
+import '../enums/goal_type.dart';
 
-  String get dbValue => name;
-
-  /// Clave de traducción para AppStrings.
-  String get l10nKey => switch (this) {
-    GoalType.lose => 'goalTypeLose',
-    GoalType.maintain => 'goalTypeMaintain',
-    GoalType.gain => 'goalTypeGain',
-  };
-
-  static GoalType fromDb(String? value) {
-    return GoalType.values.firstWhere(
-      (g) => g.name == value,
-      orElse: () => GoalType.maintain,
-    );
-  }
-}
-
-/// Objetivos nutricionales standalone de un cliente.
-/// Se usa cuando NO hay plan activo, o como referencia rápida.
-/// POCO + Equatable (ADR-037). Mapea la tabla `nutrition_goals`.
-///
-/// Nota: la BD usa numeric(8,2) para los targets aquí,
-/// a diferencia de nutrition_plans que usa integer.
+/// Metas macro de un cliente (tabla `nutrition_goals`).
 class NutritionGoal extends Equatable {
+  const NutritionGoal({
+    required this.id,
+    required this.clientId,
+    required this.gymId,
+    required this.targetCaloriesKcal,
+    required this.targetProteinG,
+    required this.targetCarbsG,
+    required this.targetFatsG,
+    required this.goalType,
+    required this.isActive,
+    required this.createdAt,
+    required this.updatedAt,
+    this.setBy,
+    this.notes,
+  });
+
   final String id;
   final String clientId;
   final String gymId;
-
-  /// UUID del nutricionista que fijó el objetivo.
   final String? setBy;
-
   final double targetCaloriesKcal;
   final double targetProteinG;
   final double targetCarbsG;
@@ -47,50 +34,11 @@ class NutritionGoal extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  const NutritionGoal({
-    required this.id,
-    required this.clientId,
-    required this.gymId,
-    this.setBy,
-    this.targetCaloriesKcal = 2000,
-    this.targetProteinG = 150,
-    this.targetCarbsG = 200,
-    this.targetFatsG = 65,
-    this.goalType = GoalType.maintain,
-    this.notes,
-    this.isActive = true,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  /// Distribución calórica de proteínas/carbs/grasas vs total.
-  /// Se usa para el MacroRing del dashboard del cliente.
-  /// Proteína y carbos = 4 kcal/g, grasa = 9 kcal/g.
-  double get proteinKcal => targetProteinG * 4;
-  double get carbsKcal => targetCarbsG * 4;
-  double get fatsKcal => targetFatsG * 9;
-  double get totalMacroKcal => proteinKcal + carbsKcal + fatsKcal;
-
-  factory NutritionGoal.fromJson(Map<String, dynamic> json) {
-    return NutritionGoal(
-      id: json['id'] as String,
-      clientId: json['client_id'] as String,
-      gymId: json['gym_id'] as String,
-      setBy: json['set_by'] as String?,
-      targetCaloriesKcal:
-          (json['target_calories_kcal'] as num?)?.toDouble() ?? 2000,
-      targetProteinG: (json['target_protein_g'] as num?)?.toDouble() ?? 150,
-      targetCarbsG: (json['target_carbs_g'] as num?)?.toDouble() ?? 200,
-      targetFatsG: (json['target_fats_g'] as num?)?.toDouble() ?? 65,
-      goalType: GoalType.fromDb(json['goal_type'] as String?),
-      notes: json['notes'] as String?,
-      isActive: json['is_active'] as bool? ?? true,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-    );
-  }
-
   NutritionGoal copyWith({
+    String? id,
+    String? clientId,
+    String? gymId,
+    String? setBy,
     double? targetCaloriesKcal,
     double? targetProteinG,
     double? targetCarbsG,
@@ -98,38 +46,72 @@ class NutritionGoal extends Equatable {
     GoalType? goalType,
     String? notes,
     bool? isActive,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool clearSetBy = false,
+    bool clearNotes = false,
   }) {
     return NutritionGoal(
-      id: id,
-      clientId: clientId,
-      gymId: gymId,
-      setBy: setBy,
+      id: id ?? this.id,
+      clientId: clientId ?? this.clientId,
+      gymId: gymId ?? this.gymId,
+      setBy: clearSetBy ? null : (setBy ?? this.setBy),
       targetCaloriesKcal: targetCaloriesKcal ?? this.targetCaloriesKcal,
       targetProteinG: targetProteinG ?? this.targetProteinG,
       targetCarbsG: targetCarbsG ?? this.targetCarbsG,
       targetFatsG: targetFatsG ?? this.targetFatsG,
       goalType: goalType ?? this.goalType,
-      notes: notes ?? this.notes,
+      notes: clearNotes ? null : (notes ?? this.notes),
       isActive: isActive ?? this.isActive,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
+  }
+
+  factory NutritionGoal.fromJson(Map<String, dynamic> json) {
+    return NutritionGoal(
+      id: json['id'] as String,
+      clientId: json['client_id'] as String,
+      gymId: json['gym_id'] as String,
+      setBy: json['set_by'] as String?,
+      targetCaloriesKcal: (json['target_calories_kcal'] as num).toDouble(),
+      targetProteinG: (json['target_protein_g'] as num).toDouble(),
+      targetCarbsG: (json['target_carbs_g'] as num).toDouble(),
+      targetFatsG: (json['target_fats_g'] as num).toDouble(),
+      goalType: GoalType.fromDbValue(json['goal_type'] as String),
+      notes: json['notes'] as String?,
+      isActive: json['is_active'] as bool,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'client_id': clientId,
+      'gym_id': gymId,
+      'set_by': setBy,
+      'target_calories_kcal': targetCaloriesKcal,
+      'target_protein_g': targetProteinG,
+      'target_carbs_g': targetCarbsG,
+      'target_fats_g': targetFatsG,
+      'goal_type': goalType.toDbValue(),
+      'notes': notes,
+      'is_active': isActive,
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
+    };
   }
 
   @override
   List<Object?> get props => [
     id,
     clientId,
-    gymId,
-    setBy,
     targetCaloriesKcal,
     targetProteinG,
     targetCarbsG,
     targetFatsG,
     goalType,
-    notes,
-    isActive,
-    createdAt,
-    updatedAt,
   ];
 }

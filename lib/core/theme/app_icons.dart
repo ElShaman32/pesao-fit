@@ -10,6 +10,7 @@ abstract final class AppIcons {
   static const IconData routine = Icons.fitness_center_rounded;
   static const IconData nutrition = Icons.restaurant_rounded;
   static const IconData nutritionOutline = Icons.restaurant_outlined;
+  static const IconData nutritionMenu = Icons.restaurant_menu_rounded;
   static const IconData profile = Icons.person_rounded;
   static const IconData profileOutline = Icons.person_outline_rounded;
   static const IconData clients = Icons.groups_rounded;

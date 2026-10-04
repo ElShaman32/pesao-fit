@@ -8,73 +8,20 @@ part of 'nutritionist_clients_controller.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-
-@ProviderFor(nutritionClientsRepository)
-final nutritionClientsRepositoryProvider =
-    NutritionClientsRepositoryProvider._();
-
-final class NutritionClientsRepositoryProvider
-    extends
-        $FunctionalProvider<
-          NutritionClientsRepository,
-          NutritionClientsRepository,
-          NutritionClientsRepository
-        >
-    with $Provider<NutritionClientsRepository> {
-  NutritionClientsRepositoryProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'nutritionClientsRepositoryProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$nutritionClientsRepositoryHash();
-
-  @$internal
-  @override
-  $ProviderElement<NutritionClientsRepository> $createElement(
-    $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
-
-  @override
-  NutritionClientsRepository create(Ref ref) {
-    return nutritionClientsRepository(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(NutritionClientsRepository value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<NutritionClientsRepository>(value),
-    );
-  }
-}
-
-String _$nutritionClientsRepositoryHash() =>
-    r'b3f8c16cbd4b9a612b8b85929bf6d0408a3bd4a4';
-
-/// Controller de la lista de clientes del nutricionista.
-/// keepAlive para que la lista sobreviva al navegar al detalle y volver.
+/// Controlador de clientes asignados al nutricionista.
 
 @ProviderFor(NutritionistClientsController)
 final nutritionistClientsControllerProvider =
     NutritionistClientsControllerProvider._();
 
-/// Controller de la lista de clientes del nutricionista.
-/// keepAlive para que la lista sobreviva al navegar al detalle y volver.
+/// Controlador de clientes asignados al nutricionista.
 final class NutritionistClientsControllerProvider
     extends
         $NotifierProvider<
           NutritionistClientsController,
-          AsyncValue<List<NutritionClient>>
+          NutritionistClientsState
         > {
-  /// Controller de la lista de clientes del nutricionista.
-  /// keepAlive para que la lista sobreviva al navegar al detalle y volver.
+  /// Controlador de clientes asignados al nutricionista.
   NutritionistClientsControllerProvider._()
     : super(
         from: null,
@@ -94,42 +41,32 @@ final class NutritionistClientsControllerProvider
   NutritionistClientsController create() => NutritionistClientsController();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(AsyncValue<List<NutritionClient>> value) {
+  Override overrideWithValue(NutritionistClientsState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<AsyncValue<List<NutritionClient>>>(
-        value,
-      ),
+      providerOverride: $SyncValueProvider<NutritionistClientsState>(value),
     );
   }
 }
 
 String _$nutritionistClientsControllerHash() =>
-    r'67e44d92e58c105d2e1e0b3734ea5d0e09d766cc';
+    r'8e44b050c5ddae3d5e84e4d342f63d96688baad8';
 
-/// Controller de la lista de clientes del nutricionista.
-/// keepAlive para que la lista sobreviva al navegar al detalle y volver.
+/// Controlador de clientes asignados al nutricionista.
 
 abstract class _$NutritionistClientsController
-    extends $Notifier<AsyncValue<List<NutritionClient>>> {
-  AsyncValue<List<NutritionClient>> build();
+    extends $Notifier<NutritionistClientsState> {
+  NutritionistClientsState build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
     final ref =
-        this.ref
-            as $Ref<
-              AsyncValue<List<NutritionClient>>,
-              AsyncValue<List<NutritionClient>>
-            >;
+        this.ref as $Ref<NutritionistClientsState, NutritionistClientsState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<
-                AsyncValue<List<NutritionClient>>,
-                AsyncValue<List<NutritionClient>>
-              >,
-              AsyncValue<List<NutritionClient>>,
+              AnyNotifier<NutritionistClientsState, NutritionistClientsState>,
+              NutritionistClientsState,
               Object?,
               Object?
             >;

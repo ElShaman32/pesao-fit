@@ -35,9 +35,7 @@ class PesaoFab extends StatelessWidget {
       enabled: enabled,
       label: semanticLabel,
       child: MouseRegion(
-        cursor: enabled
-            ? SystemMouseCursors.click
-            : MouseCursor.defer,
+        cursor: enabled ? SystemMouseCursors.click : MouseCursor.defer,
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: enabled ? onPressed : null,
@@ -45,20 +43,14 @@ class PesaoFab extends StatelessWidget {
             width: AppDimens.fabSize,
             height: AppDimens.fabSize,
             decoration: BoxDecoration(
-              color: enabled
-                  ? AppColors.primary
-                  : AppColors.surfaceHigh,
+              color: enabled ? AppColors.primary : AppColors.surfaceHigh,
               shape: BoxShape.circle,
-              boxShadow: enabled
-                  ? const [AppShadows.primaryGlow]
-                  : const [],
+              boxShadow: enabled ? const [AppShadows.primaryGlow] : const [],
             ),
             child: Icon(
               icon,
               size: 24,
-              color: enabled
-                  ? AppColors.onPrimary
-                  : AppColors.textDisabled,
+              color: enabled ? AppColors.onPrimary : AppColors.textDisabled,
             ),
           ),
         ),

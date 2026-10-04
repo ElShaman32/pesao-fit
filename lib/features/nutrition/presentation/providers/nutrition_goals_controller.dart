@@ -1,109 +1,164 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../../core/exceptions/app_exception.dart';
 import '../../../../core/providers/auth_provider.dart';
-import '../../../../core/utils/result.dart';
-import '../../data/datasources/nutrition_goals_remote_datasource.dart';
-import '../../data/repositories/nutrition_goals_repository_impl.dart';
+import '../../../../core/providers/supabase_provider.dart';
+import '../../data/datasources/nutrition_goal_remote_datasource.dart';
+import '../../data/repositories/nutrition_goal_repository_impl.dart';
 import '../../domain/entities/nutrition_goal.dart';
-import '../../domain/repositories/nutrition_goals_repository.dart';
+import '../../domain/enums/goal_type.dart';
+import '../../domain/repositories/nutrition_goal_repository.dart';
 
 part 'nutrition_goals_controller.g.dart';
 
-@riverpod
-NutritionGoalsRepository nutritionGoalsRepository(Ref ref) {
-  return NutritionGoalsRepositoryImpl(
-    remote: NutritionGoalsRemoteDatasource(Supabase.instance.client),
-  );
+/// Estado de metas nutricionales.
+class NutritionGoalsState {
+  const NutritionGoalsState({
+    this.activeGoal,
+    this.suggestedGoal,
+    this.isLoading = false,
+    this.isSaving = false,
+    this.error,
+  });
+
+  final NutritionGoal? activeGoal;
+  final NutritionGoal? suggestedGoal;
+  final bool isLoading;
+  final bool isSaving;
+  final String? error;
+
+  bool get hasGoal => activeGoal != null;
+
+  NutritionGoalsState copyWith({
+    NutritionGoal? activeGoal,
+    NutritionGoal? suggestedGoal,
+    bool? isLoading,
+    bool? isSaving,
+    String? error,
+    bool clearError = false,
+    bool clearActiveGoal = false,
+    bool clearSuggestedGoal = false,
+  }) {
+    return NutritionGoalsState(
+      activeGoal: clearActiveGoal ? null : (activeGoal ?? this.activeGoal),
+      suggestedGoal: clearSuggestedGoal
+          ? null
+          : (suggestedGoal ?? this.suggestedGoal),
+      isLoading: isLoading ?? this.isLoading,
+      isSaving: isSaving ?? this.isSaving,
+      error: clearError ? null : (error ?? this.error),
+    );
+  }
 }
 
-/// Controller de objetivos nutricionales del cliente actualmente en foco.
-/// El nutricionista fija/edita goals desde la pantalla de detalle del cliente.
+/// Controlador de metas nutricionales por cliente.
 @Riverpod(keepAlive: true)
 class NutritionGoalsController extends _$NutritionGoalsController {
-  late final NutritionGoalsRepository _repository;
+  late final NutritionGoalRepository _repository;
 
   @override
-  AsyncValue<NutritionGoal?> build() {
-    _repository = ref.watch(nutritionGoalsRepositoryProvider);
+  NutritionGoalsState build() {
+    _repository = NutritionGoalRepositoryImpl(
+      remote: NutritionGoalRemoteDatasource(supabaseClient),
+    );
 
-    authProvider.addListener(_onAuthChange);
-    ref.onDispose(() => authProvider.removeListener(_onAuthChange));
-
-    return const AsyncValue.data(null);
+    return const NutritionGoalsState();
   }
 
-  void _onAuthChange() {
-    if (!authProvider.isLoggedIn) {
-      state = const AsyncValue.data(null);
-    }
-  }
+  String? get _gymId => authProvider.userGymId;
 
-  /// Carga el goal activo del cliente en foco.
-  Future<void> loadForClient({required String clientId}) async {
-    final gymId = authProvider.userGymId;
-    if (gymId == null) {
-      state = AsyncValue.error(
-        const UnknownException(
-          code: 'NutritionGoals/no-gym',
-          message: 'Usuario sin gimnasio activo',
-        ),
-        StackTrace.current,
-      );
-      return;
-    }
+  /// Carga la meta activa de un cliente.
+  Future<void> loadGoal({required String clientId}) async {
+    final gymId = _gymId;
+    if (gymId == null) return;
 
-    state = const AsyncValue.loading();
+    state = state.copyWith(isLoading: true, clearError: true);
 
-    final result = await _repository.getGoalForClient(
+    final result = await _repository.fetchActiveGoal(
       clientId: clientId,
       gymId: gymId,
     );
-
     result.when(
       idle: () {},
       loading: () {},
-      success: (goal) => state = AsyncValue.data(goal),
-      failure: (error) => state = AsyncValue.error(error, StackTrace.current),
+      success: (goal) {
+        state = state.copyWith(
+          isLoading: false,
+          activeGoal: goal,
+          clearActiveGoal: goal == null,
+        );
+      },
+      failure: (error) {
+        state = state.copyWith(isLoading: false, error: error.code);
+      },
     );
   }
 
-  /// Guarda (crea o actualiza) el goal del cliente en foco.
-  Future<Result<NutritionGoal>> setGoal({
+  /// Guarda o actualiza la meta de un cliente.
+  Future<bool> saveGoal({
     required String clientId,
+    required GoalType goalType,
     required double targetCaloriesKcal,
     required double targetProteinG,
     required double targetCarbsG,
     required double targetFatsG,
-    required GoalType goalType,
     String? notes,
   }) async {
-    final gymId = authProvider.userGymId;
-    if (gymId == null) {
-      return const Result.failure(
-        UnknownException(
-          code: 'NutritionGoals/no-gym',
-          message: 'Sin gimnasio',
-        ),
-      );
-    }
+    final gymId = _gymId;
+    if (gymId == null) return false;
 
-    final result = await _repository.setGoal(
+    state = state.copyWith(isSaving: true);
+
+    final result = await _repository.upsertGoal(
       clientId: clientId,
       gymId: gymId,
-      setBy: authProvider.userId,
+      goalType: goalType,
       targetCaloriesKcal: targetCaloriesKcal,
       targetProteinG: targetProteinG,
       targetCarbsG: targetCarbsG,
       targetFatsG: targetFatsG,
-      goalType: goalType,
       notes: notes,
     );
+    return result.when(
+      idle: () => false,
+      loading: () => false,
+      success: (goal) {
+        state = state.copyWith(isSaving: false, activeGoal: goal);
+        return true;
+      },
+      failure: (error) {
+        state = state.copyWith(isSaving: false, error: error.code);
+        return false;
+      },
+    );
+  }
 
-    if (result.isSuccess) {
-      await loadForClient(clientId: clientId);
-    }
-    return result;
+  /// Calcula una meta sugerida basado en el objetivo.
+  Future<void> calculateSuggestion({
+    required String clientId,
+    required GoalType goalType,
+  }) async {
+    final gymId = _gymId;
+    if (gymId == null) return;
+
+    final result = await _repository.calculateSuggestedGoal(
+      clientId: clientId,
+      gymId: gymId,
+      goalType: goalType,
+    );
+    result.when(
+      idle: () {},
+      loading: () {},
+      success: (suggested) {
+        state = state.copyWith(suggestedGoal: suggested);
+      },
+      failure: (error) {
+        state = state.copyWith(error: error.code);
+      },
+    );
+  }
+
+  /// Limpia el estado al cambiar de cliente.
+  void reset() {
+    state = const NutritionGoalsState();
   }
 }

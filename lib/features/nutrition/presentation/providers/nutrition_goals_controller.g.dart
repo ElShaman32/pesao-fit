@@ -8,71 +8,15 @@ part of 'nutrition_goals_controller.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-
-@ProviderFor(nutritionGoalsRepository)
-final nutritionGoalsRepositoryProvider = NutritionGoalsRepositoryProvider._();
-
-final class NutritionGoalsRepositoryProvider
-    extends
-        $FunctionalProvider<
-          NutritionGoalsRepository,
-          NutritionGoalsRepository,
-          NutritionGoalsRepository
-        >
-    with $Provider<NutritionGoalsRepository> {
-  NutritionGoalsRepositoryProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'nutritionGoalsRepositoryProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$nutritionGoalsRepositoryHash();
-
-  @$internal
-  @override
-  $ProviderElement<NutritionGoalsRepository> $createElement(
-    $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
-
-  @override
-  NutritionGoalsRepository create(Ref ref) {
-    return nutritionGoalsRepository(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(NutritionGoalsRepository value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<NutritionGoalsRepository>(value),
-    );
-  }
-}
-
-String _$nutritionGoalsRepositoryHash() =>
-    r'fbe22ba50f99206c9fe8ec8f5260aee3aeb60ad4';
-
-/// Controller de objetivos nutricionales del cliente actualmente en foco.
-/// El nutricionista fija/edita goals desde la pantalla de detalle del cliente.
+/// Controlador de metas nutricionales por cliente.
 
 @ProviderFor(NutritionGoalsController)
 final nutritionGoalsControllerProvider = NutritionGoalsControllerProvider._();
 
-/// Controller de objetivos nutricionales del cliente actualmente en foco.
-/// El nutricionista fija/edita goals desde la pantalla de detalle del cliente.
+/// Controlador de metas nutricionales por cliente.
 final class NutritionGoalsControllerProvider
-    extends
-        $NotifierProvider<
-          NutritionGoalsController,
-          AsyncValue<NutritionGoal?>
-        > {
-  /// Controller de objetivos nutricionales del cliente actualmente en foco.
-  /// El nutricionista fija/edita goals desde la pantalla de detalle del cliente.
+    extends $NotifierProvider<NutritionGoalsController, NutritionGoalsState> {
+  /// Controlador de metas nutricionales por cliente.
   NutritionGoalsControllerProvider._()
     : super(
         from: null,
@@ -92,37 +36,31 @@ final class NutritionGoalsControllerProvider
   NutritionGoalsController create() => NutritionGoalsController();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(AsyncValue<NutritionGoal?> value) {
+  Override overrideWithValue(NutritionGoalsState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<AsyncValue<NutritionGoal?>>(value),
+      providerOverride: $SyncValueProvider<NutritionGoalsState>(value),
     );
   }
 }
 
 String _$nutritionGoalsControllerHash() =>
-    r'33f32ed69114fa45a3ffb6776422b56da14225ad';
+    r'dc27b70c3963b3d9a5f89976cc66c348dc00fd11';
 
-/// Controller de objetivos nutricionales del cliente actualmente en foco.
-/// El nutricionista fija/edita goals desde la pantalla de detalle del cliente.
+/// Controlador de metas nutricionales por cliente.
 
 abstract class _$NutritionGoalsController
-    extends $Notifier<AsyncValue<NutritionGoal?>> {
-  AsyncValue<NutritionGoal?> build();
+    extends $Notifier<NutritionGoalsState> {
+  NutritionGoalsState build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref =
-        this.ref
-            as $Ref<AsyncValue<NutritionGoal?>, AsyncValue<NutritionGoal?>>;
+    final ref = this.ref as $Ref<NutritionGoalsState, NutritionGoalsState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<
-                AsyncValue<NutritionGoal?>,
-                AsyncValue<NutritionGoal?>
-              >,
-              AsyncValue<NutritionGoal?>,
+              AnyNotifier<NutritionGoalsState, NutritionGoalsState>,
+              NutritionGoalsState,
               Object?,
               Object?
             >;

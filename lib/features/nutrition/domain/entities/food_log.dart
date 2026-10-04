@@ -1,47 +1,61 @@
 import 'package:equatable/equatable.dart';
 
-import 'meal_type.dart';
-
-/// Registro diario de comidas de un cliente.
-/// POCO + Equatable (ADR-037). Mapea la tabla `food_logs`.
-///
-/// UNIQUE(client_id, gym_id, log_date) en BD: un solo log por día.
+/// Registro diario de comidas del cliente (tabla `food_logs`).
+/// Un log por cliente por día. Los totales se recalculan con trigger.
 class FoodLog extends Equatable {
-  final String id;
-  final String clientId;
-  final String gymId;
-  final DateTime logDate;
-
-  // --- Totales precalculados por recalc_food_log_totals() ---
-  final double totalCaloriesKcal;
-  final double totalProteinG;
-  final double totalCarbsG;
-  final double totalFatsG;
-
-  final String? notes;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-
   const FoodLog({
     required this.id,
     required this.clientId,
     required this.gymId,
     required this.logDate,
-    this.totalCaloriesKcal = 0,
-    this.totalProteinG = 0,
-    this.totalCarbsG = 0,
-    this.totalFatsG = 0,
-    this.notes,
+    required this.totalCaloriesKcal,
+    required this.totalProteinG,
+    required this.totalCarbsG,
+    required this.totalFatsG,
     required this.createdAt,
     required this.updatedAt,
+    this.notes,
   });
 
-  /// true si el log es de hoy (para resaltar en la UI).
-  bool get isToday {
-    final now = DateTime.now();
-    return logDate.year == now.year &&
-        logDate.month == now.month &&
-        logDate.day == now.day;
+  final String id;
+  final String clientId;
+  final String gymId;
+  final DateTime logDate;
+  final double totalCaloriesKcal;
+  final double totalProteinG;
+  final double totalCarbsG;
+  final double totalFatsG;
+  final String? notes;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+
+  FoodLog copyWith({
+    String? id,
+    String? clientId,
+    String? gymId,
+    DateTime? logDate,
+    double? totalCaloriesKcal,
+    double? totalProteinG,
+    double? totalCarbsG,
+    double? totalFatsG,
+    String? notes,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool clearNotes = false,
+  }) {
+    return FoodLog(
+      id: id ?? this.id,
+      clientId: clientId ?? this.clientId,
+      gymId: gymId ?? this.gymId,
+      logDate: logDate ?? this.logDate,
+      totalCaloriesKcal: totalCaloriesKcal ?? this.totalCaloriesKcal,
+      totalProteinG: totalProteinG ?? this.totalProteinG,
+      totalCarbsG: totalCarbsG ?? this.totalCarbsG,
+      totalFatsG: totalFatsG ?? this.totalFatsG,
+      notes: clearNotes ? null : (notes ?? this.notes),
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
   }
 
   factory FoodLog.fromJson(Map<String, dynamic> json) {
@@ -60,26 +74,20 @@ class FoodLog extends Equatable {
     );
   }
 
-  /// Crea una copia con totales actualizados (optimistic update).
-  FoodLog withTotals({
-    required double calories,
-    required double protein,
-    required double carbs,
-    required double fats,
-  }) {
-    return FoodLog(
-      id: id,
-      clientId: clientId,
-      gymId: gymId,
-      logDate: logDate,
-      totalCaloriesKcal: calories,
-      totalProteinG: protein,
-      totalCarbsG: carbs,
-      totalFatsG: fats,
-      notes: notes,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-    );
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'client_id': clientId,
+      'gym_id': gymId,
+      'log_date': logDate.toIso8601String().split('T')[0],
+      'total_calories_kcal': totalCaloriesKcal,
+      'total_protein_g': totalProteinG,
+      'total_carbs_g': totalCarbsG,
+      'total_fats_g': totalFatsG,
+      'notes': notes,
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
+    };
   }
 
   @override
@@ -92,78 +100,5 @@ class FoodLog extends Equatable {
     totalProteinG,
     totalCarbsG,
     totalFatsG,
-    notes,
-    createdAt,
-    updatedAt,
-  ];
-}
-
-/// Item individual dentro del registro diario.
-/// POCO + Equatable (ADR-037). Mapea la tabla `food_log_items`.
-///
-/// Los macros se guardan como SNAPSHOT al momento del registro.
-/// Si el alimento se edita después, el log NO cambia.
-class FoodLogItem extends Equatable {
-  final String id;
-  final String logId;
-  final String foodId;
-  final MealType mealType;
-  final double quantity;
-
-  // --- Snapshot de macros al momento del registro ---
-  final double caloriesKcal;
-  final double proteinG;
-  final double carbsG;
-  final double fatsG;
-
-  /// Nombre del alimento (denormalizado para display sin JOIN).
-  /// Se llena en el datasource con un select anidado.
-  final String? foodName;
-
-  final DateTime createdAt;
-
-  const FoodLogItem({
-    required this.id,
-    required this.logId,
-    required this.foodId,
-    required this.mealType,
-    required this.quantity,
-    this.caloriesKcal = 0,
-    this.proteinG = 0,
-    this.carbsG = 0,
-    this.fatsG = 0,
-    this.foodName,
-    required this.createdAt,
-  });
-
-  factory FoodLogItem.fromJson(Map<String, dynamic> json) {
-    return FoodLogItem(
-      id: json['id'] as String,
-      logId: json['log_id'] as String,
-      foodId: json['food_id'] as String,
-      mealType: MealType.fromDb(json['meal_type'] as String?),
-      quantity: (json['quantity'] as num?)?.toDouble() ?? 0,
-      caloriesKcal: (json['calories_kcal'] as num?)?.toDouble() ?? 0,
-      proteinG: (json['protein_g'] as num?)?.toDouble() ?? 0,
-      carbsG: (json['carbs_g'] as num?)?.toDouble() ?? 0,
-      fatsG: (json['fats_g'] as num?)?.toDouble() ?? 0,
-      foodName: json['food_name'] as String?,
-      createdAt: DateTime.parse(json['created_at'] as String),
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-    id,
-    logId,
-    foodId,
-    mealType,
-    quantity,
-    caloriesKcal,
-    proteinG,
-    carbsG,
-    fatsG,
-    foodName,
-    createdAt,
   ];
 }
