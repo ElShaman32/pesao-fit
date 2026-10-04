@@ -7,12 +7,14 @@ import '../../../../core/l10n/app_strings.dart';
 import '../../../../core/providers/auth_provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
+import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/widgets/pesao_app_bar.dart';
 import '../../../../shared/widgets/pesao_button.dart';
 import '../../../../shared/widgets/pesao_card.dart';
+import '../../../../shared/widgets/pesao_icon_button.dart';
 import '../../../../shared/widgets/pesao_input.dart';
-import '../../../../shared/widgets/pesao_shell.dart';
+import '../../../../shared/widgets/pesao_list_tile.dart';
 import '../../../../shared/widgets/pesao_toast.dart';
 import '../../domain/entities/create_client_request.dart';
 import '../../domain/entities/client_invitation_result.dart';
@@ -56,24 +58,27 @@ class _ClientAddScreenState extends ConsumerState<ClientAddScreen> {
   Widget build(BuildContext context) {
     final l10n = AppStrings.of(context);
 
-    return PesaoShell(
+    return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: PesaoAppBar(title: l10n.clientAddTitle),
-      body: _invitationResult != null
-          ? _SuccessView(
-              result: _invitationResult!,
-              onClose: () => Navigator.of(context).pop(),
-            )
-          : _FormView(
-              nameController: _nameController,
-              emailController: _emailController,
-              passwordController: _passwordController,
-              isSubmitting: _isSubmitting,
-              onSubmit: _submit,
-              nameError: _nameError,
-              emailError: _emailError,
-              passwordError: _passwordError,
-              onRegeneratePassword: _regeneratePassword,
-            ),
+      body: SafeArea(
+        child: _invitationResult != null
+            ? _SuccessView(
+                result: _invitationResult!,
+                onClose: () => Navigator.of(context).pop(),
+              )
+            : _FormView(
+                nameController: _nameController,
+                emailController: _emailController,
+                passwordController: _passwordController,
+                isSubmitting: _isSubmitting,
+                onSubmit: _submit,
+                nameError: _nameError,
+                emailError: _emailError,
+                passwordError: _passwordError,
+                onRegeneratePassword: _regeneratePassword,
+              ),
+      ),
     );
   }
 
@@ -161,6 +166,10 @@ class _ClientAddScreenState extends ConsumerState<ClientAddScreen> {
   }
 }
 
+// ============================================================================
+// FORM VIEW
+// ============================================================================
+
 class _FormView extends StatelessWidget {
   const _FormView({
     required this.nameController,
@@ -194,54 +203,46 @@ class _FormView extends StatelessWidget {
         PesaoInput(
           label: l10n.clientAddNameLabel,
           hint: l10n.clientAddNameHint,
+          prefixIcon: const Icon(Icons.person),
           controller: nameController,
+          errorText: nameError,
         ),
-        if (nameError != null) _InlineError(text: nameError!),
         const SizedBox(height: AppDimens.m),
         PesaoInput(
           label: l10n.clientAddEmailLabel,
           hint: l10n.clientAddEmailHint,
+          prefixIcon: const Icon(Icons.email),
           controller: emailController,
           keyboardType: TextInputType.emailAddress,
+          errorText: emailError,
         ),
-        if (emailError != null) _InlineError(text: emailError!),
         const SizedBox(height: AppDimens.m),
         PesaoInput(
           label: l10n.clientAddPasswordLabel,
           hint: l10n.clientAddPasswordHint,
+          prefixIcon: const Icon(Icons.lock),
           controller: passwordController,
-          suffixIcon: IconButton(
-            icon: const Icon(Icons.refresh_rounded),
-            tooltip: l10n.clientAddPasswordRegenerate,
+          errorText: passwordError,
+          suffixIcon: PesaoIconButton(
+            icon: Icons.refresh_rounded, // TODO: promover a AppIcons.
+            semanticLabel: l10n.clientAddPasswordRegenerate,
             onPressed: onRegeneratePassword,
           ),
         ),
-        if (passwordError != null) _InlineError(text: passwordError!),
         const SizedBox(height: AppDimens.xl),
         PesaoButton(
-          label: isSubmitting ? l10n.clientAddSubmitting : l10n.clientAddSubmit,
-          onPressed: isSubmitting ? null : onSubmit,
+          label: l10n.clientAddSubmit,
+          loading: isSubmitting,
+          onPressed: onSubmit,
         ),
       ],
     );
   }
 }
 
-class _InlineError extends StatelessWidget {
-  const _InlineError({required this.text});
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: AppDimens.xs),
-      child: Text(
-        text,
-        style: AppTypography.bodySmall.copyWith(color: AppColors.errorText),
-      ),
-    );
-  }
-}
+// ============================================================================
+// SUCCESS VIEW
+// ============================================================================
 
 class _SuccessView extends StatelessWidget {
   const _SuccessView({required this.result, required this.onClose});
@@ -257,11 +258,7 @@ class _SuccessView extends StatelessWidget {
       padding: const EdgeInsets.all(AppDimens.l),
       children: [
         const SizedBox(height: AppDimens.l),
-        const Icon(
-          Icons.check_circle_outline_rounded,
-          color: AppColors.success,
-          size: 64,
-        ),
+        const Icon(AppIcons.success, color: AppColors.success, size: 64),
         const SizedBox(height: AppDimens.l),
         Text(
           l10n.clientAddSuccessTitle,
@@ -275,25 +272,15 @@ class _SuccessView extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppDimens.xl),
-        PesaoCard(
-          child: Padding(
-            padding: const EdgeInsets.all(AppDimens.l),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _CredentialRow(
-                  label: l10n.clientAddCredentialEmail,
-                  value: result.email,
-                ),
-                const SizedBox(height: AppDimens.m),
-                _CredentialRow(
-                  label: l10n.clientAddCredentialPassword,
-                  value: result.tempPassword,
-                  showCopyButton: true,
-                ),
-              ],
-            ),
-          ),
+        _CredentialRow(
+          label: l10n.clientAddCredentialEmail,
+          value: result.email,
+        ),
+        const SizedBox(height: AppDimens.s),
+        _CredentialRow(
+          label: l10n.clientAddCredentialPassword,
+          value: result.tempPassword,
+          showCopyButton: true,
         ),
         const SizedBox(height: AppDimens.xl),
         PesaoButton(label: l10n.clientAddDone, onPressed: onClose),
@@ -301,6 +288,10 @@ class _SuccessView extends StatelessWidget {
     );
   }
 }
+
+// ============================================================================
+// CREDENTIAL ROW
+// ============================================================================
 
 class _CredentialRow extends StatelessWidget {
   const _CredentialRow({
@@ -317,45 +308,25 @@ class _CredentialRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppStrings.of(context);
 
-    return Row(
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: AppTypography.label.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                value,
-                style: AppTypography.body.copyWith(
-                  color: AppColors.textPrimary,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-        ),
-        if (showCopyButton)
-          IconButton(
-            icon: const Icon(Icons.copy_rounded),
-            color: AppColors.primary,
-            tooltip: l10n.clientAddCopyTooltip,
-            onPressed: () {
-              Clipboard.setData(ClipboardData(text: value));
-              showPesaoToast(
-                context,
-                message: l10n.clientAddCopied,
-                semanticLabel: l10n.clientAddCopiedSemantics,
-                variant: PesaoToastVariant.success,
-              );
-            },
-          ),
-      ],
+    return PesaoListTile(
+      title: value,
+      subtitle: label,
+      trailing: showCopyButton
+          ? PesaoIconButton(
+              icon: Icons.copy_rounded, // TODO: promover a AppIcons.
+              iconColor: AppColors.primary,
+              semanticLabel: l10n.clientAddCopyTooltip,
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: value));
+                showPesaoToast(
+                  context,
+                  message: l10n.clientAddCopied,
+                  semanticLabel: l10n.clientAddCopiedSemantics,
+                  variant: PesaoToastVariant.success,
+                );
+              },
+            )
+          : null,
     );
   }
 }

@@ -213,6 +213,7 @@ class _TrainingPlanFormScreenState
           PesaoInput(
             label: l10n.trainingPlanFormNameLabel,
             hint: l10n.trainingPlanFormNameHint,
+            prefixIcon: const Icon(Icons.assignment),
             controller: _nameController,
           ),
           if (_nameError != null)
@@ -229,6 +230,7 @@ class _TrainingPlanFormScreenState
           PesaoInput(
             label: l10n.trainingPlanFormDescriptionLabel,
             hint: l10n.trainingPlanFormDescriptionHint,
+            prefixIcon: const Icon(Icons.event_note_outlined),
             controller: _descriptionController,
           ),
           const SizedBox(height: AppDimens.l),

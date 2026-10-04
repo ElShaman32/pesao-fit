@@ -206,6 +206,7 @@ class _FormView extends StatelessWidget {
         PesaoInput(
           label: l10n.staffAddNameLabel,
           hint: l10n.staffAddNameHint,
+          prefixIcon: const Icon(Icons.person),
           controller: nameController,
         ),
         if (nameError != null) _InlineError(text: nameError!),
@@ -213,6 +214,7 @@ class _FormView extends StatelessWidget {
         PesaoInput(
           label: l10n.staffAddEmailLabel,
           hint: l10n.staffAddEmailHint,
+          prefixIcon: const Icon(Icons.email),
           controller: emailController,
           keyboardType: TextInputType.emailAddress,
         ),
@@ -246,6 +248,7 @@ class _FormView extends StatelessWidget {
         PesaoInput(
           label: l10n.staffAddPasswordLabel,
           hint: l10n.staffAddPasswordHint,
+          prefixIcon: const Icon(Icons.lock),
           controller: passwordController,
           suffixIcon: IconButton(
             icon: const Icon(Icons.refresh_rounded),

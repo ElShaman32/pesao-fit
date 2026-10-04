@@ -26,49 +26,44 @@ class ClientLimitCard extends StatelessWidget {
     final isNearLimit = !isUnlimited && progress >= 0.8;
 
     return PesaoCard(
-      child: Padding(
-        padding: const EdgeInsets.all(AppDimens.l),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.clientsLimitTitle,
+            style: AppTypography.title.copyWith(color: AppColors.textPrimary),
+          ),
+          const SizedBox(height: AppDimens.m),
+          if (isUnlimited)
             Text(
-              l10n.clientsLimitTitle,
-              style: AppTypography.title.copyWith(
-                color: AppColors.textPrimary,
+              l10n.clientsLimitUnlimited,
+              style: AppTypography.body.copyWith(
+                color: AppColors.textSecondary,
               ),
-            ),
-            const SizedBox(height: AppDimens.m),
-            if (isUnlimited)
-              Text(
-                l10n.clientsLimitUnlimited,
-                style: AppTypography.body.copyWith(
-                  color: AppColors.textSecondary,
+            )
+          else ...[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '$clientCount / $clientLimit',
+                  style: AppTypography.numberM.copyWith(
+                    color: AppColors.textPrimary,
+                  ),
                 ),
-              )
-            else ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                if (isNearLimit)
                   Text(
-                    '$clientCount / $clientLimit',
-                    style: AppTypography.numberM.copyWith(
-                      color: AppColors.textPrimary,
+                    l10n.clientsLimitNearLimit,
+                    style: AppTypography.bodySmall.copyWith(
+                      color: AppColors.warning,
                     ),
                   ),
-                  if (isNearLimit)
-                    Text(
-                      l10n.clientsLimitNearLimit,
-                      style: AppTypography.bodySmall.copyWith(
-                        color: AppColors.warning,
-                      ),
-                    ),
-                ],
-              ),
-              const SizedBox(height: AppDimens.s),
-              PesaoProgress(value: progress),
-            ],
+              ],
+            ),
+            const SizedBox(height: AppDimens.s),
+            PesaoProgress(value: progress),
           ],
-        ),
+        ],
       ),
     );
   }

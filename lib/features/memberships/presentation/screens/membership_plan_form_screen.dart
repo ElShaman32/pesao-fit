@@ -82,6 +82,7 @@ class _MembershipPlanFormScreenState
           PesaoInput(
             label: l10n.planFormNameLabel,
             hint: l10n.planFormNameHint,
+            prefixIcon: const Icon(Icons.checklist_rounded),
             controller: _nameController,
           ),
           if (_nameError != null) _ErrorText(text: _nameError!),
@@ -91,6 +92,7 @@ class _MembershipPlanFormScreenState
           PesaoInput(
             label: l10n.planFormDescriptionLabel,
             hint: l10n.planFormDescriptionHint,
+            prefixIcon: const Icon(Icons.event_note_outlined),
             controller: _descriptionController,
           ),
           const SizedBox(height: AppDimens.m),
@@ -99,6 +101,7 @@ class _MembershipPlanFormScreenState
           PesaoInput(
             label: l10n.planFormPriceLabel,
             hint: l10n.planFormPriceHint,
+            prefixIcon: const Icon(Icons.attach_money_rounded),
             controller: _priceController,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: [
@@ -112,6 +115,7 @@ class _MembershipPlanFormScreenState
           PesaoInput(
             label: l10n.planFormDurationLabel,
             hint: l10n.planFormDurationHint,
+            prefixIcon: const Icon(Icons.schedule),
             controller: _durationController,
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
