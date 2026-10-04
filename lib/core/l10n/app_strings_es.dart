@@ -33,9 +33,6 @@ class AppStringsEs extends AppStrings {
   String get tabGyms => 'Gimnasios';
 
   @override
-  String get tabPlans => 'Planes';
-
-  @override
   String get commonRetry => 'Reintentar';
 
   @override
@@ -1498,9 +1495,6 @@ class AppStringsEs extends AppStrings {
   String get ownerClientNoPlan => 'Sin plan asignado';
 
   @override
-  String get fabCreatePlan => 'Nuevo plan';
-
-  @override
   String get exercisesScreenTitle => 'Ejercicios';
 
   @override
@@ -1917,6 +1911,9 @@ class AppStringsEs extends AppStrings {
   String get daySunday => 'Domingo';
 
   @override
+  String get fabCreatePlan => 'Nuevo plan';
+
+  @override
   String get workoutScreenTitle => 'Entreno en curso';
 
   @override
@@ -2235,6 +2232,15 @@ class AppStringsEs extends AppStrings {
   String get foodDeleteSuccess => 'Alimento eliminado ✅';
 
   @override
+  String get nutritionPlanEdit => 'Editar plan';
+
+  @override
+  String get nutritionPlanDays => 'Duración (días)';
+
+  @override
+  String get nutritionPlanNotes => 'Notas (opcional)';
+
+  @override
   String nutritionistClientsCount(int count) {
     return '$count clientes sin plan nutricional';
   }
@@ -2250,6 +2256,67 @@ class AppStringsEs extends AppStrings {
 
   @override
   String get nutritionistStatsFoods => 'Alimentos';
+
+  @override
+  String get nutriFabNewPlan => 'Nuevo plan';
+
+  @override
+  String get tabPlans => 'Planes';
+
+  @override
+  String get nutritionistPlansTitle => 'Planes nutricionales';
+
+  @override
+  String get nutritionistPlansEmpty =>
+      'Aún no has creado ningún plan nutricional.';
+
+  @override
+  String get nutritionistTemplatesTitle => 'Plantillas de comida';
+
+  @override
+  String get foodCatalogTitle => 'Catálogo de alimentos';
+
+  @override
+  String get foodCatalogEmpty =>
+      'No hay alimentos registrados. Crea el primero.';
+
+  @override
+  String get foodFormOptionalSection => 'Tal Vez';
+
+  @override
+  String get foodSearchPlaceholder => 'Buscar alimento...';
+
+  @override
+  String get mealTemplateFormTitle => 'Plantilla de comida';
+
+  @override
+  String get nutritionPlanFormTitle => 'Plan nutricional';
+
+  @override
+  String get selectClient => 'Seleccionar cliente';
+
+  @override
+  String get planDuration => 'Duración (días)';
+
+  @override
+  String get targetCalories => 'Calorías objetivo';
+
+  @override
+  String get targetProtein => 'Proteína (g)';
+
+  @override
+  String get targetCarbs => 'Carbohidratos (g)';
+
+  @override
+  String get targetFats => 'Grasas (g)';
+
+  @override
+  String get addMealTemplate => 'Agregar comida';
+
+  @override
+  String dayNumber(int number) {
+    return 'Día $number';
+  }
 }
 
 /// The translations for Spanish Castilian, as used in Venezuela (`es_VE`).
@@ -2281,9 +2348,6 @@ class AppStringsEsVe extends AppStringsEs {
   String get tabGyms => 'Gimnasios';
 
   @override
-  String get tabPlans => 'Planes';
-
-  @override
   String get commonRetry => 'Reintentar';
 
   @override
@@ -3746,9 +3810,6 @@ class AppStringsEsVe extends AppStringsEs {
   String get ownerClientNoPlan => 'Sin plan asignado';
 
   @override
-  String get fabCreatePlan => 'Nuevo plan';
-
-  @override
   String get exercisesScreenTitle => 'Ejercicios';
 
   @override
@@ -4165,6 +4226,9 @@ class AppStringsEsVe extends AppStringsEs {
   String get daySunday => 'Domingo';
 
   @override
+  String get fabCreatePlan => 'Nuevo plan';
+
+  @override
   String get workoutScreenTitle => 'Entreno en curso';
 
   @override
@@ -4483,6 +4547,15 @@ class AppStringsEsVe extends AppStringsEs {
   String get foodDeleteSuccess => 'Alimento eliminado ✅';
 
   @override
+  String get nutritionPlanEdit => 'Editar plan';
+
+  @override
+  String get nutritionPlanDays => 'Duración (días)';
+
+  @override
+  String get nutritionPlanNotes => 'Notas (opcional)';
+
+  @override
   String nutritionistClientsCount(int count) {
     return '$count clientes sin plan nutricional';
   }
@@ -4498,4 +4571,65 @@ class AppStringsEsVe extends AppStringsEs {
 
   @override
   String get nutritionistStatsFoods => 'Alimentos';
+
+  @override
+  String get nutriFabNewPlan => 'Nuevo plan';
+
+  @override
+  String get tabPlans => 'Planes';
+
+  @override
+  String get nutritionistPlansTitle => 'Planes nutricionales';
+
+  @override
+  String get nutritionistPlansEmpty =>
+      'Aún no has creado ningún plan nutricional.';
+
+  @override
+  String get nutritionistTemplatesTitle => 'Plantillas de comida';
+
+  @override
+  String get foodCatalogTitle => 'Catálogo de alimentos';
+
+  @override
+  String get foodCatalogEmpty =>
+      'No hay alimentos registrados. Crea el primero.';
+
+  @override
+  String get foodFormOptionalSection => 'Tal Vez';
+
+  @override
+  String get foodSearchPlaceholder => 'Buscar alimento...';
+
+  @override
+  String get mealTemplateFormTitle => 'Plantilla de comida';
+
+  @override
+  String get nutritionPlanFormTitle => 'Plan nutricional';
+
+  @override
+  String get selectClient => 'Seleccionar cliente';
+
+  @override
+  String get planDuration => 'Duración (días)';
+
+  @override
+  String get targetCalories => 'Calorías objetivo';
+
+  @override
+  String get targetProtein => 'Proteína (g)';
+
+  @override
+  String get targetCarbs => 'Carbohidratos (g)';
+
+  @override
+  String get targetFats => 'Grasas (g)';
+
+  @override
+  String get addMealTemplate => 'Agregar comida';
+
+  @override
+  String dayNumber(int number) {
+    return 'Día $number';
+  }
 }

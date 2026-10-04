@@ -33,6 +33,7 @@ abstract final class AppIcons {
   static const IconData search = Icons.search_rounded;
   static const IconData chevronRight = Icons.chevron_right_rounded;
   static const IconData chevronLeft = Icons.chevron_left_rounded;
+  static const IconData chevronDown = Icons.keyboard_arrow_down;
 
   // --- Estados / feedback ---
   static const IconData success = Icons.check_circle_rounded;

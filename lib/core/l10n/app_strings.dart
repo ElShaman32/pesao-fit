@@ -145,12 +145,6 @@ abstract class AppStrings {
   /// **'Gimnasios'**
   String get tabGyms;
 
-  /// Tab de planes (nutricionista).
-  ///
-  /// In es_VE, this message translates to:
-  /// **'Planes'**
-  String get tabPlans;
-
   /// Botón para volver a intentar.
   ///
   /// In es_VE, this message translates to:
@@ -2875,12 +2869,6 @@ abstract class AppStrings {
   /// **'Sin plan asignado'**
   String get ownerClientNoPlan;
 
-  /// No description provided for @fabCreatePlan.
-  ///
-  /// In es_VE, this message translates to:
-  /// **'Nuevo plan'**
-  String get fabCreatePlan;
-
   /// No description provided for @exercisesScreenTitle.
   ///
   /// In es_VE, this message translates to:
@@ -3661,6 +3649,12 @@ abstract class AppStrings {
   /// **'Domingo'**
   String get daySunday;
 
+  /// No description provided for @fabCreatePlan.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nuevo plan'**
+  String get fabCreatePlan;
+
   /// No description provided for @workoutScreenTitle.
   ///
   /// In es_VE, this message translates to:
@@ -4231,6 +4225,24 @@ abstract class AppStrings {
   /// **'Alimento eliminado ✅'**
   String get foodDeleteSuccess;
 
+  /// No description provided for @nutritionPlanEdit.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Editar plan'**
+  String get nutritionPlanEdit;
+
+  /// No description provided for @nutritionPlanDays.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Duración (días)'**
+  String get nutritionPlanDays;
+
+  /// No description provided for @nutritionPlanNotes.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Notas (opcional)'**
+  String get nutritionPlanNotes;
+
   /// No description provided for @nutritionistClientsCount.
   ///
   /// In es_VE, this message translates to:
@@ -4260,6 +4272,120 @@ abstract class AppStrings {
   /// In es_VE, this message translates to:
   /// **'Alimentos'**
   String get nutritionistStatsFoods;
+
+  /// Label del FAB contextual del nutricionista
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nuevo plan'**
+  String get nutriFabNewPlan;
+
+  /// Label del tab Planes en el shell del nutricionista
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Planes'**
+  String get tabPlans;
+
+  /// Título de la lista de planes del nutricionista
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Planes nutricionales'**
+  String get nutritionistPlansTitle;
+
+  /// Mensaje cuando no hay planes
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Aún no has creado ningún plan nutricional.'**
+  String get nutritionistPlansEmpty;
+
+  /// Título de la lista de plantillas
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plantillas de comida'**
+  String get nutritionistTemplatesTitle;
+
+  /// Título del catálogo de alimentos
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Catálogo de alimentos'**
+  String get foodCatalogTitle;
+
+  /// Mensaje cuando el catálogo está vacío
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No hay alimentos registrados. Crea el primero.'**
+  String get foodCatalogEmpty;
+
+  /// cuestionario opcional
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tal Vez'**
+  String get foodFormOptionalSection;
+
+  /// Placeholder del buscador de alimentos
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Buscar alimento...'**
+  String get foodSearchPlaceholder;
+
+  /// Título del formulario de plantilla
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plantilla de comida'**
+  String get mealTemplateFormTitle;
+
+  /// Título del formulario de plan
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plan nutricional'**
+  String get nutritionPlanFormTitle;
+
+  /// Label para seleccionar cliente en formulario de plan
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Seleccionar cliente'**
+  String get selectClient;
+
+  /// Label del campo duración del plan
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Duración (días)'**
+  String get planDuration;
+
+  /// Label del campo calorías objetivo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Calorías objetivo'**
+  String get targetCalories;
+
+  /// Label del campo proteína objetivo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Proteína (g)'**
+  String get targetProtein;
+
+  /// Label del campo carbohidratos objetivo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Carbohidratos (g)'**
+  String get targetCarbs;
+
+  /// Label del campo grasas objetivo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Grasas (g)'**
+  String get targetFats;
+
+  /// Botón para agregar comida al plan
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Agregar comida'**
+  String get addMealTemplate;
+
+  /// Label del día en el planificador
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Día {number}'**
+  String dayNumber(int number);
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {

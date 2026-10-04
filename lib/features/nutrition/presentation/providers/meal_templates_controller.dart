@@ -184,17 +184,20 @@ class MealTemplatesController extends _$MealTemplatesController {
   }
 
   /// Agrega un alimento a la plantilla seleccionada.
+  /// Si se pasa [templateId] explícitamente, se usa ese.
+  /// Si no, se usa el de la plantilla actualmente seleccionada.
   Future<bool> addFoodToTemplate({
+    String? templateId,
     required String foodId,
     required double quantity,
     int orderIndex = 0,
     String? notes,
   }) async {
-    final templateId = state.selectedTemplate?.id;
-    if (templateId == null) return false;
+    final resolvedTemplateId = templateId ?? state.selectedTemplate?.id;
+    if (resolvedTemplateId == null) return false;
 
     final result = await _repository.addFoodToTemplate(
-      templateId: templateId,
+      templateId: resolvedTemplateId,
       foodId: foodId,
       quantity: quantity,
       orderIndex: orderIndex,
@@ -204,7 +207,7 @@ class MealTemplatesController extends _$MealTemplatesController {
       idle: () => false,
       loading: () => false,
       success: (_) {
-        loadDetail(templateId);
+        loadDetail(resolvedTemplateId);
         return true;
       },
       failure: (error) {

@@ -32,10 +32,6 @@
   "@tabGyms": {
     "description": "Tab de gimnasios (superadmin)."
   },
-  "tabPlans": "Planes",
-  "@tabPlans": {
-    "description": "Tab de planes (nutricionista)."
-  },
   "commonRetry": "Reintentar",
   "@commonRetry": {
     "description": "Botón para volver a intentar."
@@ -1187,7 +1183,6 @@
   "clientAddNoGym": "No tienes un gimnasio asignado.",
   "clientAddNoGymSemantics": "Error de gimnasio asignado",
   "clientAddLimitReached": "Ya llegaste al límite de clientes de tu plan. Actualiza a Hierro para agregar más.",
-  "fabAddClient": "Agregar cliente",
   "paymentsScreenTitle": "Pagos",
   "paymentsFilterPending": "Pendientes",
   "paymentsFilterVerified": "Verificados",
@@ -1314,7 +1309,6 @@
   "uploadPaymentCreditLabel": "Saldo a favor",
   "ownerClientPlanSection": "Plan del cliente",
   "ownerClientNoPlan": "Sin plan asignado",
-  "fabCreatePlan": "Crear plan",
   "exercisesScreenTitle": "Ejercicios",
   "exercisesSearchHint": "Buscar ejercicio...",
   "exercisesEmptyTitle": "Aún no hay ejercicios",
@@ -1593,6 +1587,10 @@
   "foodDeleteConfirmTitle": "¿Eliminar este alimento?",
   "foodDeleteConfirmBody": "El alimento se desactiva pero se mantiene en los registros existentes.",
   "foodDeleteSuccess": "Alimento eliminado ✅",
+  "nutritionPlanEdit": "Editar plan",
+  "nutritionPlanName": "Nombre del plan",
+  "nutritionPlanDays": "Duración (días)",
+  "nutritionPlanNotes": "Notas (opcional)",
   "nutritionistClientsCount": "{count} clientes sin plan nutricional",
   "@nutritionistClientsCount": {
     "placeholders": {
@@ -1602,5 +1600,84 @@
   "nutritionistDashboardTitle": "Inicio",
   "nutritionistStatsClients": "Clientes",
   "nutritionistStatsPlans": "Planes",
-  "nutritionistStatsFoods": "Alimentos"
+  "nutritionistStatsFoods": "Alimentos",
+  "nutriFabNewPlan": "Nuevo plan",
+  "@nutriFabNewPlan": {
+    "description": "Label del FAB contextual del nutricionista"
+  },
+  "tabPlans": "Planes",
+  "@tabPlans": {
+    "description": "Label del tab Planes en el shell del nutricionista"
+  },
+  "nutritionistPlansTitle": "Planes nutricionales",
+  "@nutritionistPlansTitle": {
+    "description": "Título de la lista de planes del nutricionista"
+  },
+  "nutritionistPlansEmpty": "Aún no has creado ningún plan nutricional.",
+  "@nutritionistPlansEmpty": {
+    "description": "Mensaje cuando no hay planes"
+  },
+  "nutritionistTemplatesTitle": "Plantillas de comida",
+  "@nutritionistTemplatesTitle": {
+    "description": "Título de la lista de plantillas"
+  },
+  "foodCatalogTitle": "Catálogo de alimentos",
+  "@foodCatalogTitle": {
+    "description": "Título del catálogo de alimentos"
+  },
+  "foodCatalogEmpty": "No hay alimentos registrados. Crea el primero.",
+  "@foodCatalogEmpty": {
+    "description": "Mensaje cuando el catálogo está vacío"
+  },
+  "foodFormOptionalSection": "Tal Vez",
+  "@foodFormOptionalSection": {
+    "description": "cuestionario opcional"
+  },
+  "foodSearchPlaceholder": "Buscar alimento...",
+  "@foodSearchPlaceholder": {
+    "description": "Placeholder del buscador de alimentos"
+  },
+  "mealTemplateFormTitle": "Plantilla de comida",
+  "@mealTemplateFormTitle": {
+    "description": "Título del formulario de plantilla"
+  },
+  "nutritionPlanFormTitle": "Plan nutricional",
+  "@nutritionPlanFormTitle": {
+    "description": "Título del formulario de plan"
+  },
+  "selectClient": "Seleccionar cliente",
+  "@selectClient": {
+    "description": "Label para seleccionar cliente en formulario de plan"
+  },
+  "planDuration": "Duración (días)",
+  "@planDuration": {
+    "description": "Label del campo duración del plan"
+  },
+  "targetCalories": "Calorías objetivo",
+  "@targetCalories": {
+    "description": "Label del campo calorías objetivo"
+  },
+  "targetProtein": "Proteína (g)",
+  "@targetProtein": {
+    "description": "Label del campo proteína objetivo"
+  },
+  "targetCarbs": "Carbohidratos (g)",
+  "@targetCarbs": {
+    "description": "Label del campo carbohidratos objetivo"
+  },
+  "targetFats": "Grasas (g)",
+  "@targetFats": {
+    "description": "Label del campo grasas objetivo"
+  },
+  "addMealTemplate": "Agregar comida",
+  "@addMealTemplate": {
+    "description": "Botón para agregar comida al plan"
+  },
+  "dayNumber": "Día {number}",
+  "@dayNumber": {
+    "description": "Label del día en el planificador",
+    "placeholders": {
+      "number": { "type": "int" }
+    }
+  }
 }

@@ -45,7 +45,7 @@ final class NutritionPlansControllerProvider
 }
 
 String _$nutritionPlansControllerHash() =>
-    r'f970373425134daab70071acfe1f87bd9507b1ee';
+    r'fd00f201963ccb68a73566b3d825d3c103f7027f';
 
 /// Controlador de planes nutricionales del nutricionista.
 

@@ -14,6 +14,7 @@ part 'nutrition_plans_controller.g.dart';
 class NutritionPlansState {
   const NutritionPlansState({
     this.plans = const [],
+    this.clientPlans = const [], // ← NUEVO
     this.selectedPlanDetail,
     this.isLoading = false,
     this.isLoadingDetail = false,
@@ -27,12 +28,14 @@ class NutritionPlansState {
   final bool isLoadingDetail;
   final bool isSaving;
   final String? error;
+  final List<NutritionPlan> clientPlans;
 
   bool get hasData => plans.isNotEmpty && error == null;
   bool get isEmpty => plans.isEmpty && error == null;
 
   NutritionPlansState copyWith({
     List<NutritionPlan>? plans,
+    List<NutritionPlan>? clientPlans, // ← NUEVO
     NutritionPlanWithDays? selectedPlanDetail,
     bool? isLoading,
     bool? isLoadingDetail,
@@ -43,6 +46,7 @@ class NutritionPlansState {
   }) {
     return NutritionPlansState(
       plans: plans ?? this.plans,
+      clientPlans: clientPlans ?? this.clientPlans, // ← NUEVO
       selectedPlanDetail: clearDetail
           ? null
           : (selectedPlanDetail ?? this.selectedPlanDetail),
@@ -345,5 +349,26 @@ class NutritionPlansController extends _$NutritionPlansController {
   /// Limpia el detalle seleccionado.
   void clearDetail() {
     state = state.copyWith(clearDetail: true);
+  }
+
+  /// Carga los planes activos de un cliente específico.
+  /// Usado en NutritionistClientDetailScreen.
+  Future<void> loadClientPlans(String clientId) async {
+    final result = await _repository.fetchClientPlans(clientId);
+    result.when(
+      idle: () {},
+      loading: () {},
+      success: (plans) {
+        state = state.copyWith(clientPlans: plans);
+      },
+      failure: (error) {
+        state = state.copyWith(error: error.code);
+      },
+    );
+  }
+
+  /// Limpia los planes del cliente al cambiar de cliente.
+  void clearClientPlans() {
+    state = state.copyWith(clientPlans: []);
   }
 }
