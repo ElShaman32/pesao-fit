@@ -8,13 +8,18 @@ import '../../../../core/providers/connectivity_provider.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
+import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../shared/widgets/error_state.dart';
 import '../../../../shared/widgets/offline_banner.dart';
 import '../../../../shared/widgets/pesao_avatar.dart';
 import '../../../../shared/widgets/pesao_button.dart';
 import '../../../../shared/widgets/pesao_card.dart';
+import '../../../../shared/widgets/pesao_icon_button.dart';
+import '../../../../shared/widgets/pesao_list_tile.dart';
 import '../../../../shared/widgets/pesao_stat_card.dart';
 import '../../../../shared/widgets/section_header.dart';
+import '../../../../shared/widgets/skeleton_loader.dart';
 import '../../../gym/presentation/providers/staff_providers.dart';
 import '../../../memberships/presentation/providers/membership_plans_controller.dart';
 import '../../domain/entities/owner_dashboard_stats.dart';
@@ -22,8 +27,8 @@ import '../providers/owner_dashboard_controller.dart';
 
 /// Dashboard del dueño (tab Inicio del shell).
 ///
-/// design-system.md §10: avatar+saludo, 3 StatCards, PrimaryCard,
-/// Resumen de Mi Equipo, sección "Últimos clientes".
+/// design-system.md §10: avatar+saludo, 3 StatCards tappables,
+/// PrimaryCard, Resumen de Mi Equipo, sección "Últimos clientes".
 class OwnerHomeScreen extends ConsumerWidget {
   const OwnerHomeScreen({super.key});
 
@@ -32,8 +37,8 @@ class OwnerHomeScreen extends ConsumerWidget {
     final l10n = AppStrings.of(context);
     final state = ref.watch(ownerDashboardControllerProvider);
     final controller = ref.read(ownerDashboardControllerProvider.notifier);
-    final connectivity = ref.watch(connectivityProvider);
-    final isOnline = connectivity is bool ? connectivity : true;
+    final connectivityAsync = ref.watch(connectivityProvider);
+    final isOnline = connectivityAsync.value ?? true;
     final greeting = _greetingForHour(l10n);
 
     return Scaffold(
@@ -46,7 +51,7 @@ class OwnerHomeScreen extends ConsumerWidget {
           child: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
-              // AppBar
+              // Fila superior: avatar + saludo + campana.
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(
@@ -71,21 +76,20 @@ class OwnerHomeScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.notifications_outlined,
-                          color: AppColors.textSecondary,
-                        ),
-                        tooltip: l10n.notificationsLabel,
-                        onPressed: () {},
+                      PesaoIconButton(
+                        icon: AppIcons.notificationsOutline,
+                        semanticLabel: l10n.notificationsLabel,
+                        onPressed: () {
+                          // Placeholder: notificaciones en F4.
+                        },
                       ),
                     ],
                   ),
                 ),
               ),
 
-              // OfflineBanner
-              if (isOnline == false)
+              // OfflineBanner.
+              if (!isOnline)
                 const SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.all(AppDimens.l),
@@ -93,14 +97,17 @@ class OwnerHomeScreen extends ConsumerWidget {
                   ),
                 ),
 
-              // Contenido según estado
+              // Contenido según estado.
               if (state.isLoading && state.stats == null)
                 const _OwnerSkeletonSliver()
               else if (state.error != null && state.stats == null)
-                _OwnerErrorSliver(
-                  title: l10n.ownerDashErrorTitle,
-                  body: l10n.ownerDashErrorBody,
-                  onRetry: controller.load,
+                SliverFillRemaining(
+                  child: ErrorState(
+                    title: l10n.ownerDashErrorTitle,
+                    body: l10n.ownerDashErrorBody,
+                    actionLabel: l10n.commonRetry,
+                    onRetry: controller.load,
+                  ),
                 )
               else if (state.hasData)
                 _OwnerSuccessSliver(stats: state.stats!),
@@ -120,101 +127,43 @@ class OwnerHomeScreen extends ConsumerWidget {
   }
 }
 
+// ============================================================================
+// SKELETON
+// ============================================================================
+
 class _OwnerSkeletonSliver extends StatelessWidget {
   const _OwnerSkeletonSliver();
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.all(AppDimens.l),
-      sliver: SliverList(
-        delegate: SliverChildListDelegate([
-          const Row(
-            children: [
-              Expanded(child: _SkeletonBox(height: 110)),
-              SizedBox(width: AppDimens.s),
-              Expanded(child: _SkeletonBox(height: 110)),
-              SizedBox(width: AppDimens.s),
-              Expanded(child: _SkeletonBox(height: 110)),
-            ],
-          ),
-          const SizedBox(height: AppDimens.xl),
-          const _SkeletonBox(height: 160),
-          const SizedBox(height: AppDimens.xl),
-          const _SkeletonBox(height: 80),
-          const SizedBox(height: AppDimens.xl),
-          const _SkeletonBox(height: 80),
-          const SizedBox(height: AppDimens.xl),
-          const _SkeletonBox(height: 24),
-          const SizedBox(height: AppDimens.m),
-          const _SkeletonBox(height: 72),
-          const SizedBox(height: AppDimens.s),
-          const _SkeletonBox(height: 72),
-        ]),
-      ),
-    );
-  }
-}
-
-class _SkeletonBox extends StatelessWidget {
-  const _SkeletonBox({required this.height});
-  final double height;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppDimens.cardBorderRadius,
-        border: Border.all(color: AppColors.outline),
-      ),
-    );
-  }
-}
-
-class _OwnerErrorSliver extends StatelessWidget {
-  const _OwnerErrorSliver({
-    required this.title,
-    required this.body,
-    required this.onRetry,
-  });
-  final String title;
-  final String body;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverFillRemaining(
-      child: Center(
+    return const SliverToBoxAdapter(
+      child: SkeletonLoader(
         child: Padding(
-          padding: const EdgeInsets.all(AppDimens.xxl),
+          padding: EdgeInsets.all(AppDimens.l),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Icon(Icons.error_outline, color: AppColors.error, size: 48),
-              const SizedBox(height: AppDimens.m),
-              Text(
-                title,
-                style: AppTypography.title.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-                textAlign: TextAlign.center,
+              Row(
+                children: [
+                  Expanded(child: SkeletonBox(height: 110)),
+                  SizedBox(width: AppDimens.s),
+                  Expanded(child: SkeletonBox(height: 110)),
+                  SizedBox(width: AppDimens.s),
+                  Expanded(child: SkeletonBox(height: 110)),
+                ],
               ),
-              const SizedBox(height: AppDimens.s),
-              Text(
-                body,
-                style: AppTypography.body.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: AppDimens.l),
-              PesaoButton(
-                label: AppStrings.of(context).commonRetry,
-                isExpanded: false,
-                onPressed: onRetry,
-              ),
+              SizedBox(height: AppDimens.xl),
+              SkeletonBox(height: 160),
+              SizedBox(height: AppDimens.xl),
+              SkeletonBox(height: 80),
+              SizedBox(height: AppDimens.xl),
+              SkeletonBox(height: 80),
+              SizedBox(height: AppDimens.xl),
+              SkeletonBox(height: 24),
+              SizedBox(height: AppDimens.m),
+              SkeletonBox(height: 72),
+              SizedBox(height: AppDimens.s),
+              SkeletonBox(height: 72),
             ],
           ),
         ),
@@ -222,6 +171,10 @@ class _OwnerErrorSliver extends StatelessWidget {
     );
   }
 }
+
+// ============================================================================
+// SUCCESS
+// ============================================================================
 
 class _OwnerSuccessSliver extends StatelessWidget {
   const _OwnerSuccessSliver({required this.stats});
@@ -235,7 +188,7 @@ class _OwnerSuccessSliver extends StatelessWidget {
       padding: const EdgeInsets.all(AppDimens.l),
       sliver: SliverList(
         delegate: SliverChildListDelegate([
-          // StatCards
+          // StatCards tappables.
           Row(
             children: [
               Expanded(
@@ -243,7 +196,8 @@ class _OwnerSuccessSliver extends StatelessWidget {
                   label: l10n.ownerDashStatClients,
                   value: stats.activeClientsCount.toString(),
                   sub: l10n.ownerDashStatClientsSub,
-                  icon: Icons.people_rounded,
+                  icon: AppIcons.clients,
+                  onTap: () => context.go(RouteNames.ownerClients),
                 ),
               ),
               const SizedBox(width: AppDimens.s),
@@ -252,7 +206,8 @@ class _OwnerSuccessSliver extends StatelessWidget {
                   label: l10n.ownerDashStatPayments,
                   value: stats.pendingPaymentsCount.toString(),
                   sub: l10n.ownerDashStatPaymentsSub,
-                  icon: Icons.receipt_long_rounded,
+                  icon: AppIcons.payments,
+                  onTap: () => context.go(RouteNames.ownerPayments),
                 ),
               ),
               const SizedBox(width: AppDimens.s),
@@ -261,26 +216,27 @@ class _OwnerSuccessSliver extends StatelessWidget {
                   label: l10n.ownerDashStatIncome,
                   value: stats.monthlyIncomeBs.toStringAsFixed(0),
                   sub: l10n.ownerDashStatIncomeSub,
-                  icon: Icons.payments_rounded,
+                  icon: AppIcons.money,
+                  // Sin onTap: no hay pantalla de ingresos detallada.
                 ),
               ),
             ],
           ),
           const SizedBox(height: AppDimens.xl),
 
-          // PrimaryCard
+          // PrimaryCard.
           _OwnerPrimaryCard(stats: stats),
           const SizedBox(height: AppDimens.xl),
 
-          // === NUEVO: Resumen de Mi Equipo ===
+          // Resumen de Mi Equipo.
           const _OwnerStaffSummaryCard(),
           const SizedBox(height: AppDimens.xl),
 
-          // === NUEVO: Resumen de Planes del Gimnasio ===
+          // Resumen de Planes del Gimnasio.
           const _OwnerPlansSummaryCard(),
           const SizedBox(height: AppDimens.xl),
 
-          // Sección últimos clientes
+          // Últimos clientes.
           SectionHeader(
             title: l10n.ownerDashRecentSection,
             onSeeAll: () => context.go(RouteNames.ownerClients),
@@ -304,6 +260,10 @@ class _OwnerSuccessSliver extends StatelessWidget {
   }
 }
 
+// ============================================================================
+// PRIMARY CARD
+// ============================================================================
+
 class _OwnerPrimaryCard extends StatelessWidget {
   const _OwnerPrimaryCard({required this.stats});
   final OwnerDashboardStats stats;
@@ -313,30 +273,15 @@ class _OwnerPrimaryCard extends StatelessWidget {
     final l10n = AppStrings.of(context);
     final hasPending = stats.hasPendingPayments;
 
-    return Container(
-      padding: const EdgeInsets.all(AppDimens.l),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppDimens.cardBorderRadius,
-        border: Border.all(color: AppColors.outline),
-        boxShadow: hasPending
-            ? [
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.2),
-                  blurRadius: 24,
-                ),
-              ]
-            : null,
-      ),
+    return PesaoCard(
+      glow: hasPending,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Icon(
-                hasPending
-                    ? Icons.receipt_long_rounded
-                    : Icons.check_circle_outline_rounded,
+                hasPending ? AppIcons.payments : AppIcons.success,
                 color: hasPending ? AppColors.primary : AppColors.success,
                 size: 24,
               ),
@@ -381,7 +326,7 @@ class _OwnerPrimaryCard extends StatelessWidget {
 }
 
 // ============================================================================
-// WIDGETS AUXILIARES PARA STAFF EN DASHBOARD
+// STAFF SUMMARY
 // ============================================================================
 
 class _OwnerStaffSummaryCard extends ConsumerWidget {
@@ -401,57 +346,30 @@ class _OwnerStaffSummaryCard extends ConsumerWidget {
             : overview.staffLimit.toString();
         final subtitle = '${overview.staffCount} de $limitText miembros';
 
-        return PesaoCard(
-          child: Padding(
-            padding: const EdgeInsets.all(AppDimens.l),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(AppDimens.m),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.1),
-                    borderRadius: AppDimens.cardBorderRadius,
-                  ),
-                  child: const Icon(
-                    Icons.people_rounded,
-                    color: AppColors.primary,
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(width: AppDimens.m),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.staffScreenTitle,
-                        style: AppTypography.title.copyWith(
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        subtitle,
-                        style: AppTypography.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                PesaoButton(
-                  label: l10n.commonSeeAll,
-                  variant: PesaoButtonVariant.secondary,
-                  isExpanded: false,
-                  onPressed: () => context.push(RouteNames.ownerStaff),
-                ),
-              ],
+        return PesaoListTile(
+          leading: Container(
+            padding: const EdgeInsets.all(AppDimens.m),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withValues(alpha: 0.1),
+              borderRadius: AppDimens.cardBorderRadius,
             ),
+            child: const Icon(
+              AppIcons.clients,
+              color: AppColors.primary,
+              size: 24,
+            ),
+          ),
+          title: l10n.staffScreenTitle,
+          subtitle: subtitle,
+          trailing: PesaoButton(
+            label: l10n.commonSeeAll,
+            variant: PesaoButtonVariant.secondary,
+            isExpanded: false,
+            onPressed: () => context.push(RouteNames.ownerStaff),
           ),
         );
       },
-      failure: (_) =>
-          const SizedBox.shrink(), // Fallo silencioso para no bloquear el dashboard
+      failure: (_) => const SizedBox.shrink(),
     );
   }
 }
@@ -461,23 +379,15 @@ class _StaffSummarySkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppDimens.cardBorderRadius,
-        border: Border.all(color: AppColors.outline),
-      ),
-    );
+    return const SkeletonLoader(child: SkeletonBox(height: 80));
   }
 }
+
 // ============================================================================
-// WIDGET AUXILIAR PARA PLANES EN DASHBOARD
+// PLANS SUMMARY
 // ============================================================================
 
 /// Card resumen de "Planes del gimnasio" en el dashboard del dueño.
-///
-/// Muestra el conteo de planes activos y ofrece navegación a la lista completa.
 class _OwnerPlansSummaryCard extends ConsumerWidget {
   const _OwnerPlansSummaryCard();
 
@@ -491,52 +401,27 @@ class _OwnerPlansSummaryCard extends ConsumerWidget {
         final activeCount = plans.where((p) => p.isActive).length;
         final totalCount = plans.length;
 
-        return PesaoCard(
-          child: Padding(
-            padding: const EdgeInsets.all(AppDimens.l),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(AppDimens.m),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.1),
-                    borderRadius: AppDimens.cardBorderRadius,
-                  ),
-                  child: const Icon(
-                    Icons.playlist_add_rounded,
-                    color: AppColors.primary,
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(width: AppDimens.m),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.plansScreenTitle,
-                        style: AppTypography.title.copyWith(
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '$activeCount ${totalCount == 1 ? "plan activo" : "planes activos"}',
-                        style: AppTypography.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                PesaoButton(
-                  label: l10n.commonSeeAll,
-                  variant: PesaoButtonVariant.secondary,
-                  isExpanded: false,
-                  onPressed: () => context.push(RouteNames.ownerPlans),
-                ),
-              ],
+        return PesaoListTile(
+          leading: Container(
+            padding: const EdgeInsets.all(AppDimens.m),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withValues(alpha: 0.1),
+              borderRadius: AppDimens.cardBorderRadius,
             ),
+            child: const Icon(
+              AppIcons.plans,
+              color: AppColors.primary,
+              size: 24,
+            ),
+          ),
+          title: l10n.plansScreenTitle,
+          subtitle:
+              '$activeCount ${totalCount == 1 ? "plan activo" : "planes activos"}',
+          trailing: PesaoButton(
+            label: l10n.commonSeeAll,
+            variant: PesaoButtonVariant.secondary,
+            isExpanded: false,
+            onPressed: () => context.push(RouteNames.ownerPlans),
           ),
         );
       },
@@ -551,13 +436,6 @@ class _PlansSummarySkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppDimens.cardBorderRadius,
-        border: Border.all(color: AppColors.outline),
-      ),
-    );
+    return const SkeletonLoader(child: SkeletonBox(height: 80));
   }
 }

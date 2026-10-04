@@ -3876,6 +3876,390 @@ abstract class AppStrings {
   /// In es_VE, this message translates to:
   /// **'Ver historial'**
   String get workoutHistorySeeAll;
+
+  /// No description provided for @nutritionTabTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nutrición'**
+  String get nutritionTabTitle;
+
+  /// No description provided for @nutritionPlansTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Planes nutricionales'**
+  String get nutritionPlansTitle;
+
+  /// No description provided for @nutritionPlansEmptyTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sin planes todavía'**
+  String get nutritionPlansEmptyTitle;
+
+  /// No description provided for @nutritionPlansEmptyBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cuando tu nutricionista te arme un plan, aparece aquí 🥗'**
+  String get nutritionPlansEmptyBody;
+
+  /// No description provided for @nutritionPlanCreate.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nuevo plan nutricional'**
+  String get nutritionPlanCreate;
+
+  /// No description provided for @nutritionPlanName.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nombre del plan'**
+  String get nutritionPlanName;
+
+  /// No description provided for @nutritionPlanNameHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: Plan volumen — Semana 1'**
+  String get nutritionPlanNameHint;
+
+  /// No description provided for @foodSearchHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Buscar alimento...'**
+  String get foodSearchHint;
+
+  /// No description provided for @foodSearchEmptyTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No conseguimos ese alimento'**
+  String get foodSearchEmptyTitle;
+
+  /// No description provided for @foodSearchEmptyBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Prueba con otro nombre o pídele a tu nutricionista que lo agregue 🔍'**
+  String get foodSearchEmptyBody;
+
+  /// No description provided for @foodAddSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¡Listo! Comida registrada ✅'**
+  String get foodAddSuccess;
+
+  /// No description provided for @foodLogBreakfast.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Desayuno'**
+  String get foodLogBreakfast;
+
+  /// No description provided for @foodLogLunch.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Almuerzo'**
+  String get foodLogLunch;
+
+  /// No description provided for @foodLogDinner.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cena'**
+  String get foodLogDinner;
+
+  /// No description provided for @foodLogSnack.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Merienda'**
+  String get foodLogSnack;
+
+  /// No description provided for @macroCalories.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Calorías'**
+  String get macroCalories;
+
+  /// No description provided for @macroProtein.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Proteínas'**
+  String get macroProtein;
+
+  /// No description provided for @macroCarbs.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Carbos'**
+  String get macroCarbs;
+
+  /// No description provided for @macroFats.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Grasas'**
+  String get macroFats;
+
+  /// No description provided for @macroGoalExceeded.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Te pasaste un poquito de {macro}. Tranquilo, mañana se compensa 💪'**
+  String macroGoalExceeded(String macro);
+
+  /// No description provided for @nutritionGoalSet.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Objetivos guardados ✅'**
+  String get nutritionGoalSet;
+
+  /// No description provided for @nutritionTierLocked.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu gimnasio necesita el plan Hierro o Macizo para usar nutrición 🔒'**
+  String get nutritionTierLocked;
+
+  /// No description provided for @nutritionistClientsTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Mis clientes'**
+  String get nutritionistClientsTitle;
+
+  /// No description provided for @nutritionistClientsEmptyTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sin clientes asignados'**
+  String get nutritionistClientsEmptyTitle;
+
+  /// No description provided for @nutritionistClientsEmptyBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cuando el dueño del gym te asigne clientes, aparecen aquí'**
+  String get nutritionistClientsEmptyBody;
+
+  /// No description provided for @nutritionistPlansCount.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{count} planes activos'**
+  String nutritionistPlansCount(int count);
+
+  /// No description provided for @foodQuantityLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cantidad (g)'**
+  String get foodQuantityLabel;
+
+  /// No description provided for @foodServingDefault.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'100g'**
+  String get foodServingDefault;
+
+  /// No description provided for @foodFavoritesTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Favoritos'**
+  String get foodFavoritesTitle;
+
+  /// No description provided for @foodAddFavorite.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Guardar en favoritos'**
+  String get foodAddFavorite;
+
+  /// No description provided for @foodRemoveFavorite.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Quitar de favoritos'**
+  String get foodRemoveFavorite;
+
+  /// No description provided for @goalTypeLose.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Perder grasa'**
+  String get goalTypeLose;
+
+  /// No description provided for @goalTypeMaintain.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Mantener'**
+  String get goalTypeMaintain;
+
+  /// No description provided for @goalTypeGain.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Aumentar masa'**
+  String get goalTypeGain;
+
+  /// No description provided for @nutritionClientSince.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cliente desde {date}'**
+  String nutritionClientSince(String date);
+
+  /// No description provided for @nutritionViewPlan.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ver plan'**
+  String get nutritionViewPlan;
+
+  /// No description provided for @nutritionSetGoals.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Fijar objetivos'**
+  String get nutritionSetGoals;
+
+  /// No description provided for @nutritionNoPlanYet.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sin plan asignado'**
+  String get nutritionNoPlanYet;
+
+  /// No description provided for @nutritionLastLog.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Último registro: {date}'**
+  String nutritionLastLog(String date);
+
+  /// No description provided for @foodFormTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nuevo alimento'**
+  String get foodFormTitle;
+
+  /// No description provided for @foodFormEditTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Editar alimento'**
+  String get foodFormEditTitle;
+
+  /// No description provided for @foodFormNameLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Nombre del alimento'**
+  String get foodFormNameLabel;
+
+  /// No description provided for @foodFormNameHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: Arepa de maíz'**
+  String get foodFormNameHint;
+
+  /// No description provided for @foodFormBrandLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Marca (opcional)'**
+  String get foodFormBrandLabel;
+
+  /// No description provided for @foodFormBrandHint.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Ej: Harina PAN'**
+  String get foodFormBrandHint;
+
+  /// No description provided for @foodFormServingLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Porción de referencia'**
+  String get foodFormServingLabel;
+
+  /// No description provided for @foodFormCaloriesLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Calorías (kcal)'**
+  String get foodFormCaloriesLabel;
+
+  /// No description provided for @foodFormProteinLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Proteínas (g)'**
+  String get foodFormProteinLabel;
+
+  /// No description provided for @foodFormCarbsLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Carbohidratos (g)'**
+  String get foodFormCarbsLabel;
+
+  /// No description provided for @foodFormFatsLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Grasas (g)'**
+  String get foodFormFatsLabel;
+
+  /// No description provided for @foodFormFiberLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Fibra (g, opcional)'**
+  String get foodFormFiberLabel;
+
+  /// No description provided for @foodFormSugarLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Azúcar (g, opcional)'**
+  String get foodFormSugarLabel;
+
+  /// No description provided for @foodFormSodiumLabel.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sodio (mg, opcional)'**
+  String get foodFormSodiumLabel;
+
+  /// No description provided for @foodFormSaveSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Alimento guardado ✅'**
+  String get foodFormSaveSuccess;
+
+  /// No description provided for @foodFormSaveError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'No pudimos guardar el alimento. Intenta de nuevo'**
+  String get foodFormSaveError;
+
+  /// No description provided for @foodFormValidationError.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Revisa los campos marcados en rojo'**
+  String get foodFormValidationError;
+
+  /// No description provided for @foodDeleteConfirmTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¿Eliminar este alimento?'**
+  String get foodDeleteConfirmTitle;
+
+  /// No description provided for @foodDeleteConfirmBody.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'El alimento se desactiva pero se mantiene en los registros existentes.'**
+  String get foodDeleteConfirmBody;
+
+  /// No description provided for @foodDeleteSuccess.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Alimento eliminado ✅'**
+  String get foodDeleteSuccess;
+
+  /// No description provided for @nutritionistClientsCount.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'{count} clientes sin plan nutricional'**
+  String nutritionistClientsCount(int count);
+
+  /// No description provided for @nutritionistDashboardTitle.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Inicio'**
+  String get nutritionistDashboardTitle;
+
+  /// No description provided for @nutritionistStatsClients.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Clientes'**
+  String get nutritionistStatsClients;
+
+  /// No description provided for @nutritionistStatsPlans.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Planes'**
+  String get nutritionistStatsPlans;
+
+  /// No description provided for @nutritionistStatsFoods.
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Alimentos'**
+  String get nutritionistStatsFoods;
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {

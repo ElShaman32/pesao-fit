@@ -23,6 +23,11 @@ abstract final class RouteNames {
   static const String clientWorkout = '/client/routine/workout/:workoutId';
   static const String clientWorkoutHistory = '/client/routine/history';
 
+  // --- Cliente Nutrición (F3) ------------------------------------------------
+
+  static const String clientNutritionLog = '/client/nutrition/log';
+  static const String clientNutritionPlan = '/client/nutrition/plan/:planId';
+
   // --- Entrenador -----------------------------------------------------------
 
   static const String trainerHome = '/trainer/home';
@@ -60,6 +65,16 @@ abstract final class RouteNames {
   static const String nutritionistClients = '/nutritionist/clients';
   static const String nutritionistPlans = '/nutritionist/plans';
   static const String nutritionistProfile = '/nutritionist/profile';
+
+  // --- Nutricionista F3 -------------------------------------------------------
+
+  static const String nutritionistClientDetail =
+      '/nutritionist/clients/:clientId';
+  static const String nutritionistPlanCreate = '/nutritionist/plans/create';
+  static const String nutritionistPlanEdit = '/nutritionist/plans/:planId';
+  static const String nutritionistPlanDays = '/nutritionist/plans/:planId/days';
+  static const String nutritionistFoodCreate = '/nutritionist/foods/create';
+  static const String nutritionistFoodEdit = '/nutritionist/foods/:foodId';
 
   // --- Superadmin -----------------------------------------------------------
 

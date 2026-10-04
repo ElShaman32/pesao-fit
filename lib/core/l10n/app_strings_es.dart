@@ -2042,6 +2042,214 @@ class AppStringsEs extends AppStrings {
 
   @override
   String get workoutHistorySeeAll => 'Ver historial';
+
+  @override
+  String get nutritionTabTitle => 'Nutrición';
+
+  @override
+  String get nutritionPlansTitle => 'Planes nutricionales';
+
+  @override
+  String get nutritionPlansEmptyTitle => 'Sin planes todavía';
+
+  @override
+  String get nutritionPlansEmptyBody =>
+      'Cuando tu nutricionista te arme un plan, aparece aquí 🥗';
+
+  @override
+  String get nutritionPlanCreate => 'Nuevo plan nutricional';
+
+  @override
+  String get nutritionPlanName => 'Nombre del plan';
+
+  @override
+  String get nutritionPlanNameHint => 'Ej: Plan volumen — Semana 1';
+
+  @override
+  String get foodSearchHint => 'Buscar alimento...';
+
+  @override
+  String get foodSearchEmptyTitle => 'No conseguimos ese alimento';
+
+  @override
+  String get foodSearchEmptyBody =>
+      'Prueba con otro nombre o pídele a tu nutricionista que lo agregue 🔍';
+
+  @override
+  String get foodAddSuccess => '¡Listo! Comida registrada ✅';
+
+  @override
+  String get foodLogBreakfast => 'Desayuno';
+
+  @override
+  String get foodLogLunch => 'Almuerzo';
+
+  @override
+  String get foodLogDinner => 'Cena';
+
+  @override
+  String get foodLogSnack => 'Merienda';
+
+  @override
+  String get macroCalories => 'Calorías';
+
+  @override
+  String get macroProtein => 'Proteínas';
+
+  @override
+  String get macroCarbs => 'Carbos';
+
+  @override
+  String get macroFats => 'Grasas';
+
+  @override
+  String macroGoalExceeded(String macro) {
+    return 'Te pasaste un poquito de $macro. Tranquilo, mañana se compensa 💪';
+  }
+
+  @override
+  String get nutritionGoalSet => 'Objetivos guardados ✅';
+
+  @override
+  String get nutritionTierLocked =>
+      'Tu gimnasio necesita el plan Hierro o Macizo para usar nutrición 🔒';
+
+  @override
+  String get nutritionistClientsTitle => 'Mis clientes';
+
+  @override
+  String get nutritionistClientsEmptyTitle => 'Sin clientes asignados';
+
+  @override
+  String get nutritionistClientsEmptyBody =>
+      'Cuando el dueño del gym te asigne clientes, aparecen aquí';
+
+  @override
+  String nutritionistPlansCount(int count) {
+    return '$count planes activos';
+  }
+
+  @override
+  String get foodQuantityLabel => 'Cantidad (g)';
+
+  @override
+  String get foodServingDefault => '100g';
+
+  @override
+  String get foodFavoritesTitle => 'Favoritos';
+
+  @override
+  String get foodAddFavorite => 'Guardar en favoritos';
+
+  @override
+  String get foodRemoveFavorite => 'Quitar de favoritos';
+
+  @override
+  String get goalTypeLose => 'Perder grasa';
+
+  @override
+  String get goalTypeMaintain => 'Mantener';
+
+  @override
+  String get goalTypeGain => 'Aumentar masa';
+
+  @override
+  String nutritionClientSince(String date) {
+    return 'Cliente desde $date';
+  }
+
+  @override
+  String get nutritionViewPlan => 'Ver plan';
+
+  @override
+  String get nutritionSetGoals => 'Fijar objetivos';
+
+  @override
+  String get nutritionNoPlanYet => 'Sin plan asignado';
+
+  @override
+  String nutritionLastLog(String date) {
+    return 'Último registro: $date';
+  }
+
+  @override
+  String get foodFormTitle => 'Nuevo alimento';
+
+  @override
+  String get foodFormEditTitle => 'Editar alimento';
+
+  @override
+  String get foodFormNameLabel => 'Nombre del alimento';
+
+  @override
+  String get foodFormNameHint => 'Ej: Arepa de maíz';
+
+  @override
+  String get foodFormBrandLabel => 'Marca (opcional)';
+
+  @override
+  String get foodFormBrandHint => 'Ej: Harina PAN';
+
+  @override
+  String get foodFormServingLabel => 'Porción de referencia';
+
+  @override
+  String get foodFormCaloriesLabel => 'Calorías (kcal)';
+
+  @override
+  String get foodFormProteinLabel => 'Proteínas (g)';
+
+  @override
+  String get foodFormCarbsLabel => 'Carbohidratos (g)';
+
+  @override
+  String get foodFormFatsLabel => 'Grasas (g)';
+
+  @override
+  String get foodFormFiberLabel => 'Fibra (g, opcional)';
+
+  @override
+  String get foodFormSugarLabel => 'Azúcar (g, opcional)';
+
+  @override
+  String get foodFormSodiumLabel => 'Sodio (mg, opcional)';
+
+  @override
+  String get foodFormSaveSuccess => 'Alimento guardado ✅';
+
+  @override
+  String get foodFormSaveError =>
+      'No pudimos guardar el alimento. Intenta de nuevo';
+
+  @override
+  String get foodFormValidationError => 'Revisa los campos marcados en rojo';
+
+  @override
+  String get foodDeleteConfirmTitle => '¿Eliminar este alimento?';
+
+  @override
+  String get foodDeleteConfirmBody =>
+      'El alimento se desactiva pero se mantiene en los registros existentes.';
+
+  @override
+  String get foodDeleteSuccess => 'Alimento eliminado ✅';
+
+  @override
+  String nutritionistClientsCount(int count) {
+    return '$count clientes sin plan nutricional';
+  }
+
+  @override
+  String get nutritionistDashboardTitle => 'Inicio';
+
+  @override
+  String get nutritionistStatsClients => 'Clientes';
+
+  @override
+  String get nutritionistStatsPlans => 'Planes';
+
+  @override
+  String get nutritionistStatsFoods => 'Alimentos';
 }
 
 /// The translations for Spanish Castilian, as used in Venezuela (`es_VE`).
@@ -4082,4 +4290,212 @@ class AppStringsEsVe extends AppStringsEs {
 
   @override
   String get workoutHistorySeeAll => 'Ver historial';
+
+  @override
+  String get nutritionTabTitle => 'Nutrición';
+
+  @override
+  String get nutritionPlansTitle => 'Planes nutricionales';
+
+  @override
+  String get nutritionPlansEmptyTitle => 'Sin planes todavía';
+
+  @override
+  String get nutritionPlansEmptyBody =>
+      'Cuando tu nutricionista te arme un plan, aparece aquí 🥗';
+
+  @override
+  String get nutritionPlanCreate => 'Nuevo plan nutricional';
+
+  @override
+  String get nutritionPlanName => 'Nombre del plan';
+
+  @override
+  String get nutritionPlanNameHint => 'Ej: Plan volumen — Semana 1';
+
+  @override
+  String get foodSearchHint => 'Buscar alimento...';
+
+  @override
+  String get foodSearchEmptyTitle => 'No conseguimos ese alimento';
+
+  @override
+  String get foodSearchEmptyBody =>
+      'Prueba con otro nombre o pídele a tu nutricionista que lo agregue 🔍';
+
+  @override
+  String get foodAddSuccess => '¡Listo! Comida registrada ✅';
+
+  @override
+  String get foodLogBreakfast => 'Desayuno';
+
+  @override
+  String get foodLogLunch => 'Almuerzo';
+
+  @override
+  String get foodLogDinner => 'Cena';
+
+  @override
+  String get foodLogSnack => 'Merienda';
+
+  @override
+  String get macroCalories => 'Calorías';
+
+  @override
+  String get macroProtein => 'Proteínas';
+
+  @override
+  String get macroCarbs => 'Carbos';
+
+  @override
+  String get macroFats => 'Grasas';
+
+  @override
+  String macroGoalExceeded(String macro) {
+    return 'Te pasaste un poquito de $macro. Tranquilo, mañana se compensa 💪';
+  }
+
+  @override
+  String get nutritionGoalSet => 'Objetivos guardados ✅';
+
+  @override
+  String get nutritionTierLocked =>
+      'Tu gimnasio necesita el plan Hierro o Macizo para usar nutrición 🔒';
+
+  @override
+  String get nutritionistClientsTitle => 'Mis clientes';
+
+  @override
+  String get nutritionistClientsEmptyTitle => 'Sin clientes asignados';
+
+  @override
+  String get nutritionistClientsEmptyBody =>
+      'Cuando el dueño del gym te asigne clientes, aparecen aquí';
+
+  @override
+  String nutritionistPlansCount(int count) {
+    return '$count planes activos';
+  }
+
+  @override
+  String get foodQuantityLabel => 'Cantidad (g)';
+
+  @override
+  String get foodServingDefault => '100g';
+
+  @override
+  String get foodFavoritesTitle => 'Favoritos';
+
+  @override
+  String get foodAddFavorite => 'Guardar en favoritos';
+
+  @override
+  String get foodRemoveFavorite => 'Quitar de favoritos';
+
+  @override
+  String get goalTypeLose => 'Perder grasa';
+
+  @override
+  String get goalTypeMaintain => 'Mantener';
+
+  @override
+  String get goalTypeGain => 'Aumentar masa';
+
+  @override
+  String nutritionClientSince(String date) {
+    return 'Cliente desde $date';
+  }
+
+  @override
+  String get nutritionViewPlan => 'Ver plan';
+
+  @override
+  String get nutritionSetGoals => 'Fijar objetivos';
+
+  @override
+  String get nutritionNoPlanYet => 'Sin plan asignado';
+
+  @override
+  String nutritionLastLog(String date) {
+    return 'Último registro: $date';
+  }
+
+  @override
+  String get foodFormTitle => 'Nuevo alimento';
+
+  @override
+  String get foodFormEditTitle => 'Editar alimento';
+
+  @override
+  String get foodFormNameLabel => 'Nombre del alimento';
+
+  @override
+  String get foodFormNameHint => 'Ej: Arepa de maíz';
+
+  @override
+  String get foodFormBrandLabel => 'Marca (opcional)';
+
+  @override
+  String get foodFormBrandHint => 'Ej: Harina PAN';
+
+  @override
+  String get foodFormServingLabel => 'Porción de referencia';
+
+  @override
+  String get foodFormCaloriesLabel => 'Calorías (kcal)';
+
+  @override
+  String get foodFormProteinLabel => 'Proteínas (g)';
+
+  @override
+  String get foodFormCarbsLabel => 'Carbohidratos (g)';
+
+  @override
+  String get foodFormFatsLabel => 'Grasas (g)';
+
+  @override
+  String get foodFormFiberLabel => 'Fibra (g, opcional)';
+
+  @override
+  String get foodFormSugarLabel => 'Azúcar (g, opcional)';
+
+  @override
+  String get foodFormSodiumLabel => 'Sodio (mg, opcional)';
+
+  @override
+  String get foodFormSaveSuccess => 'Alimento guardado ✅';
+
+  @override
+  String get foodFormSaveError =>
+      'No pudimos guardar el alimento. Intenta de nuevo';
+
+  @override
+  String get foodFormValidationError => 'Revisa los campos marcados en rojo';
+
+  @override
+  String get foodDeleteConfirmTitle => '¿Eliminar este alimento?';
+
+  @override
+  String get foodDeleteConfirmBody =>
+      'El alimento se desactiva pero se mantiene en los registros existentes.';
+
+  @override
+  String get foodDeleteSuccess => 'Alimento eliminado ✅';
+
+  @override
+  String nutritionistClientsCount(int count) {
+    return '$count clientes sin plan nutricional';
+  }
+
+  @override
+  String get nutritionistDashboardTitle => 'Inicio';
+
+  @override
+  String get nutritionistStatsClients => 'Clientes';
+
+  @override
+  String get nutritionistStatsPlans => 'Planes';
+
+  @override
+  String get nutritionistStatsFoods => 'Alimentos';
 }

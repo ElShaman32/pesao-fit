@@ -10,30 +10,28 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
 import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../shared/widgets/empty_state.dart';
 import '../../../../shared/widgets/error_state.dart';
 import '../../../../shared/widgets/offline_banner.dart';
 import '../../../../shared/widgets/pesao_avatar.dart';
-import '../../../../shared/widgets/pesao_button.dart';
 import '../../../../shared/widgets/pesao_card.dart';
 import '../../../../shared/widgets/pesao_icon_button.dart';
 import '../../../../shared/widgets/pesao_stat_card.dart';
-import '../../../../shared/widgets/section_header.dart';
 import '../../../../shared/widgets/skeleton_loader.dart';
-import '../../domain/entities/trainer_dashboard_stats.dart';
-import '../providers/trainer_dashboard_controller.dart';
+import '../../../nutrition/presentation/providers/nutritionist_dashboard_controller.dart';
+import '../../domain/entities/nutritionist_stats.dart';
 
-/// Dashboard del entrenador (tab Inicio del shell).
+/// Dashboard del nutricionista (tab Inicio del shell).
 ///
 /// Mismo esqueleto canónico que OwnerHomeScreen:
 /// avatar + saludo + campana → StatCards → PrimaryCard → secciones.
-class TrainerHomeScreen extends ConsumerWidget {
-  const TrainerHomeScreen({super.key});
+class NutritionistHomeScreen extends ConsumerWidget {
+  const NutritionistHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppStrings.of(context);
-    final state = ref.watch(trainerDashboardControllerProvider);
-    final controller = ref.read(trainerDashboardControllerProvider.notifier);
+    final state = ref.watch(nutritionistDashboardControllerProvider);
     final connectivityAsync = ref.watch(connectivityProvider);
     final isOnline = connectivityAsync.value ?? true;
     final greeting = _greetingForHour(l10n);
@@ -44,7 +42,8 @@ class TrainerHomeScreen extends ConsumerWidget {
         child: RefreshIndicator(
           color: AppColors.primary,
           backgroundColor: AppColors.surface,
-          onRefresh: controller.load,
+          onRefresh: () =>
+              ref.read(nutritionistDashboardControllerProvider.notifier).load(),
           child: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
@@ -60,7 +59,7 @@ class TrainerHomeScreen extends ConsumerWidget {
                   child: Row(
                     children: [
                       PesaoAvatar(
-                        name: authProvider.userFullName ?? 'Entrenador',
+                        name: authProvider.userFullName ?? 'Nutricionista',
                         imageUrl: authProvider.avatarUrl,
                         size: 44,
                       ),
@@ -95,19 +94,17 @@ class TrainerHomeScreen extends ConsumerWidget {
                 ),
 
               // Contenido según estado.
-              if (state.isLoading && state.stats == null)
-                const _TrainerSkeletonSliver()
-              else if (state.error != null && state.stats == null)
+              if (state.isLoading && state.value == null)
+                const _NutritionistSkeletonSliver()
+              else if (state.hasError && state.value == null)
                 SliverFillRemaining(
                   child: ErrorState(
-                    title: l10n.trainerDashErrorTitle,
-                    body: l10n.trainerDashErrorBody,
-                    actionLabel: l10n.commonRetry,
-                    onRetry: controller.load,
+                    onRetry: () =>
+                        ref.invalidate(nutritionistDashboardControllerProvider),
                   ),
                 )
-              else if (state.hasData)
-                _TrainerSuccessSliver(stats: state.stats!),
+              else if (state.value != null)
+                _NutritionistSuccessSliver(stats: state.value!),
             ],
           ),
         ),
@@ -117,7 +114,7 @@ class TrainerHomeScreen extends ConsumerWidget {
 
   String _greetingForHour(AppStrings l10n) {
     final hour = DateTime.now().hour;
-    final name = authProvider.userFullName ?? 'coach';
+    final name = authProvider.userFullName ?? 'campeón';
     if (hour < 12) return l10n.greetingMorning(name);
     if (hour < 19) return l10n.greetingAfternoon(name);
     return l10n.greetingNight(name);
@@ -128,8 +125,8 @@ class TrainerHomeScreen extends ConsumerWidget {
 // SKELETON
 // ============================================================================
 
-class _TrainerSkeletonSliver extends StatelessWidget {
-  const _TrainerSkeletonSliver();
+class _NutritionistSkeletonSliver extends StatelessWidget {
+  const _NutritionistSkeletonSliver();
 
   @override
   Widget build(BuildContext context) {
@@ -167,9 +164,9 @@ class _TrainerSkeletonSliver extends StatelessWidget {
 // SUCCESS
 // ============================================================================
 
-class _TrainerSuccessSliver extends StatelessWidget {
-  const _TrainerSuccessSliver({required this.stats});
-  final TrainerDashboardStats stats;
+class _NutritionistSuccessSliver extends StatelessWidget {
+  const _NutritionistSuccessSliver({required this.stats});
+  final NutritionistStats stats;
 
   @override
   Widget build(BuildContext context) {
@@ -179,36 +176,34 @@ class _TrainerSuccessSliver extends StatelessWidget {
       padding: const EdgeInsets.all(AppDimens.l),
       sliver: SliverList(
         delegate: SliverChildListDelegate([
-          // StatCards (sin onTap: rutas trainer pendientes de confirmar).
+          // StatCards tappables.
           Row(
             children: [
               Expanded(
                 child: PesaoStatCard(
-                  label: l10n.trainerDashStatClients,
-                  value: stats.assignedClientsCount.toString(),
-                  sub: l10n.trainerDashStatClientsSub,
-                  icon: AppIcons.clients,
-                  onTap: () => context.go(RouteNames.trainerClients),
+                  icon: AppIcons.clientsOutline,
+                  label: l10n.tabClients,
+                  value: stats.totalClients.toString(),
+                  onTap: () => context.go(RouteNames.nutritionistClients),
                 ),
               ),
               const SizedBox(width: AppDimens.s),
               Expanded(
                 child: PesaoStatCard(
-                  label: l10n.trainerDashStatSessions,
-                  value: stats.sessionsTodayCount.toString(),
-                  sub: l10n.trainerDashStatSessionsSub,
-                  icon: AppIcons.calendar,
-                  onTap: () => context.go(RouteNames.trainerPlanForm),
+                  // TODO: agregar token AppIcons para "menú nutrición".
+                  icon: Icons.restaurant_menu_rounded,
+                  label: l10n.nutritionPlansTitle,
+                  value: stats.activePlans.toString(),
+                  onTap: () => context.go(RouteNames.nutritionistPlans),
                 ),
               ),
               const SizedBox(width: AppDimens.s),
               Expanded(
                 child: PesaoStatCard(
-                  label: l10n.trainerDashStatRoutines,
-                  value: stats.activeRoutinesCount.toString(),
-                  sub: l10n.trainerDashStatRoutinesSub,
-                  icon: AppIcons.routine,
-                  onTap: () => context.go(RouteNames.trainerRoutines),
+                  // TODO: agregar token AppIcons para "alimento".
+                  icon: Icons.lunch_dining_rounded,
+                  label: l10n.foodFavoritesTitle,
+                  value: stats.totalFoods.toString(),
                 ),
               ),
             ],
@@ -216,28 +211,15 @@ class _TrainerSuccessSliver extends StatelessWidget {
           const SizedBox(height: AppDimens.xl),
 
           // PrimaryCard.
-          _TrainerPrimaryCard(stats: stats),
+          _NutritionistPrimaryCard(stats: stats),
           const SizedBox(height: AppDimens.xl),
 
-          // Próximas sesiones.
-          SectionHeader(
-            title: l10n.trainerDashNextSection,
-            onSeeAll: () {
-              // Futuro: vista completa de sesiones (F2).
-            },
+          // Sección clientes (vacío por ahora).
+          EmptyState(
+            icon: AppIcons.clientsOutline,
+            title: l10n.nutritionistClientsTitle,
+            body: l10n.nutritionistClientsEmptyBody,
           ),
-          const SizedBox(height: AppDimens.m),
-          if (stats.upcomingSessions.isEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppDimens.m),
-              child: Text(
-                l10n.trainerDashNextEmpty,
-                style: AppTypography.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
           const SizedBox(height: AppDimens.xxl),
         ]),
       ),
@@ -249,32 +231,37 @@ class _TrainerSuccessSliver extends StatelessWidget {
 // PRIMARY CARD
 // ============================================================================
 
-class _TrainerPrimaryCard extends StatelessWidget {
-  const _TrainerPrimaryCard({required this.stats});
-  final TrainerDashboardStats stats;
+class _NutritionistPrimaryCard extends StatelessWidget {
+  const _NutritionistPrimaryCard({required this.stats});
+  final NutritionistStats stats;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppStrings.of(context);
-    final hasSessions = stats.hasSessionsToday;
+    final hasClientsWithoutPlan = stats.hasClientsWithoutPlan;
 
     return PesaoCard(
-      glow: hasSessions,
+      glow: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Icon(
-                // TODO: promover a AppIcons si se reutiliza en otras pantallas.
-                hasSessions ? AppIcons.calendar : Icons.event_busy_rounded,
-                color: hasSessions ? AppColors.primary : AppColors.textDisabled,
+                hasClientsWithoutPlan
+                    ? Icons.playlist_add_rounded
+                    : AppIcons.success,
+                color: hasClientsWithoutPlan
+                    ? AppColors.primary
+                    : AppColors.success,
                 size: 24,
               ),
               const SizedBox(width: AppDimens.s),
               Expanded(
                 child: Text(
-                  l10n.trainerDashPrimaryTitle,
+                  hasClientsWithoutPlan
+                      ? l10n.nutritionPlanCreate
+                      : l10n.nutritionPlansTitle,
                   style: AppTypography.title.copyWith(
                     color: AppColors.textPrimary,
                   ),
@@ -284,28 +271,10 @@ class _TrainerPrimaryCard extends StatelessWidget {
           ),
           const SizedBox(height: AppDimens.m),
           Text(
-            hasSessions
-                ? l10n.trainerDashPrimaryBody(stats.sessionsTodayCount)
-                : l10n.trainerDashPrimaryCtaNone,
+            hasClientsWithoutPlan
+                ? l10n.nutritionistClientsCount(stats.clientsWithoutPlan)
+                : l10n.nutritionPlansEmptyBody,
             style: AppTypography.body.copyWith(color: AppColors.textSecondary),
-          ),
-          const SizedBox(height: AppDimens.m),
-          Align(
-            alignment: Alignment.centerRight,
-            child: PesaoButton(
-              label: hasSessions
-                  ? l10n.trainerDashPrimaryCta
-                  : l10n.trainerDashPrimaryCtaNone,
-              variant: hasSessions
-                  ? PesaoButtonVariant.primary
-                  : PesaoButtonVariant.secondary,
-              isExpanded: false,
-              onPressed: hasSessions
-                  ? () {
-                      // Futuro: navegar a sesiones (F2).
-                    }
-                  : null,
-            ),
           ),
         ],
       ),

@@ -1513,5 +1513,94 @@
       "count": {"type": "int"}
     }
   },
-  "workoutHistorySeeAll": "Ver historial"
+  "workoutHistorySeeAll": "Ver historial",
+  "nutritionTabTitle": "Nutrición",
+  "nutritionPlansTitle": "Planes nutricionales",
+  "nutritionPlansEmptyTitle": "Sin planes todavía",
+  "nutritionPlansEmptyBody": "Cuando tu nutricionista te arme un plan, aparece aquí 🥗",
+  "nutritionPlanCreate": "Nuevo plan nutricional",
+  "nutritionPlanName": "Nombre del plan",
+  "nutritionPlanNameHint": "Ej: Plan volumen — Semana 1",
+  "foodSearchHint": "Buscar alimento...",
+  "foodSearchEmptyTitle": "No conseguimos ese alimento",
+  "foodSearchEmptyBody": "Prueba con otro nombre o pídele a tu nutricionista que lo agregue 🔍",
+  "foodAddSuccess": "¡Listo! Comida registrada ✅",
+  "foodLogBreakfast": "Desayuno",
+  "foodLogLunch": "Almuerzo",
+  "foodLogDinner": "Cena",
+  "foodLogSnack": "Merienda",
+  "macroCalories": "Calorías",
+  "macroProtein": "Proteínas",
+  "macroCarbs": "Carbos",
+  "macroFats": "Grasas",
+  "macroGoalExceeded": "Te pasaste un poquito de {macro}. Tranquilo, mañana se compensa 💪",
+  "@macroGoalExceeded": {
+    "placeholders": {
+      "macro": { "type": "String" }
+    }
+  },
+  "nutritionGoalSet": "Objetivos guardados ✅",
+  "nutritionTierLocked": "Tu gimnasio necesita el plan Hierro o Macizo para usar nutrición 🔒",
+  "nutritionistClientsTitle": "Mis clientes",
+  "nutritionistClientsEmptyTitle": "Sin clientes asignados",
+  "nutritionistClientsEmptyBody": "Cuando el dueño del gym te asigne clientes, aparecen aquí",
+  "nutritionistPlansCount": "{count} planes activos",
+  "@nutritionistPlansCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "foodQuantityLabel": "Cantidad (g)",
+  "foodServingDefault": "100g",
+  "foodFavoritesTitle": "Favoritos",
+  "foodAddFavorite": "Guardar en favoritos",
+  "foodRemoveFavorite": "Quitar de favoritos",
+  "goalTypeLose": "Perder grasa",
+  "goalTypeMaintain": "Mantener",
+  "goalTypeGain": "Aumentar masa",
+  "nutritionClientSince": "Cliente desde {date}",
+  "@nutritionClientSince": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "nutritionViewPlan": "Ver plan",
+  "nutritionSetGoals": "Fijar objetivos",
+  "nutritionNoPlanYet": "Sin plan asignado",
+  "nutritionLastLog": "Último registro: {date}",
+  "@nutritionLastLog": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "foodFormTitle": "Nuevo alimento",
+  "foodFormEditTitle": "Editar alimento",
+  "foodFormNameLabel": "Nombre del alimento",
+  "foodFormNameHint": "Ej: Arepa de maíz",
+  "foodFormBrandLabel": "Marca (opcional)",
+  "foodFormBrandHint": "Ej: Harina PAN",
+  "foodFormServingLabel": "Porción de referencia",
+  "foodFormCaloriesLabel": "Calorías (kcal)",
+  "foodFormProteinLabel": "Proteínas (g)",
+  "foodFormCarbsLabel": "Carbohidratos (g)",
+  "foodFormFatsLabel": "Grasas (g)",
+  "foodFormFiberLabel": "Fibra (g, opcional)",
+  "foodFormSugarLabel": "Azúcar (g, opcional)",
+  "foodFormSodiumLabel": "Sodio (mg, opcional)",
+  "foodFormSaveSuccess": "Alimento guardado ✅",
+  "foodFormSaveError": "No pudimos guardar el alimento. Intenta de nuevo",
+  "foodFormValidationError": "Revisa los campos marcados en rojo",
+  "foodDeleteConfirmTitle": "¿Eliminar este alimento?",
+  "foodDeleteConfirmBody": "El alimento se desactiva pero se mantiene en los registros existentes.",
+  "foodDeleteSuccess": "Alimento eliminado ✅",
+  "nutritionistClientsCount": "{count} clientes sin plan nutricional",
+  "@nutritionistClientsCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "nutritionistDashboardTitle": "Inicio",
+  "nutritionistStatsClients": "Clientes",
+  "nutritionistStatsPlans": "Planes",
+  "nutritionistStatsFoods": "Alimentos"
 }
