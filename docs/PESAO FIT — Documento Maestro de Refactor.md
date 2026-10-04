@@ -199,17 +199,17 @@ Icon(Icons.event_busy_rounded, ...) // TODO: promover a AppIcons
 
 ## 7. Bitácora de pantallas
 
-
 | # | Pantalla | Estado |
 |---|---|---|
 | 1 | `OwnerHomeScreen` | ✅ Completada |
 | 2 | `NutritionistHomeScreen` | ✅ Completada |
 | 3 | `ClientHomeScreen` | ✅ Completada |
 | 4 | `TrainerHomeScreen` | ✅ Completada |
-
+| 5 | `AdminHomeScreen` | ✅ Completada |
+| 6 | `ApplicationsListScreen` | ✅ Completada |
+| 7 | `ApplicationDetailScreen` | ✅ Completada |
 
 ---
-
 
 ## 8. Decisiones y pendientes
 
@@ -224,6 +224,10 @@ Icon(Icons.event_busy_rounded, ...) // TODO: promover a AppIcons
 - ✅ Fila superior canónica: `PesaoAvatar(44)` + `Expanded(Text(greeting))` + `PesaoIconButton(notificationsOutline)`.
 - ✅ Errores con `ErrorState` inline en `SliverFillRemaining`.
 - ✅ Skeletons con `SkeletonLoader` + `SkeletonBox`, envueltos en `SliverToBoxAdapter` (nunca `SliverList` con box widgets).
+- ✅ `showConfirmDialog` para sí/no. `showPesaoBottomSheet` para contenido custom (formularios, inputs).
+- ✅ `showPesaoToast` reemplaza `ScaffoldMessenger.showSnackBar`.
+- ✅ `PesaoToastVariant.error` = fallo real. `warning` = acción exitosa con consecuencia negativa.
+- ✅ Textos hardcodeados quedan por ahora con `// TODO: mover a AppStrings`.
 
 ### Pendientes
 - ⏳ Confirmar `RouteNames` disponibles para StatCards tappables (owner: `ownerClients`, `ownerPayments`; client: `clientRoutine`; nutritionist: por definir).
@@ -231,6 +235,8 @@ Icon(Icons.event_busy_rounded, ...) // TODO: promover a AppIcons
 - ⏳ Definir estructura de homes restantes (trainer, admin) cuando lleguemos.
 - ⏳ Homes restantes: `AdminHomeScreen` (si existe), y verificar si hay más roles.
 - ⏳ Migrar saludo hardcodeado de `NutritionistHomeScreen` (quedó en `AppStrings` en el último pase, así que ya no aplica 
+- ⏳ Migrar textos hardcodeados (`'Solicitudes'`, `'Cancelar'`, `'Reintentar'`, `'Pendiente'`, `'No encontramos esta solicitud'`, `'Nombre'`) a `AppStrings` en una pasada futura.
+- ⏳ Evaluar promover a `AppIcons`: `hourglass_top`, `card_membership`, `pending_actions`, `inbox`, `dashboard_outlined`, `event_busy`.
 
 ### Archivos que NO tengo pero puedo necesitar
 - `AppStrings` (para confirmar keys cuando falle).

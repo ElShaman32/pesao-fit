@@ -8,21 +8,26 @@ import '../../../../core/providers/connectivity_provider.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
+import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../shared/widgets/empty_state.dart';
+import '../../../../shared/widgets/error_state.dart';
 import '../../../../shared/widgets/offline_banner.dart';
 import '../../../../shared/widgets/pesao_avatar.dart';
 import '../../../../shared/widgets/pesao_badge.dart';
 import '../../../../shared/widgets/pesao_button.dart';
+import '../../../../shared/widgets/pesao_card.dart';
+import '../../../../shared/widgets/pesao_icon_button.dart';
 import '../../../../shared/widgets/pesao_list_tile.dart';
 import '../../../../shared/widgets/pesao_stat_card.dart';
 import '../../../../shared/widgets/section_header.dart';
+import '../../../../shared/widgets/skeleton_loader.dart';
 import '../../domain/entities/admin_dashboard_stats.dart';
 import '../providers/admin_dashboard_controller.dart';
 
 /// Dashboard del superadmin (tab Inicio del shell).
 ///
-/// Sigue design-system.md §10: AppBar con avatar + saludo,
-/// fila de StatCards, PrimaryCard con CTA, y sección secundaria.
+/// Mismo esqueleto canónico que las demás homes de rol.
 class AdminHomeScreen extends ConsumerWidget {
   const AdminHomeScreen({super.key});
 
@@ -32,7 +37,6 @@ class AdminHomeScreen extends ConsumerWidget {
     final state = ref.watch(adminDashboardControllerProvider);
     final controller = ref.read(adminDashboardControllerProvider.notifier);
 
-    // connectivityProvider puede ser AsyncValue<bool>; resolvemos con fallback online.
     final connectivity = ref.watch(connectivityProvider);
     final isOnline = connectivity.value ?? true;
 
@@ -48,7 +52,7 @@ class AdminHomeScreen extends ConsumerWidget {
           child: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
-              // === AppBar con avatar + saludo ===
+              // Fila superior: avatar + saludo + campana.
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(
@@ -60,7 +64,7 @@ class AdminHomeScreen extends ConsumerWidget {
                   child: Row(
                     children: [
                       PesaoAvatar(
-                        name: authProvider.userFullName ?? 'Leonel',
+                        name: authProvider.userFullName ?? 'Admin',
                         imageUrl: authProvider.avatarUrl,
                         size: 44,
                       ),
@@ -73,12 +77,9 @@ class AdminHomeScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.notifications_outlined,
-                          color: AppColors.textSecondary,
-                        ),
-                        tooltip: l10n.notificationsLabel,
+                      PesaoIconButton(
+                        icon: AppIcons.notificationsOutline,
+                        semanticLabel: l10n.notificationsLabel,
                         onPressed: () {
                           // Placeholder: notificaciones llegan en F4 Monetización.
                         },
@@ -88,7 +89,7 @@ class AdminHomeScreen extends ConsumerWidget {
                 ),
               ),
 
-              // === OfflineBanner (condicional) ===
+              // OfflineBanner.
               if (!isOnline)
                 const SliverToBoxAdapter(
                   child: Padding(
@@ -97,22 +98,28 @@ class AdminHomeScreen extends ConsumerWidget {
                   ),
                 ),
 
-              // === Contenido principal según estado ===
+              // Contenido según estado.
               if (state.isLoading && state.stats == null)
-                const _SkeletonSliver()
+                const _AdminSkeletonSliver()
               else if (state.error != null && state.stats == null)
-                _ErrorSliver(
-                  title: l10n.adminDashErrorTitle,
-                  body: l10n.adminDashErrorBody,
-                  onRetry: controller.load,
+                SliverFillRemaining(
+                  child: ErrorState(
+                    title: l10n.adminDashErrorTitle,
+                    body: l10n.adminDashErrorBody,
+                    actionLabel: l10n.commonRetry,
+                    onRetry: controller.load,
+                  ),
                 )
               else if (state.isEmpty)
-                _EmptySliver(
-                  title: l10n.adminDashEmptyTitle,
-                  body: l10n.adminDashEmptyBody,
+                SliverFillRemaining(
+                  child: EmptyState(
+                    icon: Icons.dashboard_outlined,
+                    title: l10n.adminDashEmptyTitle,
+                    body: l10n.adminDashEmptyBody,
+                  ),
                 )
               else if (state.hasData)
-                _SuccessSliver(stats: state.stats!),
+                _AdminSuccessSliver(stats: state.stats!),
             ],
           ),
         ),
@@ -120,123 +127,50 @@ class AdminHomeScreen extends ConsumerWidget {
     );
   }
 
-  /// Saludo por hora del día (mañana / tarde / noche).
   String _greetingForHour(AppStrings l10n) {
     final hour = DateTime.now().hour;
-    final name = authProvider.userFullName ?? 'Leonel';
+    final name = authProvider.userFullName ?? 'Admin';
     if (hour < 12) return l10n.greetingMorning(name);
     if (hour < 19) return l10n.greetingAfternoon(name);
     return l10n.greetingNight(name);
   }
 }
 
-/// Sliver con skeleton que replica el layout real del dashboard.
-/// Implementado con Container inline porque SkeletonLoader del kit
-/// no acepta height directo.
-class _SkeletonSliver extends StatelessWidget {
-  const _SkeletonSliver();
+// ============================================================================
+// SKELETON
+// ============================================================================
+
+class _AdminSkeletonSliver extends StatelessWidget {
+  const _AdminSkeletonSliver();
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.all(AppDimens.l),
-      sliver: SliverList(
-        delegate: SliverChildListDelegate([
-          // Fila de 3 StatCards skeleton.
-          const Row(
-            children: [
-              Expanded(child: _SkeletonBox(height: 110)),
-              SizedBox(width: AppDimens.s),
-              Expanded(child: _SkeletonBox(height: 110)),
-              SizedBox(width: AppDimens.s),
-              Expanded(child: _SkeletonBox(height: 110)),
-            ],
-          ),
-          const SizedBox(height: AppDimens.xl),
-
-          // PrimaryCard skeleton.
-          const _SkeletonBox(height: 180),
-          const SizedBox(height: AppDimens.xl),
-
-          // SectionHeader skeleton.
-          const _SkeletonBox(height: 24),
-          const SizedBox(height: AppDimens.m),
-
-          // Tiles de recientes skeleton.
-          const _SkeletonBox(height: 72),
-          const SizedBox(height: AppDimens.s),
-          const _SkeletonBox(height: 72),
-          const SizedBox(height: AppDimens.s),
-          const _SkeletonBox(height: 72),
-        ]),
-      ),
-    );
-  }
-}
-
-/// Caja skeleton simple con shimmer estático (sin BackdropFilter, ADR-026).
-class _SkeletonBox extends StatelessWidget {
-  const _SkeletonBox({required this.height});
-
-  final double height;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppDimens.cardBorderRadius,
-        border: Border.all(color: AppColors.outline),
-      ),
-    );
-  }
-}
-
-/// Sliver de error con reintento.
-class _ErrorSliver extends StatelessWidget {
-  const _ErrorSliver({
-    required this.title,
-    required this.body,
-    required this.onRetry,
-  });
-
-  final String title;
-  final String body;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverFillRemaining(
-      child: Center(
+    return const SliverToBoxAdapter(
+      child: SkeletonLoader(
         child: Padding(
-          padding: const EdgeInsets.all(AppDimens.xxl),
+          padding: EdgeInsets.all(AppDimens.l),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Icon(Icons.error_outline, color: AppColors.error, size: 48),
-              const SizedBox(height: AppDimens.m),
-              Text(
-                title,
-                style: AppTypography.title.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-                textAlign: TextAlign.center,
+              Row(
+                children: [
+                  Expanded(child: SkeletonBox(height: 110)),
+                  SizedBox(width: AppDimens.s),
+                  Expanded(child: SkeletonBox(height: 110)),
+                  SizedBox(width: AppDimens.s),
+                  Expanded(child: SkeletonBox(height: 110)),
+                ],
               ),
-              const SizedBox(height: AppDimens.s),
-              Text(
-                body,
-                style: AppTypography.body.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: AppDimens.l),
-              PesaoButton(
-                label: AppStrings.of(context).commonRetry,
-                isExpanded: false,
-                onPressed: onRetry,
-              ),
+              SizedBox(height: AppDimens.xl),
+              SkeletonBox(height: 180),
+              SizedBox(height: AppDimens.xl),
+              SkeletonBox(height: 24),
+              SizedBox(height: AppDimens.m),
+              SkeletonBox(height: 72),
+              SizedBox(height: AppDimens.s),
+              SkeletonBox(height: 72),
+              SizedBox(height: AppDimens.s),
+              SkeletonBox(height: 72),
             ],
           ),
         ),
@@ -245,54 +179,12 @@ class _ErrorSliver extends StatelessWidget {
   }
 }
 
-/// Sliver de estado vacío (cuando no hay datos en absoluto).
-class _EmptySliver extends StatelessWidget {
-  const _EmptySliver({required this.title, required this.body});
+// ============================================================================
+// SUCCESS
+// ============================================================================
 
-  final String title;
-  final String body;
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverFillRemaining(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(AppDimens.xxl),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.dashboard_outlined,
-                color: AppColors.textDisabled,
-                size: 48,
-              ),
-              const SizedBox(height: AppDimens.m),
-              Text(
-                title,
-                style: AppTypography.title.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: AppDimens.s),
-              Text(
-                body,
-                style: AppTypography.body.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Sliver de éxito: StatCards + PrimaryCard + lista de recientes.
-class _SuccessSliver extends StatelessWidget {
-  const _SuccessSliver({required this.stats});
+class _AdminSuccessSliver extends StatelessWidget {
+  const _AdminSuccessSliver({required this.stats});
 
   final AdminDashboardStats stats;
 
@@ -304,15 +196,10 @@ class _SuccessSliver extends StatelessWidget {
       padding: const EdgeInsets.all(AppDimens.l),
       sliver: SliverList(
         delegate: SliverChildListDelegate([
-          // === Fila de StatCards ===
           _StatsRow(stats: stats),
           const SizedBox(height: AppDimens.xl),
-
-          // === PrimaryCard con glow ===
-          _PrimaryCard(stats: stats),
+          _AdminPrimaryCard(stats: stats),
           const SizedBox(height: AppDimens.xl),
-
-          // === Sección secundaria: últimos aprobados ===
           SectionHeader(
             title: l10n.adminDashRecentSection,
             onSeeAll: () {
@@ -320,7 +207,6 @@ class _SuccessSliver extends StatelessWidget {
             },
           ),
           const SizedBox(height: AppDimens.m),
-
           if (stats.recentlyApprovedGyms.isEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: AppDimens.m),
@@ -346,7 +232,10 @@ class _SuccessSliver extends StatelessWidget {
   }
 }
 
-/// Fila de 3 StatCards. value es String (formato del kit).
+// ============================================================================
+// STATS ROW
+// ============================================================================
+
 class _StatsRow extends StatelessWidget {
   const _StatsRow({required this.stats});
 
@@ -363,7 +252,8 @@ class _StatsRow extends StatelessWidget {
             label: l10n.adminDashStatGyms,
             value: stats.activeGymsCount.toString(),
             sub: l10n.adminDashStatGymsSub,
-            icon: Icons.fitness_center_rounded,
+            icon: AppIcons.gyms,
+            onTap: () => context.go(RouteNames.adminGyms),
           ),
         ),
         const SizedBox(width: AppDimens.s),
@@ -372,14 +262,14 @@ class _StatsRow extends StatelessWidget {
             label: l10n.adminDashStatPending,
             value: stats.pendingApplicationsCount.toString(),
             sub: l10n.adminDashStatPendingSub,
-            icon: Icons.hourglass_top_rounded,
-            // Resaltar con un badge si hay pendientes (usa footer del kit).
+            icon: Icons.hourglass_top_rounded, // TODO: promover a AppIcons.
             footer: stats.hasPending
                 ? const PesaoBadge(
                     label: 'Revisar',
                     variant: PesaoBadgeVariant.warning,
                   )
                 : null,
+            onTap: () => context.go(RouteNames.adminGyms),
           ),
         ),
         const SizedBox(width: AppDimens.s),
@@ -388,7 +278,7 @@ class _StatsRow extends StatelessWidget {
             label: l10n.adminDashStatSubs,
             value: stats.activeSubscriptionsCount.toString(),
             sub: l10n.adminDashStatSubsSub,
-            icon: Icons.card_membership_rounded,
+            icon: Icons.card_membership_rounded, // TODO: promover a AppIcons.
           ),
         ),
       ],
@@ -396,9 +286,12 @@ class _StatsRow extends StatelessWidget {
   }
 }
 
-/// PrimaryCard con CTA que navega al tab de solicitudes (Gimnasios).
-class _PrimaryCard extends StatelessWidget {
-  const _PrimaryCard({required this.stats});
+// ============================================================================
+// PRIMARY CARD
+// ============================================================================
+
+class _AdminPrimaryCard extends StatelessWidget {
+  const _AdminPrimaryCard({required this.stats});
 
   final AdminDashboardStats stats;
 
@@ -407,22 +300,8 @@ class _PrimaryCard extends StatelessWidget {
     final l10n = AppStrings.of(context);
     final hasPending = stats.hasPending;
 
-    return Container(
-      padding: const EdgeInsets.all(AppDimens.l),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppDimens.cardBorderRadius,
-        border: Border.all(color: AppColors.outline),
-        boxShadow: hasPending
-            ? [
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.2),
-                  blurRadius: 24,
-                  spreadRadius: 0,
-                ),
-              ]
-            : null,
-      ),
+    return PesaoCard(
+      glow: hasPending,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -430,8 +309,9 @@ class _PrimaryCard extends StatelessWidget {
             children: [
               Icon(
                 hasPending
-                    ? Icons.pending_actions_rounded
-                    : Icons.check_circle_outline_rounded,
+                    ? Icons
+                          .pending_actions_rounded // TODO: promover a AppIcons.
+                    : AppIcons.success,
                 color: hasPending ? AppColors.primary : AppColors.success,
                 size: 24,
               ),
@@ -475,7 +355,10 @@ class _PrimaryCard extends StatelessWidget {
   }
 }
 
-/// Tile de gimnasio recientemente aprobado.
+// ============================================================================
+// RECENT GYM TILE
+// ============================================================================
+
 class _RecentGymTile extends StatelessWidget {
   const _RecentGymTile({required this.gym});
 
@@ -491,11 +374,7 @@ class _RecentGymTile extends StatelessWidget {
           color: AppColors.success.withValues(alpha: 0.15),
           shape: BoxShape.circle,
         ),
-        child: const Icon(
-          Icons.check_circle_rounded,
-          color: AppColors.success,
-          size: 20,
-        ),
+        child: const Icon(AppIcons.success, color: AppColors.success, size: 20),
       ),
       title: gym.name,
       subtitle: gym.locationLabel,

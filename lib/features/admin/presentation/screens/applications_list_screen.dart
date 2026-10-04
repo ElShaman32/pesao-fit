@@ -5,10 +5,14 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimens.dart';
+import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../shared/widgets/empty_state.dart';
+import '../../../../shared/widgets/error_state.dart';
 import '../../../../shared/widgets/pesao_app_bar.dart';
 import '../../../../shared/widgets/pesao_badge.dart';
 import '../../../../shared/widgets/pesao_card.dart';
+import '../../../../shared/widgets/skeleton_loader.dart';
 import '../../domain/entities/gym_application.dart';
 import '../providers/applications_review_controller.dart';
 
@@ -23,7 +27,9 @@ class ApplicationsListScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: const PesaoAppBar(title: 'Solicitudes'),
+      appBar: const PesaoAppBar(
+        title: 'Solicitudes',
+      ), // TODO: mover a AppStrings.
       body: RefreshIndicator(
         color: AppColors.primary,
         backgroundColor: AppColors.surface,
@@ -40,42 +46,45 @@ class ApplicationsListScreen extends ConsumerWidget {
   ) {
     final l10n = AppStrings.of(context);
 
-    // Loading: skeleton simple.
+    // Loading: skeleton.
     if (state.isLoading) {
       return ListView(
         physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.all(AppDimens.l),
-        children: List.generate(
-          3,
-          (_) => const Padding(
-            padding: EdgeInsets.only(bottom: AppDimens.m),
-            child: _SkeletonCard(),
+        children: const [
+          SkeletonLoader(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SkeletonBox(height: 88),
+                SizedBox(height: AppDimens.m),
+                SkeletonBox(height: 88),
+                SizedBox(height: AppDimens.m),
+                SkeletonBox(height: 88),
+              ],
+            ),
           ),
-        ),
+        ],
       );
     }
 
-    // Error: estado de error con reintento.
+    // Error.
     if (state.error != null) {
-      return _CenterMessage(
-        icon: Icons.error_outline,
-        iconColor: AppColors.error,
-        message: l10n.adminAppsError,
-        actionLabel: 'Reintentar',
-        onAction: controller.loadPending,
+      return ErrorState(
+        title: l10n.adminAppsError,
+        onRetry: controller.loadPending,
       );
     }
 
-    // Empty: sin solicitudes pendientes.
+    // Empty.
     if (state.isEmpty) {
-      return _CenterMessage(
-        icon: Icons.inbox_rounded,
-        iconColor: AppColors.textDisabled,
-        message: l10n.adminAppsEmpty,
+      return EmptyState(
+        icon: Icons.inbox_rounded, // TODO: promover a AppIcons.
+        body: l10n.adminAppsEmpty,
       );
     }
 
-    // Success: lista de solicitudes.
+    // Success.
     return ListView.separated(
       physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.all(AppDimens.l),
@@ -92,7 +101,10 @@ class ApplicationsListScreen extends ConsumerWidget {
   }
 }
 
-/// Card resumen de una solicitud pendiente.
+// ============================================================================
+// APPLICATION CARD
+// ============================================================================
+
 class _ApplicationCard extends StatelessWidget {
   const _ApplicationCard({required this.application, required this.onTap});
 
@@ -104,142 +116,66 @@ class _ApplicationCard extends StatelessWidget {
     return Semantics(
       button: true,
       label: '${application.gymName}, ${application.locationLabel}',
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
+      child: PesaoCard(
         onTap: onTap,
-        child: PesaoCard(
-          child: Padding(
-            padding: const EdgeInsets.all(AppDimens.l),
-            child: Row(
-              children: [
-                // Ícono del gimnasio.
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.15),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.fitness_center_rounded,
-                    color: AppColors.primary,
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(width: AppDimens.m),
-
-                // Nombre del gym + ubicación + dueño.
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        application.gymName,
-                        style: AppTypography.title.copyWith(
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: AppDimens.xs),
-                      Text(
-                        application.locationLabel,
-                        style: AppTypography.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                      const SizedBox(height: AppDimens.xs),
-                      Text(
-                        application.ownerName,
-                        style: AppTypography.bodySmall.copyWith(
-                          color: AppColors.textDisabled,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Badge pendiente + flecha.
-                const PesaoBadge(
-                  label: 'Pendiente',
-                  variant: PesaoBadgeVariant.warning,
-                ),
-                const SizedBox(width: AppDimens.s),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: AppColors.textSecondary,
-                  size: 16,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Skeleton simple para el estado de carga.
-class _SkeletonCard extends StatelessWidget {
-  const _SkeletonCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 88,
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: AppDimens.cardBorderRadius,
-        border: Border.all(color: AppColors.outline),
-      ),
-    );
-  }
-}
-
-/// Mensaje centrado reutilizable (empty / error).
-class _CenterMessage extends StatelessWidget {
-  const _CenterMessage({
-    required this.icon,
-    required this.iconColor,
-    required this.message,
-    this.actionLabel,
-    this.onAction,
-  });
-
-  final IconData icon;
-  final Color iconColor;
-  final String message;
-  final String? actionLabel;
-  final VoidCallback? onAction;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(AppDimens.xxl),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Row(
           children: [
-            Icon(icon, color: iconColor, size: 48),
-            const SizedBox(height: AppDimens.m),
-            Text(
-              message,
-              style: AppTypography.body.copyWith(
-                color: AppColors.textSecondary,
+            // Ícono del gimnasio.
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.15),
+                shape: BoxShape.circle,
               ),
-              textAlign: TextAlign.center,
+              child: const Icon(
+                AppIcons.gyms,
+                color: AppColors.primary,
+                size: 24,
+              ),
             ),
-            if (actionLabel != null && onAction != null) ...[
-              const SizedBox(height: AppDimens.l),
-              TextButton(
-                onPressed: onAction,
-                child: Text(
-                  actionLabel!,
-                  style: AppTypography.label.copyWith(
-                    color: AppColors.primaryText,
+            const SizedBox(width: AppDimens.m),
+
+            // Nombre + ubicación + dueño.
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    application.gymName,
+                    style: AppTypography.title.copyWith(
+                      color: AppColors.textPrimary,
+                    ),
                   ),
-                ),
+                  const SizedBox(height: AppDimens.xs),
+                  Text(
+                    application.locationLabel,
+                    style: AppTypography.bodySmall.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                  const SizedBox(height: AppDimens.xs),
+                  Text(
+                    application.ownerName,
+                    style: AppTypography.bodySmall.copyWith(
+                      color: AppColors.textDisabled,
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
+
+            // Badge + flecha.
+            const PesaoBadge(
+              label: 'Pendiente',
+              variant: PesaoBadgeVariant.warning,
+            ),
+            const SizedBox(width: AppDimens.s),
+            const Icon(
+              AppIcons.chevronRight,
+              color: AppColors.textSecondary,
+              size: 16,
+            ),
           ],
         ),
       ),
