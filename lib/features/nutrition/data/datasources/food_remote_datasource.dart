@@ -31,18 +31,17 @@ class FoodRemoteDatasource {
   }
 
   /// Obtiene todos los alimentos activos (global + gimnasio).
-  Future<List<Food>> fetchFoods({required String gymId}) async {
+  Future<List<Food>> fetchFoods({required String gymId, int limit = 50}) async {
     final response = await _client
         .from('foods')
         .select()
         .eq('is_active', true)
         .or('gym_id.eq.$gymId,gym_id.is.null')
         .order('is_system', ascending: false)
-        .order('name');
+        .order('name')
+        .limit(limit);
 
-    return (response as List)
-        .map((row) => Food.fromJson(row as Map<String, dynamic>))
-        .toList();
+    return response.map((json) => Food.fromJson(json)).toList();
   }
 
   /// Obtiene un alimento por ID.

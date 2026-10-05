@@ -14,6 +14,7 @@ class MealTemplateRemoteDatasource {
   Future<List<MealTemplate>> fetchTemplates({
     required String gymId,
     MealType? filterByMealType,
+    int limit = 50,
   }) async {
     var filter = _client
         .from('meal_templates')
@@ -25,7 +26,7 @@ class MealTemplateRemoteDatasource {
       filter = filter.eq('meal_type', filterByMealType.toDbValue());
     }
 
-    final query = filter.order('name');
+    final query = filter.order('name').limit(limit);
 
     final response = await query;
 
