@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
+import 'tables/nutrition_tables.dart';
 import 'tables/profiles_table.dart';
 import 'tables/gyms_table.dart';
 import 'tables/memberships_table.dart';
@@ -38,6 +39,11 @@ part 'app_database.g.dart';
     Notifications,
     ExchangeRates,
     GymSettings,
+    FoodsTable,
+    NutritionPlans,
+    NutritionGoals,
+    FoodLogs,
+    FoodLogItems,
   ],
 )
 class AppDatabase extends _$AppDatabase {

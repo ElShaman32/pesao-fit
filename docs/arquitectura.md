@@ -112,9 +112,10 @@ persistencia con Mobile.
 Drift cachea 15 de 25 tablas (ADR-038): solo las que se leen frecuentemente
 sin internet.
 
-**Tablas en Drift (15):** profiles, gyms, memberships, plans, subscriptions,
-exercises, routines, routine_exercises, workouts, workout_exercises,
-body_measurements, progress_photos, notifications, exchange_rates, gym_settings.
+**Tablas Drift (actualizado F3)**
+- **Original**: 15 tablas (perfiles, gimnasios, membresías, etc.)
+- **F3 Nutrición**: +5 tablas (foods, nutrition_plans, nutrition_goals, food_logs, food_log_items)
+- **Total**: 20 tablas cacheadas
 
 **Tablas NO en Drift (10):** payments (cola de sync), chats (Realtime),
 messages (Realtime), audit_logs (solo lectura admin), gym_applications

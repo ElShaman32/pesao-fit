@@ -1,61 +1,87 @@
+import 'package:drift/drift.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../core/database/app_database.dart';
 import '../../domain/entities/food.dart';
 import '../../domain/entities/food_favorite.dart';
 
 /// DataSource del catálogo de alimentos y favoritos.
+/// Implementa patrón cache-first: lee de Drift si falla red.
 class FoodRemoteDatasource {
-  FoodRemoteDatasource(this._client);
+  FoodRemoteDatasource(this._client, this._db);
 
   final SupabaseClient _client;
+  final AppDatabase _db;
 
-  /// Busca alimentos por nombre/marca (global + del gimnasio).
+  // ═══════════════════════════════════════════════════════════════════════
+  // MÉTODOS PÚBLICOS (patrón cache-first)
+  // ═══════════════════════════════════════════════════════════════════════
+
   Future<List<Food>> searchFoods({
     required String query,
     required String gymId,
     int limit = 20,
   }) async {
-    final response = await _client
-        .from('foods')
-        .select()
-        .or('name.ilike.%$query%,brand.ilike.%$query%')
-        .eq('is_active', true)
-        .or('gym_id.eq.$gymId,gym_id.is.null')
-        .order('is_system', ascending: false)
-        .order('name')
-        .limit(limit);
+    try {
+      final response = await _client
+          .from('foods')
+          .select()
+          .or('name.ilike.%$query%,brand.ilike.%$query%')
+          .eq('is_active', true)
+          .or('gym_id.eq.$gymId,gym_id.is.null')
+          .order('is_system', ascending: false)
+          .order('name')
+          .limit(limit);
 
-    return (response as List)
-        .map((row) => Food.fromJson(row as Map<String, dynamic>))
-        .toList();
+      final foods = (response as List)
+          .map((row) => Food.fromJson(row as Map<String, dynamic>))
+          .toList();
+
+      await _cacheFoods(foods);
+      return foods;
+    } catch (e) {
+      return _searchFoodsFromCache(query, gymId, limit);
+    }
   }
 
-  /// Obtiene todos los alimentos activos (global + gimnasio).
   Future<List<Food>> fetchFoods({required String gymId, int limit = 50}) async {
-    final response = await _client
-        .from('foods')
-        .select()
-        .eq('is_active', true)
-        .or('gym_id.eq.$gymId,gym_id.is.null')
-        .order('is_system', ascending: false)
-        .order('name')
-        .limit(limit);
+    try {
+      final response = await _client
+          .from('foods')
+          .select()
+          .eq('is_active', true)
+          .or('gym_id.eq.$gymId,gym_id.is.null')
+          .order('is_system', ascending: false)
+          .order('name')
+          .limit(limit);
 
-    return response.map((json) => Food.fromJson(json)).toList();
+      final foods = (response as List)
+          .map((row) => Food.fromJson(row as Map<String, dynamic>))
+          .toList();
+
+      await _cacheFoods(foods);
+      return foods;
+    } catch (e) {
+      return _loadFoodsFromCache(gymId, limit);
+    }
   }
 
-  /// Obtiene un alimento por ID.
   Future<Food> fetchFoodById(String foodId) async {
-    final response = await _client
-        .from('foods')
-        .select()
-        .eq('id', foodId)
-        .single();
+    try {
+      final response = await _client
+          .from('foods')
+          .select()
+          .eq('id', foodId)
+          .single();
 
-    return Food.fromJson(response);
+      final food = Food.fromJson(response);
+      await _cacheFoods([food]);
+      return food;
+    } catch (e) {
+      return _loadFoodFromCache(foodId);
+    }
   }
 
-  /// Crea un alimento del gimnasio.
   Future<Food> createFood(Food food) async {
     final response = await _client
         .from('foods')
@@ -68,10 +94,11 @@ class FoodRemoteDatasource {
         .select()
         .single();
 
-    return Food.fromJson(response);
+    final created = Food.fromJson(response);
+    await _cacheFoods([created]);
+    return created;
   }
 
-  /// Actualiza un alimento.
   Future<Food> updateFood(Food food) async {
     final response = await _client
         .from('foods')
@@ -94,15 +121,20 @@ class FoodRemoteDatasource {
         .select()
         .single();
 
-    return Food.fromJson(response);
+    final updated = Food.fromJson(response);
+    await _cacheFoods([updated]);
+    return updated;
   }
 
-  /// Desactiva un alimento (soft delete).
   Future<void> deactivateFood(String foodId) async {
     await _client.from('foods').update({'is_active': false}).eq('id', foodId);
+
+    // CORREGIDO: Sintaxis correcta de Drift update
+    await (_db.update(_db.foodsTable)..where((t) => t.id.equals(foodId))).write(
+      const FoodsTableCompanion(isActive: Value(false)),
+    );
   }
 
-  /// Obtiene los alimentos favoritos del cliente.
   Future<List<FoodFavorite>> fetchFavorites(String clientId) async {
     final response = await _client
         .from('food_favorites')
@@ -115,12 +147,10 @@ class FoodRemoteDatasource {
         .toList();
   }
 
-  /// Toggle favorito. Retorna true si quedó como favorito.
   Future<bool> toggleFavorite({
     required String clientId,
     required String foodId,
   }) async {
-    // Verificar si ya existe.
     final existing = await _client
         .from('food_favorites')
         .select('id')
@@ -129,19 +159,149 @@ class FoodRemoteDatasource {
         .maybeSingle();
 
     if (existing != null) {
-      // Ya existe → eliminar.
       await _client
           .from('food_favorites')
           .delete()
           .eq('id', existing['id'] as String);
       return false;
     } else {
-      // No existe → crear.
       await _client.from('food_favorites').insert({
         'client_id': clientId,
         'food_id': foodId,
       });
       return true;
     }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // MÉTODOS PRIVADOS (cache Drift)
+  // ═══════════════════════════════════════════════════════════════════════
+
+  Future<void> _cacheFoods(List<Food> foods) async {
+    await _db.transaction(() async {
+      for (final food in foods) {
+        await _db.foodsTable.insertOnConflictUpdate(_foodToRow(food));
+      }
+    });
+  }
+
+  Future<List<Food>> _searchFoodsFromCache(
+    String query,
+    String gymId,
+    int limit,
+  ) async {
+    final results =
+        await (_db.select(_db.foodsTable)
+              ..where(
+                (t) =>
+                    t.isActive.equals(true) &
+                    (t.gymId.equals(gymId) | t.gymId.isNull()) &
+                    (t.name.like('%$query%') | t.brand.like('%$query%')),
+              )
+              ..orderBy([
+                (t) => OrderingTerm(
+                  expression: t.isSystem,
+                  mode: OrderingMode.desc,
+                ),
+                (t) => OrderingTerm(expression: t.name),
+              ])
+              ..limit(limit))
+            .get();
+
+    return results.map(_rowToFood).toList();
+  }
+
+  Future<List<Food>> _loadFoodsFromCache(String gymId, int limit) async {
+    final results =
+        await (_db.select(_db.foodsTable)
+              ..where(
+                (t) =>
+                    t.isActive.equals(true) &
+                    (t.gymId.equals(gymId) | t.gymId.isNull()),
+              )
+              ..orderBy([
+                (t) => OrderingTerm(
+                  expression: t.isSystem,
+                  mode: OrderingMode.desc,
+                ),
+                (t) => OrderingTerm(expression: t.name),
+              ])
+              ..limit(limit))
+            .get();
+
+    return results.map(_rowToFood).toList();
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // MAPPERS (Drift ↔ Entity)
+  // ═══════════════════════════════════════════════════════════════════════
+
+  FoodsTableCompanion _foodToRow(Food food) {
+    return FoodsTableCompanion(
+      id: Value(food.id),
+      gymId: Value(food.gymId),
+      name: Value(food.name),
+      brand: Value(food.brand),
+      barcode: Value(food.barcode),
+      servingSize: Value(food.servingSize),
+      servingUnit: Value(food.servingUnit),
+      caloriesKcal: Value(food.caloriesKcal),
+      proteinG: Value(food.proteinG),
+      carbsG: Value(food.carbsG),
+      fatsG: Value(food.fatsG),
+      fiberG: Value(food.fiberG),
+      sugarG: Value(food.sugarG),
+      sodiumMg: Value(food.sodiumMg),
+      isVerified: Value(food.isVerified),
+      isSystem: Value(food.isSystem),
+      createdBy: Value(food.createdBy),
+      source: Value(food.source),
+      externalId: Value(food.externalId),
+      imageUrl: Value(food.imageUrl),
+      isActive: Value(food.isActive),
+      createdAt: Value(food.createdAt),
+      updatedAt: Value(food.updatedAt),
+    );
+  }
+
+  // CORREGIDO: Usar dynamic para evitar conflictos de tipos
+  Food _rowToFood(dynamic row) {
+    return Food(
+      id: row.id as String,
+      gymId: row.gymId as String?,
+      name: row.name as String,
+      brand: row.brand as String?,
+      barcode: row.barcode as String?,
+      servingSize: row.servingSize as double,
+      servingUnit: row.servingUnit as String,
+      caloriesKcal: row.caloriesKcal as double,
+      proteinG: row.proteinG as double,
+      carbsG: row.carbsG as double,
+      fatsG: row.fatsG as double,
+      fiberG: row.fiberG as double?,
+      sugarG: row.sugarG as double?,
+      sodiumMg: row.sodiumMg as double?,
+      isVerified: row.isVerified as bool,
+      isSystem: row.isSystem as bool,
+      createdBy: row.createdBy as String?,
+      source: row.source as String,
+      externalId: row.externalId as String?,
+      imageUrl: row.imageUrl as String?,
+      isActive: row.isActive as bool,
+      createdAt: row.createdAt as DateTime,
+      updatedAt: row.updatedAt as DateTime,
+    );
+  }
+
+  Future<Food> _loadFoodFromCache(String foodId) async {
+    final row = await (_db.select(
+      _db.foodsTable,
+    )..where((t) => t.id.equals(foodId))).getSingleOrNull();
+
+    if (row == null) {
+      throw Exception('Food not found in cache: $foodId');
+    }
+
+    return _rowToFood(row);
   }
 }

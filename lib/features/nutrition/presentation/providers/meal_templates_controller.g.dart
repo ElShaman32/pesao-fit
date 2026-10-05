@@ -45,7 +45,7 @@ final class MealTemplatesControllerProvider
 }
 
 String _$mealTemplatesControllerHash() =>
-    r'45411cd758e8676e522767f1e902548579ce65a8';
+    r'fa49c9da18dabc8d4799e538f29b96960f94026d';
 
 /// Controlador de plantillas de comida del nutricionista.
 

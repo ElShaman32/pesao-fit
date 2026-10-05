@@ -89,8 +89,25 @@ gym discovery, shells por rol con FAB contextual, dashboards.
 F2-D ✅ (parcial): Ejecución de rutina, rest timer con anillo countdown, registro de workouts ✅.
 Historial + gráficos ✅.
 
-### F3 Nutrición ⏳
-Alimentos, planes semanales, macros, consultas.
+## F3 NUTRICIÓN - Estado Actual
+
+### Completado
+- **Supabase**: 10 tablas (foods, food_favorites, food_logs, food_log_items, meal_templates, meal_template_foods, nutrition_goals, nutrition_plans, nutrition_plan_days, nutrition_plan_meals)
+- **RLS**: Completo en todas las tablas
+- **Funciones RPC**: 7 (add_food_to_log, get_or_create_food_log, get_daily_food_log, has_nutrition_feature, recalc_food_log_totals, recalc_meal_template_totals, recalc_nutrition_plan_totals)
+- **Domain**: 10 entidades + 2 enums (MealType, GoalType) + 5 repositorios abstractos
+- **Data**: 5 datasources + 5 repositorios impl
+- **Providers**: 6 controllers (foods, food_log, meal_templates, nutrition_goals, nutrition_plans, client_nutrition)
+- **Screens nutricionista**: 9 (clients, client_detail, plans, plan_form, plan_days, food_catalog, food_form, meal_template_list, meal_template_form)
+- **Screens cliente**: 2 (nutrition, food_log)
+- **Shells**: Conectados con rutas reales
+- **Drift**: 5 tablas cacheadas para offline-first
+
+### Pendiente
+- 3 datasources con cache-first (nutrition_plan, food_log, nutrition_goal)
+- Textos hardcodeados → AppStrings
+- Verificación DoD 15 puntos
+- FAB contextual cliente en nutrición
 
 ### F4 Monetización
 - F4-A ✅: Verificación de pagos del dueño (lista con filtros, detalle con comprobante,

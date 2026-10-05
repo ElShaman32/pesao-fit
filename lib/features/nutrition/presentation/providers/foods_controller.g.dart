@@ -44,7 +44,7 @@ final class FoodsControllerProvider
   }
 }
 
-String _$foodsControllerHash() => r'645e1b9441a0e7a21e54983aae28bf1daf708bee';
+String _$foodsControllerHash() => r'48153d300bfb745e723a942044b910c176ce8200';
 
 /// Controlador del catálogo de alimentos.
 

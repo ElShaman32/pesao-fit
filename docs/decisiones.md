@@ -231,3 +231,30 @@
 Contexto: El cliente necesita ejecutar su rutina marcando sets, con respuesta instantánea.
 Decisión: start_workout() pre-carga todos los sets en workout_exercises. El toggle de sets es optimista (actualiza UI inmediatamente, persiste en background, revierte si falla). Rest timer con anillo CustomPainter + HapticFeedback.
 Consecuencias: UI responsiva sin esperar red. RestTimerSheet sin dependencias externas (vibración nativa).
+
+## ADR-047: Drift cache para nutrición offline-first
+**Fecha**: 2026-10-04
+**Contexto**: El cliente necesita ver su plan nutricional sin conexión
+**Decisión**: Cachear 5 tablas en Drift (foods, nutrition_plans, nutrition_goals, food_logs, food_log_items)
+**Consecuencias**: 
+- ✅ Cliente puede ver plan offline
+- ✅ Búsqueda de alimentos funciona offline
+- ⚠️ Meal templates no se cachean (nutricionista siempre tiene conexión)
+
+## ADR-048: Patrón cache-first en datasources
+**Fecha**: 2026-10-04
+**Contexto**: Necesitamos fallback a cache cuando falla la red
+**Decisión**: Implementar patrón "try Supabase, fallback to Drift"
+**Consecuencias**:
+- ✅ Lecturas siempre funcionan (red o cache)
+- ✅ Escrituras en Supabase + actualización de cache
+- ⚠️ Requiere manejo de conflictos de sincronización (futuro)
+
+## ADR-049: Renombrar tablas Drift para evitar conflictos
+**Fecha**: 2026-10-04
+**Contexto**: Drift genera clases con el mismo nombre que las entidades del dominio
+**Decisión**: Usar sufijo "Table" en tablas Drift (FoodsTable, NutritionPlansTable, etc.)
+**Consecuencias**:
+- ✅ Evita conflictos de nombres
+- ✅ Código más claro
+- ⚠️ Requiere mappers explícitos (FoodRow → Food entity)

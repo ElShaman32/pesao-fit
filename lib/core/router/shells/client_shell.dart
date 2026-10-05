@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../features/home/presentation/screens/client_home_screen.dart';
+import '../../../features/nutrition/presentation/screens/client_food_log_screen.dart';
+import '../../../features/nutrition/presentation/screens/client_nutrition_screen.dart';
 import '../../../features/payments/presentation/screens/upload_payment_sheet.dart';
 import '../../../features/routines/presentation/screens/client_routine_screen.dart';
 import '../../../features/routines/presentation/screens/workout_execution_screen.dart';
@@ -62,14 +64,12 @@ _ClientFabConfig _clientFabForRoute(String path, BuildContext context) {
     );
   }
 
-  // Nutrición (futuro F3): registrar comida.
+  // Nutrición (F3): registrar comida.
   if (path == RouteNames.clientNutrition) {
     return _ClientFabConfig(
       icon: AppIcons.add,
       semanticLabel: 'Registrar comida',
-      onPressed: () {
-        // Futuro: abrir sheet de registro de comida.
-      },
+      onPressed: () => context.push(RouteNames.clientNutritionLog),
     );
   }
 
@@ -164,9 +164,14 @@ StatefulShellRoute buildClientShell() {
           GoRoute(
             path: RouteNames.clientNutrition,
             name: RouteNames.clientNutrition,
-            builder: (context, state) => ShellPlaceholderScreen(
-              title: AppStrings.of(context).tabNutrition,
-            ),
+            builder: (context, state) => const ClientNutritionScreen(),
+            routes: [
+              GoRoute(
+                path: 'log',
+                name: RouteNames.clientNutritionLog,
+                builder: (context, state) => const ClientFoodLogScreen(),
+              ),
+            ],
           ),
         ],
       ),

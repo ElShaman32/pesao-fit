@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/providers/auth_provider.dart';
+import '../../../../core/providers/database_provider.dart';
 import '../../../../core/providers/supabase_provider.dart';
 import '../../data/datasources/food_remote_datasource.dart';
 import '../../data/repositories/food_repository_impl.dart';
@@ -62,7 +63,10 @@ class FoodsController extends _$FoodsController {
   @override
   FoodsState build() {
     _repository = FoodRepositoryImpl(
-      remote: FoodRemoteDatasource(supabaseClient),
+      remote: FoodRemoteDatasource(
+        supabaseClient,
+        ref.read(appDatabaseProvider), // ← AGREGAR ESTO
+      ),
     );
 
     authProvider.addListener(_onAuthChange);
