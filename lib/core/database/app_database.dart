@@ -40,10 +40,10 @@ part 'app_database.g.dart';
     ExchangeRates,
     GymSettings,
     FoodsTable,
-    NutritionPlans,
-    NutritionGoals,
-    FoodLogs,
-    FoodLogItems,
+    NutritionPlansTable,
+    NutritionGoalsTable,
+    FoodLogsTable,
+    FoodLogItemsTable,
   ],
 )
 class AppDatabase extends _$AppDatabase {

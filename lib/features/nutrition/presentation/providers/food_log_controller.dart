@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/providers/auth_provider.dart';
+import '../../../../core/providers/database_provider.dart';
 import '../../../../core/providers/supabase_provider.dart';
 import '../../data/datasources/food_log_remote_datasource.dart';
 import '../../data/repositories/food_log_repository_impl.dart';
@@ -76,7 +77,10 @@ class FoodLogController extends _$FoodLogController {
   @override
   FoodLogState build() {
     _repository = FoodLogRepositoryImpl(
-      remote: FoodLogRemoteDatasource(supabaseClient),
+      remote: FoodLogRemoteDatasource(
+        supabaseClient,
+        ref.read(appDatabaseProvider),
+      ),
     );
 
     authProvider.addListener(_onAuthChange);

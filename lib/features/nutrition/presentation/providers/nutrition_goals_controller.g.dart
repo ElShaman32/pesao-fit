@@ -45,7 +45,7 @@ final class NutritionGoalsControllerProvider
 }
 
 String _$nutritionGoalsControllerHash() =>
-    r'dc27b70c3963b3d9a5f89976cc66c348dc00fd11';
+    r'73daad0dad59a72e6be0d45f05f9a37ce986d226';
 
 /// Controlador de metas nutricionales por cliente.
 

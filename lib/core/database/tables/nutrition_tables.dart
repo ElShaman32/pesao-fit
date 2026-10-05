@@ -31,7 +31,7 @@ class FoodsTable extends Table {
 }
 
 /// Planes nutricionales (cache local de `nutrition_plans`).
-class NutritionPlans extends Table {
+class NutritionPlansTable extends Table {
   TextColumn get id => text()();
   TextColumn get gymId => text()();
   TextColumn get clientId => text()();
@@ -53,7 +53,7 @@ class NutritionPlans extends Table {
 }
 
 /// Metas nutricionales por cliente (cache local de `nutrition_goals`).
-class NutritionGoals extends Table {
+class NutritionGoalsTable extends Table {
   TextColumn get id => text()();
   TextColumn get clientId => text()();
   TextColumn get gymId => text()();
@@ -73,7 +73,7 @@ class NutritionGoals extends Table {
 }
 
 /// Registro diario de comidas (cache local de `food_logs`).
-class FoodLogs extends Table {
+class FoodLogsTable extends Table {
   TextColumn get id => text()();
   TextColumn get clientId => text()();
   TextColumn get gymId => text()();
@@ -91,7 +91,7 @@ class FoodLogs extends Table {
 }
 
 /// Items de comida en el log diario (cache local de `food_log_items`).
-class FoodLogItems extends Table {
+class FoodLogItemsTable extends Table {
   TextColumn get id => text()();
   TextColumn get logId => text()();
   TextColumn get foodId => text()();

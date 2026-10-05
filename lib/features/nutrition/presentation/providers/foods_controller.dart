@@ -65,7 +65,7 @@ class FoodsController extends _$FoodsController {
     _repository = FoodRepositoryImpl(
       remote: FoodRemoteDatasource(
         supabaseClient,
-        ref.read(appDatabaseProvider), // ← AGREGAR ESTO
+        ref.read(appDatabaseProvider),
       ),
     );
 

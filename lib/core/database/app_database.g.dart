@@ -8405,12 +8405,12 @@ class FoodsTableCompanion extends UpdateCompanion<FoodsTableData> {
   }
 }
 
-class $NutritionPlansTable extends NutritionPlans
-    with TableInfo<$NutritionPlansTable, NutritionPlan> {
+class $NutritionPlansTableTable extends NutritionPlansTable
+    with TableInfo<$NutritionPlansTableTable, NutritionPlansTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $NutritionPlansTable(this.attachedDatabase, [this._alias]);
+  $NutritionPlansTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
@@ -8592,10 +8592,10 @@ class $NutritionPlansTable extends NutritionPlans
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'nutrition_plans';
+  static const String $name = 'nutrition_plans_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<NutritionPlan> instance, {
+    Insertable<NutritionPlansTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -8735,9 +8735,12 @@ class $NutritionPlansTable extends NutritionPlans
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  NutritionPlan map(Map<String, dynamic> data, {String? tablePrefix}) {
+  NutritionPlansTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return NutritionPlan(
+    return NutritionPlansTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -8802,12 +8805,13 @@ class $NutritionPlansTable extends NutritionPlans
   }
 
   @override
-  $NutritionPlansTable createAlias(String alias) {
-    return $NutritionPlansTable(attachedDatabase, alias);
+  $NutritionPlansTableTable createAlias(String alias) {
+    return $NutritionPlansTableTable(attachedDatabase, alias);
   }
 }
 
-class NutritionPlan extends DataClass implements Insertable<NutritionPlan> {
+class NutritionPlansTableData extends DataClass
+    implements Insertable<NutritionPlansTableData> {
   final String id;
   final String gymId;
   final String clientId;
@@ -8823,7 +8827,7 @@ class NutritionPlan extends DataClass implements Insertable<NutritionPlan> {
   final bool isActive;
   final DateTime createdAt;
   final DateTime updatedAt;
-  const NutritionPlan({
+  const NutritionPlansTableData({
     required this.id,
     required this.gymId,
     required this.clientId,
@@ -8865,8 +8869,8 @@ class NutritionPlan extends DataClass implements Insertable<NutritionPlan> {
     return map;
   }
 
-  NutritionPlansCompanion toCompanion(bool nullToAbsent) {
-    return NutritionPlansCompanion(
+  NutritionPlansTableCompanion toCompanion(bool nullToAbsent) {
+    return NutritionPlansTableCompanion(
       id: Value(id),
       gymId: Value(gymId),
       clientId: Value(clientId),
@@ -8887,12 +8891,12 @@ class NutritionPlan extends DataClass implements Insertable<NutritionPlan> {
     );
   }
 
-  factory NutritionPlan.fromJson(
+  factory NutritionPlansTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return NutritionPlan(
+    return NutritionPlansTableData(
       id: serializer.fromJson<String>(json['id']),
       gymId: serializer.fromJson<String>(json['gymId']),
       clientId: serializer.fromJson<String>(json['clientId']),
@@ -8934,7 +8938,7 @@ class NutritionPlan extends DataClass implements Insertable<NutritionPlan> {
     };
   }
 
-  NutritionPlan copyWith({
+  NutritionPlansTableData copyWith({
     String? id,
     String? gymId,
     String? clientId,
@@ -8950,7 +8954,7 @@ class NutritionPlan extends DataClass implements Insertable<NutritionPlan> {
     bool? isActive,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) => NutritionPlan(
+  }) => NutritionPlansTableData(
     id: id ?? this.id,
     gymId: gymId ?? this.gymId,
     clientId: clientId ?? this.clientId,
@@ -8967,8 +8971,8 @@ class NutritionPlan extends DataClass implements Insertable<NutritionPlan> {
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
   );
-  NutritionPlan copyWithCompanion(NutritionPlansCompanion data) {
-    return NutritionPlan(
+  NutritionPlansTableData copyWithCompanion(NutritionPlansTableCompanion data) {
+    return NutritionPlansTableData(
       id: data.id.present ? data.id.value : this.id,
       gymId: data.gymId.present ? data.gymId.value : this.gymId,
       clientId: data.clientId.present ? data.clientId.value : this.clientId,
@@ -9001,7 +9005,7 @@ class NutritionPlan extends DataClass implements Insertable<NutritionPlan> {
 
   @override
   String toString() {
-    return (StringBuffer('NutritionPlan(')
+    return (StringBuffer('NutritionPlansTableData(')
           ..write('id: $id, ')
           ..write('gymId: $gymId, ')
           ..write('clientId: $clientId, ')
@@ -9042,7 +9046,7 @@ class NutritionPlan extends DataClass implements Insertable<NutritionPlan> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is NutritionPlan &&
+      (other is NutritionPlansTableData &&
           other.id == this.id &&
           other.gymId == this.gymId &&
           other.clientId == this.clientId &&
@@ -9060,7 +9064,8 @@ class NutritionPlan extends DataClass implements Insertable<NutritionPlan> {
           other.updatedAt == this.updatedAt);
 }
 
-class NutritionPlansCompanion extends UpdateCompanion<NutritionPlan> {
+class NutritionPlansTableCompanion
+    extends UpdateCompanion<NutritionPlansTableData> {
   final Value<String> id;
   final Value<String> gymId;
   final Value<String> clientId;
@@ -9077,7 +9082,7 @@ class NutritionPlansCompanion extends UpdateCompanion<NutritionPlan> {
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   final Value<int> rowid;
-  const NutritionPlansCompanion({
+  const NutritionPlansTableCompanion({
     this.id = const Value.absent(),
     this.gymId = const Value.absent(),
     this.clientId = const Value.absent(),
@@ -9095,7 +9100,7 @@ class NutritionPlansCompanion extends UpdateCompanion<NutritionPlan> {
     this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  NutritionPlansCompanion.insert({
+  NutritionPlansTableCompanion.insert({
     required String id,
     required String gymId,
     required String clientId,
@@ -9124,7 +9129,7 @@ class NutritionPlansCompanion extends UpdateCompanion<NutritionPlan> {
        durationDays = Value(durationDays),
        createdAt = Value(createdAt),
        updatedAt = Value(updatedAt);
-  static Insertable<NutritionPlan> custom({
+  static Insertable<NutritionPlansTableData> custom({
     Expression<String>? id,
     Expression<String>? gymId,
     Expression<String>? clientId,
@@ -9163,7 +9168,7 @@ class NutritionPlansCompanion extends UpdateCompanion<NutritionPlan> {
     });
   }
 
-  NutritionPlansCompanion copyWith({
+  NutritionPlansTableCompanion copyWith({
     Value<String>? id,
     Value<String>? gymId,
     Value<String>? clientId,
@@ -9181,7 +9186,7 @@ class NutritionPlansCompanion extends UpdateCompanion<NutritionPlan> {
     Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
-    return NutritionPlansCompanion(
+    return NutritionPlansTableCompanion(
       id: id ?? this.id,
       gymId: gymId ?? this.gymId,
       clientId: clientId ?? this.clientId,
@@ -9257,7 +9262,7 @@ class NutritionPlansCompanion extends UpdateCompanion<NutritionPlan> {
 
   @override
   String toString() {
-    return (StringBuffer('NutritionPlansCompanion(')
+    return (StringBuffer('NutritionPlansTableCompanion(')
           ..write('id: $id, ')
           ..write('gymId: $gymId, ')
           ..write('clientId: $clientId, ')
@@ -9279,12 +9284,12 @@ class NutritionPlansCompanion extends UpdateCompanion<NutritionPlan> {
   }
 }
 
-class $NutritionGoalsTable extends NutritionGoals
-    with TableInfo<$NutritionGoalsTable, NutritionGoal> {
+class $NutritionGoalsTableTable extends NutritionGoalsTable
+    with TableInfo<$NutritionGoalsTableTable, NutritionGoalsTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $NutritionGoalsTable(this.attachedDatabase, [this._alias]);
+  $NutritionGoalsTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
@@ -9445,10 +9450,10 @@ class $NutritionGoalsTable extends NutritionGoals
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'nutrition_goals';
+  static const String $name = 'nutrition_goals_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<NutritionGoal> instance, {
+    Insertable<NutritionGoalsTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -9564,9 +9569,12 @@ class $NutritionGoalsTable extends NutritionGoals
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  NutritionGoal map(Map<String, dynamic> data, {String? tablePrefix}) {
+  NutritionGoalsTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return NutritionGoal(
+    return NutritionGoalsTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -9623,12 +9631,13 @@ class $NutritionGoalsTable extends NutritionGoals
   }
 
   @override
-  $NutritionGoalsTable createAlias(String alias) {
-    return $NutritionGoalsTable(attachedDatabase, alias);
+  $NutritionGoalsTableTable createAlias(String alias) {
+    return $NutritionGoalsTableTable(attachedDatabase, alias);
   }
 }
 
-class NutritionGoal extends DataClass implements Insertable<NutritionGoal> {
+class NutritionGoalsTableData extends DataClass
+    implements Insertable<NutritionGoalsTableData> {
   final String id;
   final String clientId;
   final String gymId;
@@ -9642,7 +9651,7 @@ class NutritionGoal extends DataClass implements Insertable<NutritionGoal> {
   final bool isActive;
   final DateTime createdAt;
   final DateTime updatedAt;
-  const NutritionGoal({
+  const NutritionGoalsTableData({
     required this.id,
     required this.clientId,
     required this.gymId,
@@ -9680,8 +9689,8 @@ class NutritionGoal extends DataClass implements Insertable<NutritionGoal> {
     return map;
   }
 
-  NutritionGoalsCompanion toCompanion(bool nullToAbsent) {
-    return NutritionGoalsCompanion(
+  NutritionGoalsTableCompanion toCompanion(bool nullToAbsent) {
+    return NutritionGoalsTableCompanion(
       id: Value(id),
       clientId: Value(clientId),
       gymId: Value(gymId),
@@ -9702,12 +9711,12 @@ class NutritionGoal extends DataClass implements Insertable<NutritionGoal> {
     );
   }
 
-  factory NutritionGoal.fromJson(
+  factory NutritionGoalsTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return NutritionGoal(
+    return NutritionGoalsTableData(
       id: serializer.fromJson<String>(json['id']),
       clientId: serializer.fromJson<String>(json['clientId']),
       gymId: serializer.fromJson<String>(json['gymId']),
@@ -9745,7 +9754,7 @@ class NutritionGoal extends DataClass implements Insertable<NutritionGoal> {
     };
   }
 
-  NutritionGoal copyWith({
+  NutritionGoalsTableData copyWith({
     String? id,
     String? clientId,
     String? gymId,
@@ -9759,7 +9768,7 @@ class NutritionGoal extends DataClass implements Insertable<NutritionGoal> {
     bool? isActive,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) => NutritionGoal(
+  }) => NutritionGoalsTableData(
     id: id ?? this.id,
     clientId: clientId ?? this.clientId,
     gymId: gymId ?? this.gymId,
@@ -9774,8 +9783,8 @@ class NutritionGoal extends DataClass implements Insertable<NutritionGoal> {
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
   );
-  NutritionGoal copyWithCompanion(NutritionGoalsCompanion data) {
-    return NutritionGoal(
+  NutritionGoalsTableData copyWithCompanion(NutritionGoalsTableCompanion data) {
+    return NutritionGoalsTableData(
       id: data.id.present ? data.id.value : this.id,
       clientId: data.clientId.present ? data.clientId.value : this.clientId,
       gymId: data.gymId.present ? data.gymId.value : this.gymId,
@@ -9802,7 +9811,7 @@ class NutritionGoal extends DataClass implements Insertable<NutritionGoal> {
 
   @override
   String toString() {
-    return (StringBuffer('NutritionGoal(')
+    return (StringBuffer('NutritionGoalsTableData(')
           ..write('id: $id, ')
           ..write('clientId: $clientId, ')
           ..write('gymId: $gymId, ')
@@ -9839,7 +9848,7 @@ class NutritionGoal extends DataClass implements Insertable<NutritionGoal> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is NutritionGoal &&
+      (other is NutritionGoalsTableData &&
           other.id == this.id &&
           other.clientId == this.clientId &&
           other.gymId == this.gymId &&
@@ -9855,7 +9864,8 @@ class NutritionGoal extends DataClass implements Insertable<NutritionGoal> {
           other.updatedAt == this.updatedAt);
 }
 
-class NutritionGoalsCompanion extends UpdateCompanion<NutritionGoal> {
+class NutritionGoalsTableCompanion
+    extends UpdateCompanion<NutritionGoalsTableData> {
   final Value<String> id;
   final Value<String> clientId;
   final Value<String> gymId;
@@ -9870,7 +9880,7 @@ class NutritionGoalsCompanion extends UpdateCompanion<NutritionGoal> {
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   final Value<int> rowid;
-  const NutritionGoalsCompanion({
+  const NutritionGoalsTableCompanion({
     this.id = const Value.absent(),
     this.clientId = const Value.absent(),
     this.gymId = const Value.absent(),
@@ -9886,7 +9896,7 @@ class NutritionGoalsCompanion extends UpdateCompanion<NutritionGoal> {
     this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  NutritionGoalsCompanion.insert({
+  NutritionGoalsTableCompanion.insert({
     required String id,
     required String clientId,
     required String gymId,
@@ -9910,7 +9920,7 @@ class NutritionGoalsCompanion extends UpdateCompanion<NutritionGoal> {
        targetFatsG = Value(targetFatsG),
        createdAt = Value(createdAt),
        updatedAt = Value(updatedAt);
-  static Insertable<NutritionGoal> custom({
+  static Insertable<NutritionGoalsTableData> custom({
     Expression<String>? id,
     Expression<String>? clientId,
     Expression<String>? gymId,
@@ -9945,7 +9955,7 @@ class NutritionGoalsCompanion extends UpdateCompanion<NutritionGoal> {
     });
   }
 
-  NutritionGoalsCompanion copyWith({
+  NutritionGoalsTableCompanion copyWith({
     Value<String>? id,
     Value<String>? clientId,
     Value<String>? gymId,
@@ -9961,7 +9971,7 @@ class NutritionGoalsCompanion extends UpdateCompanion<NutritionGoal> {
     Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
-    return NutritionGoalsCompanion(
+    return NutritionGoalsTableCompanion(
       id: id ?? this.id,
       clientId: clientId ?? this.clientId,
       gymId: gymId ?? this.gymId,
@@ -10029,7 +10039,7 @@ class NutritionGoalsCompanion extends UpdateCompanion<NutritionGoal> {
 
   @override
   String toString() {
-    return (StringBuffer('NutritionGoalsCompanion(')
+    return (StringBuffer('NutritionGoalsTableCompanion(')
           ..write('id: $id, ')
           ..write('clientId: $clientId, ')
           ..write('gymId: $gymId, ')
@@ -10049,11 +10059,12 @@ class NutritionGoalsCompanion extends UpdateCompanion<NutritionGoal> {
   }
 }
 
-class $FoodLogsTable extends FoodLogs with TableInfo<$FoodLogsTable, FoodLog> {
+class $FoodLogsTableTable extends FoodLogsTable
+    with TableInfo<$FoodLogsTableTable, FoodLogsTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $FoodLogsTable(this.attachedDatabase, [this._alias]);
+  $FoodLogsTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
@@ -10192,10 +10203,10 @@ class $FoodLogsTable extends FoodLogs with TableInfo<$FoodLogsTable, FoodLog> {
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'food_logs';
+  static const String $name = 'food_logs_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<FoodLog> instance, {
+    Insertable<FoodLogsTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -10293,9 +10304,9 @@ class $FoodLogsTable extends FoodLogs with TableInfo<$FoodLogsTable, FoodLog> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  FoodLog map(Map<String, dynamic> data, {String? tablePrefix}) {
+  FoodLogsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return FoodLog(
+    return FoodLogsTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -10344,12 +10355,13 @@ class $FoodLogsTable extends FoodLogs with TableInfo<$FoodLogsTable, FoodLog> {
   }
 
   @override
-  $FoodLogsTable createAlias(String alias) {
-    return $FoodLogsTable(attachedDatabase, alias);
+  $FoodLogsTableTable createAlias(String alias) {
+    return $FoodLogsTableTable(attachedDatabase, alias);
   }
 }
 
-class FoodLog extends DataClass implements Insertable<FoodLog> {
+class FoodLogsTableData extends DataClass
+    implements Insertable<FoodLogsTableData> {
   final String id;
   final String clientId;
   final String gymId;
@@ -10361,7 +10373,7 @@ class FoodLog extends DataClass implements Insertable<FoodLog> {
   final String? notes;
   final DateTime createdAt;
   final DateTime updatedAt;
-  const FoodLog({
+  const FoodLogsTableData({
     required this.id,
     required this.clientId,
     required this.gymId,
@@ -10393,8 +10405,8 @@ class FoodLog extends DataClass implements Insertable<FoodLog> {
     return map;
   }
 
-  FoodLogsCompanion toCompanion(bool nullToAbsent) {
-    return FoodLogsCompanion(
+  FoodLogsTableCompanion toCompanion(bool nullToAbsent) {
+    return FoodLogsTableCompanion(
       id: Value(id),
       clientId: Value(clientId),
       gymId: Value(gymId),
@@ -10411,12 +10423,12 @@ class FoodLog extends DataClass implements Insertable<FoodLog> {
     );
   }
 
-  factory FoodLog.fromJson(
+  factory FoodLogsTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return FoodLog(
+    return FoodLogsTableData(
       id: serializer.fromJson<String>(json['id']),
       clientId: serializer.fromJson<String>(json['clientId']),
       gymId: serializer.fromJson<String>(json['gymId']),
@@ -10448,7 +10460,7 @@ class FoodLog extends DataClass implements Insertable<FoodLog> {
     };
   }
 
-  FoodLog copyWith({
+  FoodLogsTableData copyWith({
     String? id,
     String? clientId,
     String? gymId,
@@ -10460,7 +10472,7 @@ class FoodLog extends DataClass implements Insertable<FoodLog> {
     Value<String?> notes = const Value.absent(),
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) => FoodLog(
+  }) => FoodLogsTableData(
     id: id ?? this.id,
     clientId: clientId ?? this.clientId,
     gymId: gymId ?? this.gymId,
@@ -10473,8 +10485,8 @@ class FoodLog extends DataClass implements Insertable<FoodLog> {
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
   );
-  FoodLog copyWithCompanion(FoodLogsCompanion data) {
-    return FoodLog(
+  FoodLogsTableData copyWithCompanion(FoodLogsTableCompanion data) {
+    return FoodLogsTableData(
       id: data.id.present ? data.id.value : this.id,
       clientId: data.clientId.present ? data.clientId.value : this.clientId,
       gymId: data.gymId.present ? data.gymId.value : this.gymId,
@@ -10499,7 +10511,7 @@ class FoodLog extends DataClass implements Insertable<FoodLog> {
 
   @override
   String toString() {
-    return (StringBuffer('FoodLog(')
+    return (StringBuffer('FoodLogsTableData(')
           ..write('id: $id, ')
           ..write('clientId: $clientId, ')
           ..write('gymId: $gymId, ')
@@ -10532,7 +10544,7 @@ class FoodLog extends DataClass implements Insertable<FoodLog> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is FoodLog &&
+      (other is FoodLogsTableData &&
           other.id == this.id &&
           other.clientId == this.clientId &&
           other.gymId == this.gymId &&
@@ -10546,7 +10558,7 @@ class FoodLog extends DataClass implements Insertable<FoodLog> {
           other.updatedAt == this.updatedAt);
 }
 
-class FoodLogsCompanion extends UpdateCompanion<FoodLog> {
+class FoodLogsTableCompanion extends UpdateCompanion<FoodLogsTableData> {
   final Value<String> id;
   final Value<String> clientId;
   final Value<String> gymId;
@@ -10559,7 +10571,7 @@ class FoodLogsCompanion extends UpdateCompanion<FoodLog> {
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   final Value<int> rowid;
-  const FoodLogsCompanion({
+  const FoodLogsTableCompanion({
     this.id = const Value.absent(),
     this.clientId = const Value.absent(),
     this.gymId = const Value.absent(),
@@ -10573,7 +10585,7 @@ class FoodLogsCompanion extends UpdateCompanion<FoodLog> {
     this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  FoodLogsCompanion.insert({
+  FoodLogsTableCompanion.insert({
     required String id,
     required String clientId,
     required String gymId,
@@ -10592,7 +10604,7 @@ class FoodLogsCompanion extends UpdateCompanion<FoodLog> {
        logDate = Value(logDate),
        createdAt = Value(createdAt),
        updatedAt = Value(updatedAt);
-  static Insertable<FoodLog> custom({
+  static Insertable<FoodLogsTableData> custom({
     Expression<String>? id,
     Expression<String>? clientId,
     Expression<String>? gymId,
@@ -10622,7 +10634,7 @@ class FoodLogsCompanion extends UpdateCompanion<FoodLog> {
     });
   }
 
-  FoodLogsCompanion copyWith({
+  FoodLogsTableCompanion copyWith({
     Value<String>? id,
     Value<String>? clientId,
     Value<String>? gymId,
@@ -10636,7 +10648,7 @@ class FoodLogsCompanion extends UpdateCompanion<FoodLog> {
     Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
-    return FoodLogsCompanion(
+    return FoodLogsTableCompanion(
       id: id ?? this.id,
       clientId: clientId ?? this.clientId,
       gymId: gymId ?? this.gymId,
@@ -10696,7 +10708,7 @@ class FoodLogsCompanion extends UpdateCompanion<FoodLog> {
 
   @override
   String toString() {
-    return (StringBuffer('FoodLogsCompanion(')
+    return (StringBuffer('FoodLogsTableCompanion(')
           ..write('id: $id, ')
           ..write('clientId: $clientId, ')
           ..write('gymId: $gymId, ')
@@ -10714,12 +10726,12 @@ class FoodLogsCompanion extends UpdateCompanion<FoodLog> {
   }
 }
 
-class $FoodLogItemsTable extends FoodLogItems
-    with TableInfo<$FoodLogItemsTable, FoodLogItem> {
+class $FoodLogItemsTableTable extends FoodLogItemsTable
+    with TableInfo<$FoodLogItemsTableTable, FoodLogItemsTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $FoodLogItemsTable(this.attachedDatabase, [this._alias]);
+  $FoodLogItemsTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
@@ -10837,10 +10849,10 @@ class $FoodLogItemsTable extends FoodLogItems
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'food_log_items';
+  static const String $name = 'food_log_items_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<FoodLogItem> instance, {
+    Insertable<FoodLogItemsTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -10931,9 +10943,9 @@ class $FoodLogItemsTable extends FoodLogItems
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  FoodLogItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+  FoodLogItemsTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return FoodLogItem(
+    return FoodLogItemsTableData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -10978,12 +10990,13 @@ class $FoodLogItemsTable extends FoodLogItems
   }
 
   @override
-  $FoodLogItemsTable createAlias(String alias) {
-    return $FoodLogItemsTable(attachedDatabase, alias);
+  $FoodLogItemsTableTable createAlias(String alias) {
+    return $FoodLogItemsTableTable(attachedDatabase, alias);
   }
 }
 
-class FoodLogItem extends DataClass implements Insertable<FoodLogItem> {
+class FoodLogItemsTableData extends DataClass
+    implements Insertable<FoodLogItemsTableData> {
   final String id;
   final String logId;
   final String foodId;
@@ -10994,7 +11007,7 @@ class FoodLogItem extends DataClass implements Insertable<FoodLogItem> {
   final double carbsG;
   final double fatsG;
   final DateTime createdAt;
-  const FoodLogItem({
+  const FoodLogItemsTableData({
     required this.id,
     required this.logId,
     required this.foodId,
@@ -11022,8 +11035,8 @@ class FoodLogItem extends DataClass implements Insertable<FoodLogItem> {
     return map;
   }
 
-  FoodLogItemsCompanion toCompanion(bool nullToAbsent) {
-    return FoodLogItemsCompanion(
+  FoodLogItemsTableCompanion toCompanion(bool nullToAbsent) {
+    return FoodLogItemsTableCompanion(
       id: Value(id),
       logId: Value(logId),
       foodId: Value(foodId),
@@ -11037,12 +11050,12 @@ class FoodLogItem extends DataClass implements Insertable<FoodLogItem> {
     );
   }
 
-  factory FoodLogItem.fromJson(
+  factory FoodLogItemsTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return FoodLogItem(
+    return FoodLogItemsTableData(
       id: serializer.fromJson<String>(json['id']),
       logId: serializer.fromJson<String>(json['logId']),
       foodId: serializer.fromJson<String>(json['foodId']),
@@ -11072,7 +11085,7 @@ class FoodLogItem extends DataClass implements Insertable<FoodLogItem> {
     };
   }
 
-  FoodLogItem copyWith({
+  FoodLogItemsTableData copyWith({
     String? id,
     String? logId,
     String? foodId,
@@ -11083,7 +11096,7 @@ class FoodLogItem extends DataClass implements Insertable<FoodLogItem> {
     double? carbsG,
     double? fatsG,
     DateTime? createdAt,
-  }) => FoodLogItem(
+  }) => FoodLogItemsTableData(
     id: id ?? this.id,
     logId: logId ?? this.logId,
     foodId: foodId ?? this.foodId,
@@ -11095,8 +11108,8 @@ class FoodLogItem extends DataClass implements Insertable<FoodLogItem> {
     fatsG: fatsG ?? this.fatsG,
     createdAt: createdAt ?? this.createdAt,
   );
-  FoodLogItem copyWithCompanion(FoodLogItemsCompanion data) {
-    return FoodLogItem(
+  FoodLogItemsTableData copyWithCompanion(FoodLogItemsTableCompanion data) {
+    return FoodLogItemsTableData(
       id: data.id.present ? data.id.value : this.id,
       logId: data.logId.present ? data.logId.value : this.logId,
       foodId: data.foodId.present ? data.foodId.value : this.foodId,
@@ -11114,7 +11127,7 @@ class FoodLogItem extends DataClass implements Insertable<FoodLogItem> {
 
   @override
   String toString() {
-    return (StringBuffer('FoodLogItem(')
+    return (StringBuffer('FoodLogItemsTableData(')
           ..write('id: $id, ')
           ..write('logId: $logId, ')
           ..write('foodId: $foodId, ')
@@ -11145,7 +11158,7 @@ class FoodLogItem extends DataClass implements Insertable<FoodLogItem> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is FoodLogItem &&
+      (other is FoodLogItemsTableData &&
           other.id == this.id &&
           other.logId == this.logId &&
           other.foodId == this.foodId &&
@@ -11158,7 +11171,8 @@ class FoodLogItem extends DataClass implements Insertable<FoodLogItem> {
           other.createdAt == this.createdAt);
 }
 
-class FoodLogItemsCompanion extends UpdateCompanion<FoodLogItem> {
+class FoodLogItemsTableCompanion
+    extends UpdateCompanion<FoodLogItemsTableData> {
   final Value<String> id;
   final Value<String> logId;
   final Value<String> foodId;
@@ -11170,7 +11184,7 @@ class FoodLogItemsCompanion extends UpdateCompanion<FoodLogItem> {
   final Value<double> fatsG;
   final Value<DateTime> createdAt;
   final Value<int> rowid;
-  const FoodLogItemsCompanion({
+  const FoodLogItemsTableCompanion({
     this.id = const Value.absent(),
     this.logId = const Value.absent(),
     this.foodId = const Value.absent(),
@@ -11183,7 +11197,7 @@ class FoodLogItemsCompanion extends UpdateCompanion<FoodLogItem> {
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  FoodLogItemsCompanion.insert({
+  FoodLogItemsTableCompanion.insert({
     required String id,
     required String logId,
     required String foodId,
@@ -11205,7 +11219,7 @@ class FoodLogItemsCompanion extends UpdateCompanion<FoodLogItem> {
        carbsG = Value(carbsG),
        fatsG = Value(fatsG),
        createdAt = Value(createdAt);
-  static Insertable<FoodLogItem> custom({
+  static Insertable<FoodLogItemsTableData> custom({
     Expression<String>? id,
     Expression<String>? logId,
     Expression<String>? foodId,
@@ -11233,7 +11247,7 @@ class FoodLogItemsCompanion extends UpdateCompanion<FoodLogItem> {
     });
   }
 
-  FoodLogItemsCompanion copyWith({
+  FoodLogItemsTableCompanion copyWith({
     Value<String>? id,
     Value<String>? logId,
     Value<String>? foodId,
@@ -11246,7 +11260,7 @@ class FoodLogItemsCompanion extends UpdateCompanion<FoodLogItem> {
     Value<DateTime>? createdAt,
     Value<int>? rowid,
   }) {
-    return FoodLogItemsCompanion(
+    return FoodLogItemsTableCompanion(
       id: id ?? this.id,
       logId: logId ?? this.logId,
       foodId: foodId ?? this.foodId,
@@ -11302,7 +11316,7 @@ class FoodLogItemsCompanion extends UpdateCompanion<FoodLogItem> {
 
   @override
   String toString() {
-    return (StringBuffer('FoodLogItemsCompanion(')
+    return (StringBuffer('FoodLogItemsTableCompanion(')
           ..write('id: $id, ')
           ..write('logId: $logId, ')
           ..write('foodId: $foodId, ')
@@ -11344,10 +11358,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ExchangeRatesTable exchangeRates = $ExchangeRatesTable(this);
   late final $GymSettingsTable gymSettings = $GymSettingsTable(this);
   late final $FoodsTableTable foodsTable = $FoodsTableTable(this);
-  late final $NutritionPlansTable nutritionPlans = $NutritionPlansTable(this);
-  late final $NutritionGoalsTable nutritionGoals = $NutritionGoalsTable(this);
-  late final $FoodLogsTable foodLogs = $FoodLogsTable(this);
-  late final $FoodLogItemsTable foodLogItems = $FoodLogItemsTable(this);
+  late final $NutritionPlansTableTable nutritionPlansTable =
+      $NutritionPlansTableTable(this);
+  late final $NutritionGoalsTableTable nutritionGoalsTable =
+      $NutritionGoalsTableTable(this);
+  late final $FoodLogsTableTable foodLogsTable = $FoodLogsTableTable(this);
+  late final $FoodLogItemsTableTable foodLogItemsTable =
+      $FoodLogItemsTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -11369,10 +11386,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     exchangeRates,
     gymSettings,
     foodsTable,
-    nutritionPlans,
-    nutritionGoals,
-    foodLogs,
-    foodLogItems,
+    nutritionPlansTable,
+    nutritionGoalsTable,
+    foodLogsTable,
+    foodLogItemsTable,
   ];
 }
 
@@ -15757,8 +15774,8 @@ typedef $$FoodsTableTableProcessedTableManager =
       FoodsTableData,
       PrefetchHooks Function()
     >;
-typedef $$NutritionPlansTableCreateCompanionBuilder =
-    NutritionPlansCompanion Function({
+typedef $$NutritionPlansTableTableCreateCompanionBuilder =
+    NutritionPlansTableCompanion Function({
       required String id,
       required String gymId,
       required String clientId,
@@ -15776,8 +15793,8 @@ typedef $$NutritionPlansTableCreateCompanionBuilder =
       required DateTime updatedAt,
       Value<int> rowid,
     });
-typedef $$NutritionPlansTableUpdateCompanionBuilder =
-    NutritionPlansCompanion Function({
+typedef $$NutritionPlansTableTableUpdateCompanionBuilder =
+    NutritionPlansTableCompanion Function({
       Value<String> id,
       Value<String> gymId,
       Value<String> clientId,
@@ -15796,9 +15813,9 @@ typedef $$NutritionPlansTableUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
-class $$NutritionPlansTableFilterComposer
-    extends Composer<_$AppDatabase, $NutritionPlansTable> {
-  $$NutritionPlansTableFilterComposer({
+class $$NutritionPlansTableTableFilterComposer
+    extends Composer<_$AppDatabase, $NutritionPlansTableTable> {
+  $$NutritionPlansTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -15881,9 +15898,9 @@ class $$NutritionPlansTableFilterComposer
   );
 }
 
-class $$NutritionPlansTableOrderingComposer
-    extends Composer<_$AppDatabase, $NutritionPlansTable> {
-  $$NutritionPlansTableOrderingComposer({
+class $$NutritionPlansTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $NutritionPlansTableTable> {
+  $$NutritionPlansTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -15966,9 +15983,9 @@ class $$NutritionPlansTableOrderingComposer
   );
 }
 
-class $$NutritionPlansTableAnnotationComposer
-    extends Composer<_$AppDatabase, $NutritionPlansTable> {
-  $$NutritionPlansTableAnnotationComposer({
+class $$NutritionPlansTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NutritionPlansTableTable> {
+  $$NutritionPlansTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16033,37 +16050,47 @@ class $$NutritionPlansTableAnnotationComposer
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 }
 
-class $$NutritionPlansTableTableManager
+class $$NutritionPlansTableTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $NutritionPlansTable,
-          NutritionPlan,
-          $$NutritionPlansTableFilterComposer,
-          $$NutritionPlansTableOrderingComposer,
-          $$NutritionPlansTableAnnotationComposer,
-          $$NutritionPlansTableCreateCompanionBuilder,
-          $$NutritionPlansTableUpdateCompanionBuilder,
+          $NutritionPlansTableTable,
+          NutritionPlansTableData,
+          $$NutritionPlansTableTableFilterComposer,
+          $$NutritionPlansTableTableOrderingComposer,
+          $$NutritionPlansTableTableAnnotationComposer,
+          $$NutritionPlansTableTableCreateCompanionBuilder,
+          $$NutritionPlansTableTableUpdateCompanionBuilder,
           (
-            NutritionPlan,
-            BaseReferences<_$AppDatabase, $NutritionPlansTable, NutritionPlan>,
+            NutritionPlansTableData,
+            BaseReferences<
+              _$AppDatabase,
+              $NutritionPlansTableTable,
+              NutritionPlansTableData
+            >,
           ),
-          NutritionPlan,
+          NutritionPlansTableData,
           PrefetchHooks Function()
         > {
-  $$NutritionPlansTableTableManager(
+  $$NutritionPlansTableTableTableManager(
     _$AppDatabase db,
-    $NutritionPlansTable table,
+    $NutritionPlansTableTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$NutritionPlansTableFilterComposer($db: db, $table: table),
+              $$NutritionPlansTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$NutritionPlansTableOrderingComposer($db: db, $table: table),
+              $$NutritionPlansTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
           createComputedFieldComposer: () =>
-              $$NutritionPlansTableAnnotationComposer($db: db, $table: table),
+              $$NutritionPlansTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
           updateCompanionCallback:
               ({
                 Value<String> id = const Value.absent(),
@@ -16082,7 +16109,7 @@ class $$NutritionPlansTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => NutritionPlansCompanion(
+              }) => NutritionPlansTableCompanion(
                 id: id,
                 gymId: gymId,
                 clientId: clientId,
@@ -16118,7 +16145,7 @@ class $$NutritionPlansTableTableManager
                 required DateTime createdAt,
                 required DateTime updatedAt,
                 Value<int> rowid = const Value.absent(),
-              }) => NutritionPlansCompanion.insert(
+              }) => NutritionPlansTableCompanion.insert(
                 id: id,
                 gymId: gymId,
                 clientId: clientId,
@@ -16139,11 +16166,14 @@ class $$NutritionPlansTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable<$NutritionPlansTable, NutritionPlan>(table),
+                  e.readTable<
+                    $NutritionPlansTableTable,
+                    NutritionPlansTableData
+                  >(table),
                   BaseReferences<
                     _$AppDatabase,
-                    $NutritionPlansTable,
-                    NutritionPlan
+                    $NutritionPlansTableTable,
+                    NutritionPlansTableData
                   >(db, table, e),
                 ),
               )
@@ -16153,25 +16183,29 @@ class $$NutritionPlansTableTableManager
       );
 }
 
-typedef $$NutritionPlansTableProcessedTableManager =
+typedef $$NutritionPlansTableTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $NutritionPlansTable,
-      NutritionPlan,
-      $$NutritionPlansTableFilterComposer,
-      $$NutritionPlansTableOrderingComposer,
-      $$NutritionPlansTableAnnotationComposer,
-      $$NutritionPlansTableCreateCompanionBuilder,
-      $$NutritionPlansTableUpdateCompanionBuilder,
+      $NutritionPlansTableTable,
+      NutritionPlansTableData,
+      $$NutritionPlansTableTableFilterComposer,
+      $$NutritionPlansTableTableOrderingComposer,
+      $$NutritionPlansTableTableAnnotationComposer,
+      $$NutritionPlansTableTableCreateCompanionBuilder,
+      $$NutritionPlansTableTableUpdateCompanionBuilder,
       (
-        NutritionPlan,
-        BaseReferences<_$AppDatabase, $NutritionPlansTable, NutritionPlan>,
+        NutritionPlansTableData,
+        BaseReferences<
+          _$AppDatabase,
+          $NutritionPlansTableTable,
+          NutritionPlansTableData
+        >,
       ),
-      NutritionPlan,
+      NutritionPlansTableData,
       PrefetchHooks Function()
     >;
-typedef $$NutritionGoalsTableCreateCompanionBuilder =
-    NutritionGoalsCompanion Function({
+typedef $$NutritionGoalsTableTableCreateCompanionBuilder =
+    NutritionGoalsTableCompanion Function({
       required String id,
       required String clientId,
       required String gymId,
@@ -16187,8 +16221,8 @@ typedef $$NutritionGoalsTableCreateCompanionBuilder =
       required DateTime updatedAt,
       Value<int> rowid,
     });
-typedef $$NutritionGoalsTableUpdateCompanionBuilder =
-    NutritionGoalsCompanion Function({
+typedef $$NutritionGoalsTableTableUpdateCompanionBuilder =
+    NutritionGoalsTableCompanion Function({
       Value<String> id,
       Value<String> clientId,
       Value<String> gymId,
@@ -16205,9 +16239,9 @@ typedef $$NutritionGoalsTableUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
-class $$NutritionGoalsTableFilterComposer
-    extends Composer<_$AppDatabase, $NutritionGoalsTable> {
-  $$NutritionGoalsTableFilterComposer({
+class $$NutritionGoalsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $NutritionGoalsTableTable> {
+  $$NutritionGoalsTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16280,9 +16314,9 @@ class $$NutritionGoalsTableFilterComposer
   );
 }
 
-class $$NutritionGoalsTableOrderingComposer
-    extends Composer<_$AppDatabase, $NutritionGoalsTable> {
-  $$NutritionGoalsTableOrderingComposer({
+class $$NutritionGoalsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $NutritionGoalsTableTable> {
+  $$NutritionGoalsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16355,9 +16389,9 @@ class $$NutritionGoalsTableOrderingComposer
   );
 }
 
-class $$NutritionGoalsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $NutritionGoalsTable> {
-  $$NutritionGoalsTableAnnotationComposer({
+class $$NutritionGoalsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $NutritionGoalsTableTable> {
+  $$NutritionGoalsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16412,37 +16446,47 @@ class $$NutritionGoalsTableAnnotationComposer
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 }
 
-class $$NutritionGoalsTableTableManager
+class $$NutritionGoalsTableTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $NutritionGoalsTable,
-          NutritionGoal,
-          $$NutritionGoalsTableFilterComposer,
-          $$NutritionGoalsTableOrderingComposer,
-          $$NutritionGoalsTableAnnotationComposer,
-          $$NutritionGoalsTableCreateCompanionBuilder,
-          $$NutritionGoalsTableUpdateCompanionBuilder,
+          $NutritionGoalsTableTable,
+          NutritionGoalsTableData,
+          $$NutritionGoalsTableTableFilterComposer,
+          $$NutritionGoalsTableTableOrderingComposer,
+          $$NutritionGoalsTableTableAnnotationComposer,
+          $$NutritionGoalsTableTableCreateCompanionBuilder,
+          $$NutritionGoalsTableTableUpdateCompanionBuilder,
           (
-            NutritionGoal,
-            BaseReferences<_$AppDatabase, $NutritionGoalsTable, NutritionGoal>,
+            NutritionGoalsTableData,
+            BaseReferences<
+              _$AppDatabase,
+              $NutritionGoalsTableTable,
+              NutritionGoalsTableData
+            >,
           ),
-          NutritionGoal,
+          NutritionGoalsTableData,
           PrefetchHooks Function()
         > {
-  $$NutritionGoalsTableTableManager(
+  $$NutritionGoalsTableTableTableManager(
     _$AppDatabase db,
-    $NutritionGoalsTable table,
+    $NutritionGoalsTableTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$NutritionGoalsTableFilterComposer($db: db, $table: table),
+              $$NutritionGoalsTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$NutritionGoalsTableOrderingComposer($db: db, $table: table),
+              $$NutritionGoalsTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
           createComputedFieldComposer: () =>
-              $$NutritionGoalsTableAnnotationComposer($db: db, $table: table),
+              $$NutritionGoalsTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
           updateCompanionCallback:
               ({
                 Value<String> id = const Value.absent(),
@@ -16459,7 +16503,7 @@ class $$NutritionGoalsTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => NutritionGoalsCompanion(
+              }) => NutritionGoalsTableCompanion(
                 id: id,
                 clientId: clientId,
                 gymId: gymId,
@@ -16491,7 +16535,7 @@ class $$NutritionGoalsTableTableManager
                 required DateTime createdAt,
                 required DateTime updatedAt,
                 Value<int> rowid = const Value.absent(),
-              }) => NutritionGoalsCompanion.insert(
+              }) => NutritionGoalsTableCompanion.insert(
                 id: id,
                 clientId: clientId,
                 gymId: gymId,
@@ -16510,11 +16554,14 @@ class $$NutritionGoalsTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable<$NutritionGoalsTable, NutritionGoal>(table),
+                  e.readTable<
+                    $NutritionGoalsTableTable,
+                    NutritionGoalsTableData
+                  >(table),
                   BaseReferences<
                     _$AppDatabase,
-                    $NutritionGoalsTable,
-                    NutritionGoal
+                    $NutritionGoalsTableTable,
+                    NutritionGoalsTableData
                   >(db, table, e),
                 ),
               )
@@ -16524,25 +16571,29 @@ class $$NutritionGoalsTableTableManager
       );
 }
 
-typedef $$NutritionGoalsTableProcessedTableManager =
+typedef $$NutritionGoalsTableTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $NutritionGoalsTable,
-      NutritionGoal,
-      $$NutritionGoalsTableFilterComposer,
-      $$NutritionGoalsTableOrderingComposer,
-      $$NutritionGoalsTableAnnotationComposer,
-      $$NutritionGoalsTableCreateCompanionBuilder,
-      $$NutritionGoalsTableUpdateCompanionBuilder,
+      $NutritionGoalsTableTable,
+      NutritionGoalsTableData,
+      $$NutritionGoalsTableTableFilterComposer,
+      $$NutritionGoalsTableTableOrderingComposer,
+      $$NutritionGoalsTableTableAnnotationComposer,
+      $$NutritionGoalsTableTableCreateCompanionBuilder,
+      $$NutritionGoalsTableTableUpdateCompanionBuilder,
       (
-        NutritionGoal,
-        BaseReferences<_$AppDatabase, $NutritionGoalsTable, NutritionGoal>,
+        NutritionGoalsTableData,
+        BaseReferences<
+          _$AppDatabase,
+          $NutritionGoalsTableTable,
+          NutritionGoalsTableData
+        >,
       ),
-      NutritionGoal,
+      NutritionGoalsTableData,
       PrefetchHooks Function()
     >;
-typedef $$FoodLogsTableCreateCompanionBuilder =
-    FoodLogsCompanion Function({
+typedef $$FoodLogsTableTableCreateCompanionBuilder =
+    FoodLogsTableCompanion Function({
       required String id,
       required String clientId,
       required String gymId,
@@ -16556,8 +16607,8 @@ typedef $$FoodLogsTableCreateCompanionBuilder =
       required DateTime updatedAt,
       Value<int> rowid,
     });
-typedef $$FoodLogsTableUpdateCompanionBuilder =
-    FoodLogsCompanion Function({
+typedef $$FoodLogsTableTableUpdateCompanionBuilder =
+    FoodLogsTableCompanion Function({
       Value<String> id,
       Value<String> clientId,
       Value<String> gymId,
@@ -16572,9 +16623,9 @@ typedef $$FoodLogsTableUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
-class $$FoodLogsTableFilterComposer
-    extends Composer<_$AppDatabase, $FoodLogsTable> {
-  $$FoodLogsTableFilterComposer({
+class $$FoodLogsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $FoodLogsTableTable> {
+  $$FoodLogsTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16637,9 +16688,9 @@ class $$FoodLogsTableFilterComposer
   );
 }
 
-class $$FoodLogsTableOrderingComposer
-    extends Composer<_$AppDatabase, $FoodLogsTable> {
-  $$FoodLogsTableOrderingComposer({
+class $$FoodLogsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $FoodLogsTableTable> {
+  $$FoodLogsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16702,9 +16753,9 @@ class $$FoodLogsTableOrderingComposer
   );
 }
 
-class $$FoodLogsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $FoodLogsTable> {
-  $$FoodLogsTableAnnotationComposer({
+class $$FoodLogsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $FoodLogsTableTable> {
+  $$FoodLogsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16753,32 +16804,39 @@ class $$FoodLogsTableAnnotationComposer
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 }
 
-class $$FoodLogsTableTableManager
+class $$FoodLogsTableTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $FoodLogsTable,
-          FoodLog,
-          $$FoodLogsTableFilterComposer,
-          $$FoodLogsTableOrderingComposer,
-          $$FoodLogsTableAnnotationComposer,
-          $$FoodLogsTableCreateCompanionBuilder,
-          $$FoodLogsTableUpdateCompanionBuilder,
-          (FoodLog, BaseReferences<_$AppDatabase, $FoodLogsTable, FoodLog>),
-          FoodLog,
+          $FoodLogsTableTable,
+          FoodLogsTableData,
+          $$FoodLogsTableTableFilterComposer,
+          $$FoodLogsTableTableOrderingComposer,
+          $$FoodLogsTableTableAnnotationComposer,
+          $$FoodLogsTableTableCreateCompanionBuilder,
+          $$FoodLogsTableTableUpdateCompanionBuilder,
+          (
+            FoodLogsTableData,
+            BaseReferences<
+              _$AppDatabase,
+              $FoodLogsTableTable,
+              FoodLogsTableData
+            >,
+          ),
+          FoodLogsTableData,
           PrefetchHooks Function()
         > {
-  $$FoodLogsTableTableManager(_$AppDatabase db, $FoodLogsTable table)
+  $$FoodLogsTableTableTableManager(_$AppDatabase db, $FoodLogsTableTable table)
     : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$FoodLogsTableFilterComposer($db: db, $table: table),
+              $$FoodLogsTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$FoodLogsTableOrderingComposer($db: db, $table: table),
+              $$FoodLogsTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$FoodLogsTableAnnotationComposer($db: db, $table: table),
+              $$FoodLogsTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<String> id = const Value.absent(),
@@ -16793,7 +16851,7 @@ class $$FoodLogsTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => FoodLogsCompanion(
+              }) => FoodLogsTableCompanion(
                 id: id,
                 clientId: clientId,
                 gymId: gymId,
@@ -16821,7 +16879,7 @@ class $$FoodLogsTableTableManager
                 required DateTime createdAt,
                 required DateTime updatedAt,
                 Value<int> rowid = const Value.absent(),
-              }) => FoodLogsCompanion.insert(
+              }) => FoodLogsTableCompanion.insert(
                 id: id,
                 clientId: clientId,
                 gymId: gymId,
@@ -16838,12 +16896,12 @@ class $$FoodLogsTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable<$FoodLogsTable, FoodLog>(table),
-                  BaseReferences<_$AppDatabase, $FoodLogsTable, FoodLog>(
-                    db,
-                    table,
-                    e,
-                  ),
+                  e.readTable<$FoodLogsTableTable, FoodLogsTableData>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $FoodLogsTableTable,
+                    FoodLogsTableData
+                  >(db, table, e),
                 ),
               )
               .toList(),
@@ -16852,22 +16910,25 @@ class $$FoodLogsTableTableManager
       );
 }
 
-typedef $$FoodLogsTableProcessedTableManager =
+typedef $$FoodLogsTableTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $FoodLogsTable,
-      FoodLog,
-      $$FoodLogsTableFilterComposer,
-      $$FoodLogsTableOrderingComposer,
-      $$FoodLogsTableAnnotationComposer,
-      $$FoodLogsTableCreateCompanionBuilder,
-      $$FoodLogsTableUpdateCompanionBuilder,
-      (FoodLog, BaseReferences<_$AppDatabase, $FoodLogsTable, FoodLog>),
-      FoodLog,
+      $FoodLogsTableTable,
+      FoodLogsTableData,
+      $$FoodLogsTableTableFilterComposer,
+      $$FoodLogsTableTableOrderingComposer,
+      $$FoodLogsTableTableAnnotationComposer,
+      $$FoodLogsTableTableCreateCompanionBuilder,
+      $$FoodLogsTableTableUpdateCompanionBuilder,
+      (
+        FoodLogsTableData,
+        BaseReferences<_$AppDatabase, $FoodLogsTableTable, FoodLogsTableData>,
+      ),
+      FoodLogsTableData,
       PrefetchHooks Function()
     >;
-typedef $$FoodLogItemsTableCreateCompanionBuilder =
-    FoodLogItemsCompanion Function({
+typedef $$FoodLogItemsTableTableCreateCompanionBuilder =
+    FoodLogItemsTableCompanion Function({
       required String id,
       required String logId,
       required String foodId,
@@ -16880,8 +16941,8 @@ typedef $$FoodLogItemsTableCreateCompanionBuilder =
       required DateTime createdAt,
       Value<int> rowid,
     });
-typedef $$FoodLogItemsTableUpdateCompanionBuilder =
-    FoodLogItemsCompanion Function({
+typedef $$FoodLogItemsTableTableUpdateCompanionBuilder =
+    FoodLogItemsTableCompanion Function({
       Value<String> id,
       Value<String> logId,
       Value<String> foodId,
@@ -16895,9 +16956,9 @@ typedef $$FoodLogItemsTableUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
-class $$FoodLogItemsTableFilterComposer
-    extends Composer<_$AppDatabase, $FoodLogItemsTable> {
-  $$FoodLogItemsTableFilterComposer({
+class $$FoodLogItemsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $FoodLogItemsTableTable> {
+  $$FoodLogItemsTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -16955,9 +17016,9 @@ class $$FoodLogItemsTableFilterComposer
   );
 }
 
-class $$FoodLogItemsTableOrderingComposer
-    extends Composer<_$AppDatabase, $FoodLogItemsTable> {
-  $$FoodLogItemsTableOrderingComposer({
+class $$FoodLogItemsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $FoodLogItemsTableTable> {
+  $$FoodLogItemsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -17015,9 +17076,9 @@ class $$FoodLogItemsTableOrderingComposer
   );
 }
 
-class $$FoodLogItemsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $FoodLogItemsTable> {
-  $$FoodLogItemsTableAnnotationComposer({
+class $$FoodLogItemsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $FoodLogItemsTableTable> {
+  $$FoodLogItemsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -17057,35 +17118,44 @@ class $$FoodLogItemsTableAnnotationComposer
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 }
 
-class $$FoodLogItemsTableTableManager
+class $$FoodLogItemsTableTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $FoodLogItemsTable,
-          FoodLogItem,
-          $$FoodLogItemsTableFilterComposer,
-          $$FoodLogItemsTableOrderingComposer,
-          $$FoodLogItemsTableAnnotationComposer,
-          $$FoodLogItemsTableCreateCompanionBuilder,
-          $$FoodLogItemsTableUpdateCompanionBuilder,
+          $FoodLogItemsTableTable,
+          FoodLogItemsTableData,
+          $$FoodLogItemsTableTableFilterComposer,
+          $$FoodLogItemsTableTableOrderingComposer,
+          $$FoodLogItemsTableTableAnnotationComposer,
+          $$FoodLogItemsTableTableCreateCompanionBuilder,
+          $$FoodLogItemsTableTableUpdateCompanionBuilder,
           (
-            FoodLogItem,
-            BaseReferences<_$AppDatabase, $FoodLogItemsTable, FoodLogItem>,
+            FoodLogItemsTableData,
+            BaseReferences<
+              _$AppDatabase,
+              $FoodLogItemsTableTable,
+              FoodLogItemsTableData
+            >,
           ),
-          FoodLogItem,
+          FoodLogItemsTableData,
           PrefetchHooks Function()
         > {
-  $$FoodLogItemsTableTableManager(_$AppDatabase db, $FoodLogItemsTable table)
-    : super(
+  $$FoodLogItemsTableTableTableManager(
+    _$AppDatabase db,
+    $FoodLogItemsTableTable table,
+  ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$FoodLogItemsTableFilterComposer($db: db, $table: table),
+              $$FoodLogItemsTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$FoodLogItemsTableOrderingComposer($db: db, $table: table),
+              $$FoodLogItemsTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$FoodLogItemsTableAnnotationComposer($db: db, $table: table),
+              $$FoodLogItemsTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
           updateCompanionCallback:
               ({
                 Value<String> id = const Value.absent(),
@@ -17099,7 +17169,7 @@ class $$FoodLogItemsTableTableManager
                 Value<double> fatsG = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => FoodLogItemsCompanion(
+              }) => FoodLogItemsTableCompanion(
                 id: id,
                 logId: logId,
                 foodId: foodId,
@@ -17125,7 +17195,7 @@ class $$FoodLogItemsTableTableManager
                 required double fatsG,
                 required DateTime createdAt,
                 Value<int> rowid = const Value.absent(),
-              }) => FoodLogItemsCompanion.insert(
+              }) => FoodLogItemsTableCompanion.insert(
                 id: id,
                 logId: logId,
                 foodId: foodId,
@@ -17141,11 +17211,13 @@ class $$FoodLogItemsTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable<$FoodLogItemsTable, FoodLogItem>(table),
+                  e.readTable<$FoodLogItemsTableTable, FoodLogItemsTableData>(
+                    table,
+                  ),
                   BaseReferences<
                     _$AppDatabase,
-                    $FoodLogItemsTable,
-                    FoodLogItem
+                    $FoodLogItemsTableTable,
+                    FoodLogItemsTableData
                   >(db, table, e),
                 ),
               )
@@ -17155,21 +17227,25 @@ class $$FoodLogItemsTableTableManager
       );
 }
 
-typedef $$FoodLogItemsTableProcessedTableManager =
+typedef $$FoodLogItemsTableTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $FoodLogItemsTable,
-      FoodLogItem,
-      $$FoodLogItemsTableFilterComposer,
-      $$FoodLogItemsTableOrderingComposer,
-      $$FoodLogItemsTableAnnotationComposer,
-      $$FoodLogItemsTableCreateCompanionBuilder,
-      $$FoodLogItemsTableUpdateCompanionBuilder,
+      $FoodLogItemsTableTable,
+      FoodLogItemsTableData,
+      $$FoodLogItemsTableTableFilterComposer,
+      $$FoodLogItemsTableTableOrderingComposer,
+      $$FoodLogItemsTableTableAnnotationComposer,
+      $$FoodLogItemsTableTableCreateCompanionBuilder,
+      $$FoodLogItemsTableTableUpdateCompanionBuilder,
       (
-        FoodLogItem,
-        BaseReferences<_$AppDatabase, $FoodLogItemsTable, FoodLogItem>,
+        FoodLogItemsTableData,
+        BaseReferences<
+          _$AppDatabase,
+          $FoodLogItemsTableTable,
+          FoodLogItemsTableData
+        >,
       ),
-      FoodLogItem,
+      FoodLogItemsTableData,
       PrefetchHooks Function()
     >;
 
@@ -17207,12 +17283,12 @@ class $AppDatabaseManager {
       $$GymSettingsTableTableManager(_db, _db.gymSettings);
   $$FoodsTableTableTableManager get foodsTable =>
       $$FoodsTableTableTableManager(_db, _db.foodsTable);
-  $$NutritionPlansTableTableManager get nutritionPlans =>
-      $$NutritionPlansTableTableManager(_db, _db.nutritionPlans);
-  $$NutritionGoalsTableTableManager get nutritionGoals =>
-      $$NutritionGoalsTableTableManager(_db, _db.nutritionGoals);
-  $$FoodLogsTableTableManager get foodLogs =>
-      $$FoodLogsTableTableManager(_db, _db.foodLogs);
-  $$FoodLogItemsTableTableManager get foodLogItems =>
-      $$FoodLogItemsTableTableManager(_db, _db.foodLogItems);
+  $$NutritionPlansTableTableTableManager get nutritionPlansTable =>
+      $$NutritionPlansTableTableTableManager(_db, _db.nutritionPlansTable);
+  $$NutritionGoalsTableTableTableManager get nutritionGoalsTable =>
+      $$NutritionGoalsTableTableTableManager(_db, _db.nutritionGoalsTable);
+  $$FoodLogsTableTableTableManager get foodLogsTable =>
+      $$FoodLogsTableTableTableManager(_db, _db.foodLogsTable);
+  $$FoodLogItemsTableTableTableManager get foodLogItemsTable =>
+      $$FoodLogItemsTableTableTableManager(_db, _db.foodLogItemsTable);
 }

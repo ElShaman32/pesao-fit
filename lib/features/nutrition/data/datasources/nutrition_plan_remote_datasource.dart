@@ -1,91 +1,109 @@
+import 'package:drift/drift.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../core/database/app_database.dart';
 import '../../domain/entities/nutrition_plan.dart';
 import '../../domain/entities/nutrition_plan_day.dart';
 import '../../domain/entities/nutrition_plan_meal.dart';
 import '../../domain/repositories/nutrition_plan_repository.dart';
 
 /// DataSource de planes nutricionales (árbol: plan → días → comidas).
+/// Implementa patrón cache-first: lee de Drift si falla red.
 class NutritionPlanRemoteDatasource {
-  NutritionPlanRemoteDatasource(this._client);
+  NutritionPlanRemoteDatasource(this._client, this._db);
 
   final SupabaseClient _client;
+  final AppDatabase _db;
 
-  // ─────────────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════
   // PLANES
-  // ─────────────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════
 
-  /// Lista planes del nutricionista actual.
   Future<List<NutritionPlan>> fetchNutritionistPlans() async {
-    final userId = _client.auth.currentUser?.id;
-    if (userId == null) throw Exception('Usuario no autenticado');
+    try {
+      final userId = _client.auth.currentUser?.id;
+      if (userId == null) throw Exception('Usuario no autenticado');
 
-    final response = await _client
-        .from('nutrition_plans')
-        .select()
-        .eq('nutritionist_id', userId)
-        .order('created_at', ascending: false);
-
-    return (response as List)
-        .map((row) => NutritionPlan.fromJson(row as Map<String, dynamic>))
-        .toList();
-  }
-
-  /// Lista planes activos de un cliente específico.
-  Future<List<NutritionPlan>> fetchClientPlans(String clientId) async {
-    final response = await _client
-        .from('nutrition_plans')
-        .select()
-        .eq('client_id', clientId)
-        .eq('is_active', true)
-        .order('created_at', ascending: false);
-
-    return (response as List)
-        .map((row) => NutritionPlan.fromJson(row as Map<String, dynamic>))
-        .toList();
-  }
-
-  /// Obtiene un plan con sus días y comidas (árbol completo).
-  Future<NutritionPlanWithDays> fetchPlanDetail(String planId) async {
-    // 1. Obtener el plan.
-    final planResponse = await _client
-        .from('nutrition_plans')
-        .select()
-        .eq('id', planId)
-        .single();
-
-    final plan = NutritionPlan.fromJson(planResponse);
-
-    // 2. Obtener los días del plan.
-    final daysResponse = await _client
-        .from('nutrition_plan_days')
-        .select()
-        .eq('plan_id', planId)
-        .order('day_number');
-
-    final days = <NutritionPlanDayWithMeals>[];
-
-    for (final dayRow in daysResponse as List) {
-      final day = NutritionPlanDay.fromJson(dayRow as Map<String, dynamic>);
-
-      // 3. Obtener las comidas del día.
-      final mealsResponse = await _client
-          .from('nutrition_plan_meals')
+      final response = await _client
+          .from('nutrition_plans')
           .select()
-          .eq('plan_day_id', day.id)
-          .order('meal_order');
+          .eq('nutritionist_id', userId)
+          .order('created_at', ascending: false);
 
-      final meals = (mealsResponse as List)
-          .map((row) => NutritionPlanMeal.fromJson(row as Map<String, dynamic>))
+      final plans = (response as List)
+          .map((row) => NutritionPlan.fromJson(row as Map<String, dynamic>))
           .toList();
 
-      days.add(NutritionPlanDayWithMeals(day: day, meals: meals));
+      await _cachePlans(plans);
+      return plans;
+    } catch (e) {
+      return _loadPlansFromCache();
     }
-
-    return NutritionPlanWithDays(plan: plan, days: days);
   }
 
-  /// Crea un plan vacío (sin días).
+  Future<List<NutritionPlan>> fetchClientPlans(String clientId) async {
+    try {
+      final response = await _client
+          .from('nutrition_plans')
+          .select()
+          .eq('client_id', clientId)
+          .eq('is_active', true)
+          .order('created_at', ascending: false);
+
+      final plans = (response as List)
+          .map((row) => NutritionPlan.fromJson(row as Map<String, dynamic>))
+          .toList();
+
+      await _cachePlans(plans);
+      return plans;
+    } catch (e) {
+      return _loadPlansFromCache(clientId: clientId);
+    }
+  }
+
+  Future<NutritionPlanWithDays> fetchPlanDetail(String planId) async {
+    try {
+      final planResponse = await _client
+          .from('nutrition_plans')
+          .select()
+          .eq('id', planId)
+          .single();
+
+      final plan = NutritionPlan.fromJson(planResponse);
+      await _cachePlans([plan]);
+
+      final daysResponse = await _client
+          .from('nutrition_plan_days')
+          .select()
+          .eq('plan_id', planId)
+          .order('day_number');
+
+      final days = <NutritionPlanDayWithMeals>[];
+
+      for (final dayRow in daysResponse as List) {
+        final day = NutritionPlanDay.fromJson(dayRow as Map<String, dynamic>);
+
+        final mealsResponse = await _client
+            .from('nutrition_plan_meals')
+            .select()
+            .eq('plan_day_id', day.id)
+            .order('meal_order');
+
+        final meals = (mealsResponse as List)
+            .map(
+              (row) => NutritionPlanMeal.fromJson(row as Map<String, dynamic>),
+            )
+            .toList();
+
+        days.add(NutritionPlanDayWithMeals(day: day, meals: meals));
+      }
+
+      return NutritionPlanWithDays(plan: plan, days: days);
+    } catch (e) {
+      return _loadPlanDetailFromCache(planId);
+    }
+  }
+
   Future<NutritionPlan> createPlan(NutritionPlan plan) async {
     final response = await _client
         .from('nutrition_plans')
@@ -105,10 +123,11 @@ class NutritionPlanRemoteDatasource {
         .select()
         .single();
 
-    return NutritionPlan.fromJson(response);
+    final created = NutritionPlan.fromJson(response);
+    await _cachePlans([created]);
+    return created;
   }
 
-  /// Actualiza datos básicos del plan.
   Future<NutritionPlan> updatePlan(NutritionPlan plan) async {
     final response = await _client
         .from('nutrition_plans')
@@ -126,22 +145,26 @@ class NutritionPlanRemoteDatasource {
         .select()
         .single();
 
-    return NutritionPlan.fromJson(response);
+    final updated = NutritionPlan.fromJson(response);
+    await _cachePlans([updated]);
+    return updated;
   }
 
-  /// Desactiva el plan (soft delete).
   Future<void> deactivatePlan(String planId) async {
     await _client
         .from('nutrition_plans')
         .update({'is_active': false})
         .eq('id', planId);
+
+    await (_db.update(_db.nutritionPlansTable)
+          ..where((t) => t.id.equals(planId)))
+        .write(const NutritionPlansTableCompanion(isActive: Value(false)));
   }
 
-  // ─────────────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════
   // DÍAS DEL PLAN
-  // ─────────────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════
 
-  /// Agrega un día al plan.
   Future<NutritionPlanDay> addDay({
     required String planId,
     required int dayNumber,
@@ -162,7 +185,6 @@ class NutritionPlanRemoteDatasource {
     return NutritionPlanDay.fromJson(response);
   }
 
-  /// Actualiza un día (nombre, notas).
   Future<NutritionPlanDay> updateDay(NutritionPlanDay day) async {
     final response = await _client
         .from('nutrition_plan_days')
@@ -174,18 +196,15 @@ class NutritionPlanRemoteDatasource {
     return NutritionPlanDay.fromJson(response);
   }
 
-  /// Elimina un día y sus comidas.
   Future<void> deleteDay(String dayId) async {
     await _client.from('nutrition_plan_days').delete().eq('id', dayId);
   }
 
-  /// Duplica un día (copia todas las comidas al día destino).
   Future<NutritionPlanDay> duplicateDay({
     required String sourceDayId,
     required String targetPlanId,
     required int targetDayNumber,
   }) async {
-    // 1. Obtener el día origen.
     final sourceDayResponse = await _client
         .from('nutrition_plan_days')
         .select()
@@ -194,7 +213,6 @@ class NutritionPlanRemoteDatasource {
 
     final sourceDay = NutritionPlanDay.fromJson(sourceDayResponse);
 
-    // 2. Crear el día destino.
     final newDayResponse = await _client
         .from('nutrition_plan_days')
         .insert({
@@ -208,7 +226,6 @@ class NutritionPlanRemoteDatasource {
 
     final newDay = NutritionPlanDay.fromJson(newDayResponse);
 
-    // 3. Copiar las comidas.
     final sourceMealsResponse = await _client
         .from('nutrition_plan_meals')
         .select()
@@ -229,11 +246,10 @@ class NutritionPlanRemoteDatasource {
     return newDay;
   }
 
-  // ─────────────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════
   // COMIDAS DEL DÍA
-  // ─────────────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════════════════
 
-  /// Agrega una comida (referencia a MealTemplate) a un día.
   Future<NutritionPlanMeal> addMealToDay({
     required String planDayId,
     required String mealTemplateId,
@@ -252,12 +268,10 @@ class NutritionPlanRemoteDatasource {
     return NutritionPlanMeal.fromJson(response);
   }
 
-  /// Elimina una comida del día.
   Future<void> removeMealFromDay(String planMealId) async {
     await _client.from('nutrition_plan_meals').delete().eq('id', planMealId);
   }
 
-  /// Reordena las comidas de un día.
   Future<void> reorderDayMeals({
     required String planDayId,
     required List<String> mealIdsInOrder,
@@ -268,5 +282,88 @@ class NutritionPlanRemoteDatasource {
           .update({'meal_order': i})
           .eq('id', mealIdsInOrder[i]);
     }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // CACHE DRIFT
+  // ═══════════════════════════════════════════════════════════════════════
+
+  Future<void> _cachePlans(List<NutritionPlan> plans) async {
+    await _db.transaction(() async {
+      for (final plan in plans) {
+        await _db.nutritionPlansTable.insertOnConflictUpdate(_planToRow(plan));
+      }
+    });
+  }
+
+  Future<List<NutritionPlan>> _loadPlansFromCache({String? clientId}) async {
+    final query = _db.select(_db.nutritionPlansTable);
+
+    if (clientId != null) {
+      query.where((t) => t.clientId.equals(clientId) & t.isActive.equals(true));
+    }
+
+    query.orderBy([
+      (t) => OrderingTerm(expression: t.createdAt, mode: OrderingMode.desc),
+    ]);
+
+    final rows = await query.get();
+    return rows.map(_rowToPlan).toList();
+  }
+
+  Future<NutritionPlanWithDays> _loadPlanDetailFromCache(String planId) async {
+    final planRow = await (_db.select(
+      _db.nutritionPlansTable,
+    )..where((t) => t.id.equals(planId))).getSingleOrNull();
+
+    if (planRow == null) {
+      throw Exception('Plan not found in cache: $planId');
+    }
+
+    final plan = _rowToPlan(planRow);
+
+    // Nota: Los días y comidas no se cachean en Drift (solo planes)
+    // Si necesitas offline completo, habría que cachear también días/comidas
+    return NutritionPlanWithDays(plan: plan, days: []);
+  }
+
+  NutritionPlansTableCompanion _planToRow(NutritionPlan plan) {
+    return NutritionPlansTableCompanion(
+      id: Value(plan.id),
+      gymId: Value(plan.gymId),
+      clientId: Value(plan.clientId),
+      nutritionistId: Value(plan.nutritionistId),
+      name: Value(plan.name),
+      goal: Value(plan.goal),
+      targetCaloriesKcal: Value(plan.targetCaloriesKcal),
+      targetProteinG: Value(plan.targetProteinG),
+      targetCarbsG: Value(plan.targetCarbsG),
+      targetFatsG: Value(plan.targetFatsG),
+      durationDays: Value(plan.durationDays),
+      notes: Value(plan.notes),
+      isActive: Value(plan.isActive),
+      createdAt: Value(plan.createdAt),
+      updatedAt: Value(plan.updatedAt),
+    );
+  }
+
+  NutritionPlan _rowToPlan(dynamic row) {
+    return NutritionPlan(
+      id: row.id as String,
+      gymId: row.gymId as String,
+      clientId: row.clientId as String,
+      nutritionistId: row.nutritionistId as String,
+      name: row.name as String,
+      goal: row.goal as String?,
+      targetCaloriesKcal: row.targetCaloriesKcal as double,
+      targetProteinG: row.targetProteinG as double,
+      targetCarbsG: row.targetCarbsG as double,
+      targetFatsG: row.targetFatsG as double,
+      durationDays: row.durationDays as int,
+      notes: row.notes as String?,
+      isActive: row.isActive as bool,
+      createdAt: row.createdAt as DateTime,
+      updatedAt: row.updatedAt as DateTime,
+    );
   }
 }

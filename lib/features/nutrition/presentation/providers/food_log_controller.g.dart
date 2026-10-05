@@ -44,7 +44,7 @@ final class FoodLogControllerProvider
   }
 }
 
-String _$foodLogControllerHash() => r'1c18abe8be97f02062ed9238a4ea52d41f426a66';
+String _$foodLogControllerHash() => r'7ca50958b284ab7b54c5f8cbc8111e3da527a473';
 
 /// Controlador del registro diario de comidas del cliente.
 

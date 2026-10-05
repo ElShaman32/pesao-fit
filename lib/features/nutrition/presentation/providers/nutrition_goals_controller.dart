@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/providers/auth_provider.dart';
+import '../../../../core/providers/database_provider.dart';
 import '../../../../core/providers/supabase_provider.dart';
 import '../../data/datasources/nutrition_goal_remote_datasource.dart';
 import '../../data/repositories/nutrition_goal_repository_impl.dart';
@@ -58,7 +59,10 @@ class NutritionGoalsController extends _$NutritionGoalsController {
   @override
   NutritionGoalsState build() {
     _repository = NutritionGoalRepositoryImpl(
-      remote: NutritionGoalRemoteDatasource(supabaseClient),
+      remote: NutritionGoalRemoteDatasource(
+        supabaseClient,
+        ref.read(appDatabaseProvider),
+      ),
     );
 
     return const NutritionGoalsState();

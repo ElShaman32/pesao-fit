@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/providers/auth_provider.dart';
+import '../../../../core/providers/database_provider.dart';
 import '../../../../core/providers/supabase_provider.dart';
 import '../../data/datasources/meal_template_remote_datasource.dart';
 import '../../data/repositories/meal_template_repository_impl.dart';
@@ -63,7 +64,10 @@ class MealTemplatesController extends _$MealTemplatesController {
   @override
   MealTemplatesState build() {
     _repository = MealTemplateRepositoryImpl(
-      remote: MealTemplateRemoteDatasource(supabaseClient),
+      remote: MealTemplateRemoteDatasource(
+        supabaseClient,
+        ref.read(appDatabaseProvider),
+      ),
     );
 
     authProvider.addListener(_onAuthChange);
