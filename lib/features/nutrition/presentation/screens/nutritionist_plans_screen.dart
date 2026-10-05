@@ -12,6 +12,7 @@ import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/widgets/empty_state.dart';
 import '../../../../shared/widgets/error_state.dart';
 import '../../../../shared/widgets/offline_banner.dart';
+import '../../../../shared/widgets/pesao_button.dart';
 import '../../../../shared/widgets/pesao_list_tile.dart';
 import '../../../../shared/widgets/skeleton_loader.dart';
 import '../../domain/entities/nutrition_plan.dart';
@@ -39,10 +40,11 @@ class _NutritionistPlansScreenState
   }
 
   void _loadData() {
-    // Cargar planes del nutricionista.
-    ref.read(nutritionPlansControllerProvider.notifier).load();
-    // Cargar clientes para resolver nombres.
-    ref.read(nutritionistClientsControllerProvider.notifier).load();
+    Future.microtask(() {
+      if (!mounted) return;
+      ref.read(nutritionPlansControllerProvider.notifier).load();
+      ref.read(nutritionistClientsControllerProvider.notifier).load();
+    });
   }
 
   void _goToCreate() {
@@ -109,6 +111,41 @@ class _NutritionistPlansScreenState
                   ),
                 ),
 
+              // Herramientas del nutricionista: Alimentos y Plantillas.
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppDimens.l,
+                    0,
+                    AppDimens.l,
+                    AppDimens.m,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: PesaoButton(
+                          label: l10n.nutritionistStatsFoods,
+                          icon: AppIcons.nutrition,
+                          variant: PesaoButtonVariant.secondary,
+                          onPressed: () =>
+                              context.push(RouteNames.nutritionistFoods),
+                        ),
+                      ),
+                      const SizedBox(width: AppDimens.s),
+                      Expanded(
+                        child: PesaoButton(
+                          label: l10n.nutritionistTemplatesTitle,
+                          icon: AppIcons.plans,
+                          variant: PesaoButtonVariant.secondary,
+                          onPressed: () =>
+                              context.push(RouteNames.nutritionistTemplates),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
               // Contenido según estado.
               if (state.isLoading && state.plans.isEmpty)
                 const _PlansSkeletonSliver()
@@ -126,8 +163,10 @@ class _NutritionistPlansScreenState
                 SliverFillRemaining(
                   child: EmptyState(
                     icon: AppIcons.plans,
-                    title: l10n.nutritionPlansEmptyTitle,
-                    body: l10n.nutritionPlansEmptyBody,
+                    title: l10n.nutritionistPlansCount == 0
+                        ? l10n.nutritionPlansEmptyTitle
+                        : l10n.nutritionPlansEmptyTitle,
+                    body: l10n.nutriDashRecentEmpty,
                     actionLabel: l10n.nutritionPlanCreate,
                     onAction: _goToCreate,
                   ),

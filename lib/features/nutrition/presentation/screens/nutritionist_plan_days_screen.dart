@@ -43,17 +43,18 @@ class _NutritionistPlanDaysScreenState
   @override
   void initState() {
     super.initState();
-    _loadData();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadData());
   }
 
   void _loadData() {
-    // Cargar detalle del plan con días y comidas.
-    ref
-        .read(nutritionPlansControllerProvider.notifier)
-        .loadDetail(widget.planId);
+    Future.microtask(() {
+      if (!mounted) return;
+      ref
+          .read(nutritionPlansControllerProvider.notifier)
+          .loadDetail(widget.planId);
 
-    // Cargar plantillas para el selector de comidas.
-    ref.read(mealTemplatesControllerProvider.notifier).load();
+      ref.read(mealTemplatesControllerProvider.notifier).load();
+    });
   }
 
   /// Agrega un nuevo día al plan.

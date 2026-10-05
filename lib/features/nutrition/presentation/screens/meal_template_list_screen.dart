@@ -37,11 +37,14 @@ class _MealTemplateListScreenState
   @override
   void initState() {
     super.initState();
-    _loadData();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadData());
   }
 
   void _loadData() {
-    ref.read(mealTemplatesControllerProvider.notifier).load();
+    Future.microtask(() {
+      if (!mounted) return;
+      ref.read(mealTemplatesControllerProvider.notifier).load();
+    });
   }
 
   void _goToCreate() {
@@ -60,13 +63,13 @@ class _MealTemplateListScreenState
   /// Retorna el ícono según el tipo de comida.
   IconData _mealTypeIcon(MealType type) {
     return switch (type) {
-      MealType.breakfast => AppIcons.nutrition,
-      MealType.lunch => AppIcons.nutrition,
-      MealType.dinner => AppIcons.nutrition,
-      MealType.morningSnack => AppIcons.nutritionOutline,
-      MealType.afternoonSnack => AppIcons.nutritionOutline,
-      MealType.preWorkout => AppIcons.nutritionOutline,
-      MealType.postWorkout => AppIcons.nutritionOutline,
+      MealType.breakfast => AppIcons.desayuno,
+      MealType.lunch => AppIcons.almuerzo,
+      MealType.dinner => AppIcons.cena,
+      MealType.morningSnack => AppIcons.merienda3,
+      MealType.afternoonSnack => AppIcons.merienda2,
+      MealType.preWorkout => AppIcons.merienda3,
+      MealType.postWorkout => AppIcons.merienda4,
     };
   }
 

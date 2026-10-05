@@ -4318,7 +4318,7 @@ abstract class AppStrings {
   /// cuestionario opcional
   ///
   /// In es_VE, this message translates to:
-  /// **'Tal Vez'**
+  /// **'Otras Opciones'**
   String get foodFormOptionalSection;
 
   /// Placeholder del buscador de alimentos

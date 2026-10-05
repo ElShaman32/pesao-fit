@@ -57,12 +57,19 @@ class _MealTemplateFormScreenState
     super.initState();
     _isEditMode = widget.templateId != null;
 
-    // Cargar alimentos para el buscador.
-    ref.read(foodsControllerProvider.notifier).load();
+    // Posponer llamadas a providers hasta después del build.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      // Cargar alimentos para el buscador.
+      Future.microtask(() {
+        if (!mounted) return;
+        ref.read(foodsControllerProvider.notifier).load();
+      });
 
-    if (_isEditMode) {
-      _loadTemplate();
-    }
+      if (_isEditMode) {
+        Future.microtask(_loadTemplate);
+      }
+    });
   }
 
   @override
@@ -113,12 +120,12 @@ class _MealTemplateFormScreenState
           ),
           _MealTypeOption(
             type: MealType.morningSnack,
-            label: l10n.foodLogSnack,
+            label: 'Merienda de la mañana',
             onTap: () => Navigator.of(context).pop(MealType.morningSnack),
           ),
           _MealTypeOption(
             type: MealType.afternoonSnack,
-            label: l10n.foodLogSnack,
+            label: 'Merienda de la tarde',
             onTap: () => Navigator.of(context).pop(MealType.afternoonSnack),
           ),
         ],
@@ -345,6 +352,7 @@ class _MealTemplateFormScreenState
               controller: _nameController,
               label: l10n.foodFormNameLabel,
               hint: l10n.mealTemplateFormTitle,
+              prefixIcon: const Icon(Icons.note),
               textCapitalization: TextCapitalization.sentences,
               errorText: _errors['name'],
             ),

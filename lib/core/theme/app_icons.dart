@@ -78,6 +78,15 @@ abstract final class AppIcons {
   static const IconData money = Icons.payments_rounded;
   static const IconData qr = Icons.qr_code_rounded;
 
+  // --- Comidas / prueba ---
+  static const IconData desayuno = Icons.breakfast_dining_rounded;
+  static const IconData almuerzo = Icons.lunch_dining_rounded;
+  static const IconData cena = Icons.dinner_dining_rounded;
+  static const IconData merienda1 = Icons.local_cafe_rounded;
+  static const IconData merienda2 = Icons.flatware_rounded;
+  static const IconData merienda3 = Icons.cookie_rounded;
+  static const IconData merienda4 = Icons.bakery_dining_rounded;
+
   // --- Otros ---
   static const IconData settings = Icons.settings_rounded;
   static const IconData star = Icons.star_rounded;

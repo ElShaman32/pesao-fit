@@ -2281,7 +2281,7 @@ class AppStringsEs extends AppStrings {
       'No hay alimentos registrados. Crea el primero.';
 
   @override
-  String get foodFormOptionalSection => 'Tal Vez';
+  String get foodFormOptionalSection => 'Otras Opciones';
 
   @override
   String get foodSearchPlaceholder => 'Buscar alimento...';
@@ -4596,7 +4596,7 @@ class AppStringsEsVe extends AppStringsEs {
       'No hay alimentos registrados. Crea el primero.';
 
   @override
-  String get foodFormOptionalSection => 'Tal Vez';
+  String get foodFormOptionalSection => 'Otras Opciones';
 
   @override
   String get foodSearchPlaceholder => 'Buscar alimento...';

@@ -233,8 +233,8 @@ StatefulShellRoute buildNutritionistShell() {
         ],
       ),
       // ── Branch PLANS ─────────────────────────────────────────────
-      // Incluye todas las herramientas del planificador:
-      // plans, foods, templates, days
+      // Incluye todas las herramientas del planificador.
+      // ¡IMPORTANTE: Rutas estáticas PRIMERO, rutas con parámetros (:planId) AL FINAL!
       StatefulShellBranch(
         navigatorKey: _nutritionistPlansNavigatorKey,
         routes: [
@@ -243,30 +243,14 @@ StatefulShellRoute buildNutritionistShell() {
             name: RouteNames.nutritionistPlans,
             builder: (context, state) => const NutritionistPlansScreen(),
             routes: [
+              // 1️⃣ RUTAS ESTÁTICAS (Deben ir primero)
               GoRoute(
                 path: 'create',
                 name: RouteNames.nutritionistPlanCreate,
                 builder: (context, state) => const NutritionistPlanFormScreen(),
               ),
-              GoRoute(
-                path: ':planId',
-                name: RouteNames.nutritionistPlanEdit,
-                builder: (context, state) {
-                  final planId = state.pathParameters['planId']!;
-                  return NutritionistPlanFormScreen(planId: planId);
-                },
-                routes: [
-                  GoRoute(
-                    path: 'days',
-                    name: RouteNames.nutritionistPlanDays,
-                    builder: (context, state) {
-                      final planId = state.pathParameters['planId']!;
-                      return NutritionistPlanDaysScreen(planId: planId);
-                    },
-                  ),
-                ],
-              ),
-              // Alimentos como sub-ruta de plans
+
+              // Alimentos
               GoRoute(
                 path: 'foods',
                 name: RouteNames.nutritionistFoods,
@@ -287,7 +271,8 @@ StatefulShellRoute buildNutritionistShell() {
                   ),
                 ],
               ),
-              // Plantillas como sub-ruta de plans
+
+              // Plantillas
               GoRoute(
                 path: 'templates',
                 name: RouteNames.nutritionistTemplates,
@@ -308,11 +293,30 @@ StatefulShellRoute buildNutritionistShell() {
                   ),
                 ],
               ),
+
+              // 2️⃣ RUTAS DINÁMICAS (Deben ir AL FINAL para no atrapar las estáticas)
+              GoRoute(
+                path: ':planId',
+                name: RouteNames.nutritionistPlanEdit,
+                builder: (context, state) {
+                  final planId = state.pathParameters['planId']!;
+                  return NutritionistPlanFormScreen(planId: planId);
+                },
+                routes: [
+                  GoRoute(
+                    path: 'days',
+                    name: RouteNames.nutritionistPlanDays,
+                    builder: (context, state) {
+                      final planId = state.pathParameters['planId']!;
+                      return NutritionistPlanDaysScreen(planId: planId);
+                    },
+                  ),
+                ],
+              ),
             ],
           ),
         ],
-      ),
-      // ── Branch PROFILE ───────────────────────────────────────────
+      ), // ── Branch PROFILE ───────────────────────────────────────────
       StatefulShellBranch(
         navigatorKey: _nutritionistProfileNavigatorKey,
         routes: [

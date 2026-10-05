@@ -58,11 +58,15 @@ class _NutritionistPlanFormScreenState
     super.initState();
     _isEditMode = widget.planId != null;
 
-    // Cargar clientes para el selector.
-    ref.read(nutritionistClientsControllerProvider.notifier).load();
+    // Cargar clientes para el selector (diferido para no modificar
+    // provider durante build).
+    Future.microtask(() {
+      if (!mounted) return;
+      ref.read(nutritionistClientsControllerProvider.notifier).load();
+    });
 
     if (_isEditMode) {
-      _loadPlan();
+      Future.microtask(_loadPlan);
     }
   }
 
@@ -305,6 +309,7 @@ class _NutritionistPlanFormScreenState
               controller: _nameController,
               label: l10n.nutritionPlanName,
               hint: l10n.nutritionPlanName,
+              prefixIcon: const Icon(Icons.event_note),
               textCapitalization: TextCapitalization.sentences,
               errorText: _errors['name'],
             ),
@@ -371,6 +376,7 @@ class _NutritionistPlanFormScreenState
             PesaoInput(
               controller: _durationController,
               label: l10n.nutritionPlanDays,
+              prefixIcon: const Icon(Icons.calendar_month),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               errorText: _errors['duration'],
@@ -388,6 +394,7 @@ class _NutritionistPlanFormScreenState
             PesaoInput(
               controller: _caloriesController,
               label: l10n.foodFormCaloriesLabel,
+              prefixIcon: const Icon(Icons.dining_outlined),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -400,6 +407,7 @@ class _NutritionistPlanFormScreenState
             PesaoInput(
               controller: _proteinController,
               label: l10n.foodFormProteinLabel,
+              prefixIcon: const Icon(Icons.set_meal_outlined),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -412,6 +420,7 @@ class _NutritionistPlanFormScreenState
             PesaoInput(
               controller: _carbsController,
               label: l10n.foodFormCarbsLabel,
+              prefixIcon: const Icon(Icons.rice_bowl_outlined),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -424,6 +433,7 @@ class _NutritionistPlanFormScreenState
             PesaoInput(
               controller: _fatsController,
               label: l10n.foodFormFatsLabel,
+              prefixIcon: const Icon(Icons.egg_outlined),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -436,6 +446,7 @@ class _NutritionistPlanFormScreenState
             PesaoInput(
               controller: _notesController,
               label: l10n.nutritionPlanNotes,
+              prefixIcon: const Icon(Icons.note),
               textCapitalization: TextCapitalization.sentences,
             ),
             const SizedBox(height: AppDimens.xxl),

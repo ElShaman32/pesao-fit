@@ -50,15 +50,16 @@ class _NutritionistClientDetailScreenState
   }
 
   void _loadData() {
-    // Cargar metas del cliente.
-    ref
-        .read(nutritionGoalsControllerProvider.notifier)
-        .loadGoal(clientId: widget.clientId);
+    Future.microtask(() {
+      if (!mounted) return;
+      ref
+          .read(nutritionGoalsControllerProvider.notifier)
+          .loadGoal(clientId: widget.clientId);
 
-    // Cargar planes del cliente.
-    ref
-        .read(nutritionPlansControllerProvider.notifier)
-        .loadClientPlans(widget.clientId);
+      ref
+          .read(nutritionPlansControllerProvider.notifier)
+          .loadClientPlans(widget.clientId);
+    });
   }
 
   @override
@@ -327,7 +328,7 @@ class _ClientDetailContent extends StatelessWidget {
             EmptyState(
               icon: AppIcons.plans,
               title: l10n.nutritionPlansEmptyTitle,
-              body: l10n.nutritionPlansEmptyBody,
+              body: l10n.nutriDashRecentEmpty,
             )
           else
             // Lista de planes.

@@ -263,6 +263,7 @@ class _FoodFormScreenState extends ConsumerState<FoodFormScreen> {
               controller: _nameController,
               label: l10n.foodFormNameLabel,
               hint: l10n.foodFormNameHint,
+              prefixIcon: const Icon(Icons.restaurant_rounded),
               textCapitalization: TextCapitalization.sentences,
               errorText: _errors['name'],
             ),
@@ -273,6 +274,7 @@ class _FoodFormScreenState extends ConsumerState<FoodFormScreen> {
               controller: _brandController,
               label: l10n.foodFormBrandLabel,
               hint: l10n.foodFormBrandHint,
+              prefixIcon: const Icon(Icons.star),
               textCapitalization: TextCapitalization.sentences,
             ),
             const SizedBox(height: AppDimens.l),
@@ -282,6 +284,7 @@ class _FoodFormScreenState extends ConsumerState<FoodFormScreen> {
               controller: _servingController,
               label: l10n.foodFormServingLabel,
               hint: l10n.foodServingDefault,
+              prefixIcon: const Icon(Icons.balance),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -301,6 +304,7 @@ class _FoodFormScreenState extends ConsumerState<FoodFormScreen> {
             PesaoInput(
               controller: _caloriesController,
               label: l10n.foodFormCaloriesLabel,
+              prefixIcon: const Icon(Icons.scale),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -313,6 +317,7 @@ class _FoodFormScreenState extends ConsumerState<FoodFormScreen> {
             PesaoInput(
               controller: _proteinController,
               label: l10n.foodFormProteinLabel,
+              prefixIcon: const Icon(Icons.set_meal),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -325,6 +330,7 @@ class _FoodFormScreenState extends ConsumerState<FoodFormScreen> {
             PesaoInput(
               controller: _carbsController,
               label: l10n.foodFormCarbsLabel,
+              prefixIcon: const Icon(Icons.rice_bowl),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -337,6 +343,7 @@ class _FoodFormScreenState extends ConsumerState<FoodFormScreen> {
             PesaoInput(
               controller: _fatsController,
               label: l10n.foodFormFatsLabel,
+              prefixIcon: const Icon(Icons.egg),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -356,6 +363,7 @@ class _FoodFormScreenState extends ConsumerState<FoodFormScreen> {
             PesaoInput(
               controller: _fiberController,
               label: l10n.foodFormFiberLabel,
+              prefixIcon: const Icon(Icons.bakery_dining_rounded),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -368,6 +376,7 @@ class _FoodFormScreenState extends ConsumerState<FoodFormScreen> {
             PesaoInput(
               controller: _sugarController,
               label: l10n.foodFormSugarLabel,
+              prefixIcon: const Icon(Icons.cake),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -380,6 +389,7 @@ class _FoodFormScreenState extends ConsumerState<FoodFormScreen> {
             PesaoInput(
               controller: _sodiumController,
               label: l10n.foodFormSodiumLabel,
+              prefixIcon: const Icon(Icons.local_pizza),
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
