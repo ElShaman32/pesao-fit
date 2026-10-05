@@ -31,7 +31,7 @@ class FoodLogRemoteDatasource {
       final found = data['found'] as bool;
 
       if (!found) {
-        return (null, []);
+        return (null, <FoodLogItem>[]);
       }
 
       final logJson = data['log'] as Map<String, dynamic>;
@@ -115,7 +115,7 @@ class FoodLogRemoteDatasource {
 
     final food = await _client.from('foods').select().eq('id', foodId).single();
 
-    final foodMap = food as Map<String, dynamic>;
+    final foodMap = food;
     final factor = quantity / (foodMap['serving_size'] as num).toDouble();
 
     final item = FoodLogItem(
@@ -158,7 +158,7 @@ class FoodLogRemoteDatasource {
         .eq('id', itemId)
         .single();
 
-    final itemMap = itemResponse as Map<String, dynamic>;
+    final itemMap = itemResponse;
     final foodId = itemMap['food_id'] as String;
 
     final foodResponse = await _client
@@ -167,7 +167,7 @@ class FoodLogRemoteDatasource {
         .eq('id', foodId)
         .single();
 
-    final foodMap = foodResponse as Map<String, dynamic>;
+    final foodMap = foodResponse;
     final servingSize = (foodMap['serving_size'] as num).toDouble();
     final factor = newQuantity / servingSize;
 
@@ -189,9 +189,7 @@ class FoodLogRemoteDatasource {
         .select()
         .single();
 
-    final updated = FoodLogItem.fromJson(
-      updatedResponse as Map<String, dynamic>,
-    );
+    final updated = FoodLogItem.fromJson(updatedResponse);
     await _cacheLogItems([updated]);
 
     return updated;
@@ -208,7 +206,7 @@ class FoodLogRemoteDatasource {
         .select()
         .single();
 
-    final log = FoodLog.fromJson(response as Map<String, dynamic>);
+    final log = FoodLog.fromJson(response);
     await _cacheLogs([log]);
 
     return log;
@@ -238,9 +236,9 @@ class FoodLogRemoteDatasource {
     String gymId,
     DateTime date,
   ) async {
-    final dateStr = date.toIso8601String().split('T')[0];
+    date.toIso8601String().split('T')[0];
     final userId = _client.auth.currentUser?.id;
-    if (userId == null) return (null, []);
+    if (userId == null) return (null, <FoodLogItem>[]);
 
     final logRow =
         await (_db.select(_db.foodLogsTable)..where(
@@ -252,7 +250,7 @@ class FoodLogRemoteDatasource {
             .getSingleOrNull();
 
     if (logRow == null) {
-      return (null, []);
+      return (null, <FoodLogItem>[]);
     }
 
     final log = _rowToLog(logRow);

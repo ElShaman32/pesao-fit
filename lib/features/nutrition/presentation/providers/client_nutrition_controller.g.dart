@@ -48,7 +48,7 @@ final class ClientNutritionControllerProvider
 }
 
 String _$clientNutritionControllerHash() =>
-    r'a7079113464e8cef9bb29e5045f563765a34bea5';
+    r'29eb5e6beba3622ee4376d6556944afe8d6362ef';
 
 /// Controller de nutrición del cliente.
 /// Carga plan activo + metas + log del día.

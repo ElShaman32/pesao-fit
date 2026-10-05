@@ -12,6 +12,7 @@ class NutritionGoalRemoteDatasource {
 
   final SupabaseClient _client;
   final AppDatabase _db;
+  SupabaseClient get client => _client;
 
   Future<NutritionGoal?> fetchActiveGoal({
     required String clientId,

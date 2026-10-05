@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/providers/auth_provider.dart';
+import '../../../../core/providers/database_provider.dart';
 import '../../../../core/providers/supabase_provider.dart';
 import '../../data/datasources/food_log_remote_datasource.dart';
 import '../../data/datasources/nutrition_goal_remote_datasource.dart';
@@ -87,13 +88,22 @@ class ClientNutritionController extends _$ClientNutritionController {
   @override
   ClientNutritionState build() {
     _planRepository = NutritionPlanRepositoryImpl(
-      remote: NutritionPlanRemoteDatasource(supabaseClient),
+      remote: NutritionPlanRemoteDatasource(
+        supabaseClient,
+        ref.read(appDatabaseProvider),
+      ),
     );
     _goalRepository = NutritionGoalRepositoryImpl(
-      remote: NutritionGoalRemoteDatasource(supabaseClient),
+      remote: NutritionGoalRemoteDatasource(
+        supabaseClient,
+        ref.read(appDatabaseProvider),
+      ),
     );
     _foodLogRepository = FoodLogRepositoryImpl(
-      remote: FoodLogRemoteDatasource(supabaseClient),
+      remote: FoodLogRemoteDatasource(
+        supabaseClient,
+        ref.read(appDatabaseProvider),
+      ),
     );
 
     authProvider.addListener(_onAuthChange);
