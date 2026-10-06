@@ -2317,6 +2317,186 @@ class AppStringsEs extends AppStrings {
   String dayNumber(int number) {
     return 'Día $number';
   }
+
+  @override
+  String get clientNutritionLogTitle => 'Comidas de hoy';
+
+  @override
+  String get clientNutritionAddFood => 'Agregar';
+
+  @override
+  String get clientNutritionNoRecords => 'Sin registros';
+
+  @override
+  String get clientNutritionEmptyMessage =>
+      'Aún no has registrado comidas hoy. ¡Ánimo! 💪';
+
+  @override
+  String clientNutritionAndMore(int count) {
+    return '...y $count más';
+  }
+
+  @override
+  String get clientNutritionFoodRegistered => 'Comida registrada';
+
+  @override
+  String get clientNutritionRegisterFood => 'Registrar comida';
+
+  @override
+  String nutritionistPlanDayTitle(int number) {
+    return 'Día $number';
+  }
+
+  @override
+  String nutritionistPlanMealTitle(int number) {
+    return 'Comida $number';
+  }
+
+  @override
+  String get nutritionistPlanTemplateAssigned => 'Plantilla asignada';
+
+  @override
+  String get nutritionistPlanAddDay => 'Agregar día';
+
+  @override
+  String nutritionistTemplateFoodTitle(int number) {
+    return 'Alimento #$number';
+  }
+
+  @override
+  String get nutritionistTemplateSelectType => 'Tipo de comida';
+
+  @override
+  String get splashBrandSemantics =>
+      'PESAO FIT, la app para una administración maciza';
+
+  @override
+  String get splashFooter => 'SiReBaI';
+
+  @override
+  String get onboardingSlide1Title => 'Tu gimnasio, ahora en tu bolsillo 💪';
+
+  @override
+  String get onboardingSlide1Subtitle =>
+      'PESAO FIT es la superapp fitness hecha pa\'l pueblo venezolano.';
+
+  @override
+  String get onboardingSlide2Title => 'Rutinas inteligentes';
+
+  @override
+  String get onboardingSlide2Subtitle =>
+      'Tu coach arma tu plan semanal, tú solo le das al play cuando toca entrenar.';
+
+  @override
+  String get onboardingSlide3Title => 'Planes nutricionales';
+
+  @override
+  String get onboardingSlide3Subtitle =>
+      'Tu nutricionista te arma el plan, tú registras lo que comes y ves tus macros.';
+
+  @override
+  String get onboardingSlide4Title => 'Comunidad maciza';
+
+  @override
+  String get onboardingSlide4Subtitle =>
+      'Rachas, logros y la energía de entrenar con los tuyos. Pronto.';
+
+  @override
+  String get onboardingTermsCheckbox =>
+      'Acepto los términos y condiciones y la política de privacidad';
+
+  @override
+  String get onboardingTermsButton => 'Términos';
+
+  @override
+  String get onboardingPrivacyButton => 'Privacidad';
+
+  @override
+  String get onboardingReadFull => 'Leer cláusulas completas';
+
+  @override
+  String get onboardingStart => 'Comenzar';
+
+  @override
+  String get onboardingSwipeHint => 'Desliza para continuar';
+
+  @override
+  String get roleSelectorTitle => '¿Cómo quieres usar PESAO FIT?';
+
+  @override
+  String get roleSelectorSubtitle => 'Elige la opción que mejor te describe 👇';
+
+  @override
+  String get roleOwnerTitle => 'Tengo un gimnasio';
+
+  @override
+  String get roleOwnerDescription =>
+      '¿Eres dueño de un gimnasio y quieres administrarlo como un profesional?';
+
+  @override
+  String get roleOwnerCta => 'Registrarme como dueño';
+
+  @override
+  String get roleClientTitle => 'Entreno en un gimnasio';
+
+  @override
+  String get roleClientDescription =>
+      'Encuentra tu gym o escanea su QR para registrarte y seguir tu progreso.';
+
+  @override
+  String get roleClientCta => 'Buscar mi gimnasio';
+
+  @override
+  String get roleStaffTitle => 'Trabajo en un gimnasio';
+
+  @override
+  String get roleStaffDescription =>
+      '¿Eres entrenador o nutricionista? Tu registro lo hace el dueño de tu gimnasio.';
+
+  @override
+  String get roleStaffCta => 'Entendido';
+
+  @override
+  String get roleStaffToast =>
+      'Pídele al dueño de tu gimnasio que te invite 🏋️';
+
+  @override
+  String get roleStaffToastSemantics =>
+      'Pídele al dueño de tu gimnasio que te invite';
+
+  @override
+  String get legalTermsTitle => 'Términos y Condiciones';
+
+  @override
+  String get legalPrivacyTitle => 'Política de Privacidad';
+
+  @override
+  String get legalDisclaimerTitle => 'Descargo de Responsabilidad';
+
+  @override
+  String get legalTermsSummary =>
+      '• Aceptas tener al menos 18 años para usar PESAO FIT.\n• Los datos que ingresas son reales y verificables.\n• El contenido de rutinas y nutrición es orientativo, no reemplaza profesionales.\n• Prohibido compartir credenciales o revender el acceso.\n• Podemos suspender tu cuenta si violas estas normas.\n• El servicio se ofrece \"tal cual\" sin garantías de disponibilidad 100%.';
+
+  @override
+  String get legalPrivacySummary =>
+      '• Recolectamos: nombre, email, datos físicos, progreso y fotos.\n• Lo usamos para: personalizar rutinas, mostrar progreso y facturación.\n• Tus datos nunca se venden a terceros.\n• Puedes pedir eliminación de tu cuenta en cualquier momento.\n• Las fotos de progreso son privadas por defecto.\n• Usamos Cloudinary para almacenar imágenes de forma segura.';
+
+  @override
+  String get legalDisclaimerSummary =>
+      '• PESAO FIT no sustituye asesoría médica, nutricional o deportiva profesional.\n• Consulta con tu médico antes de iniciar cualquier rutina.\n• No nos hacemos responsables por lesiones durante entrenamientos.\n• Los resultados varían según disciplina, genética y dieta.';
+
+  @override
+  String get legalReadFull => 'Leer cláusulas completas';
+
+  @override
+  String get legalClose => 'Cerrar';
+
+  @override
+  String get registerTermsCheckbox =>
+      'Acepto los términos y condiciones y la política de privacidad';
+
+  @override
+  String get registerTermsError => 'Debes aceptar los términos para continuar';
 }
 
 /// The translations for Spanish Castilian, as used in Venezuela (`es_VE`).
@@ -4632,4 +4812,184 @@ class AppStringsEsVe extends AppStringsEs {
   String dayNumber(int number) {
     return 'Día $number';
   }
+
+  @override
+  String get clientNutritionLogTitle => 'Comidas de hoy';
+
+  @override
+  String get clientNutritionAddFood => 'Agregar';
+
+  @override
+  String get clientNutritionNoRecords => 'Sin registros';
+
+  @override
+  String get clientNutritionEmptyMessage =>
+      'Aún no has registrado comidas hoy. ¡Ánimo! 💪';
+
+  @override
+  String clientNutritionAndMore(int count) {
+    return '...y $count más';
+  }
+
+  @override
+  String get clientNutritionFoodRegistered => 'Comida registrada';
+
+  @override
+  String get clientNutritionRegisterFood => 'Registrar comida';
+
+  @override
+  String nutritionistPlanDayTitle(int number) {
+    return 'Día $number';
+  }
+
+  @override
+  String nutritionistPlanMealTitle(int number) {
+    return 'Comida $number';
+  }
+
+  @override
+  String get nutritionistPlanTemplateAssigned => 'Plantilla asignada';
+
+  @override
+  String get nutritionistPlanAddDay => 'Agregar día';
+
+  @override
+  String nutritionistTemplateFoodTitle(int number) {
+    return 'Alimento #$number';
+  }
+
+  @override
+  String get nutritionistTemplateSelectType => 'Tipo de comida';
+
+  @override
+  String get splashBrandSemantics =>
+      'PESAO FIT, la app para una administración maciza';
+
+  @override
+  String get splashFooter => 'SiReBaI';
+
+  @override
+  String get onboardingSlide1Title => 'Tu gimnasio, ahora en tu bolsillo 💪';
+
+  @override
+  String get onboardingSlide1Subtitle =>
+      'PESAO FIT es la superapp fitness hecha pa\'l pueblo venezolano.';
+
+  @override
+  String get onboardingSlide2Title => 'Rutinas inteligentes';
+
+  @override
+  String get onboardingSlide2Subtitle =>
+      'Tu coach arma tu plan semanal, tú solo le das al play cuando toca entrenar.';
+
+  @override
+  String get onboardingSlide3Title => 'Planes nutricionales';
+
+  @override
+  String get onboardingSlide3Subtitle =>
+      'Tu nutricionista te arma el plan, tú registras lo que comes y ves tus macros.';
+
+  @override
+  String get onboardingSlide4Title => 'Comunidad maciza';
+
+  @override
+  String get onboardingSlide4Subtitle =>
+      'Rachas, logros y la energía de entrenar con los tuyos. Pronto.';
+
+  @override
+  String get onboardingTermsCheckbox =>
+      'Acepto los términos y condiciones y la política de privacidad';
+
+  @override
+  String get onboardingTermsButton => 'Términos';
+
+  @override
+  String get onboardingPrivacyButton => 'Privacidad';
+
+  @override
+  String get onboardingReadFull => 'Leer cláusulas completas';
+
+  @override
+  String get onboardingStart => 'Comenzar';
+
+  @override
+  String get onboardingSwipeHint => 'Desliza para continuar';
+
+  @override
+  String get roleSelectorTitle => '¿Cómo quieres usar PESAO FIT?';
+
+  @override
+  String get roleSelectorSubtitle => 'Elige la opción que mejor te describe 👇';
+
+  @override
+  String get roleOwnerTitle => 'Tengo un gimnasio';
+
+  @override
+  String get roleOwnerDescription =>
+      '¿Eres dueño de un gimnasio y quieres administrarlo como un profesional?';
+
+  @override
+  String get roleOwnerCta => 'Registrarme como dueño';
+
+  @override
+  String get roleClientTitle => 'Entreno en un gimnasio';
+
+  @override
+  String get roleClientDescription =>
+      'Encuentra tu gym o escanea su QR para registrarte y seguir tu progreso.';
+
+  @override
+  String get roleClientCta => 'Buscar mi gimnasio';
+
+  @override
+  String get roleStaffTitle => 'Trabajo en un gimnasio';
+
+  @override
+  String get roleStaffDescription =>
+      '¿Eres entrenador o nutricionista? Tu registro lo hace el dueño de tu gimnasio.';
+
+  @override
+  String get roleStaffCta => 'Entendido';
+
+  @override
+  String get roleStaffToast =>
+      'Pídele al dueño de tu gimnasio que te invite 🏋️';
+
+  @override
+  String get roleStaffToastSemantics =>
+      'Pídele al dueño de tu gimnasio que te invite';
+
+  @override
+  String get legalTermsTitle => 'Términos y Condiciones';
+
+  @override
+  String get legalPrivacyTitle => 'Política de Privacidad';
+
+  @override
+  String get legalDisclaimerTitle => 'Descargo de Responsabilidad';
+
+  @override
+  String get legalTermsSummary =>
+      '• Aceptas tener al menos 18 años para usar PESAO FIT.\n• Los datos que ingresas son reales y verificables.\n• El contenido de rutinas y nutrición es orientativo, no reemplaza profesionales.\n• Prohibido compartir credenciales o revender el acceso.\n• Podemos suspender tu cuenta si violas estas normas.\n• El servicio se ofrece \"tal cual\" sin garantías de disponibilidad 100%.';
+
+  @override
+  String get legalPrivacySummary =>
+      '• Recolectamos: nombre, email, datos físicos, progreso y fotos.\n• Lo usamos para: personalizar rutinas, mostrar progreso y facturación.\n• Tus datos nunca se venden a terceros.\n• Puedes pedir eliminación de tu cuenta en cualquier momento.\n• Las fotos de progreso son privadas por defecto.\n• Usamos Cloudinary para almacenar imágenes de forma segura.';
+
+  @override
+  String get legalDisclaimerSummary =>
+      '• PESAO FIT no sustituye asesoría médica, nutricional o deportiva profesional.\n• Consulta con tu médico antes de iniciar cualquier rutina.\n• No nos hacemos responsables por lesiones durante entrenamientos.\n• Los resultados varían según disciplina, genética y dieta.';
+
+  @override
+  String get legalReadFull => 'Leer cláusulas completas';
+
+  @override
+  String get legalClose => 'Cerrar';
+
+  @override
+  String get registerTermsCheckbox =>
+      'Acepto los términos y condiciones y la política de privacidad';
+
+  @override
+  String get registerTermsError => 'Debes aceptar los términos para continuar';
 }

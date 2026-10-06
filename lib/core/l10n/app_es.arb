@@ -1588,7 +1588,6 @@
   "foodDeleteConfirmBody": "El alimento se desactiva pero se mantiene en los registros existentes.",
   "foodDeleteSuccess": "Alimento eliminado ✅",
   "nutritionPlanEdit": "Editar plan",
-  "nutritionPlanName": "Nombre del plan",
   "nutritionPlanDays": "Duración (días)",
   "nutritionPlanNotes": "Notas (opcional)",
   "nutritionistClientsCount": "{count} clientes sin plan nutricional",
@@ -1679,5 +1678,241 @@
     "placeholders": {
       "number": { "type": "int" }
     }
+  },
+    "clientNutritionLogTitle": "Comidas de hoy",
+  "@clientNutritionLogTitle": {
+    "description": "Título de la pantalla de registro de comidas del cliente"
+  },
+  "clientNutritionAddFood": "Agregar",
+  "@clientNutritionAddFood": {
+    "description": "Botón para agregar comida en el log"
+  },
+  "clientNutritionNoRecords": "Sin registros",
+  "@clientNutritionNoRecords": {
+    "description": "Mensaje cuando no hay comidas registradas en un tipo"
+  },
+  "clientNutritionEmptyMessage": "Aún no has registrado comidas hoy. ¡Ánimo! 💪",
+  "@clientNutritionEmptyMessage": {
+    "description": "Mensaje motivacional cuando no hay comidas registradas"
+  },
+  "clientNutritionAndMore": "...y {count} más",
+  "@clientNutritionAndMore": {
+    "description": "Indica que hay más comidas registradas",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "clientNutritionFoodRegistered": "Comida registrada",
+  "@clientNutritionFoodRegistered": {
+    "description": "Título genérico de comida registrada"
+  },
+  "clientNutritionRegisterFood": "Registrar comida",
+  "@clientNutritionRegisterFood": {
+    "description": "Botón CTA para registrar comida"
+  },
+  "nutritionistPlanDayTitle": "Día {number}",
+  "@nutritionistPlanDayTitle": {
+    "description": "Título de un día del plan",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "nutritionistPlanMealTitle": "Comida {number}",
+  "@nutritionistPlanMealTitle": {
+    "description": "Título de una comida del día",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "nutritionistPlanTemplateAssigned": "Plantilla asignada",
+  "@nutritionistPlanTemplateAssigned": {
+    "description": "Subtitle de comida con plantilla"
+  },
+  "nutritionistPlanAddDay": "Agregar día",
+  "@nutritionistPlanAddDay": {
+    "description": "Botón para agregar día al plan"
+  },
+  "nutritionistTemplateFoodTitle": "Alimento #{number}",
+  "@nutritionistTemplateFoodTitle": {
+    "description": "Título de alimento en plantilla",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "nutritionistTemplateSelectType": "Tipo de comida",
+  "@nutritionistTemplateSelectType": {
+    "description": "Título del selector de tipo de comida"
+  },
+    "splashBrandSemantics": "PESAO FIT, la app para una administración maciza",
+  "@splashBrandSemantics": {
+    "description": "Semantics del logo en splash"
+  },
+  "splashFooter": "SiReBaI",
+  "@splashFooter": {
+    "description": "Footer del splash"
+  },
+
+  "onboardingSlide1Title": "Tu gimnasio, ahora en tu bolsillo 💪",
+  "@onboardingSlide1Title": {
+    "description": "Título del slide 1 del onboarding"
+  },
+  "onboardingSlide1Subtitle": "PESAO FIT es la superapp fitness hecha pa'l pueblo venezolano.",
+  "@onboardingSlide1Subtitle": {
+    "description": "Subtítulo del slide 1 del onboarding"
+  },
+  "onboardingSlide2Title": "Rutinas inteligentes",
+  "@onboardingSlide2Title": {
+    "description": "Título del slide 2 del onboarding"
+  },
+  "onboardingSlide2Subtitle": "Tu coach arma tu plan semanal, tú solo le das al play cuando toca entrenar.",
+  "@onboardingSlide2Subtitle": {
+    "description": "Subtítulo del slide 2 del onboarding"
+  },
+  "onboardingSlide3Title": "Planes nutricionales",
+  "@onboardingSlide3Title": {
+    "description": "Título del slide 3 del onboarding"
+  },
+  "onboardingSlide3Subtitle": "Tu nutricionista te arma el plan, tú registras lo que comes y ves tus macros.",
+  "@onboardingSlide3Subtitle": {
+    "description": "Subtítulo del slide 3 del onboarding"
+  },
+  "onboardingSlide4Title": "Comunidad maciza",
+  "@onboardingSlide4Title": {
+    "description": "Título del slide 4 del onboarding"
+  },
+  "onboardingSlide4Subtitle": "Rachas, logros y la energía de entrenar con los tuyos. Pronto.",
+  "@onboardingSlide4Subtitle": {
+    "description": "Subtítulo del slide 4 del onboarding"
+  },
+  "onboardingTermsCheckbox": "Acepto los términos y condiciones y la política de privacidad",
+  "@onboardingTermsCheckbox": {
+    "description": "Texto del checkbox de aceptación legal"
+  },
+  "onboardingTermsButton": "Términos",
+  "@onboardingTermsButton": {
+    "description": "Botón para ver términos"
+  },
+  "onboardingPrivacyButton": "Privacidad",
+  "@onboardingPrivacyButton": {
+    "description": "Botón para ver privacidad"
+  },
+  "onboardingReadFull": "Leer cláusulas completas",
+  "@onboardingReadFull": {
+    "description": "CTA para leer cláusulas en la web"
+  },
+  "onboardingStart": "Comenzar",
+  "@onboardingStart": {
+    "description": "Botón para completar onboarding"
+  },
+  "onboardingSwipeHint": "Desliza para continuar",
+  "@onboardingSwipeHint": {
+    "description": "Indicador de deslizar"
+  },
+
+  "roleSelectorTitle": "¿Cómo quieres usar PESAO FIT?",
+  "@roleSelectorTitle": {
+    "description": "Título del selector de rol"
+  },
+  "roleSelectorSubtitle": "Elige la opción que mejor te describe 👇",
+  "@roleSelectorSubtitle": {
+    "description": "Subtítulo del selector de rol"
+  },
+  "roleOwnerTitle": "Tengo un gimnasio",
+  "@roleOwnerTitle": {
+    "description": "Título de la card de dueño"
+  },
+  "roleOwnerDescription": "¿Eres dueño de un gimnasio y quieres administrarlo como un profesional?",
+  "@roleOwnerDescription": {
+    "description": "Descripción de la card de dueño"
+  },
+  "roleOwnerCta": "Registrarme como dueño",
+  "@roleOwnerCta": {
+    "description": "CTA de la card de dueño"
+  },
+  "roleClientTitle": "Entreno en un gimnasio",
+  "@roleClientTitle": {
+    "description": "Título de la card de cliente"
+  },
+  "roleClientDescription": "Encuentra tu gym o escanea su QR para registrarte y seguir tu progreso.",
+  "@roleClientDescription": {
+    "description": "Descripción de la card de cliente"
+  },
+  "roleClientCta": "Buscar mi gimnasio",
+  "@roleClientCta": {
+    "description": "CTA de la card de cliente"
+  },
+  "roleStaffTitle": "Trabajo en un gimnasio",
+  "@roleStaffTitle": {
+    "description": "Título de la card de trabajador"
+  },
+  "roleStaffDescription": "¿Eres entrenador o nutricionista? Tu registro lo hace el dueño de tu gimnasio.",
+  "@roleStaffDescription": {
+    "description": "Descripción de la card de trabajador"
+  },
+  "roleStaffCta": "Entendido",
+  "@roleStaffCta": {
+    "description": "CTA de la card de trabajador"
+  },
+  "roleStaffToast": "Pídele al dueño de tu gimnasio que te invite 🏋️",
+  "@roleStaffToast": {
+    "description": "Toast informativo para trabajador"
+  },
+  "roleStaffToastSemantics": "Pídele al dueño de tu gimnasio que te invite",
+  "@roleStaffToastSemantics": {
+    "description": "Semantics del toast trabajador"
+  },
+
+  "legalTermsTitle": "Términos y Condiciones",
+  "@legalTermsTitle": {
+    "description": "Título del bottom sheet de términos"
+  },
+  "legalPrivacyTitle": "Política de Privacidad",
+  "@legalPrivacyTitle": {
+    "description": "Título del bottom sheet de privacidad"
+  },
+  "legalDisclaimerTitle": "Descargo de Responsabilidad",
+  "@legalDisclaimerTitle": {
+    "description": "Título del bottom sheet de descargo"
+  },
+  "legalTermsSummary": "• Aceptas tener al menos 18 años para usar PESAO FIT.\n• Los datos que ingresas son reales y verificables.\n• El contenido de rutinas y nutrición es orientativo, no reemplaza profesionales.\n• Prohibido compartir credenciales o revender el acceso.\n• Podemos suspender tu cuenta si violas estas normas.\n• El servicio se ofrece \"tal cual\" sin garantías de disponibilidad 100%.",
+  "@legalTermsSummary": {
+    "description": "Resumen de términos y condiciones"
+  },
+  "legalPrivacySummary": "• Recolectamos: nombre, email, datos físicos, progreso y fotos.\n• Lo usamos para: personalizar rutinas, mostrar progreso y facturación.\n• Tus datos nunca se venden a terceros.\n• Puedes pedir eliminación de tu cuenta en cualquier momento.\n• Las fotos de progreso son privadas por defecto.\n• Usamos Cloudinary para almacenar imágenes de forma segura.",
+  "@legalPrivacySummary": {
+    "description": "Resumen de política de privacidad"
+  },
+  "legalDisclaimerSummary": "• PESAO FIT no sustituye asesoría médica, nutricional o deportiva profesional.\n• Consulta con tu médico antes de iniciar cualquier rutina.\n• No nos hacemos responsables por lesiones durante entrenamientos.\n• Los resultados varían según disciplina, genética y dieta.",
+  "@legalDisclaimerSummary": {
+    "description": "Resumen de descargo de responsabilidad"
+  },
+  "legalReadFull": "Leer cláusulas completas",
+  "@legalReadFull": {
+    "description": "CTA para leer cláusulas en la web"
+  },
+  "legalClose": "Cerrar",
+  "@legalClose": {
+    "description": "Botón cerrar del bottom sheet legal"
+  },
+
+  "registerTermsCheckbox": "Acepto los términos y condiciones y la política de privacidad",
+  "@registerTermsCheckbox": {
+    "description": "Texto del checkbox de términos en registro"
+  },
+  "registerTermsError": "Debes aceptar los términos para continuar",
+  "@registerTermsError": {
+    "description": "Error si no acepta términos"
   }
 }

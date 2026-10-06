@@ -312,8 +312,7 @@ class _PlanDaysContent extends StatelessWidget {
 
           // Botón agregar día.
           PesaoButton(
-            label: l10n
-                .trainingPlanAddWeek, // Reutilizo "Agregar semana" como "Agregar día"
+            label: l10n.nutritionistPlanAddDay,
             icon: AppIcons.add,
             variant: PesaoButtonVariant.primary,
             isExpanded: true,
@@ -408,8 +407,8 @@ class _DayCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: AppDimens.s),
                   child: PesaoListTile(
-                    title: 'Comida ${meal.mealOrder + 1}',
-                    subtitle: 'Plantilla asignada',
+                    title: l10n.nutritionistPlanMealTitle(meal.mealOrder + 1),
+                    subtitle: l10n.nutritionistPlanTemplateAssigned,
                     trailing: IconButton(
                       icon: const Icon(
                         AppIcons.close,

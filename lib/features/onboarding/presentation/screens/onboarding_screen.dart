@@ -1,176 +1,167 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../core/l10n/app_strings.dart';
-import '../../../../core/providers/auth_provider.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_dimens.dart';
-import '../../../../core/theme/app_icons.dart';
-import '../../../../core/theme/app_typography.dart';
-import '../../../../shared/widgets/pesao_card.dart';
+import '../../../../shared/widgets/pesao_button.dart';
+import '../providers/onboarding_state_provider.dart';
+import '../widgets/legal_summary_sheet.dart';
+import '../widgets/onboarding_page.dart';
+import '../widgets/terms_checkbox.dart';
 
-/// Pantalla de selección de rol (ADR-035, Opción B: rol ANTES del registro).
+/// Pantalla de onboarding de PESAO FIT.
 ///
-/// Es el punto de entrada público. Dos caminos:
-/// - Sin sesión: lleva al registro pasando el rol como query param.
-/// - Con sesión (registrado pero sin completar onboarding): lleva directo
-///   al flujo del rol, sin re-registrar.
-class OnboardingScreen extends ConsumerWidget {
+/// Muestra 4 slides vendiendo el producto. El slide 1 incluye
+/// checkbox de aceptación de términos y privacidad.
+/// Solo aparece en el primer uso de la app.
+class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
+  final _pageController = PageController();
+  int _currentPage = 0;
+  bool _termsAccepted = false;
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _nextPage() {
+    if (_currentPage < 3) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  Future<void> _completeOnboarding() async {
+    if (!_termsAccepted) return;
+
+    // Marcar términos como aceptados.
+    await ref.read(onboardingStateProvider.notifier).acceptTerms();
+    // Marcar onboarding como completado.
+    await ref.read(onboardingStateProvider.notifier).completeOnboarding();
+
+    if (!mounted) return;
+
+    // Navegar al selector de rol.
+    context.go(RouteNames.roleSelector);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppStrings.of(context);
-    final isLoggedIn = authProvider.isLoggedIn;
 
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppDimens.l,
-            vertical: AppDimens.xxl,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: AppDimens.xl),
+        child: Column(
+          children: [
+            // PageView con los 4 slides.
+            Expanded(
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() => _currentPage = index);
+                },
+                children: [
+                  // Slide 1: Bienvenida + términos.
+                  OnboardingPage(
+                    icon: Icons.fitness_center,
+                    title: l10n.onboardingSlide1Title,
+                    subtitle: l10n.onboardingSlide1Subtitle,
+                    trailing: Column(
+                      children: [
+                        const SizedBox(height: 32),
+                        TermsCheckbox(
+                          value: _termsAccepted,
+                          onChanged: (value) {
+                            setState(() => _termsAccepted = value ?? false);
+                          },
+                          onTapTerms: () =>
+                              LegalSummarySheet.showTerms(context),
+                          onTapPrivacy: () =>
+                              LegalSummarySheet.showPrivacy(context),
+                        ),
+                      ],
+                    ),
+                  ),
 
-              // Logo.
-              Text(
-                'PESAO', // TODO: si aplica, mover a AppStrings.
-                textAlign: TextAlign.center,
-                style: AppTypography.display.copyWith(
-                  color: AppColors.primary,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(height: AppDimens.m),
+                  // Slide 2: Rutinas inteligentes.
+                  OnboardingPage(
+                    icon: Icons.auto_awesome,
+                    title: l10n.onboardingSlide2Title,
+                    subtitle: l10n.onboardingSlide2Subtitle,
+                  ),
 
-              // Título.
-              Text(
-                l10n.onboardingTitle,
-                textAlign: TextAlign.center,
-                style: AppTypography.title.copyWith(
-                  color: AppColors.textPrimary,
-                ),
-              ),
-              const SizedBox(height: AppDimens.xs),
+                  // Slide 3: Planes nutricionales.
+                  OnboardingPage(
+                    icon: Icons.restaurant_menu,
+                    title: l10n.onboardingSlide3Title,
+                    subtitle: l10n.onboardingSlide3Subtitle,
+                  ),
 
-              // Subtítulo.
-              Text(
-                l10n.onboardingSubtitle,
-                textAlign: TextAlign.center,
-                style: AppTypography.body.copyWith(
-                  color: AppColors.textSecondary,
-                ),
+                  // Slide 4: Comunidad.
+                  OnboardingPage(
+                    icon: Icons.groups,
+                    title: l10n.onboardingSlide4Title,
+                    subtitle: l10n.onboardingSlide4Subtitle,
+                  ),
+                ],
               ),
-              const SizedBox(height: AppDimens.xxxl),
+            ),
 
-              // Card: Soy dueño.
-              _RoleCard(
-                icon: Icons.business_outlined, // TODO: promover a AppIcons.
-                title: l10n.onboardingOwnerTitle,
-                description: l10n.onboardingOwnerDescription,
-                onTap: () => _selectRole(context, isLoggedIn, 'owner'),
-              ),
-              const SizedBox(height: AppDimens.m),
+            // Indicador de página + botón.
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  // Indicador de página.
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      4,
+                      (index) => Container(
+                        width: _currentPage == index ? 24 : 8,
+                        height: 8,
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        decoration: BoxDecoration(
+                          color: _currentPage == index
+                              ? AppColors.primary
+                              : AppColors.textDisabled,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
 
-              // Card: Soy cliente.
-              _RoleCard(
-                icon: AppIcons.routine,
-                title: l10n.onboardingClientTitle,
-                description: l10n.onboardingClientDescription,
-                onTap: () => _selectRole(context, isLoggedIn, 'client'),
+                  // Botón de acción.
+                  if (_currentPage < 3)
+                    PesaoButton(
+                      label: l10n.onboardingSwipeHint,
+                      onPressed: _nextPage,
+                      variant: PesaoButtonVariant.secondary,
+                    )
+                  else
+                    PesaoButton(
+                      label: l10n.onboardingStart,
+                      onPressed: _termsAccepted ? _completeOnboarding : null,
+                      variant: PesaoButtonVariant.primary,
+                    ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ),
-    );
-  }
-
-  /// Navega según el estado de sesión y el rol elegido.
-  void _selectRole(BuildContext context, bool isLoggedIn, String role) {
-    if (isLoggedIn) {
-      if (role == 'owner') {
-        context.go(RouteNames.ownerApplication);
-      } else {
-        context.go(RouteNames.gymDiscovery);
-      }
-    } else {
-      context.go('${RouteNames.register}?role=$role');
-    }
-  }
-}
-
-// ============================================================================
-// ROLE CARD
-// ============================================================================
-
-/// Card de selección de rol con ícono, título y descripción.
-class _RoleCard extends StatelessWidget {
-  const _RoleCard({
-    required this.icon,
-    required this.title,
-    required this.description,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String title;
-  final String description;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return PesaoCard(
-      onTap: onTap,
-      child: Row(
-        children: [
-          // Ícono circular.
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.15),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, color: AppColors.primary, size: 28),
-          ),
-          const SizedBox(width: AppDimens.m),
-
-          // Texto.
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTypography.title.copyWith(
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: AppDimens.xs),
-                Text(
-                  description,
-                  style: AppTypography.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Flecha.
-          const Icon(
-            AppIcons.chevronRight,
-            color: AppColors.textSecondary,
-            size: 18,
-          ),
-        ],
       ),
     );
   }

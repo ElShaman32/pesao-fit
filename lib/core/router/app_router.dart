@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../features/admin/presentation/screens/application_detail_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
@@ -8,6 +7,8 @@ import '../../features/onboarding/presentation/screens/application_pending_scree
 import '../../features/onboarding/presentation/screens/gym_discovery_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../features/onboarding/presentation/screens/owner_application_screen.dart';
+import '../../features/onboarding/presentation/screens/role_selector_screen.dart';
+import '../../features/splash/presentation/screens/splash_screen.dart';
 import '../providers/auth_provider.dart';
 import '../theme/app_colors.dart';
 import 'route_names.dart';
@@ -31,7 +32,7 @@ String _homeForRole(UserRole? role) {
     case UserRole.admin:
       return RouteNames.adminHome;
     case null:
-      return RouteNames.onboarding;
+      return RouteNames.roleSelector;
   }
 }
 
@@ -39,7 +40,6 @@ String _homeForRole(UserRole? role) {
 ///
 /// Usa [refreshListenable] para que el router re-evalúe el redirect
 /// cada vez que [authProvider] notifica cambios (login/logout).
-/// NO depende del BuildContext del router (que no tiene acceso al widget tree).
 final GoRouter appRouter = GoRouter(
   initialLocation: RouteNames.splash,
   debugLogDiagnostics: true,
@@ -48,9 +48,13 @@ final GoRouter appRouter = GoRouter(
     final isLoggedIn = authProvider.isLoggedIn;
     final currentPath = state.uri.path;
 
+    // 🛡️ SPLASH: NO REDIRIGIR. El splash maneja su propia navegación.
+    if (currentPath == RouteNames.splash) return null;
+
     // Rutas públicas (sin auth).
     const publicRoutes = [
       RouteNames.onboarding,
+      RouteNames.roleSelector,
       RouteNames.terms,
       RouteNames.login,
       RouteNames.register,
@@ -60,31 +64,23 @@ final GoRouter appRouter = GoRouter(
     // Rutas del flujo de onboarding (para logueados sin rol aún).
     const onboardingFlowRoutes = [
       RouteNames.onboarding,
+      RouteNames.roleSelector,
       RouteNames.ownerApplication,
       RouteNames.gymDiscovery,
       RouteNames.applicationPending,
     ];
 
-    // SPLASH: punto de decisión, nunca estático.
-    if (currentPath == RouteNames.splash) {
-      // Esperar a que se restaure la sesión antes de decidir.
-      if (authProvider.isInitializing) return null;
-      if (!isLoggedIn) return RouteNames.onboarding;
-      if (authProvider.needsOnboarding) return RouteNames.onboarding;
-      return _homeForRole(authProvider.userRole);
-    }
-
     // NO LOGUEADO.
     if (!isLoggedIn) {
       if (publicRoutes.contains(currentPath)) return null;
-      return RouteNames.onboarding;
+      return RouteNames.roleSelector;
     }
 
     // LOGUEADO SIN ROL (registrado pero sin completar onboarding).
     if (authProvider.needsOnboarding) {
       if (onboardingFlowRoutes.contains(currentPath)) return null;
       if (currentPath == RouteNames.terms) return null;
-      return RouteNames.onboarding;
+      return RouteNames.roleSelector;
     }
 
     // LOGUEADO CON ROL: si está en ruta pública o de onboarding, ir a su shell.
@@ -100,13 +96,17 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: RouteNames.splash,
       name: RouteNames.splash,
-      builder: (context, state) =>
-          const _PlaceholderScreen(title: 'Splash', subtitle: 'FASE 1'),
+      builder: (context, state) => const SplashScreen(),
     ),
     GoRoute(
       path: RouteNames.onboarding,
       name: RouteNames.onboarding,
       builder: (context, state) => const OnboardingScreen(),
+    ),
+    GoRoute(
+      path: RouteNames.roleSelector,
+      name: RouteNames.roleSelector,
+      builder: (context, state) => const RoleSelectorScreen(),
     ),
     GoRoute(
       path: RouteNames.applicationPending,
@@ -165,6 +165,7 @@ final GoRouter appRouter = GoRouter(
     buildOwnerShell(),
     buildNutritionistShell(),
     buildAdminShell(),
+
     // --- Panel superadmin: revisión de solicitudes KYC ---
     GoRoute(
       path: '/admin/applications/:appId',
@@ -179,10 +180,8 @@ final GoRouter appRouter = GoRouter(
 /// Placeholder temporal hasta que se construya la pantalla real.
 class _PlaceholderScreen extends StatelessWidget {
   const _PlaceholderScreen({required this.title, required this.subtitle});
-
   final String title;
   final String subtitle;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

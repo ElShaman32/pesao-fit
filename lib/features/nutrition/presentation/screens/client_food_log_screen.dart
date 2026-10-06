@@ -147,7 +147,7 @@ class _ClientFoodLogScreenState extends ConsumerState<ClientFoodLogScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: const PesaoAppBar(title: 'Comidas de hoy'),
+      appBar: PesaoAppBar(title: l10n.clientNutritionLogTitle),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(AppDimens.l),
@@ -163,7 +163,7 @@ class _ClientFoodLogScreenState extends ConsumerState<ClientFoodLogScreen> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: AppDimens.m),
                       child: Text(
-                        'Sin registros',
+                        l10n.clientNutritionNoRecords,
                         style: AppTypography.bodySmall.copyWith(
                           color: AppColors.textDisabled,
                         ),
@@ -201,7 +201,7 @@ class _ClientFoodLogScreenState extends ConsumerState<ClientFoodLogScreen> {
                     ),
 
                   PesaoButton(
-                    label: 'Agregar',
+                    label: l10n.clientNutritionAddFood,
                     icon: AppIcons.add,
                     variant: PesaoButtonVariant.secondary,
                     isExpanded: true,

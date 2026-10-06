@@ -4386,6 +4386,318 @@ abstract class AppStrings {
   /// In es_VE, this message translates to:
   /// **'Día {number}'**
   String dayNumber(int number);
+
+  /// Título de la pantalla de registro de comidas del cliente
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Comidas de hoy'**
+  String get clientNutritionLogTitle;
+
+  /// Botón para agregar comida en el log
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Agregar'**
+  String get clientNutritionAddFood;
+
+  /// Mensaje cuando no hay comidas registradas en un tipo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Sin registros'**
+  String get clientNutritionNoRecords;
+
+  /// Mensaje motivacional cuando no hay comidas registradas
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Aún no has registrado comidas hoy. ¡Ánimo! 💪'**
+  String get clientNutritionEmptyMessage;
+
+  /// Indica que hay más comidas registradas
+  ///
+  /// In es_VE, this message translates to:
+  /// **'...y {count} más'**
+  String clientNutritionAndMore(int count);
+
+  /// Título genérico de comida registrada
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Comida registrada'**
+  String get clientNutritionFoodRegistered;
+
+  /// Botón CTA para registrar comida
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Registrar comida'**
+  String get clientNutritionRegisterFood;
+
+  /// Título de un día del plan
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Día {number}'**
+  String nutritionistPlanDayTitle(int number);
+
+  /// Título de una comida del día
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Comida {number}'**
+  String nutritionistPlanMealTitle(int number);
+
+  /// Subtitle de comida con plantilla
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Plantilla asignada'**
+  String get nutritionistPlanTemplateAssigned;
+
+  /// Botón para agregar día al plan
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Agregar día'**
+  String get nutritionistPlanAddDay;
+
+  /// Título de alimento en plantilla
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Alimento #{number}'**
+  String nutritionistTemplateFoodTitle(int number);
+
+  /// Título del selector de tipo de comida
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tipo de comida'**
+  String get nutritionistTemplateSelectType;
+
+  /// Semantics del logo en splash
+  ///
+  /// In es_VE, this message translates to:
+  /// **'PESAO FIT, la app para una administración maciza'**
+  String get splashBrandSemantics;
+
+  /// Footer del splash
+  ///
+  /// In es_VE, this message translates to:
+  /// **'SiReBaI'**
+  String get splashFooter;
+
+  /// Título del slide 1 del onboarding
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu gimnasio, ahora en tu bolsillo 💪'**
+  String get onboardingSlide1Title;
+
+  /// Subtítulo del slide 1 del onboarding
+  ///
+  /// In es_VE, this message translates to:
+  /// **'PESAO FIT es la superapp fitness hecha pa\'l pueblo venezolano.'**
+  String get onboardingSlide1Subtitle;
+
+  /// Título del slide 2 del onboarding
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Rutinas inteligentes'**
+  String get onboardingSlide2Title;
+
+  /// Subtítulo del slide 2 del onboarding
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu coach arma tu plan semanal, tú solo le das al play cuando toca entrenar.'**
+  String get onboardingSlide2Subtitle;
+
+  /// Título del slide 3 del onboarding
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Planes nutricionales'**
+  String get onboardingSlide3Title;
+
+  /// Subtítulo del slide 3 del onboarding
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tu nutricionista te arma el plan, tú registras lo que comes y ves tus macros.'**
+  String get onboardingSlide3Subtitle;
+
+  /// Título del slide 4 del onboarding
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Comunidad maciza'**
+  String get onboardingSlide4Title;
+
+  /// Subtítulo del slide 4 del onboarding
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Rachas, logros y la energía de entrenar con los tuyos. Pronto.'**
+  String get onboardingSlide4Subtitle;
+
+  /// Texto del checkbox de aceptación legal
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Acepto los términos y condiciones y la política de privacidad'**
+  String get onboardingTermsCheckbox;
+
+  /// Botón para ver términos
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Términos'**
+  String get onboardingTermsButton;
+
+  /// Botón para ver privacidad
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Privacidad'**
+  String get onboardingPrivacyButton;
+
+  /// CTA para leer cláusulas en la web
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Leer cláusulas completas'**
+  String get onboardingReadFull;
+
+  /// Botón para completar onboarding
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Comenzar'**
+  String get onboardingStart;
+
+  /// Indicador de deslizar
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Desliza para continuar'**
+  String get onboardingSwipeHint;
+
+  /// Título del selector de rol
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¿Cómo quieres usar PESAO FIT?'**
+  String get roleSelectorTitle;
+
+  /// Subtítulo del selector de rol
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Elige la opción que mejor te describe 👇'**
+  String get roleSelectorSubtitle;
+
+  /// Título de la card de dueño
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Tengo un gimnasio'**
+  String get roleOwnerTitle;
+
+  /// Descripción de la card de dueño
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¿Eres dueño de un gimnasio y quieres administrarlo como un profesional?'**
+  String get roleOwnerDescription;
+
+  /// CTA de la card de dueño
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Registrarme como dueño'**
+  String get roleOwnerCta;
+
+  /// Título de la card de cliente
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Entreno en un gimnasio'**
+  String get roleClientTitle;
+
+  /// Descripción de la card de cliente
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Encuentra tu gym o escanea su QR para registrarte y seguir tu progreso.'**
+  String get roleClientDescription;
+
+  /// CTA de la card de cliente
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Buscar mi gimnasio'**
+  String get roleClientCta;
+
+  /// Título de la card de trabajador
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Trabajo en un gimnasio'**
+  String get roleStaffTitle;
+
+  /// Descripción de la card de trabajador
+  ///
+  /// In es_VE, this message translates to:
+  /// **'¿Eres entrenador o nutricionista? Tu registro lo hace el dueño de tu gimnasio.'**
+  String get roleStaffDescription;
+
+  /// CTA de la card de trabajador
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Entendido'**
+  String get roleStaffCta;
+
+  /// Toast informativo para trabajador
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pídele al dueño de tu gimnasio que te invite 🏋️'**
+  String get roleStaffToast;
+
+  /// Semantics del toast trabajador
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Pídele al dueño de tu gimnasio que te invite'**
+  String get roleStaffToastSemantics;
+
+  /// Título del bottom sheet de términos
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Términos y Condiciones'**
+  String get legalTermsTitle;
+
+  /// Título del bottom sheet de privacidad
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Política de Privacidad'**
+  String get legalPrivacyTitle;
+
+  /// Título del bottom sheet de descargo
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Descargo de Responsabilidad'**
+  String get legalDisclaimerTitle;
+
+  /// Resumen de términos y condiciones
+  ///
+  /// In es_VE, this message translates to:
+  /// **'• Aceptas tener al menos 18 años para usar PESAO FIT.\n• Los datos que ingresas son reales y verificables.\n• El contenido de rutinas y nutrición es orientativo, no reemplaza profesionales.\n• Prohibido compartir credenciales o revender el acceso.\n• Podemos suspender tu cuenta si violas estas normas.\n• El servicio se ofrece \"tal cual\" sin garantías de disponibilidad 100%.'**
+  String get legalTermsSummary;
+
+  /// Resumen de política de privacidad
+  ///
+  /// In es_VE, this message translates to:
+  /// **'• Recolectamos: nombre, email, datos físicos, progreso y fotos.\n• Lo usamos para: personalizar rutinas, mostrar progreso y facturación.\n• Tus datos nunca se venden a terceros.\n• Puedes pedir eliminación de tu cuenta en cualquier momento.\n• Las fotos de progreso son privadas por defecto.\n• Usamos Cloudinary para almacenar imágenes de forma segura.'**
+  String get legalPrivacySummary;
+
+  /// Resumen de descargo de responsabilidad
+  ///
+  /// In es_VE, this message translates to:
+  /// **'• PESAO FIT no sustituye asesoría médica, nutricional o deportiva profesional.\n• Consulta con tu médico antes de iniciar cualquier rutina.\n• No nos hacemos responsables por lesiones durante entrenamientos.\n• Los resultados varían según disciplina, genética y dieta.'**
+  String get legalDisclaimerSummary;
+
+  /// CTA para leer cláusulas en la web
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Leer cláusulas completas'**
+  String get legalReadFull;
+
+  /// Botón cerrar del bottom sheet legal
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Cerrar'**
+  String get legalClose;
+
+  /// Texto del checkbox de términos en registro
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Acepto los términos y condiciones y la política de privacidad'**
+  String get registerTermsCheckbox;
+
+  /// Error si no acepta términos
+  ///
+  /// In es_VE, this message translates to:
+  /// **'Debes aceptar los términos para continuar'**
+  String get registerTermsError;
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {

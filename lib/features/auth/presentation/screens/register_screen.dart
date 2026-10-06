@@ -9,6 +9,7 @@ import '../../../../core/theme/app_dimens.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/widgets/pesao_button.dart';
 import '../../../../shared/widgets/pesao_input.dart';
+import '../../../onboarding/presentation/widgets/legal_summary_sheet.dart';
 import '../providers/register_controller.dart';
 
 /// Pantalla de registro de PESAO FIT.
@@ -29,6 +30,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
+  bool _termsAccepted = false;
 
   @override
   void dispose() {
@@ -170,10 +172,42 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 const SizedBox(height: 16),
               ],
 
-              // Submit button
+              const SizedBox(height: 16),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Checkbox(
+                    value: _termsAccepted,
+                    onChanged: (value) {
+                      setState(() => _termsAccepted = value ?? false);
+                    },
+                    activeColor: AppColors.primary,
+                    checkColor: AppColors.onPrimary,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: GestureDetector(
+                        onTap: () => LegalSummarySheet.showTerms(context),
+                        child: Text(
+                          l10n.registerTermsCheckbox,
+                          style: AppTypography.bodySmall.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              // Modificar el botón de submit para que esté disabled si no acepta términos:
+              // ✅ CORRECTO (usando las variables existentes)
               PesaoButton(
                 label: l10n.registerSubmit,
-                onPressed: state.isValid ? controller.submit : null,
+                onPressed: (state.isSubmitting || !_termsAccepted)
+                    ? null
+                    : controller.submit,
                 loading: state.isSubmitting,
               ),
               const SizedBox(height: 32),

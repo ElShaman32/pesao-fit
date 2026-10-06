@@ -14,6 +14,10 @@ abstract final class RouteNames {
   static const String gymDiscovery = '/gym-discovery';
   static const String gymDetail = '/gym-detail/:gymId';
 
+  // --- Onboarding y Role Selector (FASE A) ---
+  static const String roleSelector = '/role-selector';
+  static const String qrScanner = '/qr-scanner';
+
   // --- Cliente --------------------------------------------------------------
 
   static const String clientHome = '/client/home';

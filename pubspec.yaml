@@ -68,6 +68,8 @@ dependencies:
   uuid: ^4.6.0
   flutter_dotenv: ^6.0.1
   equatable: ^2.1.0
+  audioplayers: ^6.8.1
+  mobile_scanner: ^7.4.2
 
 dev_dependencies:
   flutter_test:
@@ -93,6 +95,7 @@ flutter:
      - .env
      - assets/fonts/
      - assets/images/
+     - assets/audio/ 
      
   fonts:
     - family: Manrope

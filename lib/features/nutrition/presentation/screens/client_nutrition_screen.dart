@@ -205,7 +205,7 @@ class _NutritionSuccessSliver extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: AppDimens.l),
               child: Text(
-                'Aún no has registrado comidas hoy. ¡Ánimo! 💪',
+                l10n.clientNutritionEmptyMessage,
                 style: AppTypography.body.copyWith(
                   color: AppColors.textSecondary,
                 ),
@@ -219,7 +219,7 @@ class _NutritionSuccessSliver extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: AppDimens.s),
                     child: PesaoListTile(
-                      title: 'Comida registrada',
+                      title: l10n.clientNutritionFoodRegistered,
                       subtitle:
                           '${item.quantity.round()}g · ${item.caloriesKcal.round()} kcal',
                       leading: const Icon(
@@ -230,7 +230,7 @@ class _NutritionSuccessSliver extends StatelessWidget {
                   ),
                 if (state.dailyItems.length > 3)
                   Text(
-                    '...y ${state.dailyItems.length - 3} más',
+                    l10n.clientNutritionAndMore(state.dailyItems.length - 3),
                     style: AppTypography.bodySmall.copyWith(
                       color: AppColors.textSecondary,
                     ),
@@ -243,7 +243,7 @@ class _NutritionSuccessSliver extends StatelessWidget {
 
           // CTA para ir al log
           PesaoButton(
-            label: 'Registrar comida',
+            label: l10n.clientNutritionRegisterFood,
             icon: AppIcons.add,
             variant: PesaoButtonVariant.primary,
             isExpanded: true,
